@@ -9,15 +9,15 @@ export default function Header() {
           <img
             src="/logo.png"
             alt="NIMBUS TECH 로고"
-            style={{ height: '24px', width: 'auto' }}
+            style={{ height: '24px', width: 'auto' }} // ✅ 완전 작게
           />
-          <span className="text-[#00A3E0] font-extrabold text-lg tracking-tight">
+          <span className="text-[#0168b7] font-extrabold text-lg tracking-tight">
             NIMBUS TECH
           </span>
         </div>
 
         {/* 네비게이션 메뉴 */}
-        <nav className="space-x-6 text-black font-semibold text-sm md:text-base">
+        <nav className="space-x-6 text-[#0168b7] font-semibold text-sm md:text-base">
           <Link to="/" className="cursor-pointer hover:underline">
             Home
           </Link>
