@@ -1,0 +1,70 @@
+// src/components/About/AboutCard.tsx
+// ========================================
+// ABOUT 페이지 개별 카드 컴포넌트
+// 담당자: About 페이지 팀
+// 주요 기능: 서비스 소개 카드, 호버 애니메이션
+// 수정 사항: 카드 크기 조정, 그림자 효과, 호버 모션
+// ========================================
+
+interface AboutCardProps {
+  title: string;
+  description: string[];
+}
+
+export default function AboutCard({ title, description }: AboutCardProps) {
+  // ========================================
+  // 카드 렌더링 (호버 효과, 크기 조정 포함)
+  // ========================================
+  return (
+    <div
+      className="bg-gray-50 rounded-lg p-6 border border-gray-200"
+      style={{
+        backgroundColor: '#f9fafb',
+        borderRadius: '8px',
+        padding: '10px',
+        border: '1px solid #e5e7eb',
+        boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+        minHeight: '200px',
+        width: '380px', // 시안처럼 고정 크기로 더 작게
+        maxWidth: '280px',
+        flexShrink: 0,
+        transition: 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+        cursor: 'pointer'
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.transform = 'translateY(-8px)';
+        e.currentTarget.style.boxShadow = '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)';
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.transform = 'translateY(0)';
+        e.currentTarget.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)';
+      }}
+    >
+      <h3 
+        className="font-semibold text-blue-600 mb-4 text-base leading-tight" 
+        style={{ 
+          color: '#2563eb', 
+          fontWeight: '600', 
+          marginBottom: '56px' 
+        }}
+      >
+        {title}
+      </h3>
+      
+      <div className="text-sm text-gray-700 space-y-1" style={{ color: '#374151', fontSize: '12px', fontWeight: '600' }}>
+        {description.map((line, i) => (
+          <div 
+            key={i} 
+            className="leading-relaxed" 
+            style={{ 
+              marginBottom: '2px', 
+              lineHeight: '1.4' 
+            }}
+          >
+            {line}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
