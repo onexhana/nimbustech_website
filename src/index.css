@@ -50,3 +50,27 @@ h1 {
     color: #747bff;
   }
 }
+
+/* ===== Partner logos infinite sliders ===== */
+@keyframes slide-right {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0%); }
+}
+
+@keyframes slide-left {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-slide-right { animation: slide-right 15s linear infinite; }
+.animate-slide-left { animation: slide-left 15s linear infinite; }
+.pause-on-hover:hover { animation-play-state: paused; }
+
+/* Hide horizontal scrollbar for custom sliders */
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Chrome, Safari and Opera */
+}

@@ -1,51 +1,45 @@
-import React, { useState } from "react";
-
-// 🔹 산업군 필터 컴포넌트 (좌측 사이드바)
+import { useState } from "react";
 import FilterBar from "@/components/Portfolio/FilterBar";
+import PartnerSlider from "@/components/Portfolio/PartnerSlider";
+import ProjectSlider from "@/components/Portfolio/ProjectSlider";
 
-// 🔹 프로젝트 카드 슬라이드 컴포넌트
-import PortfolioCardList from "@/components/Portfolio/PortfolioCardList";
-
-// 🔹 협력사 로고 그리드 컴포넌트
-import PartnerGrid from "@/components/Portfolio/PartnerGrid";
-
-// 🔹 더미 프로젝트 데이터 (향후 API 대체 예정)
 const dummyProjects = [
   {
     id: 1,
     title: "스타트업 A사의 사용자 맞춤형 서비스 플랫폼 개발",
-    description: "전자정부 고도화 프로젝트 기반",
+    description:
+      "전자정부 고도화 프로젝트 기반으로 사용자 경험을 최적화한 맞춤형 서비스 플랫폼을 구축했습니다.",
     category: "공공",
-    image: "/images/portfolio/gov1.jpg",
+    image: "/images/portfolio/gonggong1.png",
   },
   {
     id: 2,
     title: "국방 빅데이터 시스템 설계",
-    description: "데이터 통합 플랫폼",
+    description:
+      "대용량 데이터 처리와 실시간 분석이 가능한 국방 빅데이터 시스템을 설계 및 구축했습니다.",
     category: "공공",
-    image: "/images/portfolio/gov2.jpg",
+    image: "/images/portfolio/gonggong2.png",
   },
   {
     id: 3,
     title: "AI 보험 자동화 시스템 구축",
-    description: "보험 업무 최적화",
+    description: "머신러닝 기반의 보험 업무 자동화 시스템으로 업무 효율성을 크게 향상시켰습니다.",
     category: "금융",
-    image: "/images/portfolio/fin1.jpg",
+    image: "/images/portfolio/gonggong1.png",
   },
   {
     id: 4,
     title: "제조업체 스마트 팩토리 전환",
-    description: "IoT 기반 자동화",
+    description:
+      "IoT 센서와 AI 분석을 통한 스마트 팩토리 구축으로 생산성과 품질을 동시에 개선했습니다.",
     category: "제조",
-    image: "/images/portfolio/manu1.jpg",
+    image: "/images/portfolio/gonggong2.png",
   },
 ];
 
 const PortfolioPage = () => {
-  // 🔸 현재 선택된 카테고리 상태 관리
   const [selectedCategory, setSelectedCategory] = useState("공공");
 
-  // 🔸 선택된 카테고리에 따라 프로젝트 필터링
   const filtered = dummyProjects.filter(
     (p) => !selectedCategory || p.category === selectedCategory
   );
@@ -53,15 +47,14 @@ const PortfolioPage = () => {
   return (
     <section className="bg-white">
       <div className="max-w-7xl mx-auto px-6 pt-14 pb-20">
-        {/* 🔹 섹션 제목 */}
-        <h2 className="text-[28px] font-extrabold tracking-tight text-[#0168b7] mb-6">
-          Portfolio
-        </h2>
+        {/* Page Title */}
+        <div className="mb-6">
+          <h2 className="text-2xl font-bold text-left">Portfolio</h2>
+          <div className="w-[40px] h-[2px] bg-black mt-1" />
+        </div>
 
-        {/* 🔸 좌우 2단 레이아웃: 필터 + 카드 리스트 */}
-        <div className="grid grid-cols-1 md:grid-cols-[200px_minmax(0,1fr)] gap-8">
-          {/* 🔹 좌측 필터 영역 (고정 너비 + sticky) */}
-          <aside className="md:sticky md:top-20 h-fit">
+        <div className="flex flex-col md:flex-row gap-8">
+          <aside className="basis-1/4 px-4 w-full md:sticky md:top-20 h-fit shrink-0">
             <FilterBar
               categories={["공공", "금융", "일반", "제조", "유통", "기타"]}
               selected={selectedCategory}
@@ -69,20 +62,12 @@ const PortfolioPage = () => {
             />
           </aside>
 
-          {/* 🔹 우측 콘텐츠 영역 */}
-          <main>
-            {/* 🔸 선택된 카테고리 제목 */}
-            <h3 className="text-2xl font-bold mb-5">{selectedCategory}</h3>
+          <main className="basis-3/4 w-full min-w-0">
+            <h2 className="text-xl font-bold mb-4">{selectedCategory}</h2>
+            <ProjectSlider projects={filtered} />
 
-            {/* 🔸 필터링된 카드 슬라이드 출력 */}
-            <PortfolioCardList
-              category={selectedCategory}
-              projects={filtered}
-            />
-
-            {/* 🔸 협력사 로고 그리드 표시 */}
-            <div className="mt-16">
-              <PartnerGrid />
+            <div className="mt-20">
+              <PartnerSlider />
             </div>
           </main>
         </div>

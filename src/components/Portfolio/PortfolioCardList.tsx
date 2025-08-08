@@ -55,6 +55,7 @@ const PortfolioCardList = ({ category, projects }: Props) => {
               title={p.title}
               description={p.description}
               imageUrl={p.image}
+              category={p.category}
             />
           </SwiperSlide>
         ))}

@@ -10,9 +10,9 @@ type Props = {
 const FilterBar = ({ categories, selected, onSelect }: Props) => {
   return (
     // 🔹 접근성을 위한 nav + aria-label
-    <nav aria-label="산업군 필터">
-      {/* 🔹 기본 ul 스타일 제거 (불릿/마진/패딩 제거) + 세로 정렬 */}
-      <ul className="list-none m-0 p-0 flex flex-col gap-3">
+    <nav aria-label="산업군 필터" className="w-full">
+      {/* 버튼 그룹 래퍼: 좌측 영역에서 더 좁게 제한 (시안: 약 180px) */}
+      <ul className="list-none m-0 p-0 flex flex-col gap-y-2 max-w-[180px] w-[180px]">
         {/* 🔁 각 카테고리를 반복 출력 */}
         {categories.map((c) => {
           const active = c === selected; // 현재 선택된 카테고리인지 여부
@@ -21,20 +21,19 @@ const FilterBar = ({ categories, selected, onSelect }: Props) => {
             <li key={c}>
               <button
                 type="button"
-                onClick={() => onSelect(c)} // 🔹 클릭 시 선택 함수 실행
+                onClick={() => onSelect(c)}
                 className={[
-                  // ✅ 버튼 기본 스타일
-                  "w-[144px] h-10 rounded-full text-sm font-semibold",
-                  "border transition-colors duration-150",
-
-                  // ✅ 키보드 접근성용 포커스 스타일
-                  "focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0168b7]/30",
-
-                  // ✅ 선택된 버튼 vs 기본 버튼 스타일 분기
+                  // 크기 및 모양
+                  "w-full h-[44px] rounded-full px-4",
+                  // 타이포
+                  "text-[16px] font-bold",
+                  // 포커스 접근성
+                  "focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00AEEF]/30",
+                  // 상태별 스타일
                   active
-                    ? "bg-white text-[#0168b7] border-[#0168b7] shadow-sm"
-                    : "bg-[#0168b7] text-white border-[#0168b7] hover:bg-[#0a6fbe]",
-                ].join(" ")} // Tailwind 클래스 배열 → 문자열로 결합
+                    ? "bg-white text-[#00AEEF] border-2 border-[#00AEEF]"
+                    : "bg-[#00AEEF] text-white border-2 border-[#00AEEF]",
+                ].join(" ")}
               >
                 {c}
               </button>

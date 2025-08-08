@@ -2,7 +2,7 @@
 
 import React from "react";
 
-// 🔹 협력사 로고 경로 배열 (public 폴더 기준)
+// 🔹 협력사 로고 경로 배열 (1~6번으로 반복)
 const logos = [
   "/images/partners/logo1.png",
   "/images/partners/logo2.png",
@@ -21,20 +21,55 @@ const PartnerGrid = () => {
         님버스테크와 함께 하고 있습니다
       </h3>
 
-      {/* 🔹 로고 목록: flex-wrap으로 반응형 가로 정렬 */}
-      <div className="flex flex-wrap justify-center items-center gap-x-12 gap-y-8 px-4 max-w-6xl mx-auto">
-        {/* 🔁 각 로고 이미지 렌더링 */}
-        {logos.map((logo, idx) => (
-          <img
-            key={idx}
-            src={logo} // 이미지 경로
-            alt={`partner-${idx}`} // 접근성 대응용 alt 텍스트
-            className="h-10 sm:h-12 w-auto object-contain"
-            // 🔸 h-10: 기본 높이 (모바일 기준)
-            // 🔸 sm:h-12: 중간 이상에서 살짝 더 큼
-            // 🔸 object-contain: 이미지 비율 유지하며 맞춤
-          />
-        ))}
+      {/* 🔹 로고 슬라이더 컨테이너 */}
+      <div className="overflow-hidden">
+        {/* 🔹 윗줄 - 오른쪽으로 슬라이드 */}
+        <div className="flex animate-slide-right mb-8">
+          {/* 🔹 첫 번째 세트 */}
+          {logos.map((logo, idx) => (
+            <div key={`top-1-${idx}`} className="flex-shrink-0 mx-8">
+              <img
+                src={logo}
+                alt={`partner-${idx + 1}`}
+                className="h-10 sm:h-12 w-auto object-contain"
+              />
+            </div>
+          ))}
+          {/* 🔹 두 번째 세트 (무한 반복용) */}
+          {logos.map((logo, idx) => (
+            <div key={`top-2-${idx}`} className="flex-shrink-0 mx-8">
+              <img
+                src={logo}
+                alt={`partner-${idx + 1}`}
+                className="h-10 sm:h-12 w-auto object-contain"
+              />
+            </div>
+          ))}
+        </div>
+
+        {/* 🔹 아랫줄 - 왼쪽으로 슬라이드 */}
+        <div className="flex animate-slide-left">
+          {/* 🔹 첫 번째 세트 */}
+          {logos.map((logo, idx) => (
+            <div key={`bottom-1-${idx}`} className="flex-shrink-0 mx-8">
+              <img
+                src={logo}
+                alt={`partner-${idx + 1}`}
+                className="h-10 sm:h-12 w-auto object-contain"
+              />
+            </div>
+          ))}
+          {/* 🔹 두 번째 세트 (무한 반복용) */}
+          {logos.map((logo, idx) => (
+            <div key={`bottom-2-${idx}`} className="flex-shrink-0 mx-8">
+              <img
+                src={logo}
+                alt={`partner-${idx + 1}`}
+                className="h-10 sm:h-12 w-auto object-contain"
+              />
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
