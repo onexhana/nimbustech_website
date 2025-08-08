@@ -112,12 +112,20 @@ export default function ContactSection() {
           <div className="flex flex-col gap-8" style={{ minWidth: '300px' }}>
             {/* 고객지원 버튼 */}
             <button
-              className="w-full text-white font-bold py-6 px-8 transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
+              className="text-white font-bold transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
               style={{
                 backgroundColor: '#00A3E0',
-                fontSize: '20px',
+                width: '550px',
+                marginTop: '240px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                height: '74px',
+                padding: '0 32px',
+                fontSize: '24px',
+                color: '#ffffff',
                 fontWeight: '700',
-                borderRadius: '8px',
+                borderRadius: '0px',
                 border: 'none',
                 cursor: 'pointer',
                 position: 'relative',
@@ -125,29 +133,38 @@ export default function ContactSection() {
               }}
               onClick={() => setUserType('inquiry')}
             >
-              <span style={{ position: 'relative', zIndex: 1 }}>고객지원</span>
+              <span style={{ position: 'relative', zIndex: 1 }}>고객사 직원</span>
               <div
                 style={{
                   position: 'absolute',
-                  top: '50%',
-                  right: '20px',
-                  transform: 'translateY(-50%)',
-                  fontSize: '24px',
-                  color: 'white'
+                  top: '50%',              // 수직 중앙으로 이동
+                  right: 0,
+                  transform: 'translateY(-50%) rotate(390deg)',  // 화살표를 90도 회전
+                  width: 0,
+                  height: 0,
+                  borderTop: '32px solid transparent',
+                  borderBottom: '32px solid transparent',
+                  borderLeft: '20px solid white'
                 }}
-              >
-                ➤
-              </div>
+              />
             </button>
 
             {/* 인재채용 버튼 */}
             <button
-              className="w-full text-white font-bold py-6 px-8 transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
+              className="text-white font-bold transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
               style={{
                 backgroundColor: '#6b7280',
-                fontSize: '20px',
+                width: '550px',
+                marginTop: '40px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                height: '74px',
+                padding: '0 32px',
+                fontSize: '24px',
+                color: '#ffffff',
                 fontWeight: '700',
-                borderRadius: '8px',
+                borderRadius: '0px',
                 border: 'none',
                 cursor: 'pointer',
                 position: 'relative',
@@ -155,28 +172,69 @@ export default function ContactSection() {
               }}
               onClick={() => setUserType('hiring')}
             >
-              <span style={{ position: 'relative', zIndex: 1 }}>인재채용</span>
+              <span style={{ position: 'relative', zIndex: 1 }}>인재 채용</span>
               <div
                 style={{
                   position: 'absolute',
-                  top: '50%',
-                  right: '20px',
-                  transform: 'translateY(-50%)',
-                  fontSize: '24px',
-                  color: 'white'
+                  top: '50%',              // 수직 중앙으로 이동
+                  right: 0,
+                  transform: 'translateY(-50%) rotate(390deg)',  // 화살표를 90도 회전
+                  width: 0,
+                  height: 0,
+                  borderTop: '32px solid transparent',
+                  borderBottom: '32px solid transparent',
+                  borderLeft: '20px solid white'
                 }}
-              >
-                ➤
-              </div>
+              />
             </button>
           </div>
         </div>
 
         {/* 선택된 유형에 따른 폼 렌더링 */}
-        <div className="mt-12">
-          {userType === 'inquiry' && <InquiryForm />}
-          {userType === 'hiring' && <HiringForm />}
-        </div>
+        {userType && (
+          <div style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: 'rgba(0, 0, 0, 0.75)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 1000
+          }}>
+            <div style={{
+              backgroundColor: 'white',
+              position: 'relative',
+              maxWidth: '600px',
+              width: '90%',
+              maxHeight: '80vh',
+              overflow: 'auto',
+              borderRadius: '8px',
+              boxShadow: '0 10px 25px rgba(0, 0, 0, 0.3)'
+            }}>
+              <button
+                onClick={() => setUserType(null)}
+                style={{
+                  position: 'absolute',
+                  top: '16px',
+                  right: '16px',
+                  backgroundColor: 'transparent',
+                  border: 'none',
+                  color: '#00A3E0',
+                  fontSize: '14px',
+                  fontWeight: 'bold',
+                  cursor: 'pointer',
+                  zIndex: 10
+                }}
+              >
+                X CLOSE
+              </button>
+              {userType === 'inquiry' ? <InquiryForm /> : <HiringForm />}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
