@@ -115,22 +115,22 @@ const TAB_CONTENTS: Record<string, { title: string; description: string[] }[]> =
       description: [
         "Multiverse로 누구나 활용 가능하도록",
         "Data의 가치를 극대화, 미래를 위한",
-        "Open "
+        "Open Innovation Platform으로 진화 "
       ],
     },
     {
-      title: "통합 시스템 구축",
+      title: "Acculnsight+ 2.0",
       description: [
-        "1. 레거시 시스템 연동",
-        "2. API 기반 통합",
-        "3. 데이터 마이그레이션"
+        "데이터 전처리부터 분석과 운영의 Data",
+        "science 전 영역을 지원하는 Multi-",
+        "Cloud 기반의 AI DevOps 플랫폼"
       ],
     },
     {
-      title: "기술 컨설팅",
+      title: "Accu.Tuning (AutoML)",
       description: [
-        "1. 아키텍처 설계",
-        "2. 기술 로드맵 수립"
+        "직관적인 UI로 모델 생성, 설명, 배포를",
+        "한번에 제공하는 AutoML 솔루션"
       ],
     },
     {
@@ -283,6 +283,7 @@ export default function AboutSection() {
                   <AboutCard
                     title={card.title}
                     description={card.description}
+                    detailLink={activeTab === '솔루션' ? 'https://www.naver.com' : undefined}
                   />
                 </div>
               ))}

@@ -8,7 +8,7 @@ function App() {
     <BrowserRouter>
       <Header />
       <MainRouter />
-      <Footer /> {/* ✅ 여기 추가 */}
+      <Footer /> {/* Footer 항상 렌더링 */}
     </BrowserRouter>
   );
 }

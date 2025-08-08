@@ -10,9 +10,11 @@
 interface AboutCardProps {
   title: string;
   description: string[];
+  /** 솔루션 섹션 전용 상세 보기 링크 */
+  detailLink?: string;
 }
 
-export default function AboutCard({ title, description }: AboutCardProps) {
+export default function AboutCard({ title, description, detailLink }: AboutCardProps) {
   // ========================================
   // 카드 렌더링 (호버 효과, 크기 조정 포함)
   // ========================================
@@ -22,13 +24,16 @@ export default function AboutCard({ title, description }: AboutCardProps) {
       className="bg-gray-50 rounded-lg p-6 border border-gray-200"
       style={{
         backgroundColor: '#f9fafb',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: detailLink ? 'space-between' : 'flex-start',
         borderRadius: '8px',
         padding: '10px',
         border: '1px solid #e5e7eb',
         boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
-        minHeight: '200px',
-        width: '380px',
-        maxWidth: '280px',
+        height: '360px',
+        width: '480px',
+        maxWidth: '480px',
         flexShrink: 0,
         transition: 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
         cursor: 'pointer'
@@ -47,22 +52,27 @@ export default function AboutCard({ title, description }: AboutCardProps) {
       <h3 
         className="font-semibold text-blue-600 mb-4 text-base leading-tight" 
         style={{ 
-          color: '#2563eb', 
-          fontWeight: '600', 
-          marginBottom: '56px' 
+          color: '#2563eb',
+          fontSize: '34px',
+          fontWeight: '550',
+          marginTop: '24px',
+          marginLeft: '15px',
+          marginBottom: detailLink ? '106px' : '116px' 
         }}
       >
         {title}
       </h3>
       
-      <div className="text-sm text-gray-700 space-y-1" style={{ color: '#374151', fontSize: '12px', fontWeight: '600' }}>
+      <div className="text-sm text-gray-700 space-y-1" 
+      style={{ color: '#374151', fontSize: '22px', fontWeight: '550'}}>
         {/* description 배열을 순회하여 각 줄을 렌더링합니다. */}
         {description.map((line, i) => (
           <div 
             key={i} 
             className="leading-relaxed" 
             style={{ 
-              marginBottom: '2px', 
+              marginBottom: '12px', 
+              marginLeft: '15px',
               lineHeight: '1.4' 
             }}
           >
@@ -70,6 +80,18 @@ export default function AboutCard({ title, description }: AboutCardProps) {
           </div>
         ))}
       </div>
+      {detailLink && (
+        <div style={{ marginTop: '16px', marginLeft: '15px' }}>
+          <a
+            href={detailLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: '#3b82f6', fontWeight: '600', fontSize: '14px', textDecoration: 'none' }}
+          >
+            자세히 보기 →
+          </a>
+        </div>
+      )}
     </div>
   );
 }
