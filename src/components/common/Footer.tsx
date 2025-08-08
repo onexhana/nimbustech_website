@@ -26,15 +26,17 @@ export default function Footer() {
           {/* 좌측: 로고 및 회사 정보 */}
           <div className="flex flex-col space-y-4 flex-1">
             {/* 로고 및 배지 */}
-            <div className="flex items-center space-x-3" style={{ marginLeft: '64px', marginTop: '30px' }}>
+            {/* 로고 행: space-x 적용 이슈로 gap-x 사용 중 */}
+            {/* 이전 코드 참고: <div className="flex items-center space-x-8 md:space-x-14"> */}
+            <div className="flex items-center gap-x-8 md:gap-x-14" style={{ marginLeft: '64px', marginTop: '30px' }}>
               {/* NIMBUS TECH 로고 */}
               <div className="flex items-center space-x-2">
-                <img src="/cloud-white.png" alt="NIMBUS TECH" style={{ width: '40px', height: 'auto' }} />
-                <span style={{ fontSize: '20px', fontWeight: 'bold', color: 'white' }}>NIMBUS TECH</span>
+                <img src="/logo-white-wide.png" alt="NIMBUS TECH" style={{ width: '200px', height: 'auto' }} />
               </div>
               
               {/* FCS 배지 */}
-              <div className="bg-white rounded-full px-3 py-1 flex items-center space-x-2">
+              {/* 임시 간격 강제: marginLeft로 보정 (해결 후 제거 예정) */}
+              <div className="bg-white rounded-full px-3 py-1 flex items-center space-x-2" style={{ marginLeft: '48px' }}>
                 <img src="/fcs_logo.png" alt="FCS 배지" style={{ width: '40px', height: 'auto' }} />
                 <span style={{ fontSize: '16px', fontWeight: 'bold', color: '#ffffff' }}>2025 미래창조경영우수기업</span>
 
@@ -64,7 +66,7 @@ export default function Footer() {
               style={{
                 backgroundColor: 'white',
                 color: '#00A3E0', // 텍스트 색상
-                borderRadius: '6px',  // 모서리 둥글게
+                borderRadius: '3px',  // 모서리 둥글게
                 boxShadow: '0 4px 6px rgba(0,0,0,0.1)', // 그림자
                 transition: 'all 0.2s ease-in-out', // 부드러운 전환
                 padding: '8px',       // 안쪽 여백
@@ -74,7 +76,7 @@ export default function Footer() {
                 transform: 'scale(1)',  // 기본 크기
               }}
               onMouseDown={(e) => {       // 마우스를 클릭한 순간 (누르고 있는 상태)
-                e.currentTarget.style.backgroundColor = '#FF69B4'; // pink-500
+                e.currentTarget.style.backgroundColor = ' rgb(255, 240, 106)'; // pink-500
                 e.currentTarget.style.color = '#ffffff';
                 e.currentTarget.style.transform = 'scale(0.95)';
               }}
