@@ -15,7 +15,7 @@ export default function Header() {
     <header className="fixed top-0 left-0 w-full bg-white z-50 shadow-md" style={{backgroundColor: '#ffffff'}}>
       <div className="max-w-7xl mx-auto px-8 py-4 flex justify-between items-center">
         {/* 로고 영역 */}
-        <div className="flex items-center space-x-2" style={{ marginLeft: '34px', marginTop: '20px' }}> 
+        <div className="flex items-center space-x-2" style={{ marginLeft: '34px', marginTop: '25px' }}> 
           <img
             src="/logo-blue-wide.png"
             alt="NIMBUS TECH 로고"
@@ -30,7 +30,9 @@ export default function Header() {
               key={to}
               to={to}
               className={linkClass}
-              style={{ textDecoration: 'none', marginRight: '20px', marginTop: '10px' }}
+              style={{ textDecoration: 'none', marginRight:
+                
+                '20px', marginTop: '10px' }}
             >
               {label}
             </Link>
