@@ -4,18 +4,33 @@ import { motion } from "framer-motion";
 
 type Logo = { src: string; alt: string };
 
+/**
+ * 파트너 로고 슬라이더 설정값
+ * - 숫자 단위는 px/초 기준입니다.
+ */
 type PartnerLogoSliderProps = {
-  /** 로고 높이(px). 기본 24 */
+  /** 각 로고 높이(px). 기본 24 */
   logoHeight?: number;
-  /** 로고 사이 간격(px). 기본 16 */
+  /** 로고 간 가로 간격(px). 기본 16 */
   gap?: number;
-  /** 윗줄 애니메이션 시간(초). 값이 클수록 느려짐. 기본 28 */
+  /** 윗줄 1회 진행 시간(초). 값이 클수록 느려짐. 기본 28 */
   durationTop?: number;
-  /** 아랫줄 애니메이션 시간(초). 값이 클수록 느려짐. 기본 32 */
+  /** 아랫줄 1회 진행 시간(초). 값이 클수록 느려짐. 기본 32 */
   durationBottom?: number;
-  /** 두 줄(윗줄-아랫줄) 사이 세로 간격(px). 기본 16 */
+  /** 두 줄 사이의 세로 간격(px). 기본 16 */
   rowSpacing?: number;
+  /** 두 번째 줄 하단 여백(px). 기본 0 */
+  bottomSpacing?: number;
+  /** 공통 배속. 1은 기본, 2는 2배 빠르게, 0.5는 절반 속도 */
+  speed?: number;
+  /** 윗줄 배속(미지정 시 speed 사용) */
+  speedTop?: number;
+  /** 아랫줄 배속(미지정 시 speed 사용) */
+  speedBottom?: number;
 };
+
+/** 화면을 충분히 채우기 위해 한 절반(half)에 logos를 몇 번 반복할지 지정 */
+const COPIES_PER_HALF = 4;
 
 
 const ROW1: Logo[] = [
@@ -47,12 +62,11 @@ function Track({
   logoHeight: number;
   gap: number;
 }) {
-  // 화면을 충분히 채우기 위해 한 "절반(half)"을 여러 번 복제한 뒤 동일한 절반을 다시 한 번 이어붙입니다.
-  // 이렇게 하면 전체 트랙이 정확히 2개의 동일한 절반으로 구성되어 -50% 지점에서 매끄럽게 루프됩니다.
-  const COPIES_PER_HALF = 4; // 한 절반에 logos를 몇 번 반복할지 (필요시 조절)
-  const half: Logo[] = Array.from({ length: COPIES_PER_HALF })
-    .flatMap(() => logos);
-  const sequence = [...half, ...half];
+  // 한 절반을 충분히 복제해 화면을 채운 뒤 동일한 절반을 한 번 더 이어 붙여 -50% 지점에서 매끄럽게 루프
+  const repeatedHalfLogos: Logo[] = Array.from({ length: COPIES_PER_HALF }).flatMap(
+    () => logos,
+  );
+  const rollingSequence = [...repeatedHalfLogos, ...repeatedHalfLogos];
   return (
     <div className="relative w-full overflow-hidden">
       <motion.div
@@ -63,7 +77,7 @@ function Track({
         animate={{ x: reverse ? ["-50%", "0%"] : ["0%", "-50%"] }}
         transition={{ duration, repeat: Infinity, repeatType: "loop", ease: "linear" }}
       >
-        {sequence.map((logo, i) => (
+        {rollingSequence.map((logo, i) => (
           <img
             key={`${logo.alt}-${i}`}
             src={logo.src}
@@ -84,35 +98,51 @@ function Track({
 function PartnerLogoSlider({
   logoHeight = 80,
   gap = 80,
-  durationTop = 32,
-  durationBottom = 32,
-  rowSpacing = 16,
+  durationTop = 20,
+  durationBottom = 20,
+  rowSpacing = 30,
+  bottomSpacing = 30,
+  speed = 1,
+  speedTop,
+  speedBottom,
 }: PartnerLogoSliderProps) {
+  // 배속 적용: 값이 클수록 더 빠르게 진행. 0 또는 음수 입력 보호
+  const getSafeFactor = (value: number) => (value > 0 ? value : 1);
+  const topFactor = getSafeFactor(speedTop ?? speed);
+  const bottomFactor = getSafeFactor(speedBottom ?? speed);
+  const topDuration = durationTop / topFactor;
+  const bottomDuration = durationBottom / bottomFactor;
   return (
     <section aria-label="협력사 로고 슬라이더" className="w-full">
       {/* 시안 문구 */}
       <p
         style={{
-            textAlign: "center",  fontSize: "25px",  fontWeight: "bold",
-            color: "#374151",  marginBottom: "20px", 
+          textAlign: "center",
+          fontSize: "25px",
+          fontWeight: "bold",
+          color: "#374151",
+          marginBottom: "40px",
         }}
         >
         님버스테크와 함께 하고 있습니다
     </p>
 
       {/* 윗줄: 우 → 좌 */}
-      <Track logos={ROW1} duration={durationTop} logoHeight={logoHeight} gap={gap} />
+      <Track logos={ROW1} duration={topDuration} logoHeight={logoHeight} gap={gap} />
 
       {/* 아랫줄: 좌 → 우 */}
       <div style={{ marginTop: rowSpacing }}>
         <Track
           logos={ROW2}
-          duration={durationBottom}
+          duration={bottomDuration}
           reverse
           logoHeight={logoHeight}
           gap={gap}
         />
       </div>
+      {bottomSpacing > 0 && (
+        <div style={{ height: bottomSpacing }} />
+      )}
     </section>
   );
 }
