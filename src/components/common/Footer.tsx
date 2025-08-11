@@ -28,7 +28,7 @@ export default function Footer() {
             {/* 로고 및 배지 */}
             {/* 로고 행: space-x 적용 이슈로 gap-x 사용 중 */}
             {/* 이전 코드 참고: <div className="flex items-center space-x-8 md:space-x-14"> */}
-            <div className="flex items-center gap-x-8 md:gap-x-14" style={{ marginLeft: '64px', marginTop: '30px' }}>
+            <div className="flex items-center gap-x-8 md:gap-x-14" style={{ marginLeft: '48px', marginTop: '30px' }}>
               {/* NIMBUS TECH 로고 */}
               <div className="flex items-center space-x-2">
                 <img src="/logo-white-wide.png" alt="NIMBUS TECH" style={{ width: '200px', height: 'auto' }} />
@@ -36,7 +36,7 @@ export default function Footer() {
               
               {/* FCS 배지 */}
               {/* 임시 간격 강제: marginLeft로 보정 (해결 후 제거 예정) */}
-              <div className="bg-white rounded-full px-3 py-1 flex items-center space-x-2" style={{ marginLeft: '48px' }}>
+              <div className="bg-white rounded-full px-3 py-1 flex items-center space-x-2" style={{ marginLeft: '30px' }}>
                 <img src="/fcs_logo.png" alt="FCS 배지" style={{ width: '40px', height: 'auto' }} />
                 <span style={{ fontSize: '16px', fontWeight: 'bold', color: '#ffffff' }}>2025 미래창조경영우수기업</span>
 
@@ -44,13 +44,13 @@ export default function Footer() {
             </div>
 
             {/* 회사 정보 */}
-            <div className="text-left pl-10" style={{ marginLeft: '64px' }}>
-              <div className="space-y-1" style={{ lineHeight: '1.6' }}>
-                <p style={{ fontSize: '16px', color: 'white' }}>[세종 본사] 집현중앙7로6, B동 1110호 (세종대명벨리온)</p>
-                <p style={{ fontSize: '16px', color: 'white' }}>[서울사무소] 강남구 선릉로90길 10, B동 407호 (대치동, 샹제리제센터)</p>
-                <div style={{ paddingTop: '8px' }}>
-                  <p style={{ fontSize: '16px', color: 'white' }}>T: 02-555-0099</p>
-                  <p style={{ fontSize: '16px', color: 'white' }}>E: nimbustech@nimbustech.co.kr</p>
+            <div className="text-left pl-10" style={{ marginLeft: '48px' }}>
+              <div className="space-y-1" style={{ lineHeight: '1.4' }}>
+                <p style={{ fontSize: '18px', color: 'white' }}>[세종 본사] 집현중앙7로6, B동 1110호 (세종대명벨리온)</p>
+                <p style={{ fontSize: '18px', color: 'white' }}>[서울사무소] 강남구 선릉로90길 10, B동 407호 (대치동, 샹제리제센터)</p>
+                <div style={{ paddingTop: '1px' }}>
+                  <p style={{ fontSize: '18px', color: 'white' }}>T: 02-555-0099</p>
+                  <p style={{ fontSize: '18px', color: 'white' }}>E: nimbustech@nimbustech.co.kr</p>
                 </div>
               </div>
             </div>
