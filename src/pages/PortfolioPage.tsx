@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import FilterBar from '@/components/Portfolio/FilterBar';
 import PortfolioCardList from '@/components/Portfolio/PortfolioCardList'; // 새로 추가한 슬라이드 카드 컴포넌트
+import PortfolioSection from '@/components/Portfolio/PortfolioSection';
 
 const dummyProjects = [
   { id: 1, title: "프로젝트 1", description: "설명 텍스트", category: "공공" },
@@ -20,18 +21,23 @@ const PortfolioPage = () => {
   );
 
   return (
-    <section className="pt-10 px-6 pb-16 bg-white">
-      {/* 섹션 제목 */}
-      <h2 className="text-2xl font-bold text-center mb-8 text-[#0168b7]">포트폴리오</h2>
+    <>
+      <section className="pt-10 px-6 pb-16 bg-white">
+        {/* 섹션 제목 */}
+        <h2 className="text-2xl font-bold text-center mb-8 text-[#0168b7]">포트폴리오</h2>
 
-      {/* 필터 버튼 */}
-      <FilterBar selected={selectedCategory} onSelect={setSelectedCategory} />
+        {/* 필터 버튼 */}
+        <FilterBar selected={selectedCategory} onSelect={setSelectedCategory} />
 
-      {/* 슬라이드 카드 리스트 */}
-      <div className="mt-6">
-        <PortfolioCardList projects={filtered} />
-      </div>
-    </section>
+        {/* 슬라이드 카드 리스트 */}
+        <div className="mt-6">
+          <PortfolioCardList projects={filtered} />
+        </div>
+      </section>
+
+      {/* 하단 협력사 로고 슬라이더 섹션 */}
+      <PortfolioSection />
+    </>
   );
 };
 
