@@ -2,9 +2,11 @@
 // React import removed (React 17+ JSX Transform 사용)
 import { useState } from 'react';
 import type { ChangeEvent, FormEvent } from 'react';
+import { sendHiring } from '../../api/contact';
+import type { HiringData } from '../../types/contact';
 
 export default function HiringForm() {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<HiringData>({
     name: '',
     phone: '',
     email: '',
@@ -14,6 +16,8 @@ export default function HiringForm() {
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const validate = () => {
     const newErrors: Record<string, string> = {};
@@ -35,13 +39,22 @@ export default function HiringForm() {
     }));
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const validationErrors = validate();
     setErrors(validationErrors);
     if (Object.keys(validationErrors).length === 0) {
-      console.log('HiringForm 제출 데이터:', formData);
-      setIsSubmitted(true);
+      setIsLoading(true);
+      setSubmitError(null);
+      try {
+        await sendHiring(formData);
+        setIsSubmitted(true);
+      } catch (error) {
+        const message = error instanceof Error ? error.message : '제출에 실패했습니다.';
+        setSubmitError(message);
+      } finally {
+        setIsLoading(false);
+      }
     }
   };
 
@@ -51,6 +64,7 @@ export default function HiringForm() {
 
   return (
     <div className="p-8">
+      {submitError && <p className="text-red-500 text-center mb-4">{submitError}</p>}
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="grid grid-cols-2 gap-6">
           <div>
@@ -132,8 +146,9 @@ export default function HiringForm() {
           type="submit"
           className="relative w-full py-4 border border-gray-300 text-blue-500 text-lg font-medium bg-white hover:bg-gray-50"
           style={{ borderRadius: '0px' }}
+          disabled={isLoading}
         >
-          신청하기
+          {isLoading ? '신청 중...' : '신청하기'}
           <div style={{
             position: 'absolute',
             top: '50%',

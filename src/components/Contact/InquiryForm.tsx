@@ -1,8 +1,10 @@
 // src/components/Contact/InquiryForm.tsx
 import { useState } from 'react';
+import { sendInquiry } from '../../api/contact';
+import type { InquiryData } from '../../types/contact';
 
 export default function InquiryForm() {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<InquiryData>({
     name: '',
     company: '',
     email: '',
@@ -12,6 +14,8 @@ export default function InquiryForm() {
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const validate = () => {
     const newErrors: Record<string, string> = {};
@@ -26,20 +30,30 @@ export default function InquiryForm() {
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value, type, checked } = e.target;
+    const target = e.target as HTMLInputElement;
+    const { name, value, type, checked } = target;
     setFormData(prev => ({
       ...prev,
       [name]: type === 'checkbox' ? checked : value
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const validationErrors = validate();
     setErrors(validationErrors);
     if (Object.keys(validationErrors).length === 0) {
-      console.log('InquiryForm 제출 데이터:', formData);
-      setIsSubmitted(true);
+      setIsLoading(true);
+      setSubmitError(null);
+      try {
+        await sendInquiry(formData);
+        setIsSubmitted(true);
+      } catch (error) {
+        const message = error instanceof Error ? error.message : '제출에 실패했습니다.';
+        setSubmitError(message);
+      } finally {
+        setIsLoading(false);
+      }
     }
   };
 
@@ -59,6 +73,7 @@ export default function InquiryForm() {
       // 내부 여백 (컨테이너 패딩)
       padding: '32px'
     }}>
+      {submitError && <p style={{ color: '#f56565', textAlign: 'center', marginBottom: '16px' }}>{submitError}</p>}
       <form onSubmit={handleSubmit} style={{
         // 레이아웃: 수직 정렬형 flex 컨테이너
         display: 'flex',
@@ -364,6 +379,7 @@ export default function InquiryForm() {
         {/* 제출 버튼 */}
         <button
           type="submit"
+          disabled={isLoading}
           style={{
             // 버튼 위치: 상대 위치
             position: 'relative',
@@ -385,7 +401,7 @@ export default function InquiryForm() {
             borderRadius: '0px'
           }}
         >
-          신청하기
+          {isLoading ? '신청 중...' : '신청하기'}
           <div style={{
             // 화살표 위치: 절대 위치 설정
             position: 'absolute',

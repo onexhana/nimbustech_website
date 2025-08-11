@@ -134,19 +134,6 @@ export default function ContactSection() {
               onClick={() => setUserType('inquiry')}
             >
               <span style={{ position: 'relative', zIndex: 1 }}>고객사 직원</span>
-              <div
-                style={{
-                  position: 'absolute',
-                  top: '50%',              // 수직 중앙으로 이동
-                  right: 0,
-                  transform: 'translateY(-50%) rotate(390deg)',  // 화살표를 90도 회전
-                  width: 0,
-                  height: 0,
-                  borderTop: '32px solid transparent',
-                  borderBottom: '32px solid transparent',
-                  borderLeft: '20px solid white'
-                }}
-              />
             </button>
 
             {/* 인재채용 버튼 */}
@@ -173,19 +160,6 @@ export default function ContactSection() {
               onClick={() => setUserType('hiring')}
             >
               <span style={{ position: 'relative', zIndex: 1 }}>인재 채용</span>
-              <div
-                style={{
-                  position: 'absolute',
-                  top: '50%',              // 수직 중앙으로 이동
-                  right: 0,
-                  transform: 'translateY(-50%) rotate(390deg)',  // 화살표를 90도 회전
-                  width: 0,
-                  height: 0,
-                  borderTop: '32px solid transparent',
-                  borderBottom: '32px solid transparent',
-                  borderLeft: '20px solid white'
-                }}
-              />
             </button>
           </div>
         </div>
