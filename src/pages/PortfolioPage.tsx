@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import FilterBar from '@/components/Portfolio/FilterBar';
-import PortfolioCardList from '@/components/Portfolio/PortfolioCardList'; // 새로 추가한 슬라이드 카드 컴포넌트
-import PortfolioSection from '@/components/Portfolio/PortfolioSection';
+import { useState } from 'react';
+import FilterBar from '../components/Portfolio/FilterBar';
+import PortfolioCardList from '../components/Portfolio/PortfolioCardList'; // 새로 추가한 슬라이드 카드 컴포넌트
+import PortfolioSection from '../components/Portfolio/PortfolioSection';
 
 const dummyProjects = [
   { id: 1, title: "프로젝트 1", description: "설명 텍스트", category: "공공" },
