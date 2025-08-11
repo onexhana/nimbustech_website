@@ -61,22 +61,24 @@ export default function Footer() {
             className="flex-shrink-0 ml-auto self-start pr-10"
             style={{ marginRight: '64px', marginBottom: '30px' }}
           >
-            <button
+            <button 
               onClick={handleDownload}
               style={{
                 backgroundColor: 'white',
                 color: '#00A3E0', // 텍스트 색상
-                borderRadius: '3px',  // 모서리 둥글게
-                boxShadow: '0 4px 6px rgba(0,0,0,0.1)', // 그림자
+                borderRadius: '0px',  // 모서리 둥글게
+                border: 'none',
+                outline: 'none',
+                boxShadow: 'none', // 그림자 제거로 테두리처럼 보이는 검정 부분 제거
                 transition: 'all 0.2s ease-in-out', // 부드러운 전환
-                padding: '8px',       // 안쪽 여백
+                padding: '10px 28px',       // 안쪽 여백: 상하 10px, 좌우 28px로 확장
                 fontSize: '20px',   // 글자 크기
                 fontWeight: 600,  // 글자 두께
                 cursor: 'pointer',  // 마우스를 올리면 손가락 모양
                 transform: 'scale(1)',  // 기본 크기
               }}
               onMouseDown={(e) => {       // 마우스를 클릭한 순간 (누르고 있는 상태)
-                e.currentTarget.style.backgroundColor = ' rgb(255, 240, 106)'; // pink-500
+                e.currentTarget.style.backgroundColor = ' rgba(0, 183, 255, 0.64)'; // pink-500
                 e.currentTarget.style.color = '#ffffff';
                 e.currentTarget.style.transform = 'scale(0.95)';
               }}

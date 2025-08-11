@@ -19,6 +19,7 @@ export default function Header() {
           <img
             src="/logo-blue-wide.png"
             alt="NIMBUS TECH 로고"
+            style={{ height: '18px', width: 'auto' }} 
           />
         </div>
 
