@@ -73,8 +73,8 @@ export default function InquiryForm() {
           display: 'grid',
           // 각 열의 비율
           gridTemplateColumns: 'repeat(2, 1fr)',
-          // 칸 간 간격
-          gap: '70px'
+          // 행 간격 0, 열 간격 70px
+          gap: '0 70px'
         }}>
           <div>
             <label htmlFor="inquiry-name" style={{
@@ -83,7 +83,7 @@ export default function InquiryForm() {
               // 폰트 크기 설정
               fontSize: '0.875rem',
               // 폰트 두께
-              fontWeight: 500,
+              fontWeight: 650,
               // 라벨 색상 (회색 계열)
               color: '#4a5568',
               // 라벨 아래쪽 여백
@@ -97,7 +97,7 @@ export default function InquiryForm() {
               onChange={handleChange}
               style={{
                 // 너비 100%로 가득 채우기
-                width: '100%',
+                width: '90%',
                 // 입력 배경색 (밝은 회색)
                 backgroundColor: '#edf2f7',
                 // 테두리 제거
@@ -126,7 +126,7 @@ export default function InquiryForm() {
               // 폰트 크기
               fontSize: '0.875rem',
               // 폰트 두께
-              fontWeight: 500,
+              fontWeight: 650,
               // 라벨 색상
               color: '#4a5568',
               // 아래쪽 여백
@@ -140,7 +140,7 @@ export default function InquiryForm() {
               onChange={handleChange}
               style={{
                 // 너비 100%
-                width: '100%',
+                width: '90%',
                 // 배경색
                 backgroundColor: '#edf2f7',
                 // 테두리 제거
@@ -150,7 +150,9 @@ export default function InquiryForm() {
                 // 내부 여백
                 padding: '0.75rem',
                 // 높이 고정
-                height: '1.5rem'
+                height: '1.5rem',
+                // 오른쪽 여백 추가
+                marginRight: '16px'
               }}
             />
             {errors.company && <p style={{
@@ -169,8 +171,8 @@ export default function InquiryForm() {
           display: 'grid',
           // 열 비율 설정
           gridTemplateColumns: 'repeat(2, 1fr)',
-          // 아이템 간 간격
-          gap: '70px'
+          // 행 간격 0, 열 간격 70px
+          gap: '0 70px'
         }}>
           <div>
             <label htmlFor="inquiry-email" style={{
@@ -179,7 +181,7 @@ export default function InquiryForm() {
               // 폰트 크기
               fontSize: '0.875rem',
               // 두께
-              fontWeight: 500,
+              fontWeight: 650,
               // 색상
               color: '#4a5568',
               // 밑 마진
@@ -193,7 +195,7 @@ export default function InquiryForm() {
               onChange={handleChange}
               style={{
                 // 너비 100%
-                width: '100%',
+                width: '90%',
                 // 배경색
                 backgroundColor: '#edf2f7',
                 // 테두리 제거
@@ -222,7 +224,7 @@ export default function InquiryForm() {
               // 폰트 크기
               fontSize: '0.875rem',
               // 두께
-              fontWeight: 500,
+              fontWeight: 650,
               // 색상
               color: '#4a5568',
               // 마진
@@ -236,7 +238,7 @@ export default function InquiryForm() {
               onChange={handleChange}
               style={{
                 // 너비 100%
-                width: '100%',
+                width: '90%',
                 // 배경색
                 backgroundColor: '#edf2f7',
                 // 테두리 없음
@@ -246,7 +248,9 @@ export default function InquiryForm() {
                 // 패딩
                 padding: '0.75rem',
                 // 높이
-                height: '1.5rem'
+                height: '1.5rem',
+                // 오른쪽 여백 추가
+                marginRight: '16px'
               }}
             />
             {errors.phone && <p style={{
@@ -267,7 +271,7 @@ export default function InquiryForm() {
             // 크기
             fontSize: '0.875rem',
             // 두께
-            fontWeight: 500,
+            fontWeight: 650,
             // 색상
             color: '#4a5568',
             // 마진
@@ -281,7 +285,7 @@ export default function InquiryForm() {
             onChange={handleChange}
             style={{
               // 너비 100%
-              width: '100%',
+              width: '96%',
               // 배경색
               backgroundColor: '#edf2f7',
               // 테두리 없음
@@ -304,28 +308,50 @@ export default function InquiryForm() {
             marginTop: '0.25rem'
           }}>{errors.message}</p>}
         </div>
+        {/* 동의 섹션 제목 */}
+        <div style={{
+          // 제목 폰트 크기
+          fontSize: '1rem',
+          // 제목 폰트 두께
+          fontWeight: 650,
+          // 제목 색상
+          color: '#4a5568',
+          // 제목과 체크박스 간 간격
+          marginBottom: '8px'
+        }}>
+          개인정보 수집 동의
+        </div>
         {/* 동의 체크 */}
         <div style={{
-          // 수평 축 아이템 정렬용 컨테이너
+          // 체크박스와 라벨을 수평 배치
           display: 'flex',
-          // 수직 정렬
           alignItems: 'center',
-          // 아래 여백
-          marginBottom: '24px'
+          // 섹션 아래쪽 여백
+          marginBottom: '24px',
+          fontWeight: 650
         }}>
-          <input id="inquiry-agree" name="agree" type="checkbox" checked={formData.agree} onChange={handleChange} style={{
-            // 체크박스 크기 설정
-            width: '1rem',
-            height: '1rem',
-            // 오른쪽 여백
-            marginRight: '0.5rem'
-          }} />
+          <input
+            id="inquiry-agree"
+            name="agree"
+            type="checkbox"
+            checked={formData.agree}
+            onChange={handleChange}
+            style={{
+              // 체크박스 크기 설정
+              width: '1rem',
+              height: '1rem',
+              // 체크박스와 라벨 간 간격
+              marginRight: '0.5rem'
+            }}
+          />
           <label htmlFor="inquiry-agree" style={{
-            // 라벨 크기
-            fontSize: '0.875rem',
-            // 색상
+            // 라벨 폰트 크기
+            fontSize: '1rem',
+            // 라벨 색상
             color: '#4a5568'
-          }}>개인정보 수집에 동의합니다</label>
+          }}>
+            동의합니다
+          </label>
         </div>
         {errors.agree && <p style={{
           // 에러 색상
@@ -346,13 +372,13 @@ export default function InquiryForm() {
             // 세로 패딩
             padding: '1rem 0',
             // 테두리 스타일
-            border: '1px solid #e2e8f0',
+            border: '4px solidrgb(0, 0, 0)',
             // 텍스트 색상
             color: '#3182ce',
             // 폰트 크기
             fontSize: '1.125rem',
             // 글자 두께
-            fontWeight: 500,
+            fontWeight: 650,
             // 배경색
             backgroundColor: '#ffffff',
             // 반경 없음
