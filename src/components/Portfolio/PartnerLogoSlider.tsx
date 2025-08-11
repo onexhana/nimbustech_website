@@ -13,6 +13,8 @@ type PartnerLogoSliderProps = {
   durationTop?: number;
   /** 아랫줄 애니메이션 시간(초). 값이 클수록 느려짐. 기본 32 */
   durationBottom?: number;
+  /** 두 줄(윗줄-아랫줄) 사이 세로 간격(px). 기본 16 */
+  rowSpacing?: number;
 };
 
 
@@ -80,10 +82,11 @@ function Track({
 }
 
 function PartnerLogoSlider({
-  logoHeight = 84,
-  gap =80,
-  durationTop = 38,
+  logoHeight = 80,
+  gap = 80,
+  durationTop = 32,
   durationBottom = 32,
+  rowSpacing = 16,
 }: PartnerLogoSliderProps) {
   return (
     <section aria-label="협력사 로고 슬라이더" className="w-full">
@@ -101,7 +104,7 @@ function PartnerLogoSlider({
       <Track logos={ROW1} duration={durationTop} logoHeight={logoHeight} gap={gap} />
 
       {/* 아랫줄: 좌 → 우 */}
-      <div className="mt-1">
+      <div style={{ marginTop: rowSpacing }}>
         <Track
           logos={ROW2}
           duration={durationBottom}
