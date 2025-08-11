@@ -29,7 +29,9 @@
 // ========================================
 import { useState } from 'react';
 import AboutTab from './AboutTab';
-import AboutCard from './AboutCard';
+import AboutCard from './AboutCard'; // 효과 버전 (호버 애니메이션 활성화)
+//import AboutCard from './AboutCardNoEffect'; // 무효화 버전 (호버 효과 없음)
+const noEffect = AboutCard.name === 'AboutCardNoEffect';
 
 // ========================================
 // 탭 및 카드 데이터 (각 섹션별 6개씩 확장됨)
@@ -275,9 +277,9 @@ export default function AboutSection() {
                 <div
                   key={`${activeTab}-${currentSlide}-${idx}`}
                   style={{
-                    opacity: 0,
-                    transform: 'translateY(30px) scale(0.9)',
-                    animation: `cardAppear 0.6s ease-out ${idx * 0.15}s forwards`
+                    opacity: noEffect ? 1 : 0,
+                    transform: noEffect ? 'translateY(0)' : 'translateY(30px) scale(0.9)',
+                    ...(noEffect ? {} : { animation: `cardAppear 0.6s ease-out ${idx * 0.15}s forwards` })
                   }}
                 >
                   <AboutCard
