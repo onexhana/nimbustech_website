@@ -19,14 +19,14 @@ export default function Header() {
         width: '100%',
         backgroundColor: '#ffffff',
         zIndex: 50,
-        paddingBottom: '12px',
+        paddingBottom: '20px',
         boxShadow:
-          '0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1)',
+          '0 4px 6px -1px rgba(0, 0, 0, 0.19), 0 2px 4px -2px rgba(0,0,0,0.1)',
       }}
     >
       <div className="max-w-7xl mx-auto px-8 h-16 flex justify-between items-center">
         {/* 로고 영역 */}
-        <div className="flex items-center space-x-2" style={{ marginLeft: '34px', marginTop: '12px' }}> 
+        <div className="flex items-center space-x-2" style={{ marginLeft: '34px', marginTop: '22px' }}> 
           <img
             src="/logo-blue-wide.png"
             alt="NIMBUS TECH 로고"
