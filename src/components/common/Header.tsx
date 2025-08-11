@@ -9,22 +9,22 @@ export default function Header() {
     { to: '/contact', label: 'Contact' },
   ];
   const linkClass =
-    'cursor-pointer no-underline text-[#00A3E0] hover:text-[#000000] active:text-black focus:text-black mr-5';
+    'cursor-pointer no-underline text-[#00A3E0] hover:text-[#000000] active:text-black focus:text-black mr-5 inline-flex items-center leading-none';
 
   return (
-    <header className="fixed top-0 left-0 w-full bg-white z-50 shadow-md" style={{backgroundColor: '#ffffff'}}>
-      <div className="max-w-7xl mx-auto px-8 py-4 flex justify-between items-center">
+    <header className="fixed top-0 left-0 w-full bg-white z-50 shadow-md">
+      <div className="max-w-7xl mx-auto px-8 h-16 flex justify-between items-center">
         {/* 로고 영역 */}
-        <div className="flex items-center space-x-2" style={{ marginLeft: '34px', marginTop: '25px' }}> 
+        <div className="flex items-center space-x-2" style={{ marginLeft: '34px', marginTop: '12px' }}> 
           <img
             src="/logo-blue-wide.png"
             alt="NIMBUS TECH 로고"
-            style={{ height: '18px', width: 'auto' }} 
+            style={{ height: '18px', width: 'auto', display: 'block' }} 
           />
         </div>
 
         {/* 네비게이션 메뉴 */}
-        <nav className="flex text-[#00A3E0] font-bold text-[20px] md:text-[16px]">
+        <nav className="flex items-center text-[#00A3E0] font-bold text-[20px] md:text-[16px]" style={{ marginTop: '12px' }}>
           {navItems.map(({ to, label }) => (
             <Link
               key={to}
