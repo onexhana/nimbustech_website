@@ -38,7 +38,7 @@ const ROW1: Logo[] = [
   { src: "/LogoSlider_example/free-icon-github-logo.png", alt: "GitHub" },
   { src: "/LogoSlider_example/free-icon-google.png", alt: "Google" },
   { src: "/LogoSlider_example/free-icon-instagram.png", alt: "Instagram" }, 
-  { src: "/LogoSlider_example/free-icon-netflix.png", alt: "Netflix" }, //로고 예시 나중에 바꿔야함
+  { src: "/LogoSlider_example/free-icon-netflix.png", alt: "Netflix" }, //로고 예시
 ];
 
 const ROW2: Logo[] = [
@@ -46,7 +46,7 @@ const ROW2: Logo[] = [
   { src: "/LogoSlider_example/free-icon-visa.png", alt: "Visa" },
   { src: "/LogoSlider_example/free-icon-windows.png", alt: "Windows" },
   { src: "/LogoSlider_example/free-icon-youtube.png", alt: "YouTube" },
-  { src: "/LogoSlider_example/free-icon-amazon-pay.png", alt: "Amazon Pay" }, //로고 예시 나중에 바꿔야함
+  { src: "/LogoSlider_example/free-icon-amazon-pay.png", alt: "Amazon Pay" }, //로고 예시
 ];
 
 function Track({
@@ -62,7 +62,7 @@ function Track({
   logoHeight: number;
   gap: number;
 }) {
-  // 한 절반을 충분히 복제해 화면을 채운 뒤 동일한 절반을 한 번 더 이어 붙여 -50% 지점에서 매끄럽게 루프
+  // 한 절반을 충분히 복제해 화면을 채운 뒤 동일한 절반을 한 번 더 이어 붙여 -50% 지점에서 매끄럽게 루프하는 것
   const repeatedHalfLogos: Logo[] = Array.from({ length: COPIES_PER_HALF }).flatMap(
     () => logos,
   );
