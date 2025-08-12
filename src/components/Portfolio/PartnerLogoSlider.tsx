@@ -32,13 +32,13 @@ type PartnerLogoSliderProps = {
 /** 화면을 충분히 채우기 위해 한 절반(half)에 logos를 몇 번 반복할지 지정 */
 const COPIES_PER_HALF = 4;
 
-
+//로고 예시 나중에 바꿔야함
 const ROW1: Logo[] = [
   { src: "/LogoSlider_example/free-icon-amazon-pay.png", alt: "Amazon Pay" },
   { src: "/LogoSlider_example/free-icon-github-logo.png", alt: "GitHub" },
   { src: "/LogoSlider_example/free-icon-google.png", alt: "Google" },
-  { src: "/LogoSlider_example/free-icon-instagram.png", alt: "Instagram" },
-  { src: "/LogoSlider_example/free-icon-netflix.png", alt: "Netflix" },
+  { src: "/LogoSlider_example/free-icon-instagram.png", alt: "Instagram" }, 
+  { src: "/LogoSlider_example/free-icon-netflix.png", alt: "Netflix" }, //로고 예시 나중에 바꿔야함
 ];
 
 const ROW2: Logo[] = [
@@ -46,7 +46,7 @@ const ROW2: Logo[] = [
   { src: "/LogoSlider_example/free-icon-visa.png", alt: "Visa" },
   { src: "/LogoSlider_example/free-icon-windows.png", alt: "Windows" },
   { src: "/LogoSlider_example/free-icon-youtube.png", alt: "YouTube" },
-  { src: "/LogoSlider_example/free-icon-amazon-pay.png", alt: "Amazon Pay" }, // 반복 예시
+  { src: "/LogoSlider_example/free-icon-amazon-pay.png", alt: "Amazon Pay" }, //로고 예시 나중에 바꿔야함
 ];
 
 function Track({
