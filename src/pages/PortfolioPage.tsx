@@ -10,8 +10,8 @@ const PortfolioPage = () => {
   return (
     <>
       <section className="pt-[100px] pl-16 pr-12 pb-24 bg-white">
-        <div className="flex gap-16" style={{ marginLeft: '64px' }}>
-          <div>
+        <div className="flex gap-16 items-start" style={{ marginLeft: '64px' }}>
+          <div className="flex flex-col">
             <h2 className="text-[40px] font-extrabold mb-6 text-black tracking-tight">Portfolio</h2>
             <div className="flex flex-col" style={{ rowGap: '18px' }}> {/* 버튼 별 간격 설정 칸 */} 
               {portfolioCategories.map((cat) => {
@@ -33,9 +33,11 @@ const PortfolioPage = () => {
             </div>
           </div>
 
-          <div className="flex-1" style={{ marginLeft: '300px' }}> {/* 필터와 카드섹션 사이 여백*/} 
+          <div className="flex-1 flex flex-col h-full" style={{ marginLeft: '300px' }}> {/* 필터와 카드섹션 사이 여백*/} 
             <h3 className="text-[40px] font-extrabold mb-6 text-black tracking-tight">{selectedCategory}</h3>
-            <PortfolioCardList projects={filtered} />
+            <div className="flex-1">
+              <PortfolioCardList projects={filtered} />
+            </div>
           </div>
         </div>
       </section>

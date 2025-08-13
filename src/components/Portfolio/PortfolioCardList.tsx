@@ -1,10 +1,12 @@
 import { useMemo, useRef } from "react";
+import PortfolioCard from "./PortfolioCard";
 
 type Project = {
   id: number;
   title: string;
   description: string;
   category: string;
+  image?: string;
 };
 
 type Props = {
@@ -31,8 +33,12 @@ const PortfolioCardList = ({ projects }: Props) => {
     <div className="relative">
       <div
         ref={scrollRef}
-        className="no-scrollbar flex gap-12 overflow-x-auto snap-x snap-mandatory pr-2"
-        style={{ scrollBehavior: "smooth", scrollbarWidth: "none" }}
+        className="no-scrollbar flex overflow-x-auto snap-x snap-mandatory pr-2"
+        style={{ 
+          scrollBehavior: "smooth", 
+          scrollbarWidth: "none",
+          gap: "62px" // 카드 간격 설정
+        }}
       >
         {/* 웹킷 스크롤바 숨김 */}
         <style>{`
@@ -42,18 +48,14 @@ const PortfolioCardList = ({ projects }: Props) => {
           <div
             key={project.id}
             className="snap-start shrink-0"
-            style={{ width: `${cardWidthPx}px` }}
           >
-            <div className="bg-white p-8 rounded-[28px] shadow-lg hover:shadow-xl transition h-full overflow-hidden">
-              <h3 className="text-[28px] font-extrabold text-[#0168b7] tracking-tight">
-                {project.title}
-              </h3>
-              <p className="text-[15px] text-gray-700 mt-3 leading-relaxed">
-                {project.description}
-              </p>
-              {/* 이미지/콘텐츠 영역은 실제 데이터에 맞춰 교체 */}
-              <div className="mt-6 h-56 bg-gray-100 rounded-2xl" />
-            </div>
+            <PortfolioCard 
+              id={project.id}
+              title={project.title}
+              description={project.description}
+              category={project.category}
+              image={project.image}
+            />
           </div>
         ))}
       </div>
