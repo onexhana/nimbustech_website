@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import FilterBar from '../components/Portfolio/FilterBar';
-import PortfolioCardList from '../components/Portfolio/PortfolioCardList'; // 새로 추가한 슬라이드 카드 컴포넌트
+import PortfolioCardList from '../components/Portfolio/PortfolioCardList';
 import PortfolioSection from '../components/Portfolio/PortfolioSection';
+
+const categories = ["공공", "금융", "일반", "제조", "유통", "기타"];
 
 const dummyProjects = [
   { id: 1, title: "프로젝트 1", description: "설명 텍스트", category: "공공" },
@@ -15,27 +16,42 @@ const dummyProjects = [
 
 const PortfolioPage = () => {
   const [selectedCategory, setSelectedCategory] = useState("공공");
-
-  const filtered = dummyProjects.filter(
-    (p) => selectedCategory === null || p.category === selectedCategory
-  );
+  const filtered = dummyProjects.filter((p) => p.category === selectedCategory);
 
   return (
     <>
-      <section className="pt-10 px-6 pb-16 bg-white">
-        {/* 섹션 제목 */}
-        <h2 className="text-2xl font-bold text-center mb-8 text-[#0168b7]">포트폴리오</h2>
+      <section className="pt-[120px] pl-16 pr-12 pb-24 bg-white">
+        <h2 className="text-[40px] font-extrabold mb-6 text-black tracking-tight" style={{ marginLeft: '64px' }}>Portfolio</h2>
 
-        {/* 필터 버튼 */}
-        <FilterBar selected={selectedCategory} onSelect={setSelectedCategory} />
+        <div className="flex gap-16">
+          <aside className="w-[280px] shrink-0" style  ={{ marginLeft: '64px' }}>
+            <div className="flex flex-col" style={{ rowGap: '18px' }}>
+              {categories.map((cat) => {
+                const isSelected = selectedCategory === cat;
+                return (
+                  <button
+                    key={cat}
+                    onClick={() => setSelectedCategory(cat)}
+                    className={`h-[64px] w-full rounded-[999px] border text-[20px] font-bold transition-colors ${
+                      isSelected
+                        ? "bg-white text-[#0168b7] border-[#0168b7]"
+                        : "bg-[#0168b7] text-white border-transparent hover:bg-[#055c9a]"
+                    }`}
+                  >
+                    {cat}
+                  </button>
+                );
+              })}
+            </div>
+          </aside>
 
-        {/* 슬라이드 카드 리스트 */}
-        <div className="mt-6">
-          <PortfolioCardList projects={filtered} />
+          <div className="flex-1">
+            <h3 className="text-[44px] font-extrabold mb-8">{selectedCategory}</h3>
+            <PortfolioCardList projects={filtered} />
+          </div>
         </div>
       </section>
 
-      {/* 하단 협력사 로고 슬라이더 섹션 */}
       <PortfolioSection />
     </>
   );
