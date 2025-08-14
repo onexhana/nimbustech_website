@@ -10,7 +10,7 @@ const PortfolioCard = ({ title, description, category, image }: PortfolioCardPro
   return (
     <div 
       className="bg-white rounded-[24px] p-10 shadow-lg border border-black hover:shadow-xl transition-shadow duration-300"
-      style={{ width: '420px', height: '500px' }} // 카드 크기 설정
+      style={{ width: '420px', height: '450px' }} // 카드 크기 설정 높이 조정하기 역할
     >
       {/* 제목 */}
       <div className="text-center mb-4">
