@@ -33,19 +33,21 @@ const CategoryFilter = ({ selectedCategory, onCategoryChange }: CategoryFilterPr
                  cursor: 'pointer'
                }}
                onMouseEnter={(e) => {
+                 const target = e.target as HTMLButtonElement;
                  if (isSelected) {
-                   e.target.style.backgroundColor = '#FFFFFF';
+                   target.style.backgroundColor = '#FFFFFF';
                  } else {
-                   e.target.style.backgroundColor = '#008CC0';
-                   e.target.style.color = 'white';
+                   target.style.backgroundColor = '#008CC0';
+                   target.style.color = 'white';
                  }
                }}
                onMouseLeave={(e) => {
+                 const target = e.target as HTMLButtonElement;
                  if (isSelected) {
-                   e.target.style.backgroundColor = 'white';
+                   target.style.backgroundColor = 'white';
                  } else {
-                   e.target.style.backgroundColor = '#00A3E0';
-                   e.target.style.color = 'white';
+                   target.style.backgroundColor = '#00A3E0';
+                   target.style.color = 'white';
                  }
                }}
              >
