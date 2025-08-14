@@ -47,11 +47,11 @@ const CategoryFilter = ({ selectedCategory, onCategoryChange }: CategoryFilterPr
                  const target = e.target as HTMLButtonElement;
                  if (isSelected) {
                    target.style.backgroundColor = 'white';
-                   target.style.border = '1px solid #00A3E0'; // 원래 파란색 테두리
+                   target.style.border = '3px solid #00A3E0'; // 원래 파란색 테두리
                  } else {
                    target.style.backgroundColor = '#00A3E0';
                    target.style.color = 'white';
-                   target.style.border = '1px solid transparent'; // 원래 투명 테두리
+                   target.style.border = '3px solid transparent'; // 원래 투명 테두리
                  }
                }}
              >
