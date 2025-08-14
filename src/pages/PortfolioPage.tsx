@@ -11,9 +11,9 @@ const PortfolioPage = () => {
     <>
       <section className="pt-[100px] pl-16 pr-12 pb-24 bg-white">
         <div className="flex gap-16 items-start" style={{ marginLeft: '64px' }}>
-          <div className="flex flex-col">
+          <div className="flex flex-col h-full">
             <h2 className="text-[40px] font-extrabold mb-6 text-black tracking-tight">Portfolio</h2>
-            <div className="flex flex-col" style={{ rowGap: '18px' }}> {/* 버튼 별 간격 설정 칸 */} 
+            <div className="flex flex-col flex-1" style={{ rowGap: '18px' }}> {/* 버튼 별 간격 설정 칸 */} 
               {portfolioCategories.map((cat) => {
                 const isSelected = selectedCategory === cat;
                 return (
