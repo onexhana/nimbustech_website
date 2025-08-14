@@ -254,7 +254,11 @@ export default function AboutSection() {
               cursor: 'pointer',
               boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
               lineHeight: '0',
-              paddingBottom: '0'
+              paddingBottom: '0',
+              boxSizing: 'border-box',
+              marginRight: '-24px',
+              position: 'relative',
+              zIndex: 10
             }}
           >
             ‹
@@ -333,7 +337,11 @@ export default function AboutSection() {
               cursor: 'pointer',
               boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
               lineHeight: '0',
-              paddingBottom: '0'
+              paddingBottom: '0',
+              boxSizing: 'border-box',
+              marginLeft: '-24px',
+              position: 'relative',
+              zIndex: 10
             }}
           >
             ›
