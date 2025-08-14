@@ -233,7 +233,7 @@ export default function AboutSection() {
         {/* ======================================== */}
         <div className="flex items-start gap-4" style={{ display: 'flex', alignItems: 'flex-start', gap: '16px', marginLeft: '50px', marginRight: '50px' }}>
           {/* 좌측 화살표 버튼 */}
-          {isMultiPage && (
+          {isMultiPage && currentSlide > 0 && (
           <button 
             onClick={prevSlide}
             className="hover:bg-gray-100 transition-all duration-300"
@@ -254,7 +254,7 @@ export default function AboutSection() {
               cursor: 'pointer',
               boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
               lineHeight: '0',
-              paddingBottom: '8px'
+              paddingBottom: '0'
             }}
           >
             ‹
@@ -312,7 +312,7 @@ export default function AboutSection() {
           `}</style>
 
           {/* 우측 화살표 버튼 */}
-          {isMultiPage && (
+          {isMultiPage && currentSlide < numSlides - 1 && (
           <button 
             onClick={nextSlide}
             className="hover:bg-gray-100 transition-all duration-300"
@@ -333,36 +333,13 @@ export default function AboutSection() {
               cursor: 'pointer',
               boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
               lineHeight: '0',
-              paddingBottom: '8px'
+              paddingBottom: '0'
             }}
           >
             ›
           </button>
           )}
         </div>
-
-        {/* ======================================== */}
-        {/* 슬라이드 인디케이터 (점 표시) */}
-        {/* ======================================== */}
-        {isMultiPage && (
-        <div style={{ display: 'flex', justifyContent: 'center', marginTop: '30px', gap: '8px' }}>
-          {Array.from({ length: numSlides }).map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrentSlide(index)}
-              style={{
-                width: currentSlide === index ? '16px' : '12px',
-                height: '12px',
-                borderRadius: '6px',
-                border: 'none',
-                backgroundColor: currentSlide === index ? '#3b82f6' : '#d1d5db',
-                cursor: 'pointer',
-                transition: 'all 0.3s ease'
-              }}
-            />
-          ))}
-        </div>
-        )}
       </div>
     </div>
   );
