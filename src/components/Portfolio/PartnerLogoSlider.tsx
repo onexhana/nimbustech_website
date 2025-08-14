@@ -71,9 +71,24 @@ function Track({
     <div className="relative w-full overflow-hidden">
       <motion.div
         className="flex items-center min-w-[200%] whitespace-nowrap py-2"
-        style={{ columnGap: gap, willChange: "transform" }}
+        style={{ 
+          columnGap: gap, 
+          willChange: "transform",
+          // 깜빡임 방지: 브라우저 최적화 설정
+          backfaceVisibility: "hidden",
+          perspective: 1000,
+          transform: "translateZ(0)" // GPU 가속 활성화
+        }}
         animate={{ x: reverse ? ["-50%", "0%"] : ["0%", "-50%"] }}
-        transition={{ duration, repeat: Infinity, ease: "linear" }}
+        transition={{ 
+          duration, 
+          repeat: Infinity, 
+          ease: "linear",
+          // 깜빡임 방지: 부드러운 반복 설정 (새로고침 대신 상태 변경)
+          repeatType: "loop",
+          // 브라우저 임계값에서 깜빡임 방지
+          type: "tween"
+        }}
       >
         {rollingSequence.map((logo, i) => (
           <img
