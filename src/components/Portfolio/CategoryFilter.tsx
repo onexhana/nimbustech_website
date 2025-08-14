@@ -1,3 +1,5 @@
+// 카테고리 필터 컴포넌트 (카테고리 버튼 목록)
+
 import { portfolioCategories } from '../../data/portfolioData';
 
 interface CategoryFilterProps {
@@ -13,17 +15,42 @@ const CategoryFilter = ({ selectedCategory, onCategoryChange }: CategoryFilterPr
         {portfolioCategories.map((cat) => {
           const isSelected = selectedCategory === cat;
           return (
-            <button
-              key={cat}
-              onClick={() => onCategoryChange(cat)}
-              className={`h-[64px] w-[280px] rounded-[999px] border text-[24px] font-bold transition-colors ${
-                isSelected
-                  ? "bg-white text-[#00A3E0] border-[#00A3E0] hover:bg-[#FFFFFF]"
-                  : "bg-[#00A3E0] text-white border-transparent hover:bg-[#008CC0] hover:text-white"
-              }`}
-            >
-              {cat}
-            </button>
+                         <button
+               key={cat}
+               onClick={() => onCategoryChange(cat)}
+               style={{
+                 height: '64px',
+                 width: '280px',
+                 borderRadius: '999px',
+                 border: isSelected ? '1px solid #00A3E0' : '1px solid transparent',
+                 fontSize: '25px',
+                 fontWeight: '500',
+                 transition: 'all 0.3s ease',
+                 textAlign: 'left',
+                 paddingLeft: '32px',
+                 backgroundColor: isSelected ? 'white' : '#00A3E0',
+                 color: isSelected ? '#00A3E0' : 'white',
+                 cursor: 'pointer'
+               }}
+               onMouseEnter={(e) => {
+                 if (isSelected) {
+                   e.target.style.backgroundColor = '#FFFFFF';
+                 } else {
+                   e.target.style.backgroundColor = '#008CC0';
+                   e.target.style.color = 'white';
+                 }
+               }}
+               onMouseLeave={(e) => {
+                 if (isSelected) {
+                   e.target.style.backgroundColor = 'white';
+                 } else {
+                   e.target.style.backgroundColor = '#00A3E0';
+                   e.target.style.color = 'white';
+                 }
+               }}
+             >
+               {cat}
+             </button>
           );
         })}
       </div>
