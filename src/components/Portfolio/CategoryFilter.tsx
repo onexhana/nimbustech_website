@@ -36,18 +36,22 @@ const CategoryFilter = ({ selectedCategory, onCategoryChange }: CategoryFilterPr
                  const target = e.target as HTMLButtonElement;
                  if (isSelected) {
                    target.style.backgroundColor = '#FFFFFF';
+                   target.style.border = '1px solid #00A3E0'; // 호버 시에도 파란색 테두리 유지
                  } else {
                    target.style.backgroundColor = '#008CC0';
                    target.style.color = 'white';
+                   target.style.border = '1px solid #00A3E0'; // 호버 시 파란색 테두리 추가
                  }
                }}
                onMouseLeave={(e) => {
                  const target = e.target as HTMLButtonElement;
                  if (isSelected) {
                    target.style.backgroundColor = 'white';
+                   target.style.border = '1px solid #00A3E0'; // 원래 파란색 테두리
                  } else {
                    target.style.backgroundColor = '#00A3E0';
                    target.style.color = 'white';
+                   target.style.border = '1px solid transparent'; // 원래 투명 테두리
                  }
                }}
              >
