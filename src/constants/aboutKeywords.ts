@@ -1,4 +1,10 @@
 // src/constants/aboutKeywords.ts
+// ========================================
+// ABOUT 페이지 키워드 아이콘 데이터
+// 담당자: About 페이지 팀
+// 주요 기능: 키워드 아이콘 컴포넌트용 데이터
+// 수정 사항: 현재 미사용 (향후 확장 예정)
+// ========================================
 export interface KeywordData {
   keyword: string;
   icon: string;
@@ -6,6 +12,9 @@ export interface KeywordData {
   color?: 'blue' | 'green' | 'purple' | 'orange';
 }
 
+// ========================================
+// 탭별 키워드 아이콘 데이터 (현재 미사용)
+// ========================================
 export const aboutKeywords: Record<string, KeywordData[]> = {
   ITO: [
     { keyword: "전담관리", icon: "👤", description: "전담 매니저 시스템", color: "blue" },

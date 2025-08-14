@@ -1,4 +1,10 @@
 // src/components/About/AboutTab.tsx
+// ========================================
+// ABOUT 페이지 탭 네비게이션 컴포넌트
+// 담당자: About 페이지 팀
+// 주요 기능: 탭 전환, 호버 효과
+// 수정 사항: 탭 스타일링, 활성 상태 표시
+// ========================================
 import { useState } from 'react';
 
 interface AboutTabProps {
@@ -8,6 +14,9 @@ interface AboutTabProps {
 }
 
 export default function AboutTab({ tabs, activeTab, onTabChange }: AboutTabProps) {
+  // ========================================
+  // 탭 호버 상태 관리
+  // ========================================
   const [hoveredTab, setHoveredTab] = useState<string | null>(null);
 
   return (

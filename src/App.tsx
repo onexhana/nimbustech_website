@@ -7,7 +7,9 @@ function App() {
   return (
     <BrowserRouter>
       <Header />
-      <MainRouter />
+      <main className="pt-16">
+        <MainRouter />
+      </main>
       <Footer /> {/* ✅ 여기 추가 */}
     </BrowserRouter>
   );

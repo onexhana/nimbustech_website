@@ -1,4 +1,10 @@
 // src/components/About/KeywordIcon.tsx
+// ========================================
+// ABOUT 페이지 키워드 아이콘 컴포넌트
+// 담당자: About 페이지 팀
+// 주요 기능: 애니메이션 키워드 아이콘 표시
+// 수정 사항: 현재 미사용 (향후 확장 예정)
+// ========================================
 import { useState } from 'react';
 
 interface KeywordIconProps {
@@ -16,6 +22,9 @@ export default function KeywordIcon({
   size = 'md',
   color = 'blue'
 }: KeywordIconProps) {
+  // ========================================
+  // 호버 상태 관리 및 아이콘 렌더링
+  // ========================================
   const [isHovered, setIsHovered] = useState(false);
 
   const sizeClasses = {
