@@ -231,48 +231,43 @@ export default function AboutSection() {
         {/* ======================================== */}
         {/* 카드 영역 (슬라이더 구현부) */}
         {/* ======================================== */}
-        <div className="flex items-start gap-4" style={{ display: 'flex', alignItems: 'flex-start', gap: '16px', marginLeft: '50px', marginRight: '50px' }}>
+        <div className="flex items-start gap-4" style={{ position: 'relative', overflow: 'visible', display: 'flex', alignItems: 'flex-start', gap: '16px' }}>
           {/* 좌측 화살표 버튼 */}
           {isMultiPage && currentSlide > 0 && (
           <button 
             onClick={prevSlide}
             className="hover:bg-gray-100 transition-all duration-300"
             style={{
-              backgroundColor: '#ffffff',
-              border: '1px solid #e5e7eb',
-              color: '#1f2937',
-              fontSize: '24px',
-              fontWeight: 'bold',
-              padding: '0',
-              borderRadius: '50%',
+              border: 'none',
+              outline: 'none',
+              position: 'absolute',
+              top: '50%',
+              left: '50px',
+              transform: 'translate(-50%, -50%)',
               width: '50px',
               height: '50px',
+              borderRadius: '50%',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              alignSelf: 'center',
-              cursor: 'pointer',
-              boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
-              lineHeight: '1',
-              position: 'relative',
+              backgroundColor: '#ffffff',
+              boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06)',
               zIndex: 10,
-              marginRight: '-24px',
-              overflow: 'hidden'
+              cursor: 'pointer',
+              fontSize: '28px',
+              fontWeight: '700'
             }}
           >
-            ‹
+            <svg width="30" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M15 18L9 12L15 6" stroke="#1f2937" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
           </button>
           )}
 
           {/* 카드 컨테이너 - 새 카드 등장 효과 */}
-          <div 
-            className="flex gap-4 flex-1" 
-            style={{ 
-              display: 'flex', 
-              gap: '30px', 
-              flex: '1', 
-              justifyContent: 'center'
-            }}
+          <div
+            className="flex gap-4 flex-1"
+            style={{ position: 'relative', overflow: 'visible', display: 'flex', gap: '30px', flex: '1', justifyContent: 'center', marginLeft: '50px', marginRight: '50px' }}
           >
             {cards
               .slice(currentSlide * groupSize, currentSlide * groupSize + groupSize)
@@ -320,29 +315,29 @@ export default function AboutSection() {
             onClick={nextSlide}
             className="hover:bg-gray-100 transition-all duration-300"
             style={{
-              backgroundColor: '#ffffff',
-              border: '1px solid #e5e7eb',
-              color: '#1f2937',
-              fontSize: '24px',
-              fontWeight: 'bold',
-              padding: '0',
-              borderRadius: '50%',
+              border: 'none',
+              outline: 'none',
+              position: 'absolute',
+              top: '50%',
+              right: '50px',
+              transform: 'translate(50%, -50%)',
               width: '50px',
               height: '50px',
+              borderRadius: '50%',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              alignSelf: 'center',
-              cursor: 'pointer',
-              boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
-              lineHeight: '1',
-              position: 'relative',
+              backgroundColor: '#ffffff',
+              boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06)',
               zIndex: 10,
-              marginLeft: '-24px',
-              overflow: 'hidden'
+              cursor: 'pointer',
+              fontSize: '28px',
+              fontWeight: '700'
             }}
           >
-            ›
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M9 6L15 12L9 18" stroke="#1f2937" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
           </button>
           )}
         </div>
