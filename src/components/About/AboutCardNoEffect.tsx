@@ -46,7 +46,7 @@ export default function AboutCardNoEffect({ title, description, detailLink }: Ab
       <h3 
         className="font-semibold text-blue-600 mb-4 text-base leading-tight" 
         style={{ 
-          color: '#2563eb',
+          color: '#00A3E0',
           fontSize: '34px',
           fontWeight: '550',
           marginTop: '24px',
@@ -81,7 +81,7 @@ export default function AboutCardNoEffect({ title, description, detailLink }: Ab
             href={detailLink}
             target="_blank"
             rel="noopener noreferrer"
-            style={{ color: '#3b82f6', fontWeight: '600', fontSize: '14px', textDecoration: 'none' }}
+            style={{ color: '#00A3E0', fontWeight: '600', fontSize: '14px', textDecoration: 'none' }}
           >
             자세히 보기 →
           </a>

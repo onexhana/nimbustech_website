@@ -241,24 +241,23 @@ export default function AboutSection() {
               backgroundColor: '#ffffff',
               border: '1px solid #e5e7eb',
               color: '#1f2937',
-              fontSize: '68px',
+              fontSize: '24px',
               fontWeight: 'bold',
               padding: '0',
               borderRadius: '50%',
-              width: '48px',
-              height: '48px',
+              width: '50px',
+              height: '50px',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               alignSelf: 'center',
               cursor: 'pointer',
               boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
-              lineHeight: '0',
-              paddingBottom: '0',
-              boxSizing: 'border-box',
-              marginRight: '-24px',
+              lineHeight: '1',
               position: 'relative',
-              zIndex: 10
+              zIndex: 10,
+              marginRight: '-24px',
+              overflow: 'hidden'
             }}
           >
             ‹
@@ -324,24 +323,23 @@ export default function AboutSection() {
               backgroundColor: '#ffffff',
               border: '1px solid #e5e7eb',
               color: '#1f2937',
-              fontSize: '68px',
+              fontSize: '24px',
               fontWeight: 'bold',
               padding: '0',
               borderRadius: '50%',
-              width: '48px',
-              height: '48px',
+              width: '50px',
+              height: '50px',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               alignSelf: 'center',
               cursor: 'pointer',
               boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
-              lineHeight: '0',
-              paddingBottom: '0',
-              boxSizing: 'border-box',
-              marginLeft: '-24px',
+              lineHeight: '1',
               position: 'relative',
-              zIndex: 10
+              zIndex: 10,
+              marginLeft: '-24px',
+              overflow: 'hidden'
             }}
           >
             ›

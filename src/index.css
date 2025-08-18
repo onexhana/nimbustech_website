@@ -39,7 +39,6 @@ h1 {
   line-height: 1.1;
 }
 
-/* 기본 버튼 스타일 제거 - Tailwind CSS가 컨트롤하도록 함 */
 
 @media (prefers-color-scheme: light) {
   :root {

@@ -33,7 +33,7 @@ export default function AboutTab({ tabs, activeTab, onTabChange }: AboutTabProps
           key={tab}
           // 버튼 스타일: activeTab과 hoveredTab에 따라 배경색과 글자색을 변경합니다.
           style={{
-            backgroundColor: activeTab === tab ? '#3b82f6' : 'transparent',
+            backgroundColor: activeTab === tab ? '#00A3E0' : 'transparent',
             color: activeTab === tab ? '#ffffff' : '#374151',
             border: 'none',
             fontSize: '22px',
