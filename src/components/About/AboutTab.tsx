@@ -49,7 +49,7 @@ export default function AboutTab({ tabs, activeTab, onTabChange }: AboutTabProps
 
 >>>>>>> feat/sumin-portfolio
           style={{
-            backgroundColor: activeTab === tab ? '#3b82f6' : 'transparent',
+            backgroundColor: activeTab === tab ? '#00A3E0' : 'transparent',
             color: activeTab === tab ? '#ffffff' : '#374151',
             border: 'none',
             fontSize: '22px',

@@ -53,7 +53,7 @@ export default function KeywordIcon({
 =======
 >>>>>>> feat/sumin-portfolio
   const colorClasses = {
-    blue: 'from-blue-500 to-blue-600',
+    blue: 'from-[#00A3E0] to-[#00A3E0]',
     green: 'from-green-500 to-green-600',
     purple: 'from-purple-500 to-purple-600',
     orange: 'from-orange-500 to-orange-600'
@@ -84,7 +84,7 @@ export default function KeywordIcon({
           group-hover:rotate-12
         `}
         style={{
-          boxShadow: isHovered ? '0 15px 30px rgba(59, 130, 246, 0.4)' : '0 8px 20px rgba(59, 130, 246, 0.2)'
+          boxShadow: isHovered ? '0 15px 30px rgba(0, 163, 224, 0.4)' : '0 8px 20px rgba(0, 163, 224, 0.2)'
         }}
       >
         <span className="text-xl">{icon}</span>
@@ -99,7 +99,7 @@ export default function KeywordIcon({
         <span 
           className={`
             font-semibold text-gray-700 transition-colors duration-300
-            ${isHovered ? 'text-blue-600' : ''}
+            ${isHovered ? 'text-[#00A3E0]' : ''}
           `}
         >
           {keyword}
