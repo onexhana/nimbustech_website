@@ -16,11 +16,7 @@ type Props = {
 const PortfolioCardList = ({ projects }: Props) => {
   const scrollRef = useRef<HTMLDivElement | null>(null);
 
-<<<<<<< HEAD
-  const cardWidthPx = useMemo(() => 520, []); // 시안에 근접한 카드 폭(px)
-=======
   const cardWidthPx = useMemo(() => 420, []); // 카드 폭(px) - 카드 크기에 맞춰 조정
->>>>>>> feat/sumin-portfolio
   const gapPx = useMemo(() => 32, []); // 카드 간격(px)
 
   const handleNext = () => {
