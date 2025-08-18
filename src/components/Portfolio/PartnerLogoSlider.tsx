@@ -62,24 +62,15 @@ function Track({
   logoHeight: number;
   gap: number;
 }) {
-<<<<<<< HEAD
   // 한 절반을 충분히 복제한 뒤 두 번 이어붙여서 -50% 지점에서 매끄럽게 루프
   const rollingSequence = Array(COPIES_PER_HALF * 2)
     .fill(logos)
     .flat();
 
-=======
-  // 한 절반을 충분히 복제해 화면을 채운 뒤 동일한 절반을 한 번 더 이어 붙여 -50% 지점에서 매끄럽게 루프하는 것
-  const repeatedHalfLogos: Logo[] = Array.from({ length: COPIES_PER_HALF }).flatMap(
-    () => logos,
-  );
-  const rollingSequence = [...repeatedHalfLogos, ...repeatedHalfLogos];
->>>>>>> feat/sumin-portfolio
   return (
     <div className="relative w-full overflow-hidden">
       <motion.div
         className="flex items-center min-w-[200%] whitespace-nowrap py-2"
-<<<<<<< HEAD
         style={{ 
           columnGap: gap, 
           willChange: "transform",
@@ -98,13 +89,6 @@ function Track({
           // 브라우저 임계값에서 깜빡임 방지
           type: "tween"
         }}
-=======
-        // 간격(px)과 성능 최적화
-        style={{ columnGap: gap, willChange: "transform" }}
-        // 0% → -50% (또는 반대)로만 이동 후 즉시 처음 위치로 점프하여 끊김 없이 무한 반복
-        animate={{ x: reverse ? ["-50%", "0%"] : ["0%", "-50%"] }}
-        transition={{ duration, repeat: Infinity, repeatType: "loop", ease: "linear" }}
->>>>>>> feat/sumin-portfolio
       >
         {rollingSequence.map((logo, i) => (
           <img
@@ -117,10 +101,6 @@ function Track({
           />
         ))}
       </motion.div>
-<<<<<<< HEAD
-
-=======
->>>>>>> feat/sumin-portfolio
       {/* 그라데이션 페이드 */}
       <div className="pointer-events-none absolute inset-y-0 left-0 w-14 bg-gradient-to-r from-white to-transparent" />
       <div className="pointer-events-none absolute inset-y-0 right-0 w-14 bg-gradient-to-l from-white to-transparent" />
@@ -131,7 +111,6 @@ function Track({
 function PartnerLogoSlider({
   logoHeight = 80,
   gap = 80,
-<<<<<<< HEAD
   durationTop = 30,      // 윗줄 1회 이동 시간(초) → 값이 클수록 느려짐
   durationBottom = 30,   // 아랫줄 1회 이동 시간(초) → 값이 클수록 느려짐
   rowSpacing = 30,
@@ -165,53 +144,6 @@ function PartnerLogoSlider({
         </div>
       ))}
       {bottomSpacing > 0 && <div style={{ height: bottomSpacing }} />}
-=======
-  durationTop = 20,
-  durationBottom = 20,
-  rowSpacing = 30,
-  bottomSpacing = 30,
-  speed = 1,
-  speedTop,
-  speedBottom,
-}: PartnerLogoSliderProps) {
-  // 배속 적용: 값이 클수록 더 빠르게 진행. 0 또는 음수 입력 보호
-  const getSafeFactor = (value: number) => (value > 0 ? value : 1);
-  const topFactor = getSafeFactor(speedTop ?? speed);
-  const bottomFactor = getSafeFactor(speedBottom ?? speed);
-  const topDuration = durationTop / topFactor;
-  const bottomDuration = durationBottom / bottomFactor;
-  return (
-    <section aria-label="협력사 로고 슬라이더" className="w-full">
-      {/* 시안 문구 */}
-      <p
-        style={{
-          textAlign: "center",
-          fontSize: "25px",
-          fontWeight: "bold",
-          color: "#374151",
-          marginBottom: "40px",
-        }}
-        >
-        님버스테크와 함께 하고 있습니다
-    </p>
-
-      {/* 윗줄: 우 → 좌 */}
-      <Track logos={ROW1} duration={topDuration} logoHeight={logoHeight} gap={gap} />
-
-      {/* 아랫줄: 좌 → 우 */}
-      <div style={{ marginTop: rowSpacing }}>
-        <Track
-          logos={ROW2}
-          duration={bottomDuration}
-          reverse
-          logoHeight={logoHeight}
-          gap={gap}
-        />
-      </div>
-      {bottomSpacing > 0 && (
-        <div style={{ height: bottomSpacing }} />
-      )}
->>>>>>> feat/sumin-portfolio
     </section>
   );
 }
