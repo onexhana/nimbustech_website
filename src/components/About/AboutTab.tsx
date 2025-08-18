@@ -7,10 +7,7 @@
 // ========================================
 import { useState } from 'react';
 
-<<<<<<< HEAD
 // AboutTab 컴포넌트 props 정의: 탭 라벨 목록(tabs), 현재 활성 탭(activeTab), 탭 변경 콜백(onTabChange)을 전달받습니다.
-=======
->>>>>>> feat/sumin-portfolio
 interface AboutTabProps {
   tabs: string[];
   activeTab: string;
@@ -18,15 +15,9 @@ interface AboutTabProps {
 }
 
 export default function AboutTab({ tabs, activeTab, onTabChange }: AboutTabProps) {
-<<<<<<< HEAD
   // hoveredTab 상태는 호버 효과 확장을 위해 남겨두었습니다.
   // @ts-expect-error unused local variable
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-=======
-  // ========================================
-  // 탭 호버 상태 관리
-  // ========================================
->>>>>>> feat/sumin-portfolio
   const [hoveredTab, setHoveredTab] = useState<string | null>(null);
 
   return (
@@ -36,18 +27,11 @@ export default function AboutTab({ tabs, activeTab, onTabChange }: AboutTabProps
       marginBottom: '40px',
       marginLeft: '50px'
     }}>
-<<<<<<< HEAD
       {/* tabs 배열을 순회하여 각 탭 버튼을 렌더링합니다. */}
       {tabs.map((tab) => (
         <button
           key={tab}
           // 버튼 스타일: activeTab과 hoveredTab에 따라 배경색과 글자색을 변경합니다.
-=======
-      {tabs.map((tab) => (
-        <button
-          key={tab}
-
->>>>>>> feat/sumin-portfolio
           style={{
             backgroundColor: activeTab === tab ? '#00A3E0' : 'transparent',
             color: activeTab === tab ? '#ffffff' : '#374151',
@@ -59,7 +43,6 @@ export default function AboutTab({ tabs, activeTab, onTabChange }: AboutTabProps
             cursor: 'pointer',
             transition: 'all 0.3s ease'
           }}
-<<<<<<< HEAD
           // 마우스 진입 시 hoveredTab 상태 업데이트
           onMouseEnter={() => setHoveredTab(tab)}
           // 마우스 이탈 시 hoveredTab 초기화
@@ -68,12 +51,6 @@ export default function AboutTab({ tabs, activeTab, onTabChange }: AboutTabProps
           onClick={() => onTabChange(tab)}
         >
           {/* 탭 라벨을 화면에 표시합니다. */}
-=======
-          onMouseEnter={() => setHoveredTab(tab)}
-          onMouseLeave={() => setHoveredTab(null)}
-          onClick={() => onTabChange(tab)}
-        >
->>>>>>> feat/sumin-portfolio
           {tab}
         </button>
       ))}
