@@ -11,15 +11,16 @@ const CategoryFilter = ({ selectedCategory, onCategoryChange }: CategoryFilterPr
   return (
     <div className="flex flex-col h-full">
       <div className="flex flex-col" style={{ marginTop: '30px' }}> {/* Portfolio 제목을 카드와 평행하게 배치 */}
-        {/* Portfolio 위 장식 선 */}
+        {/* ⬇️ 여기가 포트폴리오 위에 있는 검은 선입니다! ⬇️ */}
         <div 
           style={{ 
             width: '80px', 
             height: '2px', 
-            backgroundColor: '#000000',
+            backgroundColor: '#000000', // 이 부분이 검은색 선을 만드는 코드
             marginBottom: '0px'
           }}
         ></div>
+        {/* ⬆️ 위 코드가 포트폴리오 제목 위의 검은 선입니다! ⬆️ */}
         <h2 className="text-[40px] font-extrabold mb-6 text-black tracking-tight" style={{ marginTop: '0px' }}>Portfolio</h2>
       </div>
       <div className="flex flex-col flex-1" style={{ rowGap: '18px' }}> {/* 버튼 별 간격 설정 칸 */}
