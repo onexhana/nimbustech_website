@@ -10,7 +10,18 @@ interface CategoryFilterProps {
 const CategoryFilter = ({ selectedCategory, onCategoryChange }: CategoryFilterProps) => {
   return (
     <div className="flex flex-col h-full">
-      <h2 className="text-[40px] font-extrabold mb-6 text-black tracking-tight">Portfolio</h2>
+      <div className="flex flex-col" style={{ marginTop: '30px' }}> {/* Portfolio 제목을 카드와 평행하게 배치 */}
+        {/* Portfolio 위 장식 선 */}
+        <div 
+          style={{ 
+            width: '80px', 
+            height: '2px', 
+            backgroundColor: '#000000',
+            marginBottom: '0px'
+          }}
+        ></div>
+        <h2 className="text-[40px] font-extrabold mb-6 text-black tracking-tight" style={{ marginTop: '0px' }}>Portfolio</h2>
+      </div>
       <div className="flex flex-col flex-1" style={{ rowGap: '18px' }}> {/* 버튼 별 간격 설정 칸 */}
         {portfolioCategories.map((cat) => {
           const isSelected = selectedCategory === cat;
