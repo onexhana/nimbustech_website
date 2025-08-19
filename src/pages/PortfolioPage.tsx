@@ -1,37 +1,33 @@
-import React, { useState } from 'react';
-import FilterBar from '@/components/Portfolio/FilterBar';
-import PortfolioCardList from '@/components/Portfolio/PortfolioCardList'; // 새로 추가한 슬라이드 카드 컴포넌트
-
-const dummyProjects = [
-  { id: 1, title: "프로젝트 1", description: "설명 텍스트", category: "공공" },
-  { id: 2, title: "프로젝트 2", description: "설명 텍스트", category: "금융" },
-  { id: 3, title: "프로젝트 3", description: "설명 텍스트", category: "일반" },
-  { id: 4, title: "프로젝트 4", description: "설명 텍스트", category: "제조" },
-  { id: 5, title: "프로젝트 5", description: "설명 텍스트", category: "유통" },
-  { id: 6, title: "프로젝트 6", description: "설명 텍스트", category: "기타" },
-  { id: 99, title: "공공 테스트 프로젝트", description: "공공용 카드입니다", category: "공공" },
-];
+import { useState } from 'react';
+import PortfolioCardList from '../components/Portfolio/PortfolioCardList';
+import PortfolioSection from '../components/Portfolio/PortfolioSection';
+import CategoryFilter from '../components/Portfolio/CategoryFilter';
+import { portfolioProjects } from '../data/portfolioData';
 
 const PortfolioPage = () => {
   const [selectedCategory, setSelectedCategory] = useState("공공");
-
-  const filtered = dummyProjects.filter(
-    (p) => selectedCategory === null || p.category === selectedCategory
-  );
+  const filtered = portfolioProjects.filter((p) => p.category === selectedCategory);
 
   return (
-    <section className="pt-10 px-6 pb-16 bg-white">
-      {/* 섹션 제목 */}
-      <h2 className="text-2xl font-bold text-center mb-8 text-[#0168b7]">포트폴리오</h2>
+    <>
+      <section className="pt-[100px] pl-16 pr-12 pb-24 bg-white">
+        <div className="flex gap-16 items-start" style={{ marginLeft: '64px' }}>
+          <CategoryFilter 
+            selectedCategory={selectedCategory}
+            onCategoryChange={setSelectedCategory}
+          />
 
-      {/* 필터 버튼 */}
-      <FilterBar selected={selectedCategory} onSelect={setSelectedCategory} />
+          <div className="flex-1 flex flex-col h-full" style={{ marginLeft: '300px' }}> {/* 필터와 카드섹션 사이 여백*/} 
+            <h3 className="text-[40px] font-extrabold mb-6 text-black tracking-tight">{selectedCategory}</h3>
+            <div className="flex-1">
+              <PortfolioCardList projects={filtered} />
+            </div>
+          </div>
+        </div>
+      </section>
 
-      {/* 슬라이드 카드 리스트 */}
-      <div className="mt-6">
-        <PortfolioCardList projects={filtered} />
-      </div>
-    </section>
+      <PortfolioSection />
+    </>
   );
 };
 

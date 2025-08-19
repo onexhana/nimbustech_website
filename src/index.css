@@ -2,9 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+/* 
+========================================
+🎨 PRETENDARD 폰트 전역 적용 - CSS 방식
+========================================
+모든 HTML 요소에 Pretendard 폰트가 기본으로 적용됩니다.
+:root에 설정하여 CSS 변수와 함께 전역으로 상속됩니다.
+========================================
+*/
 
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  /* 🎨 PRETENDARD 폰트 스택 - 우선순위별 fallback 설정 */
+  font-family: 'Pretendard Variable', 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
@@ -12,10 +21,11 @@
   color: #213547;
   background-color: #ffffff;
 
+  /* 폰트 렌더링 최적화 설정 */
   font-synthesis: none;
   text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;  /* macOS/iOS 폰트 스무딩 */
+  -moz-osx-font-smoothing: grayscale;   /* Firefox 폰트 스무딩 */
 }
 
 a {
@@ -27,11 +37,14 @@ a:hover {
   color: #535bf2;
 }
 
+/* 🎨 BODY 요소에 PRETENDARD 폰트 명시적 적용 */
 body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
   background-color: #ffffff;
+  /* body 요소에도 명시적으로 Pretendard 폰트 적용 (이중 보장) */
+  font-family: 'Pretendard Variable', 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
 }
 
 h1 {

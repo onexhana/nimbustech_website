@@ -15,7 +15,6 @@ interface AboutCardProps {
 export default function AboutCardNoEffect({ title, description, detailLink }: AboutCardProps) {
   return (
     <div
-      // 카드 컨테이너: 배경색, 그림자, 크기, 패딩 설정 (호버 효과 비활성화)
       className="bg-gray-50 rounded-lg p-6 border border-gray-200"
       style={{
         backgroundColor: '#f9fafb',
@@ -30,10 +29,9 @@ export default function AboutCardNoEffect({ title, description, detailLink }: Ab
         width: '480px',
         maxWidth: '480px',
         flexShrink: 0,
-        // transition: 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)', // 호버 transition 제거
+        /* transition: 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)' - 호버 transition 제거 */
         cursor: 'default'
       }}
-       //onMouseEnter 및 onMouseLeave 핸들러를 주석 처리하여 효과를 비활성화합니다.
        onMouseEnter={(e) => {
          e.currentTarget.style.transform = 'translateY(-8px)';
          e.currentTarget.style.boxShadow = '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)';
@@ -43,6 +41,8 @@ export default function AboutCardNoEffect({ title, description, detailLink }: Ab
          e.currentTarget.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)';
        }}
     >
+      {/* 카드 컨테이너: 배경색, 그림자, 크기, 패딩 설정 (호버 효과 비활성화) */}
+      {/* onMouseEnter 및 onMouseLeave 핸들러를 주석 처리하여 효과를 비활성화합니다. */}
       <h3 
         className="font-semibold text-blue-600 mb-4 text-base leading-tight" 
         style={{ 
