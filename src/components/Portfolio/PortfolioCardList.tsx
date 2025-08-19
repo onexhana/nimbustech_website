@@ -29,30 +29,39 @@ const PortfolioCardList = ({ projects }: Props) => {
     );
   }
 
+  // 무한 루프를 위해 프로젝트를 두 배로 복제
+  const duplicatedProjects = [...projects, ...projects];
+
   return (
     <div className="relative w-full">
       <div className="flex items-center gap-8">
         {/* 카드 3개 컨테이너 */}
-        <div className="flex-1 min-w-0" style={{ maxWidth: 'calc(380px * 3 + 32px * 2)', overflow: 'hidden' }}>
+        <div className="flex-1 min-w-0" style={{ width: 'calc(380px * 3 + 32px * 2)', overflow: 'hidden' }}>
           <Swiper
             onSwiper={(swiper) => {
+              swiperRef.current = swiper;
+            }}
+            onInit={(swiper) => {
               swiperRef.current = swiper;
             }}
             spaceBetween={32}
             slidesPerView={3}
             slidesPerGroup={1}
             loop={true}
-            loopedSlides={projects.length}
+            loopedSlides={duplicatedProjects.length}
             pagination={false}
             navigation={false}
             allowTouchMove={true}
-            freeMode={false}
             centeredSlides={false}
+            speed={300}
+            resistance={false}
+            resistanceRatio={0}
+            loopAdditionalSlides={projects.length}
             watchSlidesProgress={true}
             className="portfolio-swiper"
           >
-            {projects.map((project) => (
-              <SwiperSlide key={project.id} style={{ width: '380px', flexShrink: 0 }}>
+            {duplicatedProjects.map((project, index) => (
+              <SwiperSlide key={`${project.id}-${index}`}>
                 <PortfolioCard
                   id={project.id}
                   title={project.title}
@@ -67,26 +76,24 @@ const PortfolioCardList = ({ projects }: Props) => {
           {/* Swiper 강제 설정을 위한 스타일 */}
           <style>{`
             .portfolio-swiper {
-              width: 1204px !important;
-              max-width: 1204px !important;
+              width: calc(380px * 3 + 32px * 2) !important;
               overflow: visible !important;
             }
             .portfolio-swiper .swiper-wrapper {
-              width: 1204px !important;
               overflow: visible !important;
             }
             .portfolio-swiper .swiper-slide {
               width: 380px !important;
               flex-shrink: 0 !important;
             }
-            /* 카드 간격 및 그림자 조정 */
-            .portfolio-swiper .swiper-slide {
-              display: flex !important;
-              justify-content: center !important;
-              align-items: center !important;
-            }
             .portfolio-swiper .swiper-slide > div {
               margin: 10px 5px;
+            }
+            /* 무한 루프 보장 */
+            .portfolio-swiper .swiper-slide-duplicate {
+              opacity: 1 !important;
+              display: block !important;
+              visibility: visible !important;
             }
           `}</style>
         </div>
