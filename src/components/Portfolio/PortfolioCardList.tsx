@@ -1,5 +1,9 @@
-import { useMemo, useRef } from "react";
+import { useRef } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
 import PortfolioCard from "./PortfolioCard";
+
+// Swiper 스타일 import
+import "swiper/swiper-bundle.css";
 
 type Project = {
   id: number;
@@ -14,67 +18,64 @@ type Props = {
 };
 
 const PortfolioCardList = ({ projects }: Props) => {
-  const scrollRef = useRef<HTMLDivElement | null>(null);
-
-  const cardWidthPx = useMemo(() => 520, []); // 시안에 근접한 카드 폭(px)
-  const gapPx = useMemo(() => 32, []); // 카드 간격(px)
-
-  const handleNext = () => {
-    if (!scrollRef.current) return;
-    scrollRef.current.scrollBy({ left: cardWidthPx + gapPx, behavior: "smooth" });
-  };
-
-  const handlePrev = () => {
-    if (!scrollRef.current) return;
-    scrollRef.current.scrollBy({ left: -(cardWidthPx + gapPx), behavior: "smooth" });
-  };
+  const swiperRef = useRef<any>(null);
+  
+  // 카드가 없는 경우 처리
+  if (!projects || projects.length === 0) {
+    return (
+      <div className="flex items-center justify-center h-64 text-gray-500">
+        표시할 포트폴리오가 없습니다.
+      </div>
+    );
+  }
 
   return (
-    <div className="relative">
-      <div
-        ref={scrollRef}
-        className="no-scrollbar flex overflow-x-auto snap-x snap-mandatory pr-2"
-        style={{ 
-          scrollBehavior: "smooth", 
-          scrollbarWidth: "none",
-          gap: "62px" // 카드 간격 설정
-        }}
-      >
-        {/* 웹킷 스크롤바 숨김 */}
-        <style>{`
-          .no-scrollbar::-webkit-scrollbar { display: none; }
-        `}</style>
-        {projects.map((project) => (
-          <div
-            key={project.id}
-            className="snap-start shrink-0"
+    <div className="relative w-full">
+      <div className="flex items-center gap-8">
+        {/* 카드 3개 컨테이너 */}
+        <div className="flex-1 min-w-0" style={{ maxWidth: 'calc(380px * 3 + 32px * 2)' }}>
+          <Swiper
+            onSwiper={(swiper) => {
+              swiperRef.current = swiper;
+            }}
+            spaceBetween={32}
+            slidesPerView={3}
+            slidesPerGroup={1}
+            loop={projects.length > 3}
+            pagination={false}
+            navigation={false}
+            allowTouchMove={true}
+            freeMode={false}
+            centeredSlides={false}
+            className="portfolio-swiper w-full"
           >
-            <PortfolioCard 
-              id={project.id}
-              title={project.title}
-              description={project.description}
-              category={project.category}
-              image={project.image}
-            />
-          </div>
-        ))}
-      </div>
+            {projects.map((project) => (
+              <SwiperSlide key={project.id}>
+                <PortfolioCard
+                  id={project.id}
+                  title={project.title}
+                  description={project.description}
+                  category={project.category}
+                  image={project.image}
+                />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
 
-      {/* 좌우 이동 버튼 */}
-      <button
-        aria-label="previous"
-        onClick={handlePrev}
-        className="hidden md:flex items-center justify-center absolute -left-5 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white border border-gray-200 shadow hover:bg-gray-50"
-      >
-        ‹
-      </button>
-      <button
-        aria-label="next"
-        onClick={handleNext}
-        className="hidden md:flex items-center justify-center absolute -right-5 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white border border-gray-200 shadow hover:bg-gray-50"
-      >
-        ›
-      </button>
+        {/* 우측 화살표 버튼 */}
+        {projects.length > 3 && (
+          <button
+            aria-label="다음 카드"
+            onClick={() => swiperRef.current?.slideNext()}
+            className="w-12 h-12 rounded-full bg-white border-2 border-[#00A3E0] text-[#00A3E0] hover:bg-[#00A3E0] hover:text-white shadow-lg transition-all duration-200 flex items-center justify-center shrink-0"
+          >
+            <svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M1 1L7 7L1 13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </button>
+        )}
+      </div>
     </div>
   );
 };

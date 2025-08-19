@@ -9,8 +9,12 @@ interface PortfolioCardProps {
 const PortfolioCard = ({ title, description, category, image }: PortfolioCardProps) => {
   return (
     <div 
-      className="bg-white rounded-[24px] p-6 shadow-lg border border-gray-200 hover:shadow-xl transition-shadow duration-300"
-      style={{ width: '380px', height: '459px' }} // 카드 크기 설정
+      className="rounded-[24px] p-6 shadow-lg border border-gray-200 hover:shadow-xl transition-shadow duration-300"
+      style={{ 
+        width: '380px', 
+        height: '459px',
+        backgroundColor: '#f9fafb' // AboutCard와 동일한 배경색
+      }}
     >
       {/* 제목 */}
       <div className="text-center mb-4">
@@ -18,7 +22,11 @@ const PortfolioCard = ({ title, description, category, image }: PortfolioCardPro
       </div>
       
       {/* 설명 텍스트 */}
-      <p className="text-black text-[16px] text-center mb-6 font-medium">
+      <p className="text-center mb-6 font-medium"
+         style={{ 
+           color: '#374151', // AboutCard와 동일한 텍스트 색상
+           fontSize: '16px'
+         }}>
         {description}
       </p>
       
