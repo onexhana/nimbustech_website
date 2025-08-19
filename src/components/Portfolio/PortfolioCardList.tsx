@@ -33,7 +33,7 @@ const PortfolioCardList = ({ projects }: Props) => {
     <div className="relative w-full">
       <div className="flex items-center gap-8">
         {/* 카드 3개 컨테이너 */}
-        <div className="flex-1 min-w-0" style={{ maxWidth: 'calc(380px * 3 + 32px * 2)' }}>
+        <div className="flex-1 min-w-0" style={{ maxWidth: 'calc(380px * 3 + 32px * 2)', overflow: 'hidden' }}>
           <Swiper
             onSwiper={(swiper) => {
               swiperRef.current = swiper;
@@ -41,16 +41,18 @@ const PortfolioCardList = ({ projects }: Props) => {
             spaceBetween={32}
             slidesPerView={3}
             slidesPerGroup={1}
-            loop={projects.length > 3}
+            loop={true}
+            loopedSlides={projects.length}
             pagination={false}
             navigation={false}
             allowTouchMove={true}
             freeMode={false}
             centeredSlides={false}
-            className="portfolio-swiper w-full"
+            watchSlidesProgress={true}
+            className="portfolio-swiper"
           >
             {projects.map((project) => (
-              <SwiperSlide key={project.id}>
+              <SwiperSlide key={project.id} style={{ width: '380px', flexShrink: 0 }}>
                 <PortfolioCard
                   id={project.id}
                   title={project.title}
@@ -61,10 +63,36 @@ const PortfolioCardList = ({ projects }: Props) => {
               </SwiperSlide>
             ))}
           </Swiper>
+          
+          {/* Swiper 강제 설정을 위한 스타일 */}
+          <style>{`
+            .portfolio-swiper {
+              width: 1204px !important;
+              max-width: 1204px !important;
+              overflow: visible !important;
+            }
+            .portfolio-swiper .swiper-wrapper {
+              width: 1204px !important;
+              overflow: visible !important;
+            }
+            .portfolio-swiper .swiper-slide {
+              width: 380px !important;
+              flex-shrink: 0 !important;
+            }
+            /* 카드 간격 및 그림자 조정 */
+            .portfolio-swiper .swiper-slide {
+              display: flex !important;
+              justify-content: center !important;
+              align-items: center !important;
+            }
+            .portfolio-swiper .swiper-slide > div {
+              margin: 10px 5px;
+            }
+          `}</style>
         </div>
 
         {/* 우측 화살표 버튼 */}
-        {projects.length > 3 && (
+        {projects.length > 1 && (
           <button
             aria-label="다음 카드"
             onClick={() => swiperRef.current?.slideNext()}
