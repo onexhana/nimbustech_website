@@ -29,8 +29,8 @@ const PortfolioCardList = ({ projects }: Props) => {
     );
   }
 
-  // 무한 루프를 위해 프로젝트를 두 배로 복제
-  const duplicatedProjects = [...projects, ...projects];
+  // 무제한 반복을 위해 프로젝트를 여러 번 복제 (정말 끝없이!)
+  const duplicatedProjects = Array(10).fill(projects).flat();
 
   return (
     <div className="relative w-full">
@@ -48,7 +48,7 @@ const PortfolioCardList = ({ projects }: Props) => {
             slidesPerView={3}
             slidesPerGroup={1}
             loop={true}
-            loopedSlides={duplicatedProjects.length}
+            loopedSlides={Math.min(duplicatedProjects.length, 50)}
             pagination={false}
             navigation={false}
             allowTouchMove={true}
@@ -56,8 +56,10 @@ const PortfolioCardList = ({ projects }: Props) => {
             speed={300}
             resistance={false}
             resistanceRatio={0}
-            loopAdditionalSlides={projects.length}
-            watchSlidesProgress={true}
+            loopAdditionalSlides={20}
+            watchSlidesProgress={false}
+            freeMode={false}
+            freeModeSticky={false}
             className="portfolio-swiper"
           >
             {duplicatedProjects.map((project, index) => (
