@@ -1,17 +1,14 @@
-import { BrowserRouter } from 'react-router-dom';
-import MainRouter from './routes/MainRouter';
 import Header from './components/common/Header';
-import Footer from './components/common/Footer'; // ✅ Footer 추가
+import MainPage from './pages/MainPage';
 
 function App() {
   return (
-    <BrowserRouter>
+    <div className="min-h-screen">
       <Header />
-      <main className="pt-16">
-        <MainRouter />
+      <main>
+        <MainPage />
       </main>
-      <Footer /> {/* ✅ 여기 추가 */}
-    </BrowserRouter>
+    </div>
   );
 }
 
