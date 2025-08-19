@@ -14,7 +14,6 @@ type Props = {
 };
 
 const PortfolioCardList = ({ projects }: Props) => {
-
   return (
     <div>
       <div
