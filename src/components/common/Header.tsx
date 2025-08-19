@@ -1,14 +1,23 @@
-import { Link } from 'react-router-dom';
-
 export default function Header() {
   const navItems = [
-    { to: '/', label: 'Home' },
-    { to: '/about', label: 'About' },
-    { to: '/portfolio', label: 'Portfolio' },
-    { to: '/contact', label: 'Contact' },
+    { to: 'home', label: 'Home' },
+    { to: 'about', label: 'About' },
+    { to: 'portfolio', label: 'Portfolio' },
+    { to: 'contact', label: 'Contact' },
   ];
+  
   const linkClass =
-    'cursor-pointer no-underline text-[#00A3E0] hover:text-[#000000] active:text-black focus:text-black mr-5 inline-flex items-center leading-none';
+    'cursor-pointer no-underline text-[#00A3E0] hover:text-[#000000] active:text-black focus:text-black mr-5 inline-flex items-center leading-none transition-colors duration-200';
+
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+  };
 
   return (
     <header
@@ -37,16 +46,22 @@ export default function Header() {
         {/* 네비게이션 메뉴 */}
         <nav className="flex items-center text-[#00A3E0] font-bold text-[20px] md:text-[16px]" style={{ marginTop: '12px' }}>
           {navItems.map(({ to, label }) => (
-            <Link
+            <button
               key={to}
-              to={to}
+              onClick={() => scrollToSection(to)}
               className={linkClass}
-              style={{ textDecoration: 'none', marginRight:
-                
-                '20px', marginTop: '10px' }}
+              style={{ 
+                textDecoration: 'none', 
+                marginRight: '20px', 
+                marginTop: '10px',
+                background: 'none',
+                border: 'none',
+                padding: 0,
+                font: 'inherit'
+              }}
             >
               {label}
-            </Link>
+            </button>
           ))}
         </nav>
       </div>

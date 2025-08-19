@@ -22,7 +22,10 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+<<<<<<< HEAD
+=======
 _inner_backup/
 node_modules/
 dist/
 .env
+>>>>>>> feat/sumin-portfolio

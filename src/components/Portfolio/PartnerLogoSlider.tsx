@@ -62,20 +62,33 @@ function Track({
   logoHeight: number;
   gap: number;
 }) {
-  // 한 절반을 충분히 복제해 화면을 채운 뒤 동일한 절반을 한 번 더 이어 붙여 -50% 지점에서 매끄럽게 루프하는 것
-  const repeatedHalfLogos: Logo[] = Array.from({ length: COPIES_PER_HALF }).flatMap(
-    () => logos,
-  );
-  const rollingSequence = [...repeatedHalfLogos, ...repeatedHalfLogos];
+  // 한 절반을 충분히 복제한 뒤 두 번 이어붙여서 -50% 지점에서 매끄럽게 루프
+  const rollingSequence = Array(COPIES_PER_HALF * 2)
+    .fill(logos)
+    .flat();
+
   return (
     <div className="relative w-full overflow-hidden">
       <motion.div
         className="flex items-center min-w-[200%] whitespace-nowrap py-2"
-        // 간격(px)과 성능 최적화
-        style={{ columnGap: gap, willChange: "transform" }}
-        // 0% → -50% (또는 반대)로만 이동 후 즉시 처음 위치로 점프하여 끊김 없이 무한 반복
+        style={{ 
+          columnGap: gap, 
+          willChange: "transform",
+          // 깜빡임 방지: 브라우저 최적화 설정
+          backfaceVisibility: "hidden",
+          perspective: 1000,
+          transform: "translateZ(0)" // GPU 가속 활성화
+        }}
         animate={{ x: reverse ? ["-50%", "0%"] : ["0%", "-50%"] }}
-        transition={{ duration, repeat: Infinity, repeatType: "loop", ease: "linear" }}
+        transition={{ 
+          duration, 
+          repeat: Infinity, 
+          ease: "linear",
+          // 깜빡임 방지: 부드러운 반복 설정 (새로고침 대신 상태 변경)
+          repeatType: "loop",
+          // 브라우저 임계값에서 깜빡임 방지
+          type: "tween"
+        }}
       >
         {rollingSequence.map((logo, i) => (
           <img
@@ -98,51 +111,39 @@ function Track({
 function PartnerLogoSlider({
   logoHeight = 80,
   gap = 80,
-  durationTop = 20,
-  durationBottom = 20,
+  durationTop = 30,      // 윗줄 1회 이동 시간(초) → 값이 클수록 느려짐
+  durationBottom = 30,   // 아랫줄 1회 이동 시간(초) → 값이 클수록 느려짐
   rowSpacing = 30,
   bottomSpacing = 30,
-  speed = 1,
-  speedTop,
-  speedBottom,
+  speed = 1,             // 전체 공통 배속 (1=기본, 2=2배 빠름, 0.5=절반 속도)
+  speedTop,               // 윗줄 전용 배속 (미지정 시 speed 사용)
+  speedBottom,            // 아랫줄 전용 배속 (미지정 시 speed 사용)
 }: PartnerLogoSliderProps) {
-  // 배속 적용: 값이 클수록 더 빠르게 진행. 0 또는 음수 입력 보호
-  const getSafeFactor = (value: number) => (value > 0 ? value : 1);
-  const topFactor = getSafeFactor(speedTop ?? speed);
-  const bottomFactor = getSafeFactor(speedBottom ?? speed);
-  const topDuration = durationTop / topFactor;
-  const bottomDuration = durationBottom / bottomFactor;
+
+  // 배속 계산 (0 또는 음수 방지)
+  const safeFactor = (v: number) => (v > 0 ? v : 1);
+
+  // 최종 윗줄/아랫줄 속도 계산
+  // 예: durationTop=20, speed=2 → 20/2 = 10초에 1회 이동
+  const topDuration = durationTop / safeFactor(speedTop ?? speed);
+  const bottomDuration = durationBottom / safeFactor(speedBottom ?? speed);
+
+  const rows = [
+    { logos: ROW1, duration: topDuration },           // 윗줄 (오른쪽 → 왼쪽)
+    { logos: ROW2, duration: bottomDuration, reverse: true }, // 아랫줄 (왼쪽 → 오른쪽)
+  ];
+
   return (
     <section aria-label="협력사 로고 슬라이더" className="w-full">
-      {/* 시안 문구 */}
-      <p
-        style={{
-          textAlign: "center",
-          fontSize: "25px",
-          fontWeight: "bold",
-          color: "#374151",
-          marginBottom: "40px",
-        }}
-        >
+      <p className="text-center text-[25px] font-bold text-gray-700 mb-10">
         님버스테크와 함께 하고 있습니다
-    </p>
-
-      {/* 윗줄: 우 → 좌 */}
-      <Track logos={ROW1} duration={topDuration} logoHeight={logoHeight} gap={gap} />
-
-      {/* 아랫줄: 좌 → 우 */}
-      <div style={{ marginTop: rowSpacing }}>
-        <Track
-          logos={ROW2}
-          duration={bottomDuration}
-          reverse
-          logoHeight={logoHeight}
-          gap={gap}
-        />
-      </div>
-      {bottomSpacing > 0 && (
-        <div style={{ height: bottomSpacing }} />
-      )}
+      </p>
+      {rows.map((row, i) => (
+        <div key={i} style={{ marginTop: i === 0 ? 0 : rowSpacing }}>
+          <Track {...row} logoHeight={logoHeight} gap={gap} />
+        </div>
+      ))}
+      {bottomSpacing > 0 && <div style={{ height: bottomSpacing }} />}
     </section>
   );
 }

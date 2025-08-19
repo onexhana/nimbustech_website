@@ -9,12 +9,12 @@ interface PortfolioCardProps {
 const PortfolioCard = ({ title, description, category, image }: PortfolioCardProps) => {
   return (
     <div 
-      className="rounded-[24px] p-10 transition-all duration-300 flex flex-col justify-start"
+      className="rounded-[24px] p-10 transition-all duration-300"
       style={{ 
-        width: '420px', 
-        height: '420px', 
+        width: '380px', 
+        height: '400px', 
         backgroundColor: '#f9fafb',
-        boxShadow: '0 4px 20px rgba(0, 0, 0, 0.15), 0 1px 4px rgba(0, 0, 0, 0.1)'
+        boxShadow: '0 4px 10px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.04)'
       }} // 카드 크기, 배경색 및 부드러운 그림자
     >
       {/* 컨텐츠 그룹 - 제목/설명/이미지 묶음 */}
