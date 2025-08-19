@@ -56,10 +56,8 @@ const PortfolioCardList = ({ projects }: Props) => {
             speed={300}
             resistance={false}
             resistanceRatio={0}
-            loopAdditionalSlides={20}
             watchSlidesProgress={false}
             freeMode={false}
-            freeModeSticky={false}
             className="portfolio-swiper"
           >
             {duplicatedProjects.map((project, index) => (
