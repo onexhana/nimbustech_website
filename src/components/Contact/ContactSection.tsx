@@ -127,13 +127,13 @@ export default function ContactSection() {
           >
             {/* 고객지원 버튼 */}
             <button
-              className={`text-white font-bold transition-all duration-300 hover:shadow-lg hover:-translate-y-1 ${isMobile ? 'bg-[#00A3E0] w-full mt-8 h-[74px] px-8 flex items-center justify-center text-[24px] relative overflow-hidden' : ''}`}
+              className={`text-white font-bold transition-all duration-300 hover:shadow-lg hover:-translate-y-1 ${isMobile ? 'bg-[#00A3E0] w-full mt-8 h-[74px] px-8 flex items-center justify-center text-[24px] relative overflow-hidden border-none text-white' : ''}`}
               style={isMobile ? undefined : { backgroundColor: '#00A3E0', width: '550px', marginTop: '240px', display: 'flex', alignItems: 'center', justifyContent: 'center', height: '74px', padding: '0 32px', fontSize: '24px', color: '#ffffff', fontWeight: '700', borderRadius: '0px', border: 'none', cursor: 'pointer', position: 'relative', overflow: 'hidden' }}
               onClick={() => setUserType('inquiry')}
             >
               <span
-                className={isMobile ? 'relative z-10' : undefined}
-                style={isMobile ? undefined : { position: 'relative', zIndex: 1 }}
+                className={isMobile ? 'relative z-10 text-white !text-white' : undefined}
+                style={isMobile ? {color: '#ffffff'} : { position: 'relative', zIndex: 1 }}
               >
                 고객사 직원
               </span>
@@ -141,13 +141,13 @@ export default function ContactSection() {
 
             {/* 인재채용 버튼 */}
             <button
-              className={`text-white font-bold transition-all duration-300 hover:shadow-lg hover:-translate-y-1 ${isMobile ? 'bg-[#6b7280] w-full mt-4 h-[74px] px-8 flex items-center justify-center text-[24px] relative overflow-hidden' : ''}`}
+              className={`text-white font-bold transition-all duration-300 hover:shadow-lg hover:-translate-y-1 ${isMobile ? 'bg-[#6b7280] w-full mt-4 h-[74px] px-8 flex items-center justify-center text-[24px] relative overflow-hidden border-none text-white' : ''}`}
               style={isMobile ? undefined : { backgroundColor: '#6b7280', width: '550px', marginTop: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center', height: '74px', padding: '0 32px', fontSize: '24px', color: '#ffffff', fontWeight: '700', borderRadius: '0px', border: 'none', cursor: 'pointer', position: 'relative', overflow: 'hidden' }}
               onClick={() => setUserType('hiring')}
             >
               <span
-                className={isMobile ? 'relative z-10' : undefined}
-                style={isMobile ? undefined : { position: 'relative', zIndex: 1 }}
+                className={isMobile ? 'relative z-10 text-white !text-white' : undefined}
+                style={isMobile ? {color: '#ffffff'} : { position: 'relative', zIndex: 1 }}
               >
                 인재 채용
               </span>
@@ -170,7 +170,21 @@ export default function ContactSection() {
             }} />
             {/* 인라인 폼 렌더링 */}
             {userType === 'inquiry' && (
-              <div style={{
+              <div style={isMobile ? {
+                position: 'fixed',
+                zIndex: 1001,
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                width: '90%',
+                maxWidth: '400px',
+                backgroundColor: 'white',
+                borderRadius: '8px',
+                padding: '20px',
+                boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+                overflow: 'auto',
+                maxHeight: '80vh'
+              } : {
                 position: 'relative',
                 zIndex: 1001,
                 marginTop: '-700px',
@@ -186,7 +200,21 @@ export default function ContactSection() {
               </div>
             )}
             {userType === 'hiring' && (
-              <div style={{
+              <div style={isMobile ? {
+                position: 'fixed',
+                zIndex: 1001,
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                width: '90%',
+                maxWidth: '400px',
+                backgroundColor: 'white',
+                borderRadius: '8px',
+                padding: '20px',
+                boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+                overflow: 'auto',
+                maxHeight: '80vh'
+              } : {
                 position: 'relative',
                 zIndex: 1001,
                 marginTop: '-700px',
