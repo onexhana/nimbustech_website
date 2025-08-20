@@ -53,6 +53,27 @@ h1 {
 }
 
 
+
+
+/* 헤더 반응형 CSS */
+@media screen and (max-width: 767px) {
+  .desktop-menu-nav {
+    display: none !important;
+  }
+  .mobile-hamburger-btn {
+    display: block !important;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .desktop-menu-nav {
+    display: flex !important;
+  }
+  .mobile-hamburger-btn {
+    display: none !important;
+  }
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;

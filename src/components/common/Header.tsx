@@ -1,4 +1,9 @@
+import { useState } from 'react';
+import { FaBars } from "react-icons/fa";
+
 export default function Header() {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  
   const navItems = [
     { to: 'home', label: 'Home' },
     { to: 'about', label: 'About' },
@@ -17,6 +22,8 @@ export default function Header() {
         block: 'start'
       });
     }
+    // 모바일 메뉴 닫기
+    setIsMobileMenuOpen(false);
   };
 
   return (
@@ -43,8 +50,11 @@ export default function Header() {
           />
         </div>
 
-        {/* 네비게이션 메뉴 */}
-        <nav className="flex items-center text-[#00A3E0] font-bold text-[20px] md:text-[16px]" style={{ marginTop: '12px' }}>
+        {/* 데스크톱 네비게이션 메뉴 - md 이상에서만 표시 */}
+        <nav 
+          className="desktop-menu-nav flex items-center text-[#00A3E0] font-bold text-[20px]" 
+          style={{ marginTop: '12px' }}
+        >
           {navItems.map(({ to, label }) => (
             <button
               key={to}
@@ -64,7 +74,33 @@ export default function Header() {
             </button>
           ))}
         </nav>
+
+        {/* 모바일 햄버거 버튼 - md 미만에서만 표시 */}
+        <button 
+          className="mobile-hamburger-btn p-2"
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          style={{ marginTop: '20px', marginRight: '20px' }}
+        >
+          <FaBars size={20} color="#00A3E0" />
+        </button>
       </div>
+
+      {/* 모바일 드롭다운 메뉴 */}
+      {isMobileMenuOpen && (
+        <div className="md:hidden bg-white border-t border-gray-200">
+          <nav className="px-8 py-4">
+            {navItems.map(({ to, label }) => (
+              <button
+                key={to}
+                onClick={() => scrollToSection(to)}
+                className="block w-full text-left py-3 text-[#00A3E0] hover:text-[#000000] font-bold text-[18px] transition-colors duration-200"
+              >
+                {label}
+              </button>
+            ))}
+          </nav>
+        </div>
+      )}
     </header>
   );
 }
