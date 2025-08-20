@@ -100,14 +100,19 @@ export default function Header() {
       {/* 모바일 드롭다운 메뉴 */}
       {isMobileMenuOpen && (
         <div className="md:hidden bg-white border-t border-gray-200">
-          <nav className="px-8 py-4">
+          <nav className="px-8 py-4space-y-2">
             {navItems.map(({ to, label }, idx) => (
               <button
                 key={to}
                 onClick={() => scrollToSection(to)}
-                className={`block w-full text-left py-3 font-bold text-[18px] transition-colors duration-200
-                  text-[#000000] hover:text-[#00A3E0]
-                  ${idx !== navItems.length - 1 ? "border-b border-gray-300" : ""}`}
+                className="block w-full text-left py-6 text-[18px] font-bold
+                     bg-[#ffffff] text-[#00A3E0]  border border-[#00A3E0] rounded
+                     hover:bg-[#00A3E0] hover:text-[#ffffff]
+                     transition-colors duration-200 appearance-none"
+                     // block=블록 요소, w-full=너비 100%, text-left=왼쪽 정렬, py-4=패딩 16px, 
+                     // text-[18px]=텍스트 크기 18px, font-bold=굵게, 
+                     // bg-white=배경 흰색, text-[#00A3E0]=텍스트 색상 파란색, hover:text-black=호버 시 텍스트 검정색, 
+                     // transition-colors duration-200=트랜지션 효과 200ms
                   >
                 {label}
               </button>
