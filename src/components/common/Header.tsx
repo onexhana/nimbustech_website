@@ -43,10 +43,18 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-8 h-16 flex justify-between items-center">
         {/* 로고 영역 */}
         <div className="flex items-center space-x-2" style={{ marginLeft: '34px', marginTop: '22px' }}> 
+
+           {/* 데스크톱 로고 */}
           <img
             src="/logo-blue-wide.png"
             alt="NIMBUS TECH 로고"
-            style={{ height: '18px', width: 'auto', display: 'block' }} 
+            className="desktop-logo"
+          />
+          {/* 모바일 로고 */}
+          <img
+            src="/logo-blue-wide.png"
+            alt="NIMBUS TECH 심볼 로고"
+            className="mobile-logo"
           />
         </div>
 
@@ -77,7 +85,11 @@ export default function Header() {
 
         {/* 모바일 햄버거 버튼 - md 미만에서만 표시 */}
         <button 
-          className="mobile-hamburger-btn p-2"
+          className="mobile-hamburger-btn 
+            bg-transparent border-none shadow-none outline-none focus:outline-none" 
+            // bg-transparent=배경 제거, border-none=테두리 제거, shadow-none=그림자 제거, 
+            // outline-none/focus:outline-none=포커스 테두리 제거
+            
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           style={{ marginTop: '20px', marginRight: '20px' }}
         >
@@ -89,12 +101,14 @@ export default function Header() {
       {isMobileMenuOpen && (
         <div className="md:hidden bg-white border-t border-gray-200">
           <nav className="px-8 py-4">
-            {navItems.map(({ to, label }) => (
+            {navItems.map(({ to, label }, idx) => (
               <button
                 key={to}
                 onClick={() => scrollToSection(to)}
-                className="block w-full text-left py-3 text-[#00A3E0] hover:text-[#000000] font-bold text-[18px] transition-colors duration-200"
-              >
+                className={`block w-full text-left py-3 font-bold text-[18px] transition-colors duration-200
+                  text-[#000000] hover:text-[#00A3E0]
+                  ${idx !== navItems.length - 1 ? "border-b border-gray-300" : ""}`}
+                  >
                 {label}
               </button>
             ))}
