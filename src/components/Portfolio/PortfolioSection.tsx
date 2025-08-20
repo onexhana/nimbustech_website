@@ -19,9 +19,9 @@ export default function PortfolioSection() {
             onCategoryChange={setSelectedCategory}
           />
 
-          <div className="flex-1 flex flex-col h-full" style={{ marginLeft: '300px' }}>
+          <div className="flex-1 flex flex-col h-full items-start" style={{ marginLeft: '200px' }}>
             <h3 className="text-[36px] font-extrabold mb-6 text-black tracking-tight">{selectedCategory}</h3>
-            <div className="flex-1">
+            <div className="flex-1 w-full">
               <PortfolioCardList projects={filtered} />
             </div>
           </div>

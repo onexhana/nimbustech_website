@@ -34,9 +34,9 @@ const PortfolioCardList = ({ projects }: Props) => {
 
   return (
     <div className="relative w-full">
-      <div className="flex items-center gap-8">
-        {/* 카드 3개 컨테이너 */}
-        <div className="flex-1 min-w-0" style={{ width: 'calc(380px * 3 + 32px * 2)', overflow: 'hidden' }}>
+      <div className="flex items-center gap-4 md:gap-8">
+        {/* 카드 컨테이너 - 모바일: 1개, 웹: 3개 */}
+        <div className="portfolio-container flex-1 min-w-0 overflow-hidden" style={{ transform: 'translateX(-0px)', marginRight: '70px' }}>
           <Swiper
             onSwiper={(swiper) => {
               swiperRef.current = swiper;
@@ -46,6 +46,16 @@ const PortfolioCardList = ({ projects }: Props) => {
             }}
             spaceBetween={32}
             slidesPerView={3}
+            breakpoints={{
+              0: {
+                slidesPerView: 1,
+                spaceBetween: 32,
+              },
+              768: {
+                slidesPerView: 3,
+                spaceBetween: 32,
+              },
+            }}
             slidesPerGroup={1}
             loop={true}
             loopedSlides={Math.min(duplicatedProjects.length, 50)}
@@ -75,6 +85,7 @@ const PortfolioCardList = ({ projects }: Props) => {
           
           {/* Swiper 강제 설정을 위한 스타일 */}
           <style>{`
+            /* 기본(웹) 스타일 */
             .portfolio-swiper {
               width: calc(380px * 3 + 32px * 2) !important;
               overflow: visible !important;
@@ -95,6 +106,19 @@ const PortfolioCardList = ({ projects }: Props) => {
               display: block !important;
               visibility: visible !important;
             }
+            
+            /* 모바일 전용(768px 미만) 오버라이드 */
+            @media (max-width: 767.98px) {
+              .portfolio-container {
+                max-width: calc(100vw - 120px);
+              }
+              .portfolio-swiper {
+                width: 100% !important;
+              }
+              .portfolio-swiper .swiper-slide {
+                width: 100% !important;
+              }
+            }
           `}</style>
         </div>
 
@@ -103,11 +127,29 @@ const PortfolioCardList = ({ projects }: Props) => {
           <button
             aria-label="다음 카드"
             onClick={() => swiperRef.current?.slideNext()}
-            className="w-12 h-12 rounded-full bg-white border-2 border-[#00A3E0] text-[#00A3E0] hover:bg-[#00A3E0] hover:text-white shadow-lg transition-all duration-200 flex items-center justify-center shrink-0"
+            className="hover:bg-gray-100 transition-all duration-300 shrink-0"
+            style={{
+              backgroundColor: '#ffffff',
+              border: '1px solid #e5e7eb',
+              color: '#1f2937',
+              fontSize: '24px',
+              fontWeight: 'bold',
+              padding: '0',
+              borderRadius: '50%',
+              width: '50px',
+              height: '50px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              cursor: 'pointer',
+              boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+              lineHeight: '1',
+              position: 'relative',
+              zIndex: 10,
+              overflow: 'hidden'
+            }}
           >
-            <svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M1 1L7 7L1 13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
+            ›
           </button>
         )}
       </div>
