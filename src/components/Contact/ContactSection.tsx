@@ -5,12 +5,18 @@
 // 주요 기능: Contact 페이지 렌더링
 // ========================================
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import InquiryForm from './InquiryForm';
 import HiringForm from './HiringForm';
 
 export default function ContactSection() {
   const [userType, setUserType] = useState<'inquiry' | 'hiring' | null>(null);
+  const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 768);
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   return (
     <div className="w-full px-6 py-12 bg-white" style={{ position: 'relative', paddingTop: '120px' }}>
@@ -38,7 +44,10 @@ export default function ContactSection() {
         </h2>
 
         {/* 컨텐츠 영역 */}
-        <div className="flex" style={{ marginLeft: '50px', marginRight: '50px', gap: '100px' }}>
+        <div
+          className={`flex ${isMobile ? 'flex-col gap-8 mx-4' : ''}`}
+          style={isMobile ? undefined : { marginLeft: '50px', marginRight: '50px', gap: '100px' }}
+        >
           {/* 좌측 - 가치 섹션들 */}
           <div className="flex-1 space-y-16">
             {/* TRUST 섹션 */}
@@ -112,57 +121,36 @@ export default function ContactSection() {
           </div>
 
           {/* 우측 - 버튼 영역 */}
-          <div className="flex flex-col gap-8" style={{ minWidth: '300px' }}>
+          <div
+            className={`flex flex-col gap-8 ${isMobile ? 'min-w-full' : ''}`}
+            style={isMobile ? undefined : { minWidth: '300px' }}
+          >
             {/* 고객지원 버튼 */}
             <button
-              className="text-white font-bold transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
-              style={{
-                backgroundColor: '#00A3E0',
-                width: '550px',
-                marginTop: '240px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                height: '74px',
-                padding: '0 32px',
-                fontSize: '24px',
-                color: '#ffffff',
-                fontWeight: '700',
-                borderRadius: '0px',
-                border: 'none',
-                cursor: 'pointer',
-                position: 'relative',
-                overflow: 'hidden'
-              }}
+              className={`text-white font-bold transition-all duration-300 hover:shadow-lg hover:-translate-y-1 ${isMobile ? 'bg-[#00A3E0] w-full mt-8 h-[74px] px-8 flex items-center justify-center text-[24px] relative overflow-hidden' : ''}`}
+              style={isMobile ? undefined : { backgroundColor: '#00A3E0', width: '550px', marginTop: '240px', display: 'flex', alignItems: 'center', justifyContent: 'center', height: '74px', padding: '0 32px', fontSize: '24px', color: '#ffffff', fontWeight: '700', borderRadius: '0px', border: 'none', cursor: 'pointer', position: 'relative', overflow: 'hidden' }}
               onClick={() => setUserType('inquiry')}
             >
-              <span style={{ position: 'relative', zIndex: 1 }}>고객사 직원</span>
+              <span
+                className={isMobile ? 'relative z-10' : undefined}
+                style={isMobile ? undefined : { position: 'relative', zIndex: 1 }}
+              >
+                고객사 직원
+              </span>
             </button>
 
             {/* 인재채용 버튼 */}
             <button
-              className="text-white font-bold transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
-              style={{
-                backgroundColor: '#6b7280',
-                width: '550px',
-                marginTop: '40px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                height: '74px',
-                padding: '0 32px',
-                fontSize: '24px',
-                color: '#ffffff',
-                fontWeight: '700',
-                borderRadius: '0px',
-                border: 'none',
-                cursor: 'pointer',
-                position: 'relative',
-                overflow: 'hidden'
-              }}
+              className={`text-white font-bold transition-all duration-300 hover:shadow-lg hover:-translate-y-1 ${isMobile ? 'bg-[#6b7280] w-full mt-4 h-[74px] px-8 flex items-center justify-center text-[24px] relative overflow-hidden' : ''}`}
+              style={isMobile ? undefined : { backgroundColor: '#6b7280', width: '550px', marginTop: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center', height: '74px', padding: '0 32px', fontSize: '24px', color: '#ffffff', fontWeight: '700', borderRadius: '0px', border: 'none', cursor: 'pointer', position: 'relative', overflow: 'hidden' }}
               onClick={() => setUserType('hiring')}
             >
-              <span style={{ position: 'relative', zIndex: 1 }}>인재 채용</span>
+              <span
+                className={isMobile ? 'relative z-10' : undefined}
+                style={isMobile ? undefined : { position: 'relative', zIndex: 1 }}
+              >
+                인재 채용
+              </span>
             </button>
           </div>
         </div>
