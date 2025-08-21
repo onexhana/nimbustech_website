@@ -16,6 +16,9 @@ export default function HomeSection() {
 
   // 각 텍스트 줄의 색상 설정
   const colors = ['text-black', 'text-black', 'text-black', 'text-[#00A3E0]'];
+  
+  // 각 텍스트 줄의 폰트 두께 설정 (한글: font-black, 영어: font-black에서 더 강화)
+  const fontWeights = ['font-black', 'font-black', 'font-black', 'font-black'];
 
   useEffect(() => {
     const typingSpeed = 130; // 타이핑 속도 (밀리초)
@@ -51,7 +54,15 @@ export default function HomeSection() {
         <div className="space-y-8">
           {texts.map((text, index) => (
             <div key={index} className="min-h-[20vh]">
-              <span className={`text-[6vw] md:text-[8vw] lg:text-[10vw] xl:text-[12vw] font-extrabold tracking-tight ${colors[index]}`}>
+              <span 
+                className={`text-[6vw] md:text-[8vw] lg:text-[10vw] xl:text-[12vw] ${fontWeights[index]} tracking-tight ${colors[index]}`}
+                style={index === 3 ? { 
+                  fontWeight: '700', // 영어(NIMBUS TECH)는 더 두껍게
+                  textShadow: '0 0 1px currentColor' // 영어에 미세한 텍스트 그림자로 더 굵게 표현
+                } : { 
+                  fontWeight: '450' // 한글은 font-black보다 약간 두껍게
+                }}
+              >
                 {completedLines.includes(index) ? (
                   // 완성된 줄: 전체 텍스트 표시
                   text
