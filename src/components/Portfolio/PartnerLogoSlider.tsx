@@ -135,7 +135,16 @@ function PartnerLogoSlider({
 
   return (
     <section aria-label="협력사 로고 슬라이더" className="w-full">
-      <p className="text-center text-[25px] font-bold text-gray-700 mb-10">
+      <p 
+        className="text-center text-[35px] font-bold text-gray-700 mb-10"
+        style={{
+          fontSize: "clamp(28px, 3vw, 40px)",  // 화면 크기에 따라 반응형 글씨
+          fontWeight: 600,                     // 글씨 두께 (900 → extrabold보다 굵음)
+          marginTop: "120px",      // 위쪽 여백 크게
+          marginBottom: "80px",   // 아래쪽 여백 크게
+          lineHeight: "1.4",      // 가독성을 위해 줄간격
+        }}
+        >
         님버스테크와 함께 하고 있습니다
       </p>
       {rows.map((row, i) => (
