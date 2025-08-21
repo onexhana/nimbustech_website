@@ -22,9 +22,9 @@ export default function AboutCard({ title, description, detailLink }: AboutCardP
         borderRadius: "8px",
         padding: "16px",
         border: "1px solid #e5e7eb",
-        minHeight: "290px",
-        width: "380px",     // 카드 너비 축소
-        maxWidth: "380px",  // 카드 최대 너비 축소
+        minHeight: "20vw",
+        width: "25vw",
+        maxWidth: "25vw",
         flexShrink: 0,      // ✅ 강제로 줄어들지 않도록
         display: "flex",
       }}
@@ -44,7 +44,7 @@ export default function AboutCard({ title, description, detailLink }: AboutCardP
         className="font-semibold text-blue-600 leading-tight"
         style={{
           color: "#00A3E0",
-          fontSize: "28px",
+          fontSize: "2vw",
           fontWeight: "600",
           margin: "16px 0 24px 8px",
         }}
@@ -57,7 +57,7 @@ export default function AboutCard({ title, description, detailLink }: AboutCardP
         className="text-gray-700 space-y-2 flex-1 overflow-hidden"
         style={{
           color: "#374151",
-          fontSize: "18px",
+          fontSize: "1.2vw",
           fontWeight: "500",
           display: "flex",
           flexDirection: "column",
@@ -89,7 +89,7 @@ export default function AboutCard({ title, description, detailLink }: AboutCardP
             style={{
               color: "#00A3E0",
               fontWeight: "600",
-              fontSize: "14px",
+              fontSize: "1vw",
               textDecoration: "none",
             }}
           >
