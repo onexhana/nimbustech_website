@@ -52,6 +52,50 @@ h1 {
   line-height: 1.1;
 }
 
+/* 로고 모양 웹과 모바일 : 기본은 모바일 기준 */
+.desktop-logo {
+  display: none;
+}
+
+.mobile-logo {
+  display: block;
+  height: 12px;  /* 모바일 전용 크기 */
+  width: auto;
+}
+
+/* 768px 이상 데스크톱 */
+@media screen and (min-width: 768px) {
+  .desktop-logo {
+    display: block;
+    height: 18px;
+    width: auto;
+  }
+
+  .mobile-logo {
+    display: none;
+  }
+}
+
+
+
+/* 헤더 반응형 CSS */
+@media screen and (max-width: 767px) {
+  .desktop-menu-nav {
+    display: none !important;
+  }
+  .mobile-hamburger-btn {
+    display: block !important;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .desktop-menu-nav {
+    display: flex !important;
+  }
+  .mobile-hamburger-btn {
+    display: none !important;
+  }
+}
 
 @media (prefers-color-scheme: light) {
   :root {
