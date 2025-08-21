@@ -22,9 +22,9 @@ export default function AboutCard({ title, description, detailLink }: AboutCardP
         borderRadius: "8px",
         padding: "16px",
         border: "1px solid #e5e7eb",
-        minHeight: "360px",
-        width: "380px",     // ✅ 모든 카드 동일 너비로 고정
-        maxWidth: "380px",  // ✅ 초과 방지
+        minHeight: "290px",
+        width: "380px",     // 카드 너비 축소
+        maxWidth: "380px",  // 카드 최대 너비 축소
         flexShrink: 0,      // ✅ 강제로 줄어들지 않도록
         display: "flex",
       }}
