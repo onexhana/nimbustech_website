@@ -137,35 +137,36 @@ const PortfolioCardList = ({ projects }: Props) => {
           `}</style>
         </div>
 
-        {/* 우측 화살표 버튼 - 항상 고정 위치 */}
-        <button
-          aria-label="다음 카드"
-          onClick={() => swiperRef.current?.slideNext()}
-          className="hover:bg-gray-100 transition-all duration-300 shrink-0"
-          style={{
-            backgroundColor: '#ffffff',
-            border: '1px solid #e5e7eb',
-            color: '#1f2937',
-            fontSize: '24px',
-            fontWeight: 'bold',
-            padding: '0',
-            borderRadius: '50%',
-            width: '50px',
-            height: '50px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            cursor: 'pointer',
-            boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
-            lineHeight: '1',
-            position: 'relative',
-            zIndex: 10,
-            overflow: 'hidden',
-            marginLeft: '20px'
-          }}
-        >
-          ›
-        </button>
+        {/* 우측 화살표 버튼 */}
+        {projects.length > 1 && (
+          <button
+            aria-label="다음 카드"
+            onClick={() => swiperRef.current?.slideNext()}
+            className="hover:bg-gray-100 transition-all duration-300"
+            style={{
+              backgroundColor: '#ffffff',
+              border: 'none',
+              outline: 'none',
+              padding: '0',
+              fontSize: '28px',
+              fontWeight: 700,
+              borderRadius: '50%',
+              width: '50px',
+              height: '50px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              cursor: 'pointer',
+              boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+              position: 'relative',
+              zIndex: 10
+            }}
+          >
+            <svg width="50" height="50" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M9 6L15 12L9 18" stroke="#1f2937" strokeWidth="3" strokeLinecap="butt" strokeLinejoin="miter" />
+            </svg>
+          </button>
+        )}
       </div>
     </div>
   );
