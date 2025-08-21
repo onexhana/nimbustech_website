@@ -13,15 +13,15 @@ export default function PortfolioSection() {
     <div className="w-full">
       {/* 포트폴리오 메인 섹션 */}
       <div className="pt-[100px] pl-16 pr-12 pb-24 bg-white">
-        <div className="flex gap-16 items-start" style={{ marginLeft: '64px' }}>
+        <div className="flex items-start" style={{ marginLeft: '64px' }}>
           <CategoryFilter 
             selectedCategory={selectedCategory}
             onCategoryChange={setSelectedCategory}
           />
 
-          <div className="flex-1 flex flex-col h-full items-start" style={{ marginLeft: '200px' }}>
+          <div className="flex flex-col h-full items-start" style={{ marginLeft: '200px' }}>
             <h3 className="text-[36px] font-extrabold mb-6 text-black tracking-tight">{selectedCategory}</h3>
-            <div className="flex-1 w-full">
+            <div className="w-full">
               <PortfolioCardList projects={filtered} />
             </div>
           </div>

@@ -34,9 +34,9 @@ const PortfolioCardList = ({ projects }: Props) => {
 
   return (
     <div className="relative w-full">
-      <div className="flex items-center gap-4 md:gap-8">
-        {/* 카드 컨테이너 - 모바일: 1개, 웹: 3개 */}
-        <div className="portfolio-container flex-1 min-w-0 overflow-hidden" style={{ transform: 'translateX(-0px)', marginRight: '70px' }}>
+      <div className="flex items-center">
+        {/* 카드 컨테이너 - 화면 너비에 따라 동적 조정 */}
+        <div className="portfolio-container overflow-hidden portfolio-dynamic-width">
           <Swiper
             onSwiper={(swiper) => {
               swiperRef.current = swiper;
@@ -51,7 +51,11 @@ const PortfolioCardList = ({ projects }: Props) => {
                 slidesPerView: 1,
                 spaceBetween: 32,
               },
-              768: {
+              1200: {
+                slidesPerView: 2,
+                spaceBetween: 32,
+              },
+              1800: {
                 slidesPerView: 3,
                 spaceBetween: 32,
               },
@@ -83,11 +87,24 @@ const PortfolioCardList = ({ projects }: Props) => {
             ))}
           </Swiper>
           
-          {/* Swiper 강제 설정을 위한 스타일 */}
+          {/* Swiper 동적 크기 설정을 위한 스타일 */}
           <style>{`
-            /* 기본(웹) 스타일 */
+            /* 화면 너비별 동적 컨테이너 크기 */
+            .portfolio-dynamic-width {
+              width: calc(380px * 2 + 32px * 1 + 70px) !important; /* 기본: 2개 카드 + 화살표 공간 */
+              min-width: calc(380px * 2 + 32px * 1 + 70px) !important;
+            }
+            
+            /* 큰 화면(1800px 이상): 3개 카드 */
+            @media (min-width: 1800px) {
+              .portfolio-dynamic-width {
+                width: calc(380px * 3 + 32px * 2 + 70px) !important;
+                min-width: calc(380px * 3 + 32px * 2 + 70px) !important;
+              }
+            }
+            
             .portfolio-swiper {
-              width: calc(380px * 3 + 32px * 2) !important;
+              width: 100% !important;
               overflow: visible !important;
             }
             .portfolio-swiper .swiper-wrapper {
@@ -109,11 +126,9 @@ const PortfolioCardList = ({ projects }: Props) => {
             
             /* 모바일 전용(768px 미만) 오버라이드 */
             @media (max-width: 767.98px) {
-              .portfolio-container {
-                max-width: calc(100vw - 120px);
-              }
-              .portfolio-swiper {
-                width: 100% !important;
+              .portfolio-dynamic-width {
+                width: calc(100vw - 120px) !important;
+                min-width: auto !important;
               }
               .portfolio-swiper .swiper-slide {
                 width: 100% !important;
@@ -122,36 +137,35 @@ const PortfolioCardList = ({ projects }: Props) => {
           `}</style>
         </div>
 
-        {/* 우측 화살표 버튼 */}
-        {projects.length > 1 && (
-          <button
-            aria-label="다음 카드"
-            onClick={() => swiperRef.current?.slideNext()}
-            className="hover:bg-gray-100 transition-all duration-300 shrink-0"
-            style={{
-              backgroundColor: '#ffffff',
-              border: '1px solid #e5e7eb',
-              color: '#1f2937',
-              fontSize: '24px',
-              fontWeight: 'bold',
-              padding: '0',
-              borderRadius: '50%',
-              width: '50px',
-              height: '50px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              cursor: 'pointer',
-              boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
-              lineHeight: '1',
-              position: 'relative',
-              zIndex: 10,
-              overflow: 'hidden'
-            }}
-          >
-            ›
-          </button>
-        )}
+        {/* 우측 화살표 버튼 - 항상 고정 위치 */}
+        <button
+          aria-label="다음 카드"
+          onClick={() => swiperRef.current?.slideNext()}
+          className="hover:bg-gray-100 transition-all duration-300 shrink-0"
+          style={{
+            backgroundColor: '#ffffff',
+            border: '1px solid #e5e7eb',
+            color: '#1f2937',
+            fontSize: '24px',
+            fontWeight: 'bold',
+            padding: '0',
+            borderRadius: '50%',
+            width: '50px',
+            height: '50px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            cursor: 'pointer',
+            boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+            lineHeight: '1',
+            position: 'relative',
+            zIndex: 10,
+            overflow: 'hidden',
+            marginLeft: '20px'
+          }}
+        >
+          ›
+        </button>
       </div>
     </div>
   );

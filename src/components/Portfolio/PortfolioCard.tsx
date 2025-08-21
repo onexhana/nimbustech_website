@@ -18,7 +18,7 @@ const PortfolioCard = ({ title, description, category, image }: PortfolioCardPro
       }} // 카드 크기, 배경색 및 부드러운 그림자
     >
       {/* 컨텐츠 그룹 - 제목/설명/이미지 묶음 */}
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col items-center h-full">
         {/* 제목과 설명 */}
         <div className="text-center mb-4">
           <h3 className="text-[#00A3E0] text-[28px] font-bold" style={{ marginBottom: '2px' }}>{title}</h3>
