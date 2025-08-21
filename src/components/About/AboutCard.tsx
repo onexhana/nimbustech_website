@@ -3,10 +3,9 @@
 // ABOUT 페이지 개별 카드 컴포넌트
 // 담당자: About 페이지 팀
 // 주요 기능: 서비스 소개 카드, 호버 애니메이션
-// 수정 사항: 카드 크기 조정, 그림자 효과, 호버 모션
+// 수정 사항: 카드 크기 유동화, 동일 높이 유지, 그림자 효과, 호버 모션
 // ========================================
 
-// AboutCard 컴포넌트 props 타입 정의: 카드 제목(title)과 내용(description 배열)을 전달받습니다.
 interface AboutCardProps {
   title: string;
   description: string[];
@@ -15,78 +14,84 @@ interface AboutCardProps {
 }
 
 export default function AboutCard({ title, description, detailLink }: AboutCardProps) {
-  // ========================================
-  // 카드 렌더링 (호버 효과, 크기 조정 포함)
-  // ========================================
   return (
     <div
-      // 카드 컨테이너: 배경색, 그림자, 크기, 패딩 및 호버 트랜지션 설정
-      className="bg-gray-50 rounded-lg p-6 border border-gray-200"
+      className="bg-gray-50 rounded-lg border border-gray-200 shadow-sm transition-transform duration-300 cursor-pointer flex flex-col"
       style={{
-        backgroundColor: '#f9fafb',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: detailLink ? 'space-between' : 'flex-start',
-        borderRadius: '8px',
-        padding: '10px',
-        border: '1px solid #e5e7eb',
-        boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
-        height: '360px',
-        width: '480px',
-        maxWidth: '480px',
-        flexShrink: 0,
-        transition: 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-        cursor: 'pointer'
+        backgroundColor: "#f9fafb",
+        borderRadius: "8px",
+        padding: "16px",
+        border: "1px solid #e5e7eb",
+        minHeight: "360px",
+        width: "380px",     // ✅ 모든 카드 동일 너비로 고정
+        maxWidth: "380px",  // ✅ 초과 방지
+        flexShrink: 0,      // ✅ 강제로 줄어들지 않도록
+        display: "flex",
       }}
       onMouseEnter={(e) => {
-        // 카드가 호버되면 위로 이동하고 그림자를 강화합니다.
-        e.currentTarget.style.transform = 'translateY(-8px)';
-        e.currentTarget.style.boxShadow = '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)';
+        e.currentTarget.style.transform = "translateY(-8px)";
+        e.currentTarget.style.boxShadow =
+          "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)";
       }}
       onMouseLeave={(e) => {
-        // 호버 해제 시 원래 위치와 그림자로 복원합니다.
-        e.currentTarget.style.transform = 'translateY(0)';
-        e.currentTarget.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)';
+        e.currentTarget.style.transform = "translateY(0)";
+        e.currentTarget.style.boxShadow =
+          "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)";
       }}
     >
-      <h3 
-        className="font-semibold text-blue-600 mb-4 text-base leading-tight" 
-        style={{ 
-          color: '#00A3E0',
-          fontSize: '34px',
-          fontWeight: '550',
-          marginTop: '24px',
-          marginLeft: '15px',
-          marginBottom: detailLink ? '106px' : '116px' 
+      {/* 제목 */}
+      <h3
+        className="font-semibold text-blue-600 leading-tight"
+        style={{
+          color: "#00A3E0",
+          fontSize: "28px",
+          fontWeight: "600",
+          margin: "16px 0 24px 8px",
         }}
       >
         {title}
       </h3>
-      
-      <div className="text-sm text-gray-700 space-y-1" 
-      style={{ color: '#374151', fontSize: '22px', fontWeight: '550'}}>
-        {/* description 배열을 순회하여 각 줄을 렌더링합니다. */}
+
+      {/* 설명 */}
+      <div
+        className="text-gray-700 space-y-2 flex-1 overflow-hidden"
+        style={{
+          color: "#374151",
+          fontSize: "18px",
+          fontWeight: "500",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "flex-start",
+        }}
+      >
         {description.map((line, i) => (
-          <div 
-            key={i} 
-            className="leading-relaxed" 
-            style={{ 
-              marginBottom: '12px', 
-              marginLeft: '15px',
-              lineHeight: '1.4' 
+          <div
+            key={i}
+            className="leading-relaxed truncate"
+            style={{
+              marginBottom: "8px",
+              marginLeft: "8px",
+              lineHeight: "1.5",
             }}
           >
             {line}
           </div>
         ))}
       </div>
+
+      {/* 상세 링크 */}
       {detailLink && (
-        <div style={{ marginTop: '16px', marginLeft: '15px' }}>
+        <div style={{ marginTop: "16px", marginLeft: "8px" }}>
           <a
             href={detailLink}
             target="_blank"
             rel="noopener noreferrer"
-            style={{ color: '#00A3E0', fontWeight: '600', fontSize: '14px', textDecoration: 'none' }}
+            style={{
+              color: "#00A3E0",
+              fontWeight: "600",
+              fontSize: "14px",
+              textDecoration: "none",
+            }}
           >
             자세히 보기 →
           </a>
