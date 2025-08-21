@@ -18,7 +18,7 @@ const PortfolioPage = () => {
           />
 
           <div className="flex-1 flex flex-col h-full" style={{ marginLeft: '300px' }}> {/* 필터와 카드섹션 사이 여백*/} 
-            <h3 className="text-[40px] font-extrabold mb-6 text-black tracking-tight">{selectedCategory}</h3>
+            <h3 className="text-[36px] font-extrabold mb-6 text-black tracking-tight">{selectedCategory}</h3>
             <div className="flex-1">
               <PortfolioCardList projects={filtered} />
             </div>
