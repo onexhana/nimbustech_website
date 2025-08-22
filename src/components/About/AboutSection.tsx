@@ -211,9 +211,9 @@ export default function AboutSection() {
         <h2 style={{
           fontSize: '45px',
           fontWeight: '1100',
-          marginBottom: '48px',
+          marginBottom: '80px',
           color: '#1f2937',
-          lineHeight: '1.6',
+          lineHeight: '1.2',
           letterSpacing: '-3.5px',
           marginLeft: '50px'
         }}>

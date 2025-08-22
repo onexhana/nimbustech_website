@@ -10,29 +10,8 @@ interface CategoryFilterProps {
 const CategoryFilter = ({ selectedCategory, onCategoryChange }: CategoryFilterProps) => {
   return (
     <div className="flex flex-col h-full">
-      <div className="flex flex-col" style={{ marginTop: '30px' }}> {/* Portfolio 제목을 카드와 평행하게 배치 */}
-        {/* 
-        🎯 찾았습니다! 포트폴리오 위에 있는 검은 선은 여기에 있습니다:
-        📍 파일: src/components/Portfolio/CategoryFilter.tsx
-        📍 라인: 아래 div 태그
-        
-        검은 선을 만드는 코드 설명:
-        - width: '80px' - 선의 길이 80px
-        - height: '2px' - 선의 두께 2px  
-        - backgroundColor: '#000000' - 검은색 (#000000)
-        - Portfolio 제목 바로 위에 장식용 선으로 배치되어 있음
-        */}
-        <div 
-          style={{ 
-            width: '80px', 
-            height: '2px', 
-            backgroundColor: '#000000', // 👈 이 부분이 검은색 선을 만드는 코드!
-            marginBottom: '0px'
-          }}
-        ></div>
-        <h2 className="text-[40px] font-extrabold mb-6 text-black tracking-tight" style={{ marginTop: '0px' }}>Portfolio</h2>
-      </div>
-      <div className="flex flex-col flex-1" style={{ rowGap: '18px' }}> {/* 버튼 별 간격 설정 칸 */}
+
+      <div className="flex flex-col flex-1" style={{ rowGap: '18px', marginTop: '80px' }}> {/* 버튼 별 간격 설정 칸 */}
         {portfolioCategories.map((cat) => {
           const isSelected = selectedCategory === cat;
           return (

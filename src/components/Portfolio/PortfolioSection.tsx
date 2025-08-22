@@ -13,6 +13,31 @@ export default function PortfolioSection() {
     <div className="w-full">
       {/* 포트폴리오 메인 섹션 */}
       <div className="pt-[100px] pl-16 pr-12 pb-24 bg-white">
+        {/* Portfolio 페이지 제목 */}
+        <div className="max-w-7xl mx-auto">
+          {/* 검은 실선 */}
+          <div style={{
+            width: '110px',
+            height: '3px',
+            backgroundColor: '#000000',
+            marginLeft: '50px',
+            marginBottom: '20px'
+          }}></div>
+          
+          {/* 메인 타이틀 */}
+          <h2 style={{
+            fontSize: '45px',
+            fontWeight: '1100',
+            marginBottom: '80px',
+            color: '#1f2937',
+            lineHeight: '1.2',
+            letterSpacing: '-3.5px',
+            marginLeft: '50px'
+          }}>
+            Portfolio
+          </h2>
+        </div>
+        
         <div className="flex gap-16 items-start" style={{ marginLeft: '64px' }}>
           <CategoryFilter 
             selectedCategory={selectedCategory}
