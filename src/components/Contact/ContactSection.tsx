@@ -185,10 +185,11 @@ export default function ContactSection() {
                 overflow: 'auto',
                 maxHeight: '80vh'
               } : {
-                position: 'relative',
+                position: 'fixed',
                 zIndex: 1001,
-                marginTop: '-700px',
-                marginLeft: '600px',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
                 width: '480px',
                 height: '680px',
                 overflow: 'hidden'
@@ -215,10 +216,11 @@ export default function ContactSection() {
                 overflow: 'auto',
                 maxHeight: '80vh'
               } : {
-                position: 'relative',
+                position: 'fixed',
                 zIndex: 1001,
-                marginTop: '-700px',
-                marginLeft: '600px',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
                 width: '480px',
                 height: '700px',
                 overflow: 'hidden'
