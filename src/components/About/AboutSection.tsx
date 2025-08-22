@@ -233,7 +233,7 @@ export default function AboutSection() {
         {/* ======================================== */}
         <div className="flex items-start gap-4" style={{ position: 'relative', overflow: 'visible', display: 'flex', alignItems: 'flex-start', gap: '16px' }}>
           {/* 좌측 화살표 버튼 */}
-          {isMultiPage && currentSlide > 0 && (
+          {isMultiPage && (
           <button 
             onClick={prevSlide}
             className="hover:bg-gray-100 transition-all duration-300"
@@ -310,7 +310,7 @@ export default function AboutSection() {
           `}</style>
 
           {/* 우측 화살표 버튼 */}
-          {isMultiPage && currentSlide < numSlides - 1 && (
+          {isMultiPage && (
           <button 
             onClick={nextSlide}
             className="hover:bg-gray-100 transition-all duration-300"
