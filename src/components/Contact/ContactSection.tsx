@@ -176,14 +176,13 @@ export default function ContactSection() {
                 top: '50%',
                 left: '50%',
                 transform: 'translate(-50%, -50%)',
-                width: '90%',
+                width: '90vw',
                 maxWidth: '400px',
+                maxHeight: '90vh',
                 backgroundColor: 'white',
                 borderRadius: '8px',
                 padding: '20px',
-                boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-                overflow: 'auto',
-                maxHeight: '80vh'
+                overflow: 'auto'
               } : {
                 position: 'fixed',
                 zIndex: 1001,
@@ -194,10 +193,13 @@ export default function ContactSection() {
                 height: '680px',
                 overflow: 'hidden'
               }}>
-                {/* 내부 wrapper로 상단 헤더를 -90px 만큼 올려 클리핑 */}
-                <div style={{ position: 'absolute', top: '-31px', left: 0, width: '100%' }}>
+                {isMobile ? (
                   <InquiryForm />
-                </div>
+                ) : (
+                  <div style={{ position: 'absolute', top: '-31px', left: 0, width: '100%' }}>
+                    <InquiryForm />
+                  </div>
+                )}
               </div>
             )}
             {userType === 'hiring' && (
@@ -207,14 +209,13 @@ export default function ContactSection() {
                 top: '50%',
                 left: '50%',
                 transform: 'translate(-50%, -50%)',
-                width: '90%',
+                width: '90vw',
                 maxWidth: '400px',
+                maxHeight: '90vh',
                 backgroundColor: 'white',
                 borderRadius: '8px',
                 padding: '20px',
-                boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-                overflow: 'auto',
-                maxHeight: '80vh'
+                overflow: 'auto'
               } : {
                 position: 'fixed',
                 zIndex: 1001,
@@ -225,10 +226,13 @@ export default function ContactSection() {
                 height: '700px',
                 overflow: 'hidden'
               }}>
-                {/* 내부 wrapper로 상단 헤더를 -90px 만큼 올려 클리핑 */}
-                <div style={{ position: 'absolute', top: '-31px', left: 0, width: '100%' }}>
+                {isMobile ? (
                   <HiringForm />
-                </div>
+                ) : (
+                  <div style={{ position: 'absolute', top: '-31px', left: 0, width: '100%' }}>
+                    <HiringForm />
+                  </div>
+                )}
               </div>
             )}
           </>
