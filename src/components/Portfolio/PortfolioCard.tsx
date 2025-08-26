@@ -22,7 +22,8 @@ const PortfolioCard = ({ title, description, category, image }: PortfolioCardPro
         {/* 제목과 설명 */}
         <div className="text-center mb-4">
           <h3 className="text-[#00A3E0] text-[28px] font-bold" style={{ marginBottom: '2px' }}>{title}</h3>
-          <p className="text-black text-[22px] text-center font-black" style={{ marginTop: '2px' }}>
+          <p className="text-black text-[22px] text-center font-black"
+            style={{ marginTop: '2px', whiteSpace: 'pre-line' }}>
             {description}
           </p>
         </div>
