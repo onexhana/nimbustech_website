@@ -32,22 +32,19 @@ type PartnerLogoSliderProps = {
 /** 화면을 충분히 채우기 위해 한 절반(half)에 logos를 몇 번 반복할지 지정 */
 const COPIES_PER_HALF = 4;
 
-//로고 예시 나중에 바꿔야함
-const ROW1: Logo[] = [
-  { src: "/LogoSlider_example/free-icon-amazon-pay.png", alt: "Amazon Pay" },
-  { src: "/LogoSlider_example/free-icon-github-logo.png", alt: "GitHub" },
-  { src: "/LogoSlider_example/free-icon-google.png", alt: "Google" },
-  { src: "/LogoSlider_example/free-icon-instagram.png", alt: "Instagram" }, 
-  { src: "/LogoSlider_example/free-icon-netflix.png", alt: "Netflix" }, //로고 예시
-];
+/// 고객사 로고 17개 자동 생성
+const ROW1: Logo[] = Array.from({ length: 17 }, (_, i) => {
+  const num = String(i + 1).padStart(2, "0");
+  return { src: `/고객사 & 파트너사/고객사${num}.png`, alt: `고객사${num}` };
+});
 
-const ROW2: Logo[] = [
-  { src: "/LogoSlider_example/free-icon-tik-tok.png", alt: "TikTok" },
-  { src: "/LogoSlider_example/free-icon-visa.png", alt: "Visa" },
-  { src: "/LogoSlider_example/free-icon-windows.png", alt: "Windows" },
-  { src: "/LogoSlider_example/free-icon-youtube.png", alt: "YouTube" },
-  { src: "/LogoSlider_example/free-icon-amazon-pay.png", alt: "Amazon Pay" }, //로고 예시
-];
+// 파트너사 로고 21개 자동 생성
+const ROW2: Logo[] = Array.from({ length: 21 }, (_, i) => {
+  const num = String(i + 1).padStart(2, "0");
+  const ext = (num === "01" || num === "05"|| num === "14") ? "jpg" : "png"; // 일부 jpg 예외 처리
+  return { src: `/고객사 & 파트너사/파트너사${num}.${ext}`, alt: `파트너사${num}` };
+});
+
 
 function Track({
   logos,
@@ -79,7 +76,7 @@ function Track({
           perspective: 1000,
           transform: "translateZ(0)" // GPU 가속 활성화
         }}
-        animate={{ x: reverse ? ["-50%", "0%"] : ["0%", "-50%"] }}
+        animate={{ x: reverse ? ["-60%", "0%"] : ["0%", "-60%"] }}
         transition={{ 
           duration, 
           repeat: Infinity, 
@@ -109,11 +106,11 @@ function Track({
 }
 
 function PartnerLogoSlider({
-  logoHeight = 80,
+  logoHeight = 50,
   gap = 80,
-  durationTop = 30,      // 윗줄 1회 이동 시간(초) → 값이 클수록 느려짐
-  durationBottom = 30,   // 아랫줄 1회 이동 시간(초) → 값이 클수록 느려짐
-  rowSpacing = 30,
+  durationTop = 50,      // 윗줄 1회 이동 시간(초) → 값이 클수록 느려짐
+  durationBottom = 50,   // 아랫줄 1회 이동 시간(초) → 값이 클수록 느려짐
+  rowSpacing = 55,
   bottomSpacing = 30,
   speed = 1,             // 전체 공통 배속 (1=기본, 2=2배 빠름, 0.5=절반 속도)
   speedTop,               // 윗줄 전용 배속 (미지정 시 speed 사용)
