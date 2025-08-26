@@ -45,12 +45,24 @@ export const portfolioProjects = [
     category: "공공"
   },
   // 금융 카테고리
-  { id: 2, title: "신한은행", description: "모바일 뱅킹 시스템", category: "금융" },
-  { id: 12, title: "KB국민은행", description: "디지털 금융 플랫폼", category: "금융" },
-  { id: 13, title: "하나은행", description: "핀테크 솔루션", category: "금융" },
-  
+  { id: 22, title: "신한금융투자", description: "RPA개발 및 운영사업", category: "금융" },
+  { id: 23, title: "메트라이프금융서비스", description: "메트라이프파이낸셜서비스(MFS) RPA 개발", category: "금융" },
+  { id: 24, title: "메트라이프금융서비스", description: "메트라이프FS RPA 시범사업", category: "금융" },
+  { id: 25, title: "이큐얼", description: "ACE 손보 대응개발", category: "금융" },
+  { id: 26, title: "이큐얼", description: "미래에셋보안포탈", category: "금융" },
+  { id: 27, title: "kt ds", description: "국민카드 클라우드 사업", category: "금융" },
+  { id: 28, title: "디비시티", description: "국민은행 \"오라클 DB마이그레이션 기술지원", category: "금융" },
+  { id: 29, title: "DB_INC", description: "DB생명보험 운영", category: "금융" },
+  { id: 30, title: "아우르다", description: "증권트레이닝 시스템 개선", category: "금융" },
+  { id: 31, title: "SK AX", description: "메트라이프 데이터센터 운영", category: "금융" },
+  { id: 32, title: "SK AX", description: "메트라이프 (대전)", category: "금융" },
+  { id: 33, title: "SK AX", description: "AIA생명 운영", category: "금융" },
+  { id: 34, title: "SK AX", description: "한국투자증권 운영", category: "금융" },
+  { id: 35, title: "하이퍼정보", description: "신한금융투자", category: "금융" },
+  { id: 36, title: "매크로비전", description: "하나은행 마이데이터 구축", category: "금융" },
   // 일반 카테고리
-  { id: 3, title: "삼성전자", description: "스마트 홈 IoT", category: "일반" },
+  { id: 3, title: "삼성전자", description: "RPA 개발 및 운영사업", category: "일반" },
+  { id: 37, title: "태평양물산", description: "RPA 시범사업", category: "일반" },
   { id: 14, title: "LG전자", description: "AI 가전 시스템", category: "일반" },
   { id: 15, title: "네이버", description: "클라우드 서비스", category: "일반" },
   

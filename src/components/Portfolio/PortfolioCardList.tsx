@@ -18,6 +18,7 @@ type Props = {
 };
 
 const PortfolioCardList = ({ projects }: Props) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const swiperRef = useRef<any>(null);
   
   // 카드가 없는 경우 처리
@@ -38,10 +39,12 @@ const PortfolioCardList = ({ projects }: Props) => {
         {/* 카드 컨테이너 - 화면 너비에 따라 동적 조정 */}
         <div className="portfolio-container overflow-hidden portfolio-dynamic-width">
           <Swiper
-            onSwiper={(swiper) => {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            onSwiper={(swiper: any) => {
               swiperRef.current = swiper;
             }}
-            onInit={(swiper) => {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            onInit={(swiper: any) => {
               swiperRef.current = swiper;
             }}
             spaceBetween={32}
