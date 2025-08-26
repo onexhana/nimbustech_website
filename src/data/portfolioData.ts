@@ -49,16 +49,8 @@ export const portfolioProjects = [
   { id: 16, title: "두산중공업", description: "제조 관리 시스템", category: "제조" },
   { id: 17, title: "SK하이닉스", description: "반도체 생산 시스템", category: "제조" },
   
-  // 유통 카테고리
-  { id: 5, title: "롯데마트", description: "옴니채널 플랫폼", category: "유통" },
-  { id: 18, title: "이마트", description: "디지털 유통 시스템", category: "유통" },
-  { id: 19, title: "GS25", description: "편의점 관리 시스템", category: "유통" },
   
-  // 기타 카테고리
-  { id: 6, title: "KT", description: "5G 네트워크 구축", category: "기타" },
-  { id: 20, title: "SK텔레콤", description: "통신 인프라", category: "기타" },
-  { id: 21, title: "LG유플러스", description: "모바일 서비스", category: "기타" },
 ];
 
 // 카테고리 목록
-export const portfolioCategories = ["공공", "금융", "일반", "제조", "유통", "기타"];
+export const portfolioCategories = ["공공", "금융", "일반", "제조"];
