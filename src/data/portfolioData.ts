@@ -1,47 +1,125 @@
 // 포트폴리오 프로젝트 데이터
 export const portfolioProjects = [
-  // 공공 카테고리 (5개)
+  // 공공 카테고리 (20개)
   { 
     id: 1, 
-    title: "현대자동차", 
-    description: "인젠트 보안솔루션", 
+    title: "다산콜센터", 
+    description: "다산콜센터 업무자동화", 
     category: "공공",
     image: "/portfolio_photo/제조_현대 자동차.png"
   },
   { 
+    id: 2, 
+    title: "중구청", 
+    description: "중구청 업무자동화", 
+    category: "공공"
+  },
+  { 
+    id: 3, 
+    title: "국가정보자원관리원", 
+    description: "국가정보자원관리원 RPA-챗봇 서비스 개발", 
+    category: "공공"
+  },
+  { 
+    id: 4, 
+    title: "국가정보자원관리원", 
+    description: "국가정보자원관리원 광주센터 정보시스템 2군 RPA", 
+    category: "공공"
+  },
+  { 
+    id: 5, 
+    title: "국가정보자원관리원", 
+    description: "2018년 제2차 범정부 정보자원 통합구축 사업 HW2", 
+    category: "공공"
+  },
+  { 
+    id: 6, 
+    title: "국가정보자원관리원", 
+    description: "2018년 제1차 범정부 정보자원 통합구축 사업 HW1", 
+    category: "공공"
+  },
+  { 
     id: 7, 
-    title: "서울시청", 
-    description: "스마트 시티 플랫폼 구축", 
+    title: "국가정보자원관리원", 
+    description: "2018년 제1차 범정부 정보자원 통합구축 사업 HW5", 
     category: "공공"
   },
   { 
     id: 8, 
-    title: "한국전력공사", 
-    description: "전력망 모니터링 시스템", 
+    title: "국가정보자원관리원", 
+    description: "2019년 광주센터 정보시스템1군 유지관리 사업", 
     category: "공공"
   },
   { 
     id: 9, 
-    title: "국토교통부", 
-    description: "교통정보 통합관리 시스템", 
+    title: "국가정보자원관리원", 
+    description: "2019년 광주센터 정보시스템2군유지관리 사업", 
     category: "공공"
   },
   { 
     id: 10, 
-    title: "부산광역시", 
-    description: "시민포털 서비스 개발", 
+    title: "국가정보자원관리원", 
+    description: "2019년 제2차 범정부 정보자원 통합구축 사업 HW1", 
     category: "공공"
   },
   { 
     id: 11, 
-    title: "한국도로공사", 
-    description: "고속도로 통행료 시스템", 
+    title: "국가정보자원관리원", 
+    description: "2019년 제1차 범정부 정보자원 통합구축 사업 HW2", 
     category: "공공"
   },
   { 
-    id: 99, 
-    title: "안녕하세요", 
-    description: "공공용 카드입니다", 
+    id: 12, 
+    title: "국가정보자원관리원", 
+    description: "2020년 제2차 범정부 정보자원 통합구축 사업 HW1", 
+    category: "공공"
+  },
+  { 
+    id: 13, 
+    title: "국가정보자원관리원", 
+    description: "2020년 제1차 범정부 정보자원 통합구축 사업 HW3폼", 
+    category: "공공"
+  },
+  { 
+    id: 14, 
+    title: "국가정보자원관리원", 
+    description: "2022년 광주센터 클라우드 운영유지관리 사업", 
+    category: "공공"
+  },
+  { 
+    id: 15, 
+    title: "국가정보자원관리원", 
+    description: "2022년 대전센터 클라우드 운영유지관리 사업", 
+    category: "공공"
+  },
+  { 
+    id: 16, 
+    title: "국가정보자원관리원", 
+    description: "2023년 대구센터 클라우드 전산환경 구축", 
+    category: "공공"
+  },
+  { 
+    id: 17, 
+    title: "국가정보자원관리원", 
+    description: "2025년 대구센터 클라우드 운영유지관리 사업", 
+    category: "공공"
+  },
+  { 
+    id: 18, 
+    title: "국가정보자원관리원", 
+    description: "2025년 대전센터 클라우드 운영유지관리 사업", 
+    category: "공공"
+  },
+  { 
+    id: 19, 
+    title: "국가정보자원관리원", 
+    description: "2025년 광주센터 클라우드 운영유지관리 사업", 
+    category: "공공"
+  },
+  { 
+    id: 20, 
+    title: "국방통합데이터센터", 
+    description: "차세대 지능형  SDDC 기반 국방데이터센터 구축 사업", 
     category: "공공"
   },
   // 금융 카테고리
