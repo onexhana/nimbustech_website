@@ -1,127 +1,27 @@
 // 포트폴리오 프로젝트 데이터
 export const portfolioProjects = [
   // 공공 카테고리 (20개)
-  { 
-    id: 1, 
-    title: "다산콜센터", 
-    description: "다산콜센터 업무자동화", 
-    category: "공공",
-    image: "/portfolio_photo/제조_현대 자동차.png"
-  },
-  { 
-    id: 2, 
-    title: "중구청", 
-    description: "중구청 업무자동화", 
-    category: "공공"
-  },
-  { 
-    id: 3, 
-    title: "국가정보자원관리원", 
-    description: "국가정보자원관리원 RPA-챗봇 서비스 개발", 
-    category: "공공"
-  },
-  { 
-    id: 4, 
-    title: "국가정보자원관리원", 
-    description: "국가정보자원관리원 광주센터 정보시스템 2군 RPA", 
-    category: "공공"
-  },
-  { 
-    id: 5, 
-    title: "국가정보자원관리원", 
-    description: "2018년 제2차 범정부 정보자원 통합구축 사업 HW2", 
-    category: "공공"
-  },
-  { 
-    id: 6, 
-    title: "국가정보자원관리원", 
-    description: "2018년 제1차 범정부 정보자원 통합구축 사업 HW1", 
-    category: "공공"
-  },
-  { 
-    id: 7, 
-    title: "국가정보자원관리원", 
-    description: "2018년 제1차 범정부 정보자원 통합구축 사업 HW5", 
-    category: "공공"
-  },
-  { 
-    id: 8, 
-    title: "국가정보자원관리원", 
-    description: "2019년 광주센터 정보시스템1군 유지관리 사업", 
-    category: "공공"
-  },
-  { 
-    id: 9, 
-    title: "국가정보자원관리원", 
-    description: "2019년 광주센터 정보시스템2군유지관리 사업", 
-    category: "공공"
-  },
-  { 
-    id: 10, 
-    title: "국가정보자원관리원", 
-    description: "2019년 제2차 범정부 정보자원 통합구축 사업 HW1", 
-    category: "공공"
-  },
-  { 
-    id: 11, 
-    title: "국가정보자원관리원", 
-    description: "2019년 제1차 범정부 정보자원 통합구축 사업 HW2", 
-    category: "공공"
-  },
-  { 
-    id: 12, 
-    title: "국가정보자원관리원", 
-    description: "2020년 제2차 범정부 정보자원 통합구축 사업 HW1", 
-    category: "공공"
-  },
-  { 
-    id: 13, 
-    title: "국가정보자원관리원", 
-    description: "2020년 제1차 범정부 정보자원 통합구축 사업 HW3폼", 
-    category: "공공"
-  },
-  { 
-    id: 14, 
-    title: "국가정보자원관리원", 
-    description: "2022년 광주센터 클라우드 운영유지관리 사업", 
-    category: "공공"
-  },
-  { 
-    id: 15, 
-    title: "국가정보자원관리원", 
-    description: "2022년 대전센터 클라우드 운영유지관리 사업", 
-    category: "공공"
-  },
-  { 
-    id: 16, 
-    title: "국가정보자원관리원", 
-    description: "2023년 대구센터 클라우드 전산환경 구축", 
-    category: "공공"
-  },
-  { 
-    id: 17, 
-    title: "국가정보자원관리원", 
-    description: "2025년 대구센터 클라우드 운영유지관리 사업", 
-    category: "공공"
-  },
-  { 
-    id: 18, 
-    title: "국가정보자원관리원", 
-    description: "2025년 대전센터 클라우드 운영유지관리 사업", 
-    category: "공공"
-  },
-  { 
-    id: 19, 
-    title: "국가정보자원관리원", 
-    description: "2025년 광주센터 클라우드 운영유지관리 사업", 
-    category: "공공"
-  },
-  { 
-    id: 20, 
-    title: "국방통합데이터센터", 
-    description: "차세대 지능형  SDDC 기반 국방데이터센터 구축 사업", 
-    category: "공공"
-  },
+  { id: 1, title: "다산콜센터", description: "다산콜센터 업무자동화", category: "공공", image: "/portfolio_photo/제조_현대 자동차.png" },
+  { id: 2, title: "중구청", description: "중구청 업무자동화", category: "공공" },
+  { id: 3, title: "국가정보자원관리원", description: "국가정보자원관리원\nRPA-챗봇 서비스 개발", category: "공공" },
+  { id: 4, title: "국가정보자원관리원", description: "국가정보자원관리원\n광주센터 정보시스템 2군 RPA", category: "공공" },
+  { id: 5, title: "국가정보자원관리원", description: "2018년 제2차 범정부\n정보자원 통합구축 사업 HW2", category: "공공" },
+  { id: 6, title: "국가정보자원관리원", description: "2018년 제1차 범정부\n정보자원 통합구축 사업 HW1", category: "공공" },
+  { id: 7, title: "국가정보자원관리원", description: "2018년 제1차 범정부\n정보자원 통합구축 사업 HW5", category: "공공" },
+  { id: 8, title: "국가정보자원관리원", description: "2019년 광주센터\n정보시스템1군 유지관리 사업", category: "공공" },
+  { id: 9, title: "국가정보자원관리원", description: "2019년 광주센터\n정보시스템2군유지관리 사업", category: "공공" },
+  { id: 10, title: "국가정보자원관리원", description: "2019년 제2차 범정부\n정보자원 통합구축 사업 HW1", category: "공공" },
+  { id: 11, title: "국가정보자원관리원", description: "2019년 제1차 범정부\n정보자원 통합구축 사업 HW2", category: "공공" },
+  { id: 12, title: "국가정보자원관리원", description: "2020년 제2차 범정부\n정보자원 통합구축 사업 HW1", category: "공공" },
+  { id: 13, title: "국가정보자원관리원", description: "2020년 제1차 범정부\n정보자원 통합구축 사업 HW3폼", category: "공공" },
+  { id: 14, title: "국가정보자원관리원", description: "2022년 광주센터\n클라우드 운영유지관리 사업", category: "공공" },
+  { id: 15, title: "국가정보자원관리원", description: "2022년 대전센터\n클라우드 운영유지관리 사업", category: "공공" },
+  { id: 16, title: "국가정보자원관리원", description: "2023년 대구센터\n클라우드 전산환경 구축", category: "공공" },
+  { id: 17, title: "국가정보자원관리원", description: "2025년 대구센터\n클라우드 운영유지관리 사업", category: "공공" },
+  { id: 18, title: "국가정보자원관리원", description: "2025년 대전센터\n클라우드 운영유지관리 사업", category: "공공" },
+  { id: 19, title: "국가정보자원관리원", description: "2025년 광주센터\n클라우드 운영유지관리 사업", category: "공공" },
+  { id: 20, title: "국방통합데이터센터", description: "차세대 지능형 SDDC 기반\n국방데이터센터 구축 사업", category: "공공" },
+
   // 금융 카테고리
   { id: 22, title: "신한금융투자", description: "RPA개발 및 운영사업", category: "금융" },
   { id: 23, title: "메트라이프금융서비스", description: "메트라이프파이낸셜서비스(MFS)\nRPA 개발", category: "금융" },
