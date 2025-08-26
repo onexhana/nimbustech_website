@@ -27,7 +27,7 @@
 // - 다른 팀과 merge 시 이 파일들만 수정됨
 // - AboutSection, AboutCard, AboutTab 등 About/ 폴더 전체
 // ========================================
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import AboutTab from './AboutTab';
 import AboutCard from './AboutCard'; // 효과 버전 (호버 애니메이션 활성화)
 //import AboutCard from './AboutCardNoEffect'; // 무효화 버전 (호버 효과 없음)
@@ -170,6 +170,14 @@ export default function AboutSection() {
   // activeTab - 선택된 탭, currentSlide - 현재 슬라이드 인덱스
   const [activeTab, setActiveTab] = useState("ITO");
   const [currentSlide, setCurrentSlide] = useState(0); // 슬라이더 현재 위치
+  const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 768);
+  
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+  
   const cards = TAB_CONTENTS[activeTab];
   const isMultiPage = activeTab === '솔루션';
   const groupSize = isMultiPage ? 3 : cards.length;
@@ -204,112 +212,201 @@ export default function AboutSection() {
           width: '110px',
           height: '3px',
           backgroundColor: '#000000',
-          marginLeft: '50px',
+          marginLeft: isMobile ? '0' : '50px',
           marginBottom: '20px'
         }}></div>
         
         <h2 style={{
-          fontSize: '45px',
+          fontSize: isMobile ? '28px' : '45px',
           fontWeight: '1100',
-          marginBottom: '80px',
+          marginBottom: isMobile ? '40px' : '80px',
           color: '#1f2937',
           lineHeight: '1.2',
           letterSpacing: '-3.5px',
-          marginLeft: '50px'
+          marginLeft: isMobile ? '0' : '50px'
         }}>
           신뢰성 높은 DT서비스를 제공하여<br />
           지속적인 고객 성공을 리딩합니다
         </h2>
 
-        {/* 탭 컴포넌트 */}
-        <AboutTab 
-          tabs={TAB_LIST}
-          activeTab={activeTab}
-          onTabChange={handleTabChange}
-        />
-
-        {/* ======================================== */}
-        {/* 카드 영역 (슬라이더 구현부) */}
-        {/* ======================================== */}
-        <div className="flex items-start gap-4" style={{ position: 'relative', overflow: 'visible', display: 'flex', alignItems: 'flex-start', gap: '16px' }}>
-
-          {/* 카드 컨테이너 - 새 카드 등장 효과 */}
-          <div
-            className="flex gap-4 flex-1"
-            style={{ position: 'relative', overflow: 'visible', display: 'flex', gap: '30px', flex: '1', justifyContent: 'center', marginLeft: '50px', marginRight: '50px' }}
-          >
-            {cards
-              .slice(currentSlide * groupSize, currentSlide * groupSize + groupSize)
-              .map((card, idx) => (
-                <div
-                  key={`${activeTab}-${currentSlide}-${idx}`}
-                  style={{
-                    opacity: noEffect ? 1 : 0,
-                    transform: noEffect ? 'translateY(0)' : 'translateY(30px) scale(0.9)',
-                    ...(noEffect ? {} : { animation: `cardAppear 0.6s ease-out ${idx * 0.15}s forwards` })
-                  }}
-                >
-                  <AboutCard
-                    title={card.title}
-                    description={card.description}
-                    detailLink={activeTab === '솔루션' ? 'https://www.naver.com' : undefined}
-                  />
-                </div>
-              ))}
-          </div>
-
-          {/* ======================================== */}
-          {/* CSS 애니메이션 스타일 (카드 등장 효과) */}
-          {/* ======================================== */}
-          <style>{`
-            @keyframes cardAppear {
-              0% {
-                opacity: 0;
-                transform: translateY(30px) scale(0.9);
-              }
-              50% {
-                opacity: 0.7;
-                transform: translateY(-5px) scale(1.02);
-              }
-              100% {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-              }
-            }
-          `}</style>
-
-          {/* 우측 화살표 버튼 */}
-          {isMultiPage && (
-          <button 
-            onClick={nextSlide}
-            className="hover:bg-gray-100 transition-all duration-300"
-            style={{
-              border: 'none',
-              outline: 'none',
-              position: 'absolute',
-              top: '50%',
-              right: '50px',
-              transform: 'translate(50%, -50%)',
-              width: '50px',
-              height: '50px',
-              borderRadius: '50%',
-              display: 'flex',
-              alignItems: 'center',
+        {isMobile ? (
+          /* 모바일 레이아웃 */
+          <>
+            {/* 모바일용 필터 버튼들 */}
+            <div style={{ 
+              display: 'flex', 
+              flexWrap: 'wrap',
               justifyContent: 'center',
-              backgroundColor: '#ffffff',
-              boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06)',
-              zIndex: 10,
-              cursor: 'pointer',
-              fontSize: '28px',
-              fontWeight: '700'
-            }}
-          >
-            <svg width="50" height="50" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M9 6L15 12L9 18" stroke="#1f2937" strokeWidth="3" strokeLinecap="butt" strokeLinejoin="miter" />
-            </svg>
-          </button>
-          )}
-        </div>
+              gap: '10px',
+              marginBottom: '20px'
+            }}>
+              {TAB_LIST.map((tab) => (
+                <button
+                  key={tab}
+                  style={{
+                    backgroundColor: activeTab === tab ? '#00A3E0' : 'white',
+                    color: activeTab === tab ? 'white' : '#00A3E0',
+                    border: '1px solid #00A3E0',
+                    borderRadius: '20px',
+                    padding: '8px 20px',
+                    fontSize: '14px',
+                    fontWeight: '600',
+                    cursor: 'pointer'
+                  }}
+                  onClick={() => handleTabChange(tab)}
+                >
+                  {tab}
+                </button>
+              ))}
+            </div>
+
+            {/* 모바일용 카드 컨테이너 (하늘색 배경) */}
+            <div style={{
+              backgroundColor: '#E6F7FF',
+              borderRadius: '12px',
+              padding: '20px',
+              marginBottom: '20px'
+            }}>
+              {/* 현재 활성화된 탭의 첫 번째 카드만 표시 */}
+              <h3 style={{
+                fontSize: '22px',
+                fontWeight: '700',
+                color: '#00A3E0',
+                marginBottom: '12px'
+              }}>
+                {cards[currentSlide].title}
+              </h3>
+              <div style={{
+                fontSize: '16px',
+                color: '#333',
+                fontWeight: '500',
+                lineHeight: '1.5'
+              }}>
+                {cards[currentSlide].description.map((line, i) => (
+                  <p key={i} style={{ marginBottom: '8px' }}>{line}</p>
+                ))}
+              </div>
+            </div>
+
+            {/* 모바일용 슬라이더 인디케이터 */}
+            <div style={{
+              display: 'flex',
+              justifyContent: 'center',
+              gap: '8px',
+              marginTop: '20px'
+            }}>
+              {Array.from({ length: cards.length }).map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setCurrentSlide(i)}
+                  style={{
+                    width: i === currentSlide ? '30px' : '10px',
+                    height: '10px',
+                    borderRadius: i === currentSlide ? '5px' : '50%',
+                    backgroundColor: i === currentSlide ? '#00A3E0' : '#D1D5DB',
+                    border: 'none',
+                    padding: 0,
+                    transition: 'all 0.3s ease'
+                  }}
+                  aria-label={`슬라이드 ${i + 1}`}
+                />
+              ))}
+            </div>
+          </>
+        ) : (
+          /* 데스크톱 레이아웃 */
+          <>
+            {/* 탭 컴포넌트 */}
+            <AboutTab 
+              tabs={TAB_LIST}
+              activeTab={activeTab}
+              onTabChange={handleTabChange}
+            />
+
+            {/* ======================================== */}
+            {/* 카드 영역 (슬라이더 구현부) */}
+            {/* ======================================== */}
+            <div className="flex items-start gap-4" style={{ position: 'relative', overflow: 'visible', display: 'flex', alignItems: 'flex-start', gap: '16px' }}>
+
+              {/* 카드 컨테이너 - 새 카드 등장 효과 */}
+              <div
+                className="flex gap-4 flex-1"
+                style={{ position: 'relative', overflow: 'visible', display: 'flex', gap: '30px', flex: '1', justifyContent: 'center', marginLeft: '50px', marginRight: '50px' }}
+              >
+                {cards
+                  .slice(currentSlide * groupSize, currentSlide * groupSize + groupSize)
+                  .map((card, idx) => (
+                    <div
+                      key={`${activeTab}-${currentSlide}-${idx}`}
+                      style={{
+                        opacity: noEffect ? 1 : 0,
+                        transform: noEffect ? 'translateY(0)' : 'translateY(30px) scale(0.9)',
+                        ...(noEffect ? {} : { animation: `cardAppear 0.6s ease-out ${idx * 0.15}s forwards` })
+                      }}
+                    >
+                      <AboutCard
+                        title={card.title}
+                        description={card.description}
+                        detailLink={activeTab === '솔루션' ? 'https://www.naver.com' : undefined}
+                      />
+                    </div>
+                  ))}
+              </div>
+
+              {/* ======================================== */}
+              {/* CSS 애니메이션 스타일 (카드 등장 효과) */}
+              {/* ======================================== */}
+              <style>{`
+                @keyframes cardAppear {
+                  0% {
+                    opacity: 0;
+                    transform: translateY(30px) scale(0.9);
+                  }
+                  50% {
+                    opacity: 0.7;
+                    transform: translateY(-5px) scale(1.02);
+                  }
+                  100% {
+                    opacity: 1;
+                    transform: translateY(0) scale(1);
+                  }
+                }
+              `}</style>
+
+              {/* 우측 화살표 버튼 */}
+              {isMultiPage && (
+              <button 
+                onClick={nextSlide}
+                className="hover:bg-gray-100 transition-all duration-300"
+                style={{
+                  border: 'none',
+                  outline: 'none',
+                  position: 'absolute',
+                  top: '50%',
+                  right: '50px',
+                  transform: 'translate(50%, -50%)',
+                  width: '50px',
+                  height: '50px',
+                  borderRadius: '50%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  backgroundColor: '#ffffff',
+                  boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06)',
+                  zIndex: 10,
+                  cursor: 'pointer',
+                  fontSize: '28px',
+                  fontWeight: '700'
+                }}
+              >
+                <svg width="50" height="50" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M9 6L15 12L9 18" stroke="#1f2937" strokeWidth="3" strokeLinecap="butt" strokeLinejoin="miter" />
+                </svg>
+              </button>
+              )}
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
