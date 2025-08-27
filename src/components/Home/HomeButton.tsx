@@ -56,55 +56,51 @@ export default function HomeButton() {
     setSelectedIdx(idx);
   };
   
-  // 모달 JSX 정의
-  const idx = selectedIdx!; // non-null assertion
-  const modalContent = (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-[1000]">
-      <div className="relative bg-white p-8 rounded-lg shadow-lg w-full max-w-3xl">
-        <button onClick={handleCloseModal} className="absolute top-4 right-4 text-gray-500 hover:text-gray-700">
-          ✕
-        </button>
-        {idx === 0 ? (
-          // Mission&Vision 모달
-          <div className="space-y-4 text-center">
-            <h2 className="text-2xl font-bold">
-              님버스테크의 <span className="text-[#00A3E0]">미션&비전</span>
-            </h2>
-            <p className="text-gray-600">고객의 성공을 이끄는, 신뢰받는 디지털 파트너</p>
-            <div className="flex items-center justify-between mt-6">
-              <div className="flex-1 text-center">
-                <p className="text-sm text-gray-500 uppercase">MISSION</p>
-                <p className="text-xl font-semibold mt-2">미션</p>
-                <p className="mt-2 text-gray-700">신뢰성 높은 DT 서비스를 제공하여 고객 성공을 리딩한다.</p>
-              </div>
-              <div className="mx-8">
-                <img src="/logo.png" alt="Nimbus Tech" className="w-24 h-24 rounded-full" />
-              </div>
-              <div className="flex-1 text-center">
-                <p className="text-sm text-gray-500 uppercase">VISION</p>
-                <p className="text-xl font-semibold mt-2">비전</p>
-                <p className="mt-2 text-gray-700">고객 성공을 리딩하는 DT Value Creator.</p>
+  // 모달 포탈 렌더링 (선택된 버튼이 있을 때만)
+  const renderModal = () => {
+    if (selectedIdx === null) return null;
+    const idx = selectedIdx;
+    return createPortal(
+      <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-[1000]">
+        <div className="relative bg-white p-8 rounded-lg shadow-lg w-full max-w-3xl">
+          <button onClick={handleCloseModal} className="absolute top-4 right-4 text-gray-500 hover:text-gray-700">✕</button>
+          {idx === 0 ? (
+            <div className="space-y-4 text-center">
+              <h2 className="text-2xl font-bold">님버스테크의 <span className="text-[#00A3E0]">미션&비전</span></h2>
+              <p className="text-gray-600">고객의 성공을 이끄는, 신뢰받는 디지털 파트너</p>
+              <div className="flex items-center justify-between mt-6">
+                <div className="flex-1 text-center">
+                  <p className="text-sm text-gray-500 uppercase">MISSION</p>
+                  <p className="text-xl font-semibold mt-2">미션</p>
+                  <p className="mt-2 text-gray-700">신뢰성 높은 DT 서비스를 제공하여 고객 성공을 리딩한다.</p>
+                </div>
+                <div className="mx-8">
+                  <img src="/logo.png" alt="Nimbus Tech" className="w-24 h-24 rounded-full" />
+                </div>
+                <div className="flex-1 text-center">
+                  <p className="text-sm text-gray-500 uppercase">VISION</p>
+                  <p className="text-xl font-semibold mt-2">비전</p>
+                  <p className="mt-2 text-gray-700">고객 성공을 리딩하는 DT Value Creator.</p>
+                </div>
               </div>
             </div>
-          </div>
-        ) : (
-          // 기본 팝업
-          <div className="text-center">
-            <h3 className="text-xl font-medium text-[#00A3E0]">{buttons[idx].title}</h3>
-            <p className="text-5xl font-bold mt-1">{buttons[idx].subtitle}</p>
-            <p className="mt-4 text-gray-700">{buttons[idx].description}</p>
-          </div>
-        )}
-      </div>
-    </div>
-  );
-  
+          ) : (
+            <div className="text-center">
+              <h3 className="text-xl font-medium text-[#00A3E0]">{buttons[idx].title}</h3>
+              <p className="text-5xl font-bold mt-1">{buttons[idx].subtitle}</p>
+              <p className="mt-4 text-gray-700">{buttons[idx].description}</p>
+            </div>
+          )}
+        </div>
+      </div>,
+      document.body
+    );
+  };
+
   return (
     <>
       {/* Portal을 사용한 모달 렌더링 */}
-      {selectedIdx !== null && typeof document !== 'undefined'
-        ? createPortal(modalContent, document.body)
-        : null}
+      {renderModal()}
       {/* 버튼 그리드 */}
       <div className="w-full bg-white">
         <div className="grid grid-cols-4 border-t border-gray-200">
