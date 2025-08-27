@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import HomeButton from './HomeButton';
 
 export default function HomeSection() {
   // 타이핑 애니메이션을 위한 상태 관리
@@ -46,41 +47,44 @@ export default function HomeSection() {
   }, [currentCharIndex, currentLineIndex]);
 
   return (
-    <section
-      id="home"
-      className="w-full h-screen bg-white flex items-center justify-end pr-6 md:pr-20"
-    >
-      <div className="text-right">
-        <div className="space-y-8">
-          {texts.map((text, index) => (
-            <div key={index} className="min-h-[20vh]">
-              <span 
-                className={`text-[6vw] md:text-[8vw] lg:text-[10vw] xl:text-[12vw] ${fontWeights[index]} tracking-tight ${colors[index]}`}
-                style={index === 3 ? { 
-                  fontWeight: '700', // 영어(NIMBUS TECH)는 더 두껍게
-                  textShadow: '0 0 1px currentColor' // 영어에 미세한 텍스트 그림자로 더 굵게 표현
-                } : { 
-                  fontWeight: '450' // 한글은 font-black보다 약간 두껍게
-                }}
-              >
-                {completedLines.includes(index) ? (
-                  // 완성된 줄: 전체 텍스트 표시
-                  text
-                ) : index === currentLineIndex ? (
-                  // 현재 타이핑 중인 줄: 부분 텍스트 + 커서 표시
-                  <>
-                    {text.substring(0, currentCharIndex)}
-                    <span className="animate-pulse">|</span>
-                  </>
-                ) : (
-                  // 아직 시작하지 않은 줄: 빈 공간 유지
-                  ''
-                )}
-              </span>
-            </div>
-          ))}
+    <>
+      <section
+        id="home"
+        className="w-full h-screen bg-white flex items-center justify-end pr-6 md:pr-20"
+      >
+        <div className="text-right">
+          <div className="space-y-8">
+            {texts.map((text, index) => (
+              <div key={index} className="min-h-[20vh]">
+                <span 
+                  className={`text-[6vw] md:text-[8vw] lg:text-[10vw] xl:text-[12vw] ${fontWeights[index]} tracking-tight ${colors[index]}`}
+                  style={index === 3 ? { 
+                    fontWeight: '700', // 영어(NIMBUS TECH)는 더 두껍게
+                    textShadow: '0 0 1px currentColor' // 영어에 미세한 텍스트 그림자로 더 굵게 표현
+                  } : { 
+                    fontWeight: '450' // 한글은 font-black보다 약간 두껍게
+                  }}
+                >
+                  {completedLines.includes(index) ? (
+                    // 완성된 줄: 전체 텍스트 표시
+                    text
+                  ) : index === currentLineIndex ? (
+                    // 현재 타이핑 중인 줄: 부분 텍스트 + 커서 표시
+                    <>
+                      {text.substring(0, currentCharIndex)}
+                      <span className="animate-pulse">|</span>
+                    </>
+                  ) : (
+                    // 아직 시작하지 않은 줄: 빈 공간 유지
+                    ''
+                  )}
+                </span>
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+      <HomeButton />
+    </>
   );
 }
