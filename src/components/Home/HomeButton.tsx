@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { createPortal } from 'react-dom';
 
 interface ButtonItem {
@@ -37,60 +37,41 @@ const buttons: ButtonItem[] = [
 ];
 
 export default function HomeButton() {
-  const [selectedIdx, setSelectedIdx] = useState<number | null>(null);
-  
-  // 상태 변경 디버깅을 위한 useEffect
-  useEffect(() => {
-    console.log('selectedIdx changed:', selectedIdx);
-  }, [selectedIdx]);
+  // 클릭된 버튼 인덱스를 추적하고, 모두 클릭되었을 때 모달을 표시합니다.
+  const [clickedSet, setClickedSet] = useState<Set<number>>(new Set());
+  const [showModal, setShowModal] = useState(false);
   
   // 모달 닫기 핸들러
   const handleCloseModal = () => {
     console.log('Closing modal');
-    setSelectedIdx(null);
+    setShowModal(false);
+    setClickedSet(new Set());
   };
   
-  // 버튼 클릭 핸들러
+  // 버튼 클릭 핸들러: 클릭 인덱스를 집합에 추가하고, 모든 버튼 클릭 시 모달을 띄웁니다.
   const handleButtonClick = (idx: number) => {
     console.log('Button clicked:', idx);
-    setSelectedIdx(idx);
+    setClickedSet(prev => {
+      const newSet = new Set(prev);
+      newSet.add(idx);
+      if (newSet.size === buttons.length) {
+        setShowModal(true);
+      }
+      return newSet;
+    });
   };
   
-  // 모달 포탈 렌더링 (선택된 버튼이 있을 때만)
+  // 모달 포탈 렌더링 (모든 버튼 클릭 시)
   const renderModal = () => {
-    if (selectedIdx === null) return null;
-    const idx = selectedIdx;
+    if (!showModal) return null;
     return createPortal(
       <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-[1000]">
         <div className="relative bg-white p-8 rounded-lg shadow-lg w-full max-w-3xl">
           <button onClick={handleCloseModal} className="absolute top-4 right-4 text-gray-500 hover:text-gray-700">✕</button>
-          {idx === 0 ? (
-            <div className="space-y-4 text-center">
-              <h2 className="text-2xl font-bold">님버스테크의 <span className="text-[#00A3E0]">미션&비전</span></h2>
-              <p className="text-gray-600">고객의 성공을 이끄는, 신뢰받는 디지털 파트너</p>
-              <div className="flex items-center justify-between mt-6">
-                <div className="flex-1 text-center">
-                  <p className="text-sm text-gray-500 uppercase">MISSION</p>
-                  <p className="text-xl font-semibold mt-2">미션</p>
-                  <p className="mt-2 text-gray-700">신뢰성 높은 DT 서비스를 제공하여 고객 성공을 리딩한다.</p>
-                </div>
-                <div className="mx-8">
-                  <img src="/logo.png" alt="Nimbus Tech" className="w-24 h-24 rounded-full" />
-                </div>
-                <div className="flex-1 text-center">
-                  <p className="text-sm text-gray-500 uppercase">VISION</p>
-                  <p className="text-xl font-semibold mt-2">비전</p>
-                  <p className="mt-2 text-gray-700">고객 성공을 리딩하는 DT Value Creator.</p>
-                </div>
-              </div>
-            </div>
-          ) : (
-            <div className="text-center">
-              <h3 className="text-xl font-medium text-[#00A3E0]">{buttons[idx].title}</h3>
-              <p className="text-5xl font-bold mt-1">{buttons[idx].subtitle}</p>
-              <p className="mt-4 text-gray-700">{buttons[idx].description}</p>
-            </div>
-          )}
+          <div className="text-center space-y-4">
+            <h2 className="text-2xl font-bold">축하합니다!</h2>
+            <p className="text-gray-700">모든 버튼을 클릭하셨습니다.</p>
+          </div>
         </div>
       </div>,
       document.body
@@ -108,7 +89,7 @@ export default function HomeButton() {
             <div
               key={idx}
               onClick={() => handleButtonClick(idx)}
-              className={`aspect-square w-full flex flex-col cursor-pointer justify-center p-8 text-center transition-colors border-b border-gray-200 ${idx !== buttons.length - 1 ? 'border-r' : ''} ${selectedIdx === idx ? 'bg-gray-100' : 'hover:bg-gray-50'}`}
+              className={`aspect-square w-full flex flex-col cursor-pointer justify-center p-8 text-center transition-colors border-b border-gray-200 ${idx !== buttons.length - 1 ? 'border-r' : ''} ${clickedSet.has(idx) ? 'bg-gray-100' : 'hover:bg-gray-50'}`}
             >
               <div className="mb-2">
                 <h3 className="text-[#00A3E0] font-medium text-2xl">
