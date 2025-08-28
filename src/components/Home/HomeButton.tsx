@@ -75,7 +75,7 @@ export default function HomeButton() {
                   <p className="mt-2 text-gray-700">신뢰성 높은 DT 서비스를 제공하여 고객 성공을 리딩한다.</p>
                 </div>
                 <div className="mx-8">
-                  <img src="/logo.png" alt="Nimbus Tech" className="w-24 h-24 rounded-full" />
+                  <img src="/logo/logo.png" alt="Nimbus Tech" className="w-24 h-24 rounded-full" />
                 </div>
                 <div className="flex-1 text-center">
                   <p className="text-sm text-gray-500 uppercase">VISION</p>

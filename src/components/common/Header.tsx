@@ -46,13 +46,13 @@ export default function Header() {
 
            {/* 데스크톱 로고 */}
           <img
-            src="/logo-blue-wide.png"
+            src="/logo/logo-blue-wide.png"
             alt="NIMBUS TECH 로고"
             className="desktop-logo"
           />
           {/* 모바일 로고 */}
           <img
-            src="/logo-blue-wide.png"
+            src="/logo/logo-blue-wide.png"
             alt="NIMBUS TECH 심볼 로고"
             className="mobile-logo"
           />
@@ -100,7 +100,7 @@ export default function Header() {
       {/* 모바일 드롭다운 메뉴 */}
       {isMobileMenuOpen && (
         <div className="md:hidden bg-white border-t border-gray-200">
-          <nav className="px-8 py-4space-y-2">
+          <nav className="px-8 py-4">
             {navItems.map(({ to, label }, idx) => (
               <button
                 key={to}

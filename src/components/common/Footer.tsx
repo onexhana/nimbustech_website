@@ -31,13 +31,13 @@ export default function Footer() {
             <div className="flex items-center gap-x-8 md:gap-x-14" style={{ marginLeft: '48px', marginTop: '30px' }}>
               {/* NIMBUS TECH 로고 */}
               <div className="flex items-center space-x-2">
-                <img src="/logo-white-wide.png" alt="NIMBUS TECH" style={{ width: '200px', height: 'auto' }} />
+                <img src="/logo/logo-white-wide.png" alt="NIMBUS TECH" style={{ width: '200px', height: 'auto' }} />
               </div>
               
               {/* FCS 배지 */}
               {/* 임시 간격 강제: marginLeft로 보정 (해결 후 제거 예정) */}
               <div className="bg-white rounded-full px-3 py-1 flex items-center space-x-2" style={{ marginLeft: '30px' }}>
-                <img src="/fcs_logo.png" alt="FCS 배지" style={{ width: '40px', height: 'auto' }} />
+                <img src="/logo/fcs_logo.png" alt="FCS 배지" style={{ width: '40px', height: 'auto' }} />
                 <span style={{ fontSize: '18px', fontWeight: 'bold', color: '#ffffff' }}>2025 미래창조경영우수기업</span>
 
               </div>
