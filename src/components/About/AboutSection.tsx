@@ -5,10 +5,9 @@
 // 
 // 📋 주요 기능:
 // - 4개 탭 네비게이션 (ITO, 클라우드, RPA, 솔루션)
-// - 각 탭별 6개 카드 데이터 (총 24개 카드)
-// - 3개씩 보여주는 슬라이더 기능
-// - 좌우 화살표 버튼 네비게이션
-// - 하단 인디케이터 (점 표시)
+// - 각 탭별 카드 데이터 (ITO/클라우드/RPA: 3개, 솔루션: 7개)
+// - 솔루션: 무한 루프 슬라이더 (Swiper 기반)
+// - 기타 탭: 3개씩 고정 표시
 // - 카드 등장 애니메이션 효과
 // - 카드 호버 효과
 // 
@@ -21,16 +20,21 @@
 // 🚀 애니메이션:
 // - 카드 순차 등장 (0.15초 간격)
 // - 카드 호버 시 위로 8px 이동
-// - 인디케이터 모양 변화 (점 → 막대)
+// - 솔루션: 무한 루프 슬라이더
 // 
 // ⚠️ 주의사항:
 // - 다른 팀과 merge 시 이 파일들만 수정됨
 // - AboutSection, AboutCard, AboutTab 등 About/ 폴더 전체
 // ========================================
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { Swiper, SwiperSlide } from "swiper/react";
 import AboutTab from './AboutTab';
 import AboutCard from './AboutCard'; // 효과 버전 (호버 애니메이션 활성화)
 //import AboutCard from './AboutCardNoEffect'; // 무효화 버전 (호버 효과 없음)
+
+// Swiper 스타일 import
+import "swiper/swiper-bundle.css";
+
 const noEffect = AboutCard.name === 'AboutCardNoEffect';
 
 // ========================================
@@ -39,7 +43,7 @@ const noEffect = AboutCard.name === 'AboutCardNoEffect';
 // 탭 리스트 정의: 네비게이션에 표시될 탭명을 배열로 지정합니다.
 const TAB_LIST = ["ITO", "클라우드", "RPA", "솔루션"];
 
-// 각 탭별 카드 데이터 정의: title(제목)과 description(내용 배열) 형태로 구성된 객체입니다.
+// 각 탭별 카드 데이터 정의: title(제목)과 description(내용 배열) 형태로 구성된 객체입니다. (솔루션은 7개)
 const TAB_CONTENTS: Record<string, { title: string; description: string[] }[]> = {
   ITO: [
     {
@@ -159,6 +163,14 @@ const TAB_CONTENTS: Record<string, { title: string; description: string[] }[]> =
         "3. AI 기반 예측 분석"
       ],
     },
+    {
+      title: "클라우드 마이그레이션",
+      description: [
+        "1. 온프레미스 → 클라우드 전환",
+        "2. 멀티클라우드 아키텍처 설계",
+        "3. 안전한 데이터 이전 지원"
+      ],
+    },
   ],
 };
 
@@ -172,6 +184,10 @@ export default function AboutSection() {
   const [currentSlide, setCurrentSlide] = useState(0); // 슬라이더 현재 위치
   const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 768);
   
+  // Swiper ref for infinite loop (솔루션 섹션용)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const swiperRef = useRef<any>(null);
+  
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
     window.addEventListener('resize', handleResize);
@@ -180,25 +196,14 @@ export default function AboutSection() {
   
   const cards = TAB_CONTENTS[activeTab];
   const isMultiPage = activeTab === '솔루션';
-  const groupSize = isMultiPage ? 3 : cards.length;
-  const numSlides = isMultiPage ? Math.ceil(cards.length / 3) : 1;
+  
+  // 솔루션 섹션용 무한 루프를 위한 카드 복제
+  const duplicatedCards = isMultiPage ? Array(3).fill(cards).flat() : cards;
 
   // 탭 변경 핸들러: activeTab, currentSlide 및 애니메이션 상태를 초기화합니다.
   const handleTabChange = (tab: string) => {
     setActiveTab(tab);
     setCurrentSlide(0);
-  };
-
-  // 다음 슬라이드로 이동하는 함수: 최대 슬라이드 개수를 계산하여 순환합니다.
-  const nextSlide = () => {
-    const maxSlides = numSlides - 1;
-    setCurrentSlide(prev => prev < maxSlides ? prev + 1 : 0);
-  };
-
-  // 이전 슬라이드로 이동하는 함수: 순환 형태로 이동합니다.
-  const prevSlide = () => {
-    const maxSlides = numSlides - 1;
-    setCurrentSlide(prev => prev > 0 ? prev - 1 : maxSlides);
   };
 
 
@@ -324,20 +329,133 @@ export default function AboutSection() {
             />
 
             {/* ======================================== */}
-            {/* 카드 영역 (슬라이더 구현부) */}
+            {/* 카드 영역 (솔루션: Swiper 무한루프, 기타: 고정 표시) */}
             {/* ======================================== */}
             <div className="flex items-start gap-4" style={{ position: 'relative', overflow: 'visible', display: 'flex', alignItems: 'flex-start', gap: '16px' }}>
 
-              {/* 카드 컨테이너 - 새 카드 등장 효과 */}
+              {isMultiPage ? (
+                                /* 솔루션 섹션: Swiper 무한 루프 */
+                <>
+                  {/* 카드 컨테이너만 */}
+                  <div style={{ 
+                    width: '1670px', 
+                    overflow: 'hidden',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    marginLeft: 'auto',
+                    marginRight: 'auto'
+                  }}>
+                    <div style={{ width: 'calc(380px * 3 + 165px * 2)' }}>
+                      <Swiper
+                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                        onSwiper={(swiper: any) => {
+                          swiperRef.current = swiper;
+                        }}
+                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                        onInit={(swiper: any) => {
+                          swiperRef.current = swiper;
+                        }}
+                        spaceBetween={165}
+                        slidesPerView={3}
+                        slidesPerGroup={1}
+                        loop={true}
+                        loopedSlides={duplicatedCards.length}
+                        pagination={false}
+                        navigation={false}
+                        allowTouchMove={true}
+                        centeredSlides={false}
+                        speed={300}
+                        resistance={false}
+                        resistanceRatio={0}
+                        watchSlidesProgress={false}
+                        freeMode={false}
+                        className="about-swiper"
+                      >
+                        {duplicatedCards.map((card, index) => (
+                        <SwiperSlide key={`${card.title}-${index}`}>
+                          <div
+                            style={{
+                              opacity: noEffect ? 1 : 0,
+                              transform: noEffect ? 'translateY(0)' : 'translateY(30px) scale(0.9)',
+                              ...(noEffect ? {} : { animation: `cardAppear 0.6s ease-out ${(index % 3) * 0.15}s forwards` })
+                            }}
+                          >
+                            <AboutCard
+                              title={card.title}
+                              description={card.description}
+                              detailLink='https://www.naver.com'
+                            />
+                          </div>
+                        </SwiperSlide>
+                        ))}
+                      </Swiper>
+                      
+                      {/* Swiper 스타일 */}
+                      <style>{`
+                        .about-swiper {
+                          width: 100% !important;
+                          height: auto !important;
+                          overflow: hidden !important;
+                        }
+                        .about-swiper .swiper-wrapper {
+                          display: flex !important;
+                          align-items: flex-start !important;
+                        }
+                        .about-swiper .swiper-slide {
+                          width: 380px !important;
+                          flex-shrink: 0 !important;
+                          height: auto !important;
+                        }
+                        /* 무한 루프 보장 */
+                        .about-swiper .swiper-slide-duplicate {
+                          opacity: 1 !important;
+                          display: block !important;
+                          visibility: visible !important;
+                        }
+                      `}</style>
+                    </div>
+                  </div>
+
+                  {/* 별개의 우측 화살표 버튼 */}
+                  <button 
+                    onClick={() => swiperRef.current?.slideNext()}
+                    className="hover:bg-gray-100 transition-all duration-300"
+                    style={{
+                      border: 'none',
+                      outline: 'none',
+                      width: '50px',
+                      height: '50px',
+                      borderRadius: '50%',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      backgroundColor: '#ffffff',
+                      boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06)',
+                      zIndex: 10,
+                      cursor: 'pointer',
+                      fontSize: '28px',
+                      fontWeight: '700',
+                      position: 'absolute',
+                      right: '50px',
+                      top: '50%',
+                      transform: 'translateY(-50%)'
+                    }}
+                  >
+                    <svg width="50" height="50" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M9 6L15 12L9 18" stroke="#1f2937" strokeWidth="3" strokeLinecap="butt" strokeLinejoin="miter" />
+                    </svg>
+                  </button>
+                </>
+              ) : (
+                /* 기타 섹션: 고정 표시 */
               <div
                 className="flex gap-4 flex-1"
                 style={{ position: 'relative', overflow: 'visible', display: 'flex', gap: '30px', flex: '1', justifyContent: 'center', marginLeft: '50px', marginRight: '50px' }}
               >
-                {cards
-                  .slice(currentSlide * groupSize, currentSlide * groupSize + groupSize)
-                  .map((card, idx) => (
+                  {cards.map((card, idx) => (
                     <div
-                      key={`${activeTab}-${currentSlide}-${idx}`}
+                      key={`${activeTab}-${idx}`}
                       style={{
                         opacity: noEffect ? 1 : 0,
                         transform: noEffect ? 'translateY(0)' : 'translateY(30px) scale(0.9)',
@@ -347,11 +465,11 @@ export default function AboutSection() {
                       <AboutCard
                         title={card.title}
                         description={card.description}
-                        detailLink={activeTab === '솔루션' ? 'https://www.naver.com' : undefined}
                       />
                     </div>
                   ))}
               </div>
+              )}
 
               {/* ======================================== */}
               {/* CSS 애니메이션 스타일 (카드 등장 효과) */}
@@ -372,38 +490,6 @@ export default function AboutSection() {
                   }
                 }
               `}</style>
-
-              {/* 우측 화살표 버튼 */}
-              {isMultiPage && (
-              <button 
-                onClick={nextSlide}
-                className="hover:bg-gray-100 transition-all duration-300"
-                style={{
-                  border: 'none',
-                  outline: 'none',
-                  position: 'absolute',
-                  top: '50%',
-                  right: '50px',
-                  transform: 'translate(50%, -50%)',
-                  width: '50px',
-                  height: '50px',
-                  borderRadius: '50%',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  backgroundColor: '#ffffff',
-                  boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06)',
-                  zIndex: 10,
-                  cursor: 'pointer',
-                  fontSize: '28px',
-                  fontWeight: '700'
-                }}
-              >
-                <svg width="50" height="50" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M9 6L15 12L9 18" stroke="#1f2937" strokeWidth="3" strokeLinecap="butt" strokeLinejoin="miter" />
-                </svg>
-              </button>
-              )}
             </div>
           </>
         )}
