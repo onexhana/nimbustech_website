@@ -27,11 +27,14 @@
 // - 다른 팀과 merge 시 이 파일들만 수정됨
 // - AboutSection, AboutCard, AboutTab 등 About/ 폴더 전체
 // ========================================
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import type { Swiper as SwiperType } from 'swiper';
 import AboutTab from './AboutTab';
+// Swiper 관련 import 제거
 import AboutCard from './AboutCard'; // 효과 버전 (호버 애니메이션 활성화)
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/swiper-bundle.css';
 //import AboutCard from './AboutCardNoEffect'; // 무효화 버전 (호버 효과 없음)
-const noEffect = AboutCard.name === 'AboutCardNoEffect';
 
 // ========================================
 // 탭 및 카드 데이터 (각 섹션별 6개씩 확장됨)
@@ -171,6 +174,7 @@ export default function AboutSection() {
   const [activeTab, setActiveTab] = useState("ITO");
   const [currentSlide, setCurrentSlide] = useState(0); // 슬라이더 현재 위치
   const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 768);
+  const swiperRef = useRef<SwiperType | null>(null);
   
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
@@ -181,26 +185,13 @@ export default function AboutSection() {
   const cards = TAB_CONTENTS[activeTab];
   const isMultiPage = activeTab === '솔루션';
   const groupSize = isMultiPage ? 3 : cards.length;
-  const numSlides = isMultiPage ? Math.ceil(cards.length / 3) : 1;
+  // const numSlides = isMultiPage ? Math.ceil(cards.length / 3) : 1; // unused, removed lint error
 
   // 탭 변경 핸들러: activeTab, currentSlide 및 애니메이션 상태를 초기화합니다.
   const handleTabChange = (tab: string) => {
     setActiveTab(tab);
     setCurrentSlide(0);
   };
-
-  // 다음 슬라이드로 이동하는 함수: 최대 슬라이드 개수를 계산하여 순환합니다.
-  const nextSlide = () => {
-    const maxSlides = numSlides - 1;
-    setCurrentSlide(prev => prev < maxSlides ? prev + 1 : 0);
-  };
-
-  // 이전 슬라이드로 이동하는 함수: 순환 형태로 이동합니다.
-  const prevSlide = () => {
-    const maxSlides = numSlides - 1;
-    setCurrentSlide(prev => prev > 0 ? prev - 1 : maxSlides);
-  };
-
 
 
   return (
@@ -230,7 +221,6 @@ export default function AboutSection() {
         </h2>
 
         {isMobile ? (
-          /* 모바일 레이아웃 */
           <>
             {/* 모바일용 필터 버튼들 */}
             <div style={{ 
@@ -314,7 +304,6 @@ export default function AboutSection() {
             </div>
           </>
         ) : (
-          /* 데스크톱 레이아웃 */
           <>
             {/* 탭 컴포넌트 */}
             <AboutTab 
@@ -327,82 +316,72 @@ export default function AboutSection() {
             {/* 카드 영역 (슬라이더 구현부) */}
             {/* ======================================== */}
             <div className="flex items-start gap-4" style={{ position: 'relative', overflow: 'visible', display: 'flex', alignItems: 'flex-start', gap: '16px' }}>
-
-              {/* 카드 컨테이너 - 새 카드 등장 효과 */}
-              <div
-                className="flex gap-4 flex-1"
-                style={{ position: 'relative', overflow: 'visible', display: 'flex', gap: '30px', flex: '1', justifyContent: 'center', marginLeft: '50px', marginRight: '50px' }}
-              >
-                {cards
-                  .slice(currentSlide * groupSize, currentSlide * groupSize + groupSize)
-                  .map((card, idx) => (
-                    <div
-                      key={`${activeTab}-${currentSlide}-${idx}`}
-                      style={{
-                        opacity: noEffect ? 1 : 0,
-                        transform: noEffect ? 'translateY(0)' : 'translateY(30px) scale(0.9)',
-                        ...(noEffect ? {} : { animation: `cardAppear 0.6s ease-out ${idx * 0.15}s forwards` })
-                      }}
-                    >
+              {activeTab === '솔루션' ? (
+                <>
+                <Swiper
+                  onSwiper={(swiper) => { swiperRef.current = swiper }}
+                  onInit={(swiper) => { swiperRef.current = swiper }}
+                  loop
+                  slidesPerView={3}
+                  spaceBetween={30}
+                  pagination={false}
+                  className="about-solutions-swiper"
+                  style={{ width: '100%', justifyContent: 'center', padding: '0 50px' }}
+                >
+                  {cards.map((card, idx) => (
+                    <SwiperSlide key={`solution-${idx}`}>
                       <AboutCard
                         title={card.title}
                         description={card.description}
-                        detailLink={activeTab === '솔루션' ? 'https://www.naver.com' : undefined}
+                        detailLink="https://www.naver.com"
+                      />
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
+                {/* 오른쪽 화살표 커스텀 버튼 */}
+                <button
+                  aria-label="다음 카드"
+                  onClick={() => swiperRef.current?.slideNext()}
+                  className="hover:bg-gray-100 transition-all duration-300"
+                  style={{
+                    backgroundColor: '#ffffff',
+                    border: 'none',
+                    outline: 'none',
+                    padding: 0,
+                    fontSize: '28px',
+                    fontWeight: 700,
+                    borderRadius: '50%',
+                    width: '50px',
+                    height: '50px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    cursor: 'pointer',
+                    boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06)',
+                    position: 'absolute',
+                    top: '50%',
+                    right: '50px',
+                    transform: 'translate(50%, -50%)',
+                    zIndex: 10
+                  }}
+                >
+                  <svg width="50" height="50" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M9 6L15 12L9 18" stroke="#1f2937" strokeWidth="3" strokeLinecap="butt" strokeLinejoin="miter"/>
+                  </svg>
+                </button>
+                </>
+              ) : (
+                  <div className="flex gap-4 flex-1" style={{ position: 'relative', overflow: 'visible', display: 'flex', gap: '30px', flex: '1', justifyContent: 'center', marginLeft: '50px', marginRight: '50px' }}>
+                  {cards.slice(currentSlide * groupSize, currentSlide * groupSize + groupSize).map((card, idx) => (
+                    <div key={`${activeTab}-${currentSlide}-${idx}`}>
+                      <AboutCard
+                        title={card.title}
+                        description={card.description}
+                        detailLink={undefined}
                       />
                     </div>
                   ))}
-              </div>
-
-              {/* ======================================== */}
-              {/* CSS 애니메이션 스타일 (카드 등장 효과) */}
-              {/* ======================================== */}
-              <style>{`
-                @keyframes cardAppear {
-                  0% {
-                    opacity: 0;
-                    transform: translateY(30px) scale(0.9);
-                  }
-                  50% {
-                    opacity: 0.7;
-                    transform: translateY(-5px) scale(1.02);
-                  }
-                  100% {
-                    opacity: 1;
-                    transform: translateY(0) scale(1);
-                  }
-                }
-              `}</style>
-
-              {/* 우측 화살표 버튼 */}
-              {isMultiPage && (
-              <button 
-                onClick={nextSlide}
-                className="hover:bg-gray-100 transition-all duration-300"
-                style={{
-                  border: 'none',
-                  outline: 'none',
-                  position: 'absolute',
-                  top: '50%',
-                  right: '50px',
-                  transform: 'translate(50%, -50%)',
-                  width: '50px',
-                  height: '50px',
-                  borderRadius: '50%',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  backgroundColor: '#ffffff',
-                  boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06)',
-                  zIndex: 10,
-                  cursor: 'pointer',
-                  fontSize: '28px',
-                  fontWeight: '700'
-                }}
-              >
-                <svg width="50" height="50" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M9 6L15 12L9 18" stroke="#1f2937" strokeWidth="3" strokeLinecap="butt" strokeLinejoin="miter" />
-                </svg>
-              </button>
+                </div>
               )}
             </div>
           </>
