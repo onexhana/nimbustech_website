@@ -118,7 +118,7 @@ const PortfolioCardList = ({ projects }: Props) => {
               flex-shrink: 0 !important;
             }
             .portfolio-swiper .swiper-slide > div {
-              margin: 10px 5px;
+              margin: 20px 5px 10px 5px;
             }
             /* 무한 루프 보장 */
             .portfolio-swiper .swiper-slide-duplicate {

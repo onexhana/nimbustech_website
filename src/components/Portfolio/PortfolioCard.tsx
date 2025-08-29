@@ -10,7 +10,8 @@ const PortfolioCard = ({ title, description, image }: PortfolioCardProps) => {
       className="rounded-[24px] p-10 transition-all duration-300"
       style={{ 
         width: '380px', 
-        minHeight: '400px', 
+        marginTop: '0px',
+        height: '400px', 
         backgroundColor: '#f9fafb',
        boxShadow: '0 4px 10px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.04)'
       }} // 카드 최소 높이를 지정하여 내용에 따라 늘어납니다

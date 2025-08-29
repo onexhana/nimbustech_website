@@ -11,7 +11,7 @@ const CategoryFilter = ({ selectedCategory, onCategoryChange }: CategoryFilterPr
   return (
     <div className="flex flex-col h-full">
 
-      <div className="flex flex-col flex-1" style={{ rowGap: '18px', marginTop: '-10px' }}> {/* 버튼 별 간격 설정 칸 */}
+      <div className="flex flex-col flex-1" style={{ rowGap: '18px', marginTop: '0px' }}> {/* 버튼 별 간격 설정 칸 */}
         {portfolioCategories.map((cat) => {
           const isSelected = selectedCategory === cat;
           return (

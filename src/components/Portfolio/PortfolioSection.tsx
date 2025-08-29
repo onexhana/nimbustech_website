@@ -12,7 +12,7 @@ export default function PortfolioSection() {
   return (
     <div className="w-full">
       {/* 포트폴리오 메인 섹션 */}
-      <div className="pt-[0px] pl-16 pr-12 pb-24 bg-white">
+      <div className="pt-[120px] pl-16 pr-12 pb-24 bg-white">
         {/* Portfolio 페이지 제목 */}
         <div className="max-w-7xl mx-auto">
           {/* 검은 실선 */}

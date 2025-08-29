@@ -87,7 +87,7 @@ const buttons: ButtonItem[] = [
   {
     title: "Mission&Vision",
     subtitle: "미션&비전",
-    description: "우리의 존재 이유와 향하는 미래를 담습니다.",
+    description: "우리의 존재 이유와\n향하는 미래를 담습니다.",
     link: "/#about",
     imagePath: "/popup_image/Mission&Vision.jpg",
     titleFontSize: 30,
@@ -97,7 +97,7 @@ const buttons: ButtonItem[] = [
   {
     title: "Core Values",
     subtitle: "핵심가치",
-    description: "고객과 함께 성장하는 신뢰·책임·전문성의 가치",
+    description: "고객과 함께 성장하는\n신뢰·책임·전문성의 가치",
     link: "/#about",
     imagePath: "/popup_image/Core%20Values.jpg",
     titleFontSize: 30,
