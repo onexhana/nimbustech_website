@@ -52,15 +52,19 @@ export default function HomeSection() {
         id="home"
         className="w-full h-screen bg-white flex items-center justify-end pr-6 md:pr-20"
       >
-        <div className="text-right">
-          <div className="space-y-8">
+        <div className="text-right" style={{ marginRight: '70px' }}>
+          <div>
             {texts.map((text, index) => (
-              <div key={index} className="min-h-[20vh]">
+              <div key={index} style={{ 
+                marginBottom: index < texts.length - 1 ? '1px' : '0',
+                marginTop: index === 0 ? '120px' : '0'
+              }}>
                 <span 
-                  className={`text-[6vw] md:text-[8vw] lg:text-[10vw] xl:text-[12vw] ${fontWeights[index]} tracking-tight ${colors[index]}`}
+                  className={index === 3 ? `${fontWeights[index]} tracking-tight ${colors[index]}` : `text-[6vw] md:text-[8vw] lg:text-[10vw] xl:text-[12vw] ${fontWeights[index]} tracking-tight ${colors[index]}`}
                   style={index === 3 ? { 
                     fontWeight: '700', // 영어(NIMBUS TECH)는 더 두껍게
-                    textShadow: '0 0 1px currentColor' // 영어에 미세한 텍스트 그림자로 더 굵게 표현
+                    textShadow: '0 0 1px currentColor', // 영어에 미세한 텍스트 그림자로 더 굵게 표현
+                    fontSize: '150px' // NIMBUS TECH만 px로 고정 크기
                   } : { 
                     fontWeight: '450' // 한글은 font-black보다 약간 두껍게
                   }}
