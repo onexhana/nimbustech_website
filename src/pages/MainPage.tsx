@@ -22,9 +22,9 @@ const MainPage = () => {
         {/* About Section */}
         <section 
           id="about" 
-          className="min-h-screen w-full bg-gray-50 py-16 lg:py-24"
+          className="min-h-screen w-full bg-gray-50 py-24"
         >
-          <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="w-full max-w-7xl mx-auto px-8">
             <AboutSection />
           </div>
         </section>
@@ -32,7 +32,7 @@ const MainPage = () => {
         {/* Portfolio Section */}
         <section 
           id="portfolio" 
-          className="min-h-screen w-full bg-white py-16 lg:py-24"
+          className="min-h-screen w-full bg-white py-24"
         >
           <div className="w-full">
             <PortfolioSection />
