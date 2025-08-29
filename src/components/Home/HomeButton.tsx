@@ -259,7 +259,7 @@ export default function HomeButton() {
   return (
     <>
       {renderModal()}
-      <div className="w-full bg-white">
+      <div className="w-full bg-white" style={{ marginTop: '100px' }}>
         <div className="grid grid-cols-4 border-t border-gray-200">
           {buttons.map((btn, idx) => {
             const isSelected = selectedIdx === idx;
@@ -307,15 +307,15 @@ export default function HomeButton() {
             );
           })}
         </div>
-        <div className="w-full py-16 bg-gray-100">
-          <InfiniteTextSlider 
-            text="Leading Customer Success"
-            fontSize={96}
-            textColor="#4C585B"
-            duration={25}
-            gap={10}
-          />
-        </div>
+                 <div className="w-full py-16 bg-gray-100" style={{ marginTop: '20px' }}>
+           <InfiniteTextSlider 
+             text="Leading Customer Success"
+             fontSize={96}
+             textColor="#c2c2c2"
+             duration={25}
+             gap={10}
+           />
+         </div>
       </div>
     </>
   );
