@@ -27,16 +27,12 @@
 // - AboutSection, AboutCard, AboutTab 등 About/ 폴더 전체
 // ========================================
 import { useState, useEffect, useRef } from 'react';
-import { Swiper, SwiperSlide } from "swiper/react";
 import AboutTab from './AboutTab';
 // Swiper 관련 import 제거
 import AboutCard from './AboutCard'; // 효과 버전 (호버 애니메이션 활성화)
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
 //import AboutCard from './AboutCardNoEffect'; // 무효화 버전 (호버 효과 없음)
-
-// Swiper 스타일 import
-import "swiper/swiper-bundle.css";
 
 const noEffect = AboutCard.name === 'AboutCardNoEffect';
 
@@ -186,7 +182,6 @@ export default function AboutSection() {
   const [activeTab, setActiveTab] = useState("ITO");
   const [currentSlide, setCurrentSlide] = useState(0); // 슬라이더 현재 위치
   const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 768);
-  const swiperRef = useRef<SwiperType | null>(null);
   
   // Swiper ref for infinite loop (솔루션 섹션용)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
