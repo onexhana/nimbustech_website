@@ -12,7 +12,7 @@ const PortfolioCard = ({ title, description, category, image }: PortfolioCardPro
       className="rounded-[24px] p-10 transition-all duration-300"
       style={{ 
         width: '380px', 
-        marginTop: '-10px',
+        marginTop: '0px',
         height: '400px', 
         backgroundColor: '#f9fafb',
         boxShadow: '0 4px 10px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.04)'
