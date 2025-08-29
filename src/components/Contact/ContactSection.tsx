@@ -53,7 +53,7 @@ export default function ContactSection() {
             {/* TRUST 섹션 */}
             <div>
               <h3 style={{
-                fontSize: '36px',
+                fontSize: '45px',
                 fontWeight: '900',
                 color: '#00A3E0',
                 marginBottom: '2px',
@@ -62,7 +62,7 @@ export default function ContactSection() {
                 TRUST
               </h3>
               <p style={{
-                fontSize: '16px',
+                fontSize: '21px',
                 color: '#4b5563',
                 lineHeight: '1.6',
                 fontWeight: '700',
@@ -76,7 +76,7 @@ export default function ContactSection() {
             {/* OWNERSHIP 섹션 */}
             <div>
               <h3 style={{
-                fontSize: '36px',
+                fontSize: '45px',
                 fontWeight: '900',
                 color: '#00A3E0',
                 marginBottom: '2px',
@@ -85,7 +85,7 @@ export default function ContactSection() {
                 OWNERSHIP
               </h3>
               <p style={{
-                fontSize: '16px',
+                fontSize: '21px',
                 color: '#4b5563',
                 lineHeight: '1.6',
                 fontWeight: '700',
@@ -99,7 +99,7 @@ export default function ContactSection() {
             {/* GROWTH 섹션 */}
             <div>
               <h3 style={{
-                fontSize: '36px',
+                fontSize: '45px',
                 fontWeight: '900',
                 color: '#00A3E0',
                 marginBottom: '2px',
@@ -108,7 +108,7 @@ export default function ContactSection() {
                 GROWTH
               </h3>
               <p style={{
-                fontSize: '16px',
+                fontSize: '21px',
                 color: '#4b5563',
                 lineHeight: '1.6',
                 fontWeight: '700',
@@ -128,7 +128,7 @@ export default function ContactSection() {
             {/* 고객지원 버튼 */}
             <button
               className={`text-white font-bold transition-all duration-300 hover:shadow-lg hover:-translate-y-1 ${isMobile ? 'bg-[#00A3E0] w-full mt-8 h-[74px] px-8 flex items-center justify-center text-[24px] relative overflow-hidden border-none text-white' : ''}`}
-              style={isMobile ? undefined : { backgroundColor: '#00A3E0', width: '550px', marginTop: '240px', display: 'flex', alignItems: 'center', justifyContent: 'center', height: '74px', padding: '0 32px', fontSize: '24px', color: '#ffffff', fontWeight: '700', borderRadius: '0px', border: 'none', cursor: 'pointer', position: 'relative', overflow: 'hidden' }}
+              style={isMobile ? undefined : { backgroundColor: '#00A3E0', width: '530px', marginTop: '320px', display: 'flex', alignItems: 'center', justifyContent: 'center', height: '80px', padding: '0 32px', fontSize: '28px', color: '#ffffff', fontWeight: '700', borderRadius: '0px', border: 'none', cursor: 'pointer', position: 'relative', overflow: 'hidden' }}
               onClick={() => setUserType('inquiry')}
             >
               <span
@@ -142,7 +142,7 @@ export default function ContactSection() {
             {/* 인재채용 버튼 */}
             <button
               className={`text-white font-bold transition-all duration-300 hover:shadow-lg hover:-translate-y-1 ${isMobile ? 'bg-[#6b7280] w-full mt-4 h-[74px] px-8 flex items-center justify-center text-[24px] relative overflow-hidden border-none text-white' : ''}`}
-              style={isMobile ? undefined : { backgroundColor: '#6b7280', width: '550px', marginTop: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center', height: '74px', padding: '0 32px', fontSize: '24px', color: '#ffffff', fontWeight: '700', borderRadius: '0px', border: 'none', cursor: 'pointer', position: 'relative', overflow: 'hidden' }}
+              style={isMobile ? undefined : { backgroundColor: '#6b7280', width: '530px', marginTop: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center', height: '80px', padding: '0 32px', fontSize: '28px', color: '#ffffff', fontWeight: '700', borderRadius: '0px', border: 'none', cursor: 'pointer', position: 'relative', overflow: 'hidden' }}
               onClick={() => setUserType('hiring')}
             >
               <span
