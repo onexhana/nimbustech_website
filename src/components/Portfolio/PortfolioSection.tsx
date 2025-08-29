@@ -12,7 +12,7 @@ export default function PortfolioSection() {
   return (
     <div className="w-full">
       {/* 포트폴리오 메인 섹션 */}
-      <div className="pt-[100px] pl-16 pr-12 pb-24 bg-white">
+      <div className="pt-[0px] pl-16 pr-12 pb-24 bg-white">
         {/* Portfolio 페이지 제목 */}
         <div className="max-w-7xl mx-auto">
           {/* 검은 실선 */}
@@ -38,14 +38,13 @@ export default function PortfolioSection() {
           </h2>
         </div>
         
-        <div className="flex gap-16 items-start" style={{ marginLeft: '64px' }}>
+        <div className="flex gap-16 items-start" style={{ marginLeft: '64px', marginTop: '-0px' }}>
           <CategoryFilter 
             selectedCategory={selectedCategory}
             onCategoryChange={setSelectedCategory}
           />
 
           <div className="flex flex-col h-full items-start" style={{ marginLeft: '200px' }}>
-            <h3 className="text-[36px] font-extrabold mb-6 text-black tracking-tight">{selectedCategory}</h3>
             <div className="w-full">
               <PortfolioCardList projects={filtered} />
             </div>
@@ -54,7 +53,7 @@ export default function PortfolioSection() {
       </div>
 
       {/* 파트너 로고 슬라이더 */}
-      <div style={{ marginTop: "50px" }}>
+      <div style={{ marginTop: "0px" }}>
         <PartnerLogoSlider />
       </div>
     </div>
