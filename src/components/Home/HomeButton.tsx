@@ -99,7 +99,7 @@ const buttons: ButtonItem[] = [
     subtitle: "핵심가치",
     description: "고객과 함께 성장하는\n신뢰·책임·전문성의 가치",
     link: "/#about",
-    imagePath: "/popup_image/Core%20Values.jpg",
+    imagePath: "/popup_image/Core%20Values.png",
     titleFontSize: 30,
     subtitleFontSize: 40,
     descriptionFontSize: 20,
