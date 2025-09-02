@@ -1,0 +1,108 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 
+========================================
+🎨 PRETENDARD 폰트 전역 적용 - CSS 방식
+========================================
+모든 HTML 요소에 Pretendard 폰트가 기본으로 적용됩니다.
+:root에 설정하여 CSS 변수와 함께 전역으로 상속됩니다.
+========================================
+*/
+
+:root {
+  /* 🎨 PRETENDARD 폰트 스택 - 우선순위별 fallback 설정 */
+  font-family: 'Pretendard Variable', 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light;
+  color: #213547;
+  background-color: #ffffff;
+
+  /* 폰트 렌더링 최적화 설정 */
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;  /* macOS/iOS 폰트 스무딩 */
+  -moz-osx-font-smoothing: grayscale;   /* Firefox 폰트 스무딩 */
+}
+
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #535bf2;
+}
+
+/* 🎨 BODY 요소에 PRETENDARD 폰트 명시적 적용 */
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background-color: #ffffff;
+  /* body 요소에도 명시적으로 Pretendard 폰트 적용 (이중 보장) */
+  font-family: 'Pretendard Variable', 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+/* 로고 모양 웹과 모바일 : 기본은 모바일 기준 */
+.desktop-logo {
+  display: none;
+}
+
+.mobile-logo {
+  display: block;
+  height: 12px;  /* 모바일 전용 크기 */
+  width: auto;
+}
+
+/* 768px 이상 데스크톱 */
+@media screen and (min-width: 768px) {
+  .desktop-logo {
+    display: block;
+    height: 18px;
+    width: auto;
+  }
+
+  .mobile-logo {
+    display: none;
+  }
+}
+
+
+
+/* 헤더 반응형 CSS */
+@media screen and (max-width: 767px) {
+  .desktop-menu-nav {
+    display: none !important;
+  }
+  .mobile-hamburger-btn {
+    display: block !important;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .desktop-menu-nav {
+    display: flex !important;
+  }
+  .mobile-hamburger-btn {
+    display: none !important;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+}
