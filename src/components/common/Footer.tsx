@@ -96,6 +96,7 @@ export default function Footer() {
                 fontWeight: 600,  // 글자 두께
                 cursor: 'pointer',  // /* pointer: 클릭 가능한 손가락 모양 | default: 기본 화살표 | text: 텍스트 선택 I-모양 | wait: 로딩 중 (모래시계/스피너) | move: 이동 가능 (십자 화살표) | not-allowed: 금지 표시 | help: 도움말 아이콘 | crosshair: 십자선 모양 */
                 transform: 'scale(1)',  // 기본 크기
+                marginBottom: '25px',
               }}
               onMouseDown={(e) => {       // 마우스를 클릭한 순간 (누르고 있는 상태)
                 e.currentTarget.style.backgroundColor = ' rgba(0, 163, 224, 1)'; // #00A3E0 rbga 

@@ -1,0 +1,49 @@
+{
+  "hash": "b760d08b",
+  "configHash": "b3e84b0f",
+  "lockfileHash": "07a6368d",
+  "browserHash": "907360a7",
+  "optimized": {
+    "react/jsx-dev-runtime": {
+      "src": "../../node_modules/react/jsx-dev-runtime.js",
+      "file": "react_jsx-dev-runtime.js",
+      "fileHash": "63199348",
+      "needsInterop": true
+    },
+    "react": {
+      "src": "../../node_modules/react/index.js",
+      "file": "react.js",
+      "fileHash": "be4d70bd",
+      "needsInterop": true
+    },
+    "react-dom/client": {
+      "src": "../../node_modules/react-dom/client.js",
+      "file": "react-dom_client.js",
+      "fileHash": "445d41e7",
+      "needsInterop": true
+    },
+    "react-icons/fa": {
+      "src": "../../node_modules/react-icons/fa/index.mjs",
+      "file": "react-icons_fa.js",
+      "fileHash": "c0c471dc",
+      "needsInterop": false
+    },
+    "swiper/react": {
+      "src": "../../node_modules/swiper/react/swiper-react.js",
+      "file": "swiper_react.js",
+      "fileHash": "b96d577d",
+      "needsInterop": false
+    },
+    "framer-motion": {
+      "src": "../../node_modules/framer-motion/dist/es/index.mjs",
+      "file": "framer-motion.js",
+      "fileHash": "84f7340a",
+      "needsInterop": false
+    }
+  },
+  "chunks": {
+    "chunk-H3AANLML": {
+      "file": "chunk-H3AANLML.js"
+    }
+  }
+}
