@@ -122,18 +122,15 @@ const TAB_CONTENTS: Record<string, { title: string; description: string[] }[]> =
       ],
     },
     {
-      title: "Acculnsight+ 2.0",
+      title: "WEDATALAB",
       description: [
-        "데이터 전처리부터 분석과 운영의 Data",
-        "science 전 영역을 지원하는 Multi-",
-        "Cloud 기반의 AI DevOps 플랫폼"
+        "WEDATALAB 솔루션, 연결해드립니다"
       ],
     },
     {
-      title: "Accu.Tuning (AutoML)",
+      title: "IT STORY",
       description: [
-        "직관적인 UI로 모델 생성, 설명, 배포를",
-        "한번에 제공하는 AutoML 솔루션"
+        "IT STORY 솔루션, 연결해드립니다"
       ],
     },
     {
