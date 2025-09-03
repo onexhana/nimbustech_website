@@ -19,7 +19,25 @@ export default function Header() {
     if (element) {
       // 헤더 높이만큼 오프셋 조정
       const headerHeight = 80;
-      const elementPosition = element.offsetTop - headerHeight;
+      let elementPosition = element.offsetTop - headerHeight;
+      
+      // Portfolio 섹션의 경우 초록색 박스 중간으로 스크롤
+      if (sectionId === 'portfolio') {
+        // 초록색 박스 높이의 절반 정도를 추가로 빼서 중간 위치로 조정
+        elementPosition = element.offsetTop - headerHeight - -100;
+      }
+      
+      // Contact 섹션의 경우 적절한 위치로 스크롤
+      if (sectionId === 'contact') {
+        // Contact 섹션도 적절한 위치로 조정
+        elementPosition = element.offsetTop - headerHeight - -100;
+      }
+      
+      // About 섹션의 경우 적절한 위치로 스크롤
+      if (sectionId === 'about-gray-start') {
+        // About 섹션도 적절한 위치로 조정
+        elementPosition = element.offsetTop - headerHeight - 60;
+      }
       
       window.scrollTo({
         top: elementPosition,
