@@ -22,11 +22,9 @@ const MainPage = () => {
         {/* About Section */}
         <section 
           id="about" 
-          className="w-full bg-blue-100 py-24"
+          className="w-full"
         >
-          <div className="w-full max-w-7xl mx-auto px-8">
-            <AboutSection />
-          </div>
+          <AboutSection />
         </section>
 
         {/* Portfolio Section */}

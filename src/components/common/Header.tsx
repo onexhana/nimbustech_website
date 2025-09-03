@@ -6,7 +6,7 @@ export default function Header() {
 
   const navItems = [
     { to: 'home', label: 'Home' },
-    { to: 'about', label: 'About' },
+    { to: 'about-gray-start', label: 'About' },
     { to: 'portfolio', label: 'Portfolio' },
     { to: 'contact', label: 'Contact' },
   ];
@@ -17,9 +17,13 @@ export default function Header() {
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start',
+      // 헤더 높이만큼 오프셋 조정
+      const headerHeight = 80;
+      const elementPosition = element.offsetTop - headerHeight;
+      
+      window.scrollTo({
+        top: elementPosition,
+        behavior: 'smooth'
       });
     }
     // 모바일 메뉴 닫기
