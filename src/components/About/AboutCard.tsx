@@ -76,9 +76,15 @@ export default function AboutCard({ title, description, detailLink, borderRadius
         const descriptions = e.currentTarget.querySelectorAll('.text-gray-700 div');
         descriptions.forEach(desc => (desc as HTMLElement).style.color = descriptionColor || "#374151");
         
-        // 링크 색상을 원래대로 복원
+        // 링크 색상을 원래대로 복원 (버튼 형태일 경우 흰색, 아닐 경우 파란색)
         const link = e.currentTarget.querySelector('a');
-        if (link) link.style.color = "#00A3E0";
+        if (link) {
+          if (linkAsButton) {
+            link.style.color = "#ffffff";
+          } else {
+            link.style.color = "#00A3E0";
+          }
+        }
       }}
     >
       {/* 제목 */}

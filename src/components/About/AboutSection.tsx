@@ -419,7 +419,7 @@ export default function AboutSection() {
                       onClick={() => swiperRef.current?.slidePrev()}
                       style={{
                         position: 'absolute',
-                        top: '-3rem',
+                        top: '-5rem',
                         right: '6rem',
                         border: 'none',
                         outline: 'none',
@@ -442,7 +442,7 @@ export default function AboutSection() {
                       onClick={() => swiperRef.current?.slideNext()}
                       style={{
                         position: 'absolute',
-                        top: '-3rem',
+                        top: '-5rem',
                         right: '2rem',
                         border: 'none',
                         outline: 'none',
