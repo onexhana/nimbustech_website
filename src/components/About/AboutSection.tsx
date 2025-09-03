@@ -207,34 +207,17 @@ export default function AboutSection() {
 
 
   return (
-    <div className="w-full px-6 py-12 bg-white" style={{ paddingTop: '120px' }}>
-      {/* 메인 타이틀 */}
+    <div className="w-full px-6 py-12" style={{ paddingTop: '120px' }}>
+      {/* 메인 타이틀 영역 (AboutSection 컴포넌트 내부 상단) */}
       <div className="max-w-7xl mx-auto">
-        {/* 검은 실선 */}
-        <div style={{
-          width: '110px',
-          height: '3px',
-          backgroundColor: '#000000',
-          marginLeft: isMobile ? '0' : '50px',
-          marginBottom: '20px'
-        }}></div>
-        
-        <h2 style={{
-          fontSize: isMobile ? '28px' : '45px',
-          fontWeight: '1100',
-          marginBottom: isMobile ? '40px' : '80px',
-          color: '#1f2937',
-          lineHeight: '1.2',
-          letterSpacing: '-3.5px',
-          marginLeft: isMobile ? '0' : '50px'
-        }}>
-          신뢰성 높은 DT서비스를 제공하여<br />
-          지속적인 고객 성공을 리딩합니다
-        </h2>
-
+        {/*
+          isMobile 분기: 화면 너비가 모바일 기준(<768px)이면 이 블록 실행
+          - 모바일용 필터 버튼들을 flex-wrap으로 가로/세로 배치
+          - gap 및 marginBottom으로 버튼 간 간격 설정
+        */}
         {isMobile ? (
           <>
-            {/* 모바일용 필터 버튼들 */}
+            {/* 모바일 필터 버튼들을 감싸는 div */}
             <div style={{ 
               display: 'flex', 
               flexWrap: 'wrap',
@@ -242,9 +225,11 @@ export default function AboutSection() {
               gap: '10px',
               marginBottom: '20px'
             }}>
+              {/* TAB_LIST 배열을 순회하며 각각 버튼 생성 */}
               {TAB_LIST.map((tab) => (
                 <button
                   key={tab}
+                  /* 버튼 스타일: 활성 탭은 파란색, 비활성 탭은 흰색 배경 */
                   style={{
                     backgroundColor: activeTab === tab ? '#00A3E0' : 'white',
                     color: activeTab === tab ? 'white' : '#00A3E0',
@@ -257,7 +242,7 @@ export default function AboutSection() {
                   }}
                   onClick={() => handleTabChange(tab)}
                 >
-                  {tab}
+                  {tab} {/* 탭명 표시 */}
                 </button>
               ))}
             </div>
@@ -273,7 +258,7 @@ export default function AboutSection() {
               <h3 style={{
                 fontSize: '22px',
                 fontWeight: '700',
-                color: '#00A3E0',
+                color: activeTab === 'ITO' ? '#000000' : '#00A3E0',
                 marginBottom: '12px'
               }}>
                 {cards[currentSlide].title}
@@ -467,10 +452,21 @@ export default function AboutSection() {
                         ...(noEffect ? {} : { animation: `cardAppear 0.6s ease-out ${idx * 0.15}s forwards` })
                       }}
                     >
-                      <AboutCard
-                        title={card.title}
-                        description={card.description}
-                      />
+                      {activeTab === 'ITO' ? (
+                        <AboutCard
+                          title={card.title}
+                          description={card.description}
+                          borderRadius="16px"
+                          titleColor="#000000"
+                          descriptionColor="#6B7280"
+                          backgroundColor="#ffffff"
+                        />
+                      ) : (
+                        <AboutCard
+                          title={card.title}
+                          description={card.description}
+                        />
+                      )}
                     </div>
                   ))}
               </div>

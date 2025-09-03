@@ -22,7 +22,7 @@ const MainPage = () => {
         {/* About Section */}
         <section 
           id="about" 
-          className="w-full bg-gray-50 py-24"
+          className="w-full bg-blue-100 py-24"
         >
           <div className="w-full max-w-7xl mx-auto px-8">
             <AboutSection />
