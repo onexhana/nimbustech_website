@@ -207,7 +207,8 @@ export default function AboutSection() {
 
 
   return (
-    <div className="w-full px-6" style={{ paddingTop: '100px', paddingBottom: '96px', backgroundColor: '#F3F6F9', marginTop: '120px' }}>
+    <div id="about-gray-start">
+      <div className="w-full px-6" style={{ paddingTop: '100px', paddingBottom: '96px', backgroundColor: '#F3F6F9', marginTop: '120px' }}>
       {/* 메인 타이틀 영역 (AboutSection 컴포넌트 내부 상단) */}
       <div className="max-w-7xl mx-auto">
         {/*
@@ -496,6 +497,7 @@ export default function AboutSection() {
           </>
         )}
       </div>
+    </div>
     </div>
   );
 }
