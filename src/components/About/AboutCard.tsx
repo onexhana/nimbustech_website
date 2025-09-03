@@ -19,9 +19,13 @@ interface AboutCardProps {
   descriptionColor?: string;
   /** 커스텀 배경 색상 */
   backgroundColor?: string;
+  /** 커스텀 카드 폭 (예: "20vw") */
+  width?: string;
+  /** 커스텀 카드 최소 높이 (예: "16vw") */
+  minHeight?: string;
 }
 
-export default function AboutCard({ title, description, detailLink, borderRadius, titleColor, descriptionColor, backgroundColor }: AboutCardProps) {
+export default function AboutCard({ title, description, detailLink, borderRadius, titleColor, descriptionColor, backgroundColor, width, minHeight }: AboutCardProps) {
   return (
     <div
       className="bg-gray-100 rounded-lg border border-gray-200 shadow-sm transition-transform duration-300 cursor-pointer flex flex-col"
@@ -30,9 +34,9 @@ export default function AboutCard({ title, description, detailLink, borderRadius
         borderRadius: borderRadius || "8px",
         padding: "16px",
         border: "1px solid #e5e7eb",
-        minHeight: "20vw",
-        width: "25vw",
-        maxWidth: "25vw",
+        minHeight: minHeight || "20vw",
+        width: width || "25vw",
+        maxWidth: width || "25vw",
         flexShrink: 0,      // ✅ 강제로 줄어들지 않도록
         display: "flex",
       }}

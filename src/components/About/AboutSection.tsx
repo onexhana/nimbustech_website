@@ -456,10 +456,11 @@ export default function AboutSection() {
                         <AboutCard
                           title={card.title}
                           description={card.description}
-                          borderRadius="16px"
+                          borderRadius="35px"
                           titleColor="#000000"
                           descriptionColor="#6B7280"
                           backgroundColor="#ffffff"
+                          minHeight="12vw"
                         />
                       ) : (
                         <AboutCard
