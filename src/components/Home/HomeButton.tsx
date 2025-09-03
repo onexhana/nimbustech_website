@@ -19,6 +19,9 @@ interface InfiniteTextSliderProps {
   textColor?: string;
   duration?: number;
   gap?: number;
+  coloredWords?: { [word: string]: string }; // 특정 단어별 색상 지정
+  fontWeight?: string | number; // 기본 글씨 두께
+  fontWeights?: { [word: string]: string | number }; // 특정 단어별 글씨 두께
 }
 
 // 무한 텍스트 슬라이더 컴포넌트
@@ -27,10 +30,82 @@ function InfiniteTextSlider({
   fontSize = 48, // px 단위 기본값
   textColor = "text-gray-300", 
   duration = 20,
-  gap = 100 
+  gap = 100,
+  coloredWords = {},
+  fontWeight = 300,
+  fontWeights = {}
 }: InfiniteTextSliderProps) {
   // 텍스트를 여러 번 복제하여 무한 스크롤 효과 생성
   const repeatedText = Array(6).fill(text);
+
+  // 텍스트를 단어별로 분할하고 색상/두께를 적용하는 함수
+  const renderColoredText = (txt: string) => {
+    // coloredWords와 fontWeights가 모두 비어있으면 기존 방식으로 렌더링
+    if (Object.keys(coloredWords).length === 0 && Object.keys(fontWeights).length === 0) {
+      return txt.split('\n').map((line: string, lineIndex: number, array: string[]) => (
+        <span key={lineIndex}>
+          {line}
+          {lineIndex < array.length - 1 && <br />}
+        </span>
+      ));
+    }
+
+    // 단어별로 색상과 두께 적용
+    let processedText = txt;
+    const wordElements: React.ReactNode[] = [];
+    
+    // 모든 특별한 단어들을 수집 (색상이나 두께가 지정된 단어들)
+    const specialWords = new Set([...Object.keys(coloredWords), ...Object.keys(fontWeights)]);
+    
+    // 각 특별한 단어를 찾아서 마킹
+    specialWords.forEach((word) => {
+      const regex = new RegExp(`(${word})`, 'gi');
+      processedText = processedText.replace(regex, `||${word}||SPECIAL||`);
+    });
+
+    // 처리된 텍스트를 파싱하여 JSX 요소로 변환
+    const parts = processedText.split('||');
+    for (let i = 0; i < parts.length; i += 3) {
+      const beforeText = parts[i];
+      const specialWord = parts[i + 1];
+      const marker = parts[i + 2];
+
+      // 일반 텍스트 추가
+      if (beforeText) {
+        wordElements.push(
+          <span 
+            key={`text-${i}`} 
+            style={{ 
+              color: textColor.startsWith('#') || textColor.startsWith('rgb') ? textColor : undefined,
+              fontWeight: fontWeight
+            }}
+          >
+            {beforeText}
+          </span>
+        );
+      }
+
+      // 특별한 단어 (색상이나 두께가 적용된 단어) 추가
+      if (specialWord && marker === 'SPECIAL') {
+        const wordColor = coloredWords[specialWord] || (textColor.startsWith('#') || textColor.startsWith('rgb') ? textColor : undefined);
+        const wordWeight = fontWeights[specialWord] || fontWeight;
+        
+        wordElements.push(
+          <span 
+            key={`special-${i}`} 
+            style={{ 
+              color: wordColor,
+              fontWeight: wordWeight
+            }}
+          >
+            {specialWord}
+          </span>
+        );
+      }
+    }
+
+    return wordElements;
+  };
 
   return (
     <div className="relative w-full overflow-hidden">
@@ -53,25 +128,20 @@ function InfiniteTextSlider({
         }}
       >
         {repeatedText.map((txt, i) => {
-          // 줄바꿈 처리: \n을 <br />로 변환
-          const textWithBreaks = txt.split('\n').map((line: string, lineIndex: number, array: string[]) => (
-            <span key={lineIndex}>
-              {line}
-              {lineIndex < array.length - 1 && <br />}
-            </span>
-          ));
-
           return (
             <span
               key={i}
-              className={textColor.startsWith('#') || textColor.startsWith('rgb') ? "font-light flex-none" : `${textColor} font-light flex-none`}
+              className="flex-none"
               style={{ 
                 fontSize: `${fontSize}px`,
                 lineHeight: '1.2',
-                ...(textColor.startsWith('#') || textColor.startsWith('rgb') ? { color: textColor } : {})
+                ...(Object.keys(coloredWords).length === 0 && Object.keys(fontWeights).length === 0 ? { 
+                  color: textColor.startsWith('#') || textColor.startsWith('rgb') ? textColor : undefined,
+                  fontWeight: fontWeight
+                } : {})
               }}
             >
-              {textWithBreaks}
+              {renderColoredText(txt)}
             </span>
           );
         })}
@@ -309,11 +379,22 @@ export default function HomeButton() {
         </div>
                  <div className="w-full py-16 bg-gray-100" style={{ marginTop: '20px' }}>
            <InfiniteTextSlider 
-             text="Leading Customer Success"
-             fontSize={96}
+             text="LEADINGCUSTOMERSUCESS"
+             fontSize={110}
              textColor="#c2c2c2"
              duration={25}
              gap={10}
+             fontWeight={300}
+             coloredWords={{
+               "LEADING": "#b8e9ff",
+               "CUSTOMER": "#18a8f1",
+               "SUCESS": "#b8e9ff"
+             }}
+             fontWeights={{
+               "LEADING": 700,
+               "CUSTOMER": 700,
+               "SUCESS": 700
+             }}
            />
          </div>
       </div>
