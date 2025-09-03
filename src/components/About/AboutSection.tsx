@@ -135,7 +135,8 @@ const TAB_CONTENTS: Record<string, { title: string; description: string[] }[]> =
       title: "Accu.Tuning (AutoML)",
       description: [
         "직관적인 UI로 모델 생성, 설명, 배포를",
-        "한번에 제공하는 AutoML 솔루션"
+        "한번에 제공하는 AutoML 솔루션",
+        "모델 생성 후 자동 배포 및 운영 지원"
       ],
     },
     {
@@ -333,7 +334,7 @@ export default function AboutSection() {
                       style={{ 
                         width: 'calc(30vw * 3 + 1vw * 2)', // 3장 카드(30vw) + gap(5vw * 2)
                         minWidth: 'calc(30vw * 3 + 1vw * 2)',
-                        margin: '0 auto' // 중앙 정렬
+                        margin: '0 auto' // 중아 정렬
                       }}
                     >
                     <Swiper
@@ -413,33 +414,51 @@ export default function AboutSection() {
                       `}</style>
                     </div>
 
-                    {/* 우측 화살표 버튼 - RPA와 동일한 위치 */}
-                    <button 
-                      onClick={() => swiperRef.current?.slideNext()}
-                      className="hover:bg-gray-100 transition-all duration-300"
+                    {/* 솔루션 섹션 네비게이션 화살표 버튼 */}
+                    <button
+                      onClick={() => swiperRef.current?.slidePrev()}
                       style={{
+                        position: 'absolute',
+                        top: '-3rem',
+                        right: '6rem',
                         border: 'none',
                         outline: 'none',
-                        position: 'absolute',
-                        top: '50%',
-                        right: '50px',
-                        transform: 'translate(50%, -50%)',
-                        width: '50px',
-                        height: '50px',
+                        width: '40px',
+                        height: '40px',
                         borderRadius: '50%',
+                        backgroundColor: '#E5E7EB',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        backgroundColor: '#ffffff',
-                        boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06)',
-                        zIndex: 10,
                         cursor: 'pointer',
-                        fontSize: '28px',
-                        fontWeight: '700'
+                        zIndex: 10,
                       }}
                     >
-                      <svg width="50" height="50" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M9 6L15 12L9 18" stroke="#1f2937" strokeWidth="3" strokeLinecap="butt" strokeLinejoin="miter" />
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path d="M15 6L9 12L15 18" stroke="#1F2937" strokeWidth="3" strokeLinecap="butt" strokeLinejoin="miter" />
+                      </svg>
+                    </button>
+                    <button
+                      onClick={() => swiperRef.current?.slideNext()}
+                      style={{
+                        position: 'absolute',
+                        top: '-3rem',
+                        right: '2rem',
+                        border: 'none',
+                        outline: 'none',
+                        width: '40px',
+                        height: '40px',
+                        borderRadius: '50%',
+                        backgroundColor: '#1F2937',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        cursor: 'pointer',
+                        zIndex: 10,
+                      }}
+                    >
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path d="M9 6L15 12L9 18" stroke="#FFFFFF" strokeWidth="3" strokeLinecap="butt" strokeLinejoin="miter" />
                       </svg>
                     </button>
                   </div>
