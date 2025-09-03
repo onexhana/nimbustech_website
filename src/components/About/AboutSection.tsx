@@ -361,6 +361,13 @@ export default function AboutSection() {
                             title={card.title}
                             description={card.description}
                             detailLink='https://www.naver.com'
+                            linkAsButton
+                            linkText="자세히 보기"
+                            borderRadius="35px"
+                            titleColor="#000000"
+                            descriptionColor="#6B7280"
+                            backgroundColor="#ffffff"
+                            minHeight="12vw"
                           />
                         </div>
                       </SwiperSlide>
@@ -439,7 +446,7 @@ export default function AboutSection() {
                         ...(noEffect ? {} : { animation: `cardAppear 0.6s ease-out ${idx * 0.15}s forwards` })
                       }}
                     >
-                      {activeTab === 'ITO' ? (
+                      {['ITO', '클라우드', 'RPA'].includes(activeTab) ? (
                         <AboutCard
                           title={card.title}
                           description={card.description}
