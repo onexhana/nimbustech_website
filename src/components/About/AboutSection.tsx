@@ -27,13 +27,12 @@
 // - AboutSection, AboutCard, AboutTab 등 About/ 폴더 전체
 // ========================================
 import { useState, useEffect, useRef } from 'react';
-import { Swiper, SwiperSlide } from "swiper/react";
 import AboutTab from './AboutTab';
+// Swiper 관련 import 제거
 import AboutCard from './AboutCard'; // 효과 버전 (호버 애니메이션 활성화)
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/swiper-bundle.css';
 //import AboutCard from './AboutCardNoEffect'; // 무효화 버전 (호버 효과 없음)
-
-// Swiper 스타일 import
-import "swiper/swiper-bundle.css";
 
 const noEffect = AboutCard.name === 'AboutCardNoEffect';
 
@@ -207,7 +206,6 @@ export default function AboutSection() {
   };
 
 
-
   return (
     <div className="w-full px-6 py-12 bg-white" style={{ paddingTop: '120px' }}>
       {/* 메인 타이틀 */}
@@ -235,7 +233,6 @@ export default function AboutSection() {
         </h2>
 
         {isMobile ? (
-          /* 모바일 레이아웃 */
           <>
             {/* 모바일용 필터 버튼들 */}
             <div style={{ 
@@ -319,7 +316,6 @@ export default function AboutSection() {
             </div>
           </>
         ) : (
-          /* 데스크톱 레이아웃 */
           <>
             {/* 탭 컴포넌트 */}
             <AboutTab 
@@ -331,30 +327,28 @@ export default function AboutSection() {
             {/* ======================================== */}
             {/* 카드 영역 (솔루션: Swiper 무한루프, 기타: 고정 표시) */}
             {/* ======================================== */}
-            <div className="flex items-start gap-4" style={{ position: 'relative', overflow: 'visible', display: 'flex', alignItems: 'flex-start', gap: '16px' }}>
+            <div className="flex items-start" style={{ position: 'relative', overflow: 'visible', display: 'flex', alignItems: 'flex-start', gap: '1vw', justifyContent: 'center', marginLeft: '5vw', marginRight: '5vw' }}>
 
               {isMultiPage ? (
                                 /* 솔루션 섹션: 고정 위치 + 무한 루프 */
                 <>
                   {/* 카드 컨테이너 - RPA와 동일한 중앙 정렬 */}
                   <div
-                    className="flex gap-4 flex-1"
+                    className="flex flex-1"
                     style={{ 
                       position: 'relative', 
                       overflow: 'visible', 
                       display: 'flex', 
-                      gap: '30px', 
                       flex: '1', 
-                      justifyContent: 'center', 
-                      marginLeft: '50px', 
-                      marginRight: '50px'
+                      justifyContent: 'center'
                     }}
                   >
                     <div 
                       className="overflow-hidden"
                       style={{ 
-                        width: 'calc(380px * 3 + 30px * 2)', // 정확히 3장 + 간격
-                        minWidth: 'calc(380px * 3 + 30px * 2)'
+                        width: 'calc(30vw * 3 + 1vw * 2)', // 3장 카드(30vw) + gap(5vw * 2)
+                        minWidth: 'calc(30vw * 3 + 1vw * 2)',
+                        margin: '0 auto' // 중앙 정렬
                       }}
                     >
                     <Swiper
@@ -366,7 +360,7 @@ export default function AboutSection() {
                       onInit={(swiper: any) => {
                         swiperRef.current = swiper;
                       }}
-                      spaceBetween={30}
+                      spaceBetween={window.innerWidth * 0.01} // 5vw에 해당하는 픽셀 값
                       slidesPerView={3}
                       slidesPerGroup={1}
                       loop={true}
@@ -406,16 +400,17 @@ export default function AboutSection() {
                         .about-solution-swiper {
                           width: 100% !important;
                           overflow: visible !important;
+                          margin: 0 auto !important;
                         }
                         .about-solution-swiper .swiper-wrapper {
                           overflow: visible !important;
                         }
                         .about-solution-swiper .swiper-slide {
-                          width: 380px !important;
+                          width: 30vw !important; /* 카드 폭을 30vw로 조정 */
                           flex-shrink: 0 !important;
                         }
                         .about-solution-swiper .swiper-slide > div {
-                          margin: 10px 5px;
+                          margin: 10px 0; /* 수평 마진 제거, spaceBetween 사용 */
                         }
                         /* 무한 루프 보장 */
                         .about-solution-swiper .swiper-slide-duplicate {
@@ -460,8 +455,8 @@ export default function AboutSection() {
               ) : (
                 /* 기타 섹션: 고정 표시 */
               <div
-                className="flex gap-4 flex-1"
-                style={{ position: 'relative', overflow: 'visible', display: 'flex', gap: '30px', flex: '1', justifyContent: 'center', marginLeft: '50px', marginRight: '50px' }}
+                className="flex flex-1"
+                style={{ position: 'relative', overflow: 'visible', display: 'flex', gap: '5vw', flex: '1', justifyContent: 'center', marginLeft: '5vw', marginRight: '5vw' }}
               >
                   {cards.map((card, idx) => (
                     <div
