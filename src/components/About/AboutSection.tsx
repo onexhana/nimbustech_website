@@ -116,11 +116,9 @@ const TAB_CONTENTS: Record<string, { title: string; description: string[] }[]> =
   ],
   솔루션: [
     {
-      title: "Multiverse Component",
+      title: "SUSE",
       description: [
-        "Multiverse로 누구나 활용 가능하도록",
-        "Data의 가치를 극대화, 미래를 위한",
-        "Open Innovation Platform으로 진화 "
+        "SUSE 솔루션, 연결해드립니다"
       ],
     },
     {
