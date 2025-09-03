@@ -19,13 +19,17 @@ interface AboutCardProps {
   descriptionColor?: string;
   /** 커스텀 배경 색상 */
   backgroundColor?: string;
+  /** 버튼 형태 링크 렌더링 여부 */
+  linkAsButton?: boolean;
+  /** 버튼에 표시할 텍스트 */
+  linkText?: string;
   /** 커스텀 카드 폭 (예: "20vw") */
   width?: string;
   /** 커스텀 카드 최소 높이 (예: "16vw") */
   minHeight?: string;
 }
 
-export default function AboutCard({ title, description, detailLink, borderRadius, titleColor, descriptionColor, backgroundColor, width, minHeight }: AboutCardProps) {
+export default function AboutCard({ title, description, detailLink, borderRadius, titleColor, descriptionColor, backgroundColor, width, minHeight, linkAsButton, linkText }: AboutCardProps) {
   return (
     <div
       className="bg-gray-100 rounded-lg border border-gray-200 shadow-sm transition-all duration-300 cursor-pointer flex flex-col"
@@ -120,19 +124,42 @@ export default function AboutCard({ title, description, detailLink, borderRadius
       {/* 상세 링크 */}
       {detailLink && (
         <div style={{ marginTop: "16px", marginLeft: "8px" }}>
-          <a
-            href={detailLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              color: "#00A3E0",
-              fontWeight: "600",
-              fontSize: "1vw",
-              textDecoration: "none",
-            }}
-          >
-            자세히 보기 →
-          </a>
+          {linkAsButton ? (
+            <a
+              href={detailLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                backgroundColor: "#00A3E0",
+                color: "#ffffff",
+                borderRadius: "20px",
+                padding: "8px 20px",
+                fontSize: "1rem",
+                fontWeight: 600,
+                textDecoration: "none",
+                border: "none",
+                cursor: "pointer",
+                transition: "background-color 0.2s ease-in-out",
+                display: "inline-block",
+              }}
+            >
+              {linkText || "자세히 보기"}
+            </a>
+          ) : (
+            <a
+              href={detailLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                color: "#00A3E0",
+                fontWeight: "600",
+                fontSize: "1vw",
+                textDecoration: "none",
+              }}
+            >
+              {linkText || "자세히 보기 →"}
+            </a>
+          )}
         </div>
       )}
     </div>

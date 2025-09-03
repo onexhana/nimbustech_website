@@ -116,58 +116,45 @@ const TAB_CONTENTS: Record<string, { title: string; description: string[] }[]> =
   ],
   솔루션: [
     {
-      title: "Multiverse Component",
+      title: "SUSE",
       description: [
-        "Multiverse로 누구나 활용 가능하도록",
-        "Data의 가치를 극대화, 미래를 위한",
-        "Open Innovation Platform으로 진화 "
+        "SUSE 솔루션, 연결해드립니다"
       ],
     },
     {
-      title: "Acculnsight+ 2.0",
+      title: "WEDATALAB",
       description: [
-        "데이터 전처리부터 분석과 운영의 Data",
-        "science 전 영역을 지원하는 Multi-",
-        "Cloud 기반의 AI DevOps 플랫폼"
+        "WEDATALAB 솔루션, 연결해드립니다"
       ],
     },
     {
-      title: "Accu.Tuning (AutoML)",
+      title: "IT STORY",
       description: [
-        "직관적인 UI로 모델 생성, 설명, 배포를",
-        "한번에 제공하는 AutoML 솔루션"
+        "IT STORY 솔루션, 연결해드립니다"
       ],
     },
     {
       title: "ERP 솔루션",
       description: [
-        "1. 통합 업무 관리 시스템",
-        "2. 실시간 데이터 연동",
-        "3. 맞춤형 워크플로우"
+        "1. 통합 업무 관리 시스템"
       ],
     },
     {
       title: "모바일 앱 개발",
       description: [
-        "1. 크로스 플랫폼 개발",
-        "2. 네이티브 성능 최적화",
-        "3. 직관적인 UI/UX 설계"
+        "1. 크로스 플랫폼 개발"
       ],
     },
     {
       title: "데이터 분석 플랫폼",
       description: [
-        "1. 빅데이터 처리 시스템",
-        "2. 실시간 분석 대시보드",
-        "3. AI 기반 예측 분석"
+        "1. 빅데이터 처리 시스템"
       ],
     },
     {
       title: "클라우드 마이그레이션",
       description: [
-        "1. 온프레미스 → 클라우드 전환",
-        "2. 멀티클라우드 아키텍처 설계",
-        "3. 안전한 데이터 이전 지원"
+        "1. 온프레미스 → 클라우드 전환"
       ],
     },
   ],
@@ -334,7 +321,7 @@ export default function AboutSection() {
                       style={{ 
                         width: 'calc(30vw * 3 + 1vw * 2)', // 3장 카드(30vw) + gap(5vw * 2)
                         minWidth: 'calc(30vw * 3 + 1vw * 2)',
-                        margin: '0 auto' // 중앙 정렬
+                        margin: '0 auto' // 중아 정렬
                       }}
                     >
                     <Swiper
@@ -375,6 +362,13 @@ export default function AboutSection() {
                             title={card.title}
                             description={card.description}
                             detailLink='https://www.naver.com'
+                            linkAsButton
+                            linkText="자세히 보기"
+                            borderRadius="35px"
+                            titleColor="#000000"
+                            descriptionColor="#6B7280"
+                            backgroundColor="#ffffff"
+                            minHeight="12vw"
                           />
                         </div>
                       </SwiperSlide>
@@ -407,33 +401,51 @@ export default function AboutSection() {
                       `}</style>
                     </div>
 
-                    {/* 우측 화살표 버튼 - RPA와 동일한 위치 */}
-                    <button 
-                      onClick={() => swiperRef.current?.slideNext()}
-                      className="hover:bg-gray-100 transition-all duration-300"
+                    {/* 솔루션 섹션 네비게이션 화살표 버튼 */}
+                    <button
+                      onClick={() => swiperRef.current?.slidePrev()}
                       style={{
+                        position: 'absolute',
+                        top: '-3rem',
+                        right: '6rem',
                         border: 'none',
                         outline: 'none',
-                        position: 'absolute',
-                        top: '50%',
-                        right: '50px',
-                        transform: 'translate(50%, -50%)',
-                        width: '50px',
-                        height: '50px',
+                        width: '40px',
+                        height: '40px',
                         borderRadius: '50%',
+                        backgroundColor: '#E5E7EB',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        backgroundColor: '#ffffff',
-                        boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06)',
-                        zIndex: 10,
                         cursor: 'pointer',
-                        fontSize: '28px',
-                        fontWeight: '700'
+                        zIndex: 10,
                       }}
                     >
-                      <svg width="50" height="50" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M9 6L15 12L9 18" stroke="#1f2937" strokeWidth="3" strokeLinecap="butt" strokeLinejoin="miter" />
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path d="M15 6L9 12L15 18" stroke="#1F2937" strokeWidth="3" strokeLinecap="butt" strokeLinejoin="miter" />
+                      </svg>
+                    </button>
+                    <button
+                      onClick={() => swiperRef.current?.slideNext()}
+                      style={{
+                        position: 'absolute',
+                        top: '-3rem',
+                        right: '2rem',
+                        border: 'none',
+                        outline: 'none',
+                        width: '40px',
+                        height: '40px',
+                        borderRadius: '50%',
+                        backgroundColor: '#1F2937',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        cursor: 'pointer',
+                        zIndex: 10,
+                      }}
+                    >
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path d="M9 6L15 12L9 18" stroke="#FFFFFF" strokeWidth="3" strokeLinecap="butt" strokeLinejoin="miter" />
                       </svg>
                     </button>
                   </div>
@@ -453,7 +465,7 @@ export default function AboutSection() {
                         ...(noEffect ? {} : { animation: `cardAppear 0.6s ease-out ${idx * 0.15}s forwards` })
                       }}
                     >
-                      {activeTab === 'ITO' ? (
+                      {['ITO', '클라우드', 'RPA'].includes(activeTab) ? (
                         <AboutCard
                           title={card.title}
                           description={card.description}
