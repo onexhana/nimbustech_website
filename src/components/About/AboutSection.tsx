@@ -210,28 +210,7 @@ export default function AboutSection() {
     <div className="w-full px-6 py-12 bg-white" style={{ paddingTop: '120px' }}>
       {/* 메인 타이틀 */}
       <div className="max-w-7xl mx-auto">
-        {/* 검은 실선 */}
-        <div style={{
-          width: '110px',
-          height: '3px',
-          backgroundColor: '#000000',
-          marginLeft: isMobile ? '0' : '50px',
-          marginBottom: '20px'
-        }}></div>
         
-        <h2 style={{
-          fontSize: isMobile ? '28px' : '45px',
-          fontWeight: '1100',
-          marginBottom: isMobile ? '40px' : '80px',
-          color: '#1f2937',
-          lineHeight: '1.2',
-          letterSpacing: '-3.5px',
-          marginLeft: isMobile ? '0' : '50px'
-        }}>
-          신뢰성 높은 DT서비스를 제공하여<br />
-          지속적인 고객 성공을 리딩합니다
-        </h2>
-
         {isMobile ? (
           <>
             {/* 모바일용 필터 버튼들 */}
