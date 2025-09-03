@@ -24,7 +24,7 @@ interface AboutCardProps {
 export default function AboutCard({ title, description, detailLink, borderRadius, titleColor, descriptionColor, backgroundColor }: AboutCardProps) {
   return (
     <div
-      className="bg-gray-100 rounded-lg border border-gray-200 shadow-sm transition-transform duration-300 cursor-pointer flex flex-col"
+      className="bg-gray-100 rounded-lg border border-gray-200 shadow-sm transition-all duration-300 cursor-pointer flex flex-col"
       style={{
         backgroundColor: backgroundColor || "#f3f4f6",
         borderRadius: borderRadius || "8px",
@@ -40,11 +40,37 @@ export default function AboutCard({ title, description, detailLink, borderRadius
         e.currentTarget.style.transform = "translateY(-8px)";
         e.currentTarget.style.boxShadow =
           "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)";
+        e.currentTarget.style.backgroundColor = "#00A3E0";
+        
+        // 제목 색상을 흰색으로 변경
+        const title = e.currentTarget.querySelector('h3');
+        if (title) title.style.color = "white";
+        
+        // 설명 텍스트 색상을 흰색으로 변경
+        const descriptions = e.currentTarget.querySelectorAll('.text-gray-700 div');
+        descriptions.forEach(desc => (desc as HTMLElement).style.color = "white");
+        
+        // 링크 색상을 흰색으로 변경
+        const link = e.currentTarget.querySelector('a');
+        if (link) link.style.color = "white";
       }}
       onMouseLeave={(e) => {
         e.currentTarget.style.transform = "translateY(0)";
         e.currentTarget.style.boxShadow =
           "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)";
+        e.currentTarget.style.backgroundColor = backgroundColor || "#f3f4f6";
+        
+        // 제목 색상을 원래대로 복원
+        const title = e.currentTarget.querySelector('h3');
+        if (title) title.style.color = titleColor || "#00A3E0";
+        
+        // 설명 텍스트 색상을 원래대로 복원
+        const descriptions = e.currentTarget.querySelectorAll('.text-gray-700 div');
+        descriptions.forEach(desc => (desc as HTMLElement).style.color = descriptionColor || "#374151");
+        
+        // 링크 색상을 원래대로 복원
+        const link = e.currentTarget.querySelector('a');
+        if (link) link.style.color = "#00A3E0";
       }}
     >
       {/* 제목 */}
