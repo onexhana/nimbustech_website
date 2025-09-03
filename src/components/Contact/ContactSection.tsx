@@ -19,7 +19,8 @@ export default function ContactSection() {
   }, []);
 
   return (
-    <div className="w-full px-6 py-12 bg-white" style={{ position: 'relative', paddingTop: '120px' }}>
+    //contact & footer 사이 여백 100px
+    <div className="w-full px-6 bg-white" style={{ position: 'relative', paddingTop: '120px', paddingBottom: '100px' }}>
       <div className="max-w-7xl mx-auto">
         {/* 검은 실선 */}
         <div style={{

@@ -116,59 +116,45 @@ const TAB_CONTENTS: Record<string, { title: string; description: string[] }[]> =
   ],
   솔루션: [
     {
-      title: "Multiverse Component",
+      title: "SUSE",
       description: [
-        "Multiverse로 누구나 활용 가능하도록",
-        "Data의 가치를 극대화, 미래를 위한",
-        "Open Innovation Platform으로 진화 "
+        "SUSE 솔루션, 연결해드립니다"
       ],
     },
     {
-      title: "Acculnsight+ 2.0",
+      title: "WEDATALAB",
       description: [
-        "데이터 전처리부터 분석과 운영의 Data",
-        "science 전 영역을 지원하는 Multi-",
-        "Cloud 기반의 AI DevOps 플랫폼"
+        "WEDATALAB 솔루션, 연결해드립니다"
       ],
     },
     {
-      title: "Accu.Tuning (AutoML)",
+      title: "IT STORY",
       description: [
-        "직관적인 UI로 모델 생성, 설명, 배포를",
-        "한번에 제공하는 AutoML 솔루션",
-        "모델 생성 후 자동 배포 및 운영 지원"
+        "IT STORY 솔루션, 연결해드립니다"
       ],
     },
     {
       title: "ERP 솔루션",
       description: [
-        "1. 통합 업무 관리 시스템",
-        "2. 실시간 데이터 연동",
-        "3. 맞춤형 워크플로우"
+        "1. 통합 업무 관리 시스템"
       ],
     },
     {
       title: "모바일 앱 개발",
       description: [
-        "1. 크로스 플랫폼 개발",
-        "2. 네이티브 성능 최적화",
-        "3. 직관적인 UI/UX 설계"
+        "1. 크로스 플랫폼 개발"
       ],
     },
     {
       title: "데이터 분석 플랫폼",
       description: [
-        "1. 빅데이터 처리 시스템",
-        "2. 실시간 분석 대시보드",
-        "3. AI 기반 예측 분석"
+        "1. 빅데이터 처리 시스템"
       ],
     },
     {
       title: "클라우드 마이그레이션",
       description: [
-        "1. 온프레미스 → 클라우드 전환",
-        "2. 멀티클라우드 아키텍처 설계",
-        "3. 안전한 데이터 이전 지원"
+        "1. 온프레미스 → 클라우드 전환"
       ],
     },
   ],
