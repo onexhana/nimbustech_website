@@ -1,10 +1,10 @@
 // 포트폴리오 프로젝트 데이터
 export const portfolioProjects = [
   // 공공 카테고리 (20개)
-  { id: 1, title: "다산콜센터", description: "다산콜센터 업무자동화", category: "공공", image: "/portfolio_photo/제조_현대 자동차.png" },
-  { id: 2, title: "중구청", description: "중구청 업무자동화", category: "공공" },
-  { id: 3, title: "국가정보자원관리원", description: "국가정보자원관리원\nRPA-챗봇 서비스 개발", category: "공공" },
-  { id: 4, title: "국가정보자원관리원", description: "국가정보자원관리원\n광주센터 정보시스템 2군 RPA", category: "공공" },
+  { id: 1, title: "다산콜센터", description: "다산콜센터 업무자동화", category: "공공", image: "/portfolio_photo/공공_다산콜센터.jpg" },
+  { id: 2, title: "중구청", description: "중구청 업무자동화", category: "공공", image: "/portfolio_photo/공공_중구청.jpg" },
+  { id: 3, title: "국가정보자원관리원", description: "국가정보자원관리원\nRPA-챗봇 서비스 개발", category: "공공", image: "/portfolio_photo/공공_RPA 챗봇 서비스 개발.jpg" },
+  { id: 4, title: "국가정보자원관리원", description: "국가정보자원관리원\n광주센터 정보시스템 2군 RPA", category: "공공", image: "/portfolio_photo/공공_광주센터 정보시스템 2군 RPA.jpg" },
   { id: 5, title: "국가정보자원관리원", description: "2018년 제2차 범정부\n정보자원 통합구축 사업 HW2", category: "공공" },
   { id: 6, title: "국가정보자원관리원", description: "2018년 제1차 범정부\n정보자원 통합구축 사업 HW1", category: "공공" },
   { id: 7, title: "국가정보자원관리원", description: "2018년 제1차 범정부\n정보자원 통합구축 사업 HW5", category: "공공" },
