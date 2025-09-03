@@ -130,9 +130,7 @@ const TAB_CONTENTS: Record<string, { title: string; description: string[] }[]> =
     {
       title: "IT STORY",
       description: [
-        "직관적인 UI로 모델 생성, 설명, 배포를",
-        "한번에 제공하는 AutoML 솔루션",
-        "모델 생성 후 자동 배포 및 운영 지원"
+        "IT STORY 솔루션, 연결해드립니다"
       ],
     },
     {
