@@ -18,8 +18,13 @@ export default function HomeSection() {
   // 각 텍스트 줄의 색상 설정
   const colors = ['text-black', 'text-black', 'text-black', 'text-[#00A3E0]'];
   
-  // 각 텍스트 줄의 폰트 두께 설정 (한글: font-black, 영어: font-black에서 더 강화)
-  const fontWeights = ['font-black', 'font-black', 'font-black', 'font-black'];
+  // 각 텍스트 줄의 폰트 두께 설정 (숫자로 명시적 설정)
+  const fontWeights = [
+    550, // '고객을 빛나게' 
+    550, // '구성원을 빛나게'
+    550, // '미래를 빛나게'
+    700  // 'NIMBUS TECH'
+  ];
 
   useEffect(() => {
     const typingSpeed = 130; // 타이핑 속도 (밀리초)
@@ -55,33 +60,35 @@ export default function HomeSection() {
         <div className="text-right" style={{ marginRight: '70px' }}>
           <div>
             {texts.map((text, index) => (
-              <div key={index} style={{ 
+              <div key={index} style={{   
                 marginBottom: index < texts.length - 1 ? '1px' : '0',
                 marginTop: index === 0 ? '120px' : '0'
               }}>
                 <span 
-                  className={index === 3 ? `${fontWeights[index]} tracking-tight ${colors[index]}` : `text-[6vw] md:text-[8vw] lg:text-[10vw] xl:text-[12vw] ${fontWeights[index]} tracking-tight ${colors[index]}`}
+                  className={index === 3 ? `tracking-tight ${colors[index]}` : `text-[6vw] md:text-[8vw] lg:text-[10vw] xl:text-[12vw] tracking-tight ${colors[index]}`}
                   style={index === 3 ? { 
-                    fontWeight: '700', // 영어(NIMBUS TECH)는 더 두껍게
+                    fontWeight: fontWeights[index], // NIMBUS TECH 폰트 두께
                     textShadow: '0 0 1px currentColor', // 영어에 미세한 텍스트 그림자로 더 굵게 표현
                     fontSize: '150px' // NIMBUS TECH만 px로 고정 크기
                   } : { 
-                    fontWeight: '450' // 한글은 font-black보다 약간 두껍게
+                    fontWeight: fontWeights[index] // 각 줄별 폰트 두께 적용
                   }}
                 >
-                  {completedLines.includes(index) ? (
-                    // 완성된 줄: 전체 텍스트 표시
-                    text
-                  ) : index === currentLineIndex ? (
-                    // 현재 타이핑 중인 줄: 부분 텍스트 + 커서 표시
-                    <>
-                      {text.substring(0, currentCharIndex)}
-                      <span className="animate-pulse">|</span>
-                    </>
-                  ) : (
-                    // 아직 시작하지 않은 줄: 빈 공간 유지
-                    ''
-                  )}
+                  <>
+                    {completedLines.includes(index) ? (
+                      // 완성된 줄: 전체 텍스트 표시
+                      text
+                    ) : index === currentLineIndex ? (
+                      // 현재 타이핑 중인 줄: 부분 텍스트 + 커서 표시
+                      <>
+                        {text.substring(0, currentCharIndex)}
+                        <span className="animate-pulse">|</span>
+                      </>
+                    ) : (
+                      // 아직 시작하지 않은 줄: 투명한 텍스트로 공간 확보
+                      <span style={{ opacity: 0 }}>{text}</span>
+                    )}
+                  </>
                 </span>
               </div>
             ))}
