@@ -195,7 +195,7 @@ export default function AboutSection() {
 
   return (
     <div id="about-gray-start">
-      <div className="w-full px-6" style={{ paddingTop: '100px', paddingBottom: '96px', backgroundColor: '#F3F6F9', marginTop: '120px' }}>
+      <div className="w-full px-6" style={{ paddingTop: '100px', paddingBottom: '96px', backgroundColor: isMobile ? 'transparent' : '#F3F6F9', marginTop: '120px' }}>
       {/* 메인 타이틀 영역 (AboutSection 컴포넌트 내부 상단) */}
       <div className="max-w-7xl mx-auto">
         {/*
@@ -204,14 +204,24 @@ export default function AboutSection() {
           - gap 및 marginBottom으로 버튼 간 간격 설정
         */}
         {isMobile ? (
-          <>
+          <div style={{
+            position: 'relative',
+            top: '-50px',
+            margin: '0 16px',
+            backgroundColor: '#F3F6F9',
+            borderRadius: '16px',
+            padding: '30px 20px',
+            boxShadow: '0 8px 24px rgba(0,0,0,0.2)',
+            zIndex: 1
+          }}>
+            
             {/* 모바일 필터 버튼들을 감싸는 div */}
             <div style={{ 
               display: 'flex', 
               flexWrap: 'wrap',
               justifyContent: 'center',
-              gap: '10px',
-              marginBottom: '20px'
+              gap: '8px',
+              marginBottom: '25px'
             }}>
               {/* TAB_LIST 배열을 순회하며 각각 버튼 생성 */}
               {TAB_LIST.map((tab) => (
@@ -220,13 +230,14 @@ export default function AboutSection() {
                   /* 버튼 스타일: 활성 탭은 파란색, 비활성 탭은 흰색 배경 */
                   style={{
                     backgroundColor: activeTab === tab ? '#00A3E0' : 'white',
-                    color: activeTab === tab ? 'white' : '#00A3E0',
-                    border: '1px solid #00A3E0',
+                    color: activeTab === tab ? 'white' : '#000000',
+                    border: activeTab === tab ? 'none' : '1px solid #00A3E0',
                     borderRadius: '20px',
-                    padding: '8px 20px',
+                    padding: '1px 16px',
                     fontSize: '14px',
-                    fontWeight: '600',
-                    cursor: 'pointer'
+                    fontWeight: '550',
+                    cursor: 'pointer',
+                    minWidth: '60px'
                   }}
                   onClick={() => handleTabChange(tab)}
                 >
@@ -238,27 +249,28 @@ export default function AboutSection() {
             {/* 모바일용 카드 컨테이너 (하늘색 배경) */}
             <div style={{
               backgroundColor: '#E6F7FF',
-              borderRadius: '12px',
-              padding: '20px',
-              marginBottom: '20px'
+              borderRadius: '16px',
+              padding: '24px 20px 40px', // bottom padding 늘림
+              marginBottom: '25px',
+              margin: '0 8px 25px 8px'
             }}>
               {/* 현재 활성화된 탭의 첫 번째 카드만 표시 */}
               <h3 style={{
-                fontSize: '22px',
-                fontWeight: '700',
-                color: activeTab === 'ITO' ? '#000000' : '#00A3E0',
-                marginBottom: '12px'
+                fontSize: '20px',
+                fontWeight: '600',
+                color: '#000000',
+                margin: '0 0 30px 0'
               }}>
                 {cards[currentSlide].title}
               </h3>
               <div style={{
                 fontSize: '16px',
-                color: '#333',
-                fontWeight: '500',
-                lineHeight: '1.5'
+                color: '#000000',
+                fontWeight: '400',
+                lineHeight: '1.4'
               }}>
                 {cards[currentSlide].description.map((line, i) => (
-                  <p key={i} style={{ marginBottom: '8px' }}>{line}</p>
+                  <p key={i} style={{ marginBottom: '-15px', marginLeft: '0' }}>{line}</p>
                 ))}
               </div>
             </div>
@@ -267,27 +279,28 @@ export default function AboutSection() {
             <div style={{
               display: 'flex',
               justifyContent: 'center',
-              gap: '8px',
-              marginTop: '20px'
+              gap: '6px',
+              marginTop: '15px'
             }}>
               {Array.from({ length: cards.length }).map((_, i) => (
                 <button
                   key={i}
                   onClick={() => setCurrentSlide(i)}
                   style={{
-                    width: i === currentSlide ? '30px' : '10px',
-                    height: '10px',
-                    borderRadius: i === currentSlide ? '5px' : '50%',
+                    width: i === currentSlide ? '24px' : '8px',
+                    height: '8px',
+                    borderRadius: i === currentSlide ? '4px' : '50%',
                     backgroundColor: i === currentSlide ? '#00A3E0' : '#D1D5DB',
                     border: 'none',
                     padding: 0,
-                    transition: 'all 0.3s ease'
+                    transition: 'all 0.3s ease',
+                    cursor: 'pointer'
                   }}
                   aria-label={`슬라이드 ${i + 1}`}
                 />
               ))}
             </div>
-          </>
+          </div>
         ) : (
           <>
             {/* 탭 컴포넌트 */}
