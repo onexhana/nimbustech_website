@@ -55,9 +55,10 @@ export default function HomeSectionMobile() {
     <>
       <section
         id="home"
-        className="w-full h-screen bg-white flex items-start justify-center px-4 pt-32"
+        className="w-full h-screen bg-white flex items-start justify-end px-4"
+        style={{ paddingTop: '100px' }}
       >
-        <div className="text-center">
+        <div className="text-right" style={{ marginRight: '32px' }}>
           <div>
             {texts.map((text, index) => (
               <div key={index} style={{   
