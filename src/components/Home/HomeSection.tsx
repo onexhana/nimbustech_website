@@ -48,6 +48,14 @@ function HomeSectionWeb() {
   // 각 텍스트 줄의 폰트 두께 설정
   const fontWeights = [550, 550, 550, 700];
 
+  // 각 텍스트 줄의 폰트 크기 설정 (웹용)
+  const webFontSizes = [
+    '120px',   // '고객을 빛나게'
+    '120px',   // '구성원을 빛나게' 
+    '120px',   // '미래를 빛나게'
+    '150px'  // 'NIMBUS TECH' - 고정 크기
+  ];
+
   useEffect(() => {
     const typingSpeed = 130;
     const pauseTime = 700;
@@ -84,13 +92,11 @@ function HomeSectionWeb() {
                 marginTop: index === 0 ? '120px' : '0'
               }}>
                 <span 
-                  className={index === 3 ? `tracking-tight ${colors[index]}` : `text-[6vw] md:text-[8vw] lg:text-[10vw] xl:text-[12vw] tracking-tight ${colors[index]}`}
-                  style={index === 3 ? { 
-                    fontWeight: fontWeights[index],
-                    textShadow: '0 0 1px currentColor',
-                    fontSize: '160px' // 웹에서는 고정 크기
-                  } : { 
-                    fontWeight: fontWeights[index]
+                  className={`tracking-tight ${colors[index]}`}
+                  style={{ 
+                    fontWeight: fontWeights[index], // 각 줄별 폰트 두께 적용
+                    fontSize: webFontSizes[index], // 각 줄별 폰트 크기 적용
+                    ...(index === 3 && { textShadow: '0 0 1px currentColor' }) // NIMBUS TECH에만 텍스트 그림자
                   }}
                 >
                   <>

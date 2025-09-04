@@ -26,6 +26,14 @@ export default function HomeSectionMobile() {
     700  // 'NIMBUS TECH'
   ];
 
+  // 각 텍스트 줄의 폰트 크기 설정 (모바일용)
+  const mobileFontSizes = [
+    '30px',   // '고객을 빛나게'
+    '30px',   // '구성원을 빛나게' 
+    '30px',   // '미래를 빛나게'
+    '40px'    // 'NIMBUS TECH'
+  ];
+
   useEffect(() => {
     const typingSpeed = 130; // 타이핑 속도 (밀리초)
     const pauseTime = 700;   // 줄 완성 후 대기 시간 (밀리초)
@@ -66,9 +74,10 @@ export default function HomeSectionMobile() {
                 marginTop: index === 0 ? '0px' : '0'
               }}>
                 <span 
-                  className={index === 3 ? `text-[9vw] tracking-tight ${colors[index]}` : `text-[6vw] tracking-tight ${colors[index]}`}
+                  className={`tracking-tight ${colors[index]}`}
                   style={{ 
                     fontWeight: fontWeights[index], // 각 줄별 폰트 두께 적용
+                    fontSize: mobileFontSizes[index], // 각 줄별 폰트 크기 적용
                     ...(index === 3 && { textShadow: '0 0 1px currentColor' }) // NIMBUS TECH에만 텍스트 그림자
                   }}
                 >
