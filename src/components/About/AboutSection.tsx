@@ -195,7 +195,7 @@ export default function AboutSection() {
 
   return (
     <div id="about-gray-start">
-      <div className="w-full px-6" style={{ paddingTop: '100px', paddingBottom: '96px', backgroundColor: '#F3F6F9', marginTop: '120px' }}>
+      <div className="w-full px-6" style={{ paddingTop: '100px', paddingBottom: '96px', backgroundColor: isMobile ? 'transparent' : '#F3F6F9', marginTop: '120px' }}>
       {/* 메인 타이틀 영역 (AboutSection 컴포넌트 내부 상단) */}
       <div className="max-w-7xl mx-auto">
         {/*
@@ -208,7 +208,7 @@ export default function AboutSection() {
             position: 'relative',
             top: '-50px',
             margin: '0 16px',
-            backgroundColor: 'white',
+            backgroundColor: '#F3F6F9',
             borderRadius: '16px',
             padding: '30px 20px',
             boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
@@ -246,8 +246,8 @@ export default function AboutSection() {
                   /* 버튼 스타일: 활성 탭은 파란색, 비활성 탭은 흰색 배경 */
                   style={{
                     backgroundColor: activeTab === tab ? '#00A3E0' : 'white',
-                    color: activeTab === tab ? 'white' : '#00A3E0',
-                    border: activeTab === tab ? 'none' : '1px solid #CCCCCC',
+                    color: activeTab === tab ? 'white' : '#000000',
+                    border: activeTab === tab ? 'none' : '1px solid #00A3E0',
                     borderRadius: '20px',
                     padding: '10px 18px',
                     fontSize: '14px',
@@ -264,7 +264,7 @@ export default function AboutSection() {
 
             {/* 모바일용 카드 컨테이너 (하늘색 배경) */}
             <div style={{
-              backgroundColor: '#E6F7FF',
+              backgroundColor: '#ADD8E6',
               borderRadius: '16px',
               padding: '24px 20px',
               marginBottom: '25px',
