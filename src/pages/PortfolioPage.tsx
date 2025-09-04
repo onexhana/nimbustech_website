@@ -1,13 +1,17 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import PortfolioCardList from '../components/Portfolio/PortfolioCardList';
 import PortfolioSection from '../components/Portfolio/PortfolioSection';
 import CategoryFilter from '../components/Portfolio/CategoryFilter';
 import { portfolioProjects, portfolioCategories } from '../data/portfolioData';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/swiper-bundle.css';
 
 const PortfolioPage = () => {
   const [selectedCategory, setSelectedCategory] = useState("공공");
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 768);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const swiperRef = useRef<any>(null);
   
   const filtered = portfolioProjects.filter((p) => p.category === selectedCategory);
   
@@ -20,6 +24,9 @@ const PortfolioPage = () => {
   const handleCategoryChange = (category: string) => {
     setSelectedCategory(category);
     setCurrentSlide(0);
+    if (swiperRef.current && swiperRef.current.slideTo) {
+      swiperRef.current.slideTo(0);
+    }
   };
 
   return (
@@ -58,60 +65,94 @@ const PortfolioPage = () => {
               ))}
             </div>
 
-            {/* 모바일용 포트폴리오 카드 컨테이너 */}
+            {/* 모바일용 포트폴리오 카드 스와이퍼 */}
             <div style={{
-              backgroundColor: '#E6F7FF',
-              borderRadius: '12px',
-              padding: '20px',
-              marginBottom: '20px',
               marginLeft: '20px',
-              marginRight: '20px'
+              marginRight: '20px',
+              marginBottom: '20px'
             }}>
-              {/* 현재 슬라이드의 카드만 표시 */}
-              {filtered.length > 0 && (
-                <>
-                  <h3 style={{
-                    fontSize: '22px',
-                    fontWeight: '700',
-                    color: '#00A3E0',
-                    marginBottom: '12px',
-                    textAlign: 'center'
-                  }}>
-                    {filtered[currentSlide].title}
-                  </h3>
-                  <div style={{
-                    fontSize: '16px',
-                    color: '#333',
-                    fontWeight: '500',
-                    lineHeight: '1.5',
-                    textAlign: 'center',
-                    marginBottom: '16px'
-                  }}>
-                    {filtered[currentSlide].description.split('\n').map((line, i) => (
-                      <p key={i} style={{ marginBottom: '8px' }}>{line}</p>
-                    ))}
-                  </div>
-                  
-                  {/* 이미지 영역 */}
-                  {filtered[currentSlide].image && (
+              <Swiper
+                ref={swiperRef}
+                spaceBetween={20}
+                slidesPerView={1.2}
+                centeredSlides={true}
+                onSlideChange={(swiper: any) => {
+                  console.log(`슬라이드 변경: ${swiper.activeIndex}`);
+                  setCurrentSlide(swiper.activeIndex);
+                }}
+                style={{
+                  paddingBottom: '20px'
+                }}
+              >
+                {filtered.map((project, index) => (
+                  <SwiperSlide key={index}>
                     <div style={{
+                      backgroundColor: '#E6F7FF',
+                      borderRadius: '12px',
+                      padding: '10px 20px 20px 20px',
+                      height: '300px',
                       display: 'flex',
-                      justifyContent: 'center',
-                      marginTop: '16px'
+                      flexDirection: 'column',
+                      justifyContent: 'space-between'
                     }}>
-                      <img 
-                        src={filtered[currentSlide].image} 
-                        alt={filtered[currentSlide].title}
-                        style={{
-                          maxWidth: '100%',
-                          height: 'auto',
-                          borderRadius: '8px'
-                        }}
-                      />
+                      <div>
+                        <h3 style={{
+                          fontSize: '22px',
+                          fontWeight: '700',
+                          color: '#00A3E0',
+                          marginBottom: '-5px',
+                          textAlign: 'center'
+                        }}>
+                          {project.title}
+                        </h3>
+                        <div style={{
+                          fontSize: '16px',
+                          color: '#333',
+                          fontWeight: '500',
+                          lineHeight: '1.5',
+                          textAlign: 'center',
+                          marginBottom: '16px',
+                          minHeight: '50px',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          justifyContent: 'center'
+                        }}>
+                          {project.description.split('\n').map((line, i) => (
+                            <p key={i} style={{ marginBottom: '4px' }}>{line}</p>
+                          ))}
+                        </div>
+                      </div>
+                      
+                      {/* 이미지 영역 */}
+                      {project.image && (
+                        <div style={{
+                          display: 'flex',
+                          justifyContent: 'center',
+                          marginTop: '16px'
+                        }}>
+                          <div style={{
+                            width: '280px',
+                            height: '150px',
+                            borderRadius: '8px',
+                            overflow: 'hidden',
+                            backgroundColor: '#f0f0f0'
+                          }}>
+                            <img 
+                              src={project.image} 
+                              alt={project.title}
+                              style={{
+                                width: '100%',
+                                height: '100%',
+                                objectFit: 'cover'
+                              }}
+                            />
+                          </div>
+                        </div>
+                      )}
                     </div>
-                  )}
-                </>
-              )}
+                  </SwiperSlide>
+                ))}
+              </Swiper>
             </div>
 
             {/* 모바일용 슬라이더 인디케이터 */}
@@ -122,22 +163,38 @@ const PortfolioPage = () => {
                 gap: '8px',
                 marginTop: '20px'
               }}>
-                {Array.from({ length: filtered.length }).map((_, i) => (
-                  <button
-                    key={i}
-                    onClick={() => setCurrentSlide(i)}
-                    style={{
-                      width: i === currentSlide ? '30px' : '10px',
-                      height: '10px',
-                      borderRadius: i === currentSlide ? '5px' : '50%',
-                      backgroundColor: i === currentSlide ? '#00A3E0' : '#D1D5DB',
-                      border: 'none',
-                      padding: 0,
-                      transition: 'all 0.3s ease'
-                    }}
-                    aria-label={`슬라이드 ${i + 1}`}
-                  />
-                ))}
+                {Array.from({ length: Math.ceil(filtered.length / 2) }).map((_, i) => {
+                  const isActive = Math.floor(currentSlide / 2) === i;
+                  return (
+                    <button
+                      key={i}
+                      onClick={() => {
+                        const targetSlide = i * 2;
+                        console.log(`점 ${i} 클릭: ${targetSlide}번 카드로 이동`);
+                        
+                        setCurrentSlide(targetSlide);
+                        
+                        if (swiperRef.current) {
+                          console.log('Swiper 참조 있음, slideTo 호출');
+                          swiperRef.current.slideTo(targetSlide, 300);
+                        } else {
+                          console.log('Swiper 참조 없음');
+                        }
+                      }}
+                      style={{
+                        width: isActive ? '30px' : '10px',
+                        height: '10px',
+                        borderRadius: isActive ? '5px' : '50%',
+                        backgroundColor: isActive ? '#00A3E0' : '#D1D5DB',
+                        border: 'none',
+                        padding: 0,
+                        transition: 'all 0.3s ease',
+                        cursor: 'pointer'
+                      }}
+                      aria-label={`슬라이드 그룹 ${i + 1}`}
+                    />
+                  );
+                })}
               </div>
             )}
           </>
