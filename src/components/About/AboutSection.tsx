@@ -211,25 +211,9 @@ export default function AboutSection() {
             backgroundColor: '#F3F6F9',
             borderRadius: '16px',
             padding: '30px 20px',
-            boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+            boxShadow: '0 8px 24px rgba(0,0,0,0.2)',
             zIndex: 1
           }}>
-            {/* 모바일 메인 타이틀 */}
-            <div style={{
-              textAlign: 'center',
-              marginBottom: '30px'
-            }}>
-              <h2 style={{
-                fontSize: '20px',
-                fontWeight: '700',
-                color: '#333',
-                lineHeight: '1.4',
-                margin: 0
-              }}>
-                신뢰성 높은 DT서비스를 제공하여<br />
-                글씨 아무것도 없으니까 심심하긴하다
-              </h2>
-            </div>
             
             {/* 모바일 필터 버튼들을 감싸는 div */}
             <div style={{ 
@@ -249,9 +233,9 @@ export default function AboutSection() {
                     color: activeTab === tab ? 'white' : '#000000',
                     border: activeTab === tab ? 'none' : '1px solid #00A3E0',
                     borderRadius: '20px',
-                    padding: '10px 18px',
+                    padding: '1px 16px',
                     fontSize: '14px',
-                    fontWeight: '500',
+                    fontWeight: '550',
                     cursor: 'pointer',
                     minWidth: '60px'
                   }}
@@ -264,29 +248,29 @@ export default function AboutSection() {
 
             {/* 모바일용 카드 컨테이너 (하늘색 배경) */}
             <div style={{
-              backgroundColor: '#ADD8E6',
+              backgroundColor: '#E6F7FF',
               borderRadius: '16px',
-              padding: '24px 20px',
+              padding: '24px 20px 40px', // bottom padding 늘림
               marginBottom: '25px',
               margin: '0 8px 25px 8px'
             }}>
               {/* 현재 활성화된 탭의 첫 번째 카드만 표시 */}
               <h3 style={{
-                fontSize: '18px',
-                fontWeight: '700',
+                fontSize: '20px',
+                fontWeight: '600',
                 color: '#000000',
-                marginBottom: '12px'
+                margin: '0 0 30px 0'
               }}>
                 {cards[currentSlide].title}
               </h3>
               <div style={{
-                fontSize: '15px',
-                color: '#333',
-                fontWeight: '500',
-                lineHeight: '1.6'
+                fontSize: '16px',
+                color: '#000000',
+                fontWeight: '400',
+                lineHeight: '1.4'
               }}>
                 {cards[currentSlide].description.map((line, i) => (
-                  <p key={i} style={{ marginBottom: '4px' }}>{line}</p>
+                  <p key={i} style={{ marginBottom: '-15px', marginLeft: '0' }}>{line}</p>
                 ))}
               </div>
             </div>
