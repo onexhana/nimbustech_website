@@ -204,14 +204,40 @@ export default function AboutSection() {
           - gap 및 marginBottom으로 버튼 간 간격 설정
         */}
         {isMobile ? (
-          <>
+          <div style={{
+            position: 'relative',
+            top: '-50px',
+            margin: '0 16px',
+            backgroundColor: 'white',
+            borderRadius: '16px',
+            padding: '30px 20px',
+            boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+            zIndex: 1
+          }}>
+            {/* 모바일 메인 타이틀 */}
+            <div style={{
+              textAlign: 'center',
+              marginBottom: '30px'
+            }}>
+              <h2 style={{
+                fontSize: '20px',
+                fontWeight: '700',
+                color: '#333',
+                lineHeight: '1.4',
+                margin: 0
+              }}>
+                신뢰성 높은 DT서비스를 제공하여<br />
+                글씨 아무것도 없으니까 심심하긴하다
+              </h2>
+            </div>
+            
             {/* 모바일 필터 버튼들을 감싸는 div */}
             <div style={{ 
               display: 'flex', 
               flexWrap: 'wrap',
               justifyContent: 'center',
-              gap: '10px',
-              marginBottom: '20px'
+              gap: '8px',
+              marginBottom: '25px'
             }}>
               {/* TAB_LIST 배열을 순회하며 각각 버튼 생성 */}
               {TAB_LIST.map((tab) => (
@@ -221,12 +247,13 @@ export default function AboutSection() {
                   style={{
                     backgroundColor: activeTab === tab ? '#00A3E0' : 'white',
                     color: activeTab === tab ? 'white' : '#00A3E0',
-                    border: '1px solid #00A3E0',
+                    border: activeTab === tab ? 'none' : '1px solid #CCCCCC',
                     borderRadius: '20px',
-                    padding: '8px 20px',
+                    padding: '10px 18px',
                     fontSize: '14px',
-                    fontWeight: '600',
-                    cursor: 'pointer'
+                    fontWeight: '500',
+                    cursor: 'pointer',
+                    minWidth: '60px'
                   }}
                   onClick={() => handleTabChange(tab)}
                 >
@@ -238,27 +265,28 @@ export default function AboutSection() {
             {/* 모바일용 카드 컨테이너 (하늘색 배경) */}
             <div style={{
               backgroundColor: '#E6F7FF',
-              borderRadius: '12px',
-              padding: '20px',
-              marginBottom: '20px'
+              borderRadius: '16px',
+              padding: '24px 20px',
+              marginBottom: '25px',
+              margin: '0 8px 25px 8px'
             }}>
               {/* 현재 활성화된 탭의 첫 번째 카드만 표시 */}
               <h3 style={{
-                fontSize: '22px',
+                fontSize: '18px',
                 fontWeight: '700',
-                color: activeTab === 'ITO' ? '#000000' : '#00A3E0',
+                color: '#000000',
                 marginBottom: '12px'
               }}>
                 {cards[currentSlide].title}
               </h3>
               <div style={{
-                fontSize: '16px',
+                fontSize: '15px',
                 color: '#333',
                 fontWeight: '500',
-                lineHeight: '1.5'
+                lineHeight: '1.6'
               }}>
                 {cards[currentSlide].description.map((line, i) => (
-                  <p key={i} style={{ marginBottom: '8px' }}>{line}</p>
+                  <p key={i} style={{ marginBottom: '4px' }}>{line}</p>
                 ))}
               </div>
             </div>
@@ -267,27 +295,28 @@ export default function AboutSection() {
             <div style={{
               display: 'flex',
               justifyContent: 'center',
-              gap: '8px',
-              marginTop: '20px'
+              gap: '6px',
+              marginTop: '15px'
             }}>
               {Array.from({ length: cards.length }).map((_, i) => (
                 <button
                   key={i}
                   onClick={() => setCurrentSlide(i)}
                   style={{
-                    width: i === currentSlide ? '30px' : '10px',
-                    height: '10px',
-                    borderRadius: i === currentSlide ? '5px' : '50%',
+                    width: i === currentSlide ? '24px' : '8px',
+                    height: '8px',
+                    borderRadius: i === currentSlide ? '4px' : '50%',
                     backgroundColor: i === currentSlide ? '#00A3E0' : '#D1D5DB',
                     border: 'none',
                     padding: 0,
-                    transition: 'all 0.3s ease'
+                    transition: 'all 0.3s ease',
+                    cursor: 'pointer'
                   }}
                   aria-label={`슬라이드 ${i + 1}`}
                 />
               ))}
             </div>
-          </>
+          </div>
         ) : (
           <>
             {/* 탭 컴포넌트 */}
