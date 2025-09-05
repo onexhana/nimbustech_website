@@ -62,16 +62,18 @@ export default function ContactSection() {
                 fontWeight: '900',
                 color: '#00A3E0',
                 marginBottom: '2px',
-                letterSpacing: '-1.5px'
+                letterSpacing: '-1.5px',
+                marginLeft: isMobile ? '24px' : undefined
               }}>
                 TRUST
               </h3>
               <p style={{
-                fontSize: '21px',
+                fontSize: isMobile ? '17px' : '21px',
                 color: '#4b5563',
                 lineHeight: '1.6',
                 fontWeight: '700',
-                marginTop: '2px'
+                marginTop: '2px',
+                marginLeft: isMobile ? '24px' : undefined
               }}>
                 구성원 간의 신뢰, 고객과의 신뢰를 기반으로<br />
                 모든 협업과 서비스를 책임 있게 수행합니다.
@@ -85,16 +87,18 @@ export default function ContactSection() {
                 fontWeight: '900',
                 color: '#00A3E0',
                 marginBottom: '2px',
-                letterSpacing: '-1.5px'
+                letterSpacing: '-1.5px',
+                marginLeft: isMobile ? '24px' : undefined
               }}>
                 OWNERSHIP
               </h3>
               <p style={{
-                fontSize: '21px',
+                fontSize: isMobile ? '17px' : '21px',
                 color: '#4b5563',
                 lineHeight: '1.6',
                 fontWeight: '700',
-                marginTop: '2px'
+                marginTop: '2px',
+                marginLeft: isMobile ? '24px' : undefined
               }}>
                 각자의 역할에 책임을 가지고 임하며,<br />
                 스스로 문제를 해결하는 태도를 지향합니다.
@@ -108,16 +112,18 @@ export default function ContactSection() {
                 fontWeight: '900',
                 color: '#00A3E0',
                 marginBottom: '2px',
-                letterSpacing: '-1.5px'
+                letterSpacing: '-1.5px',
+                marginLeft: isMobile ? '24px' : undefined
               }}>
                 GROWTH
               </h3>
               <p style={{
-                fontSize: '21px',
+                fontSize: isMobile ? '17px' : '21px',
                 color: '#4b5563',
                 lineHeight: '1.6',
                 fontWeight: '700',
-                marginTop: '2px'
+                marginTop: '2px',
+                marginLeft: isMobile ? '24px' : undefined
               }}>
                 기술, AI, 프로젝트 경험을 통해<br />
                 개인과 조직이 함께 발전하는 문화를 만들어갑니다.
