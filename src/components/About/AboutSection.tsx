@@ -195,7 +195,13 @@ export default function AboutSection() {
 
   return (
     <div id="about-gray-start">
-      <div className="w-full px-6" style={{ paddingTop: '100px', paddingBottom: '96px', backgroundColor: isMobile ? 'transparent' : '#F3F6F9', marginTop: '120px' }}>
+      <div className="w-full" style={{
+        padding: isMobile
+          ? `80px 0 ${activeTab === 'RPA' ? '40px' : '55px'} 0`
+          : `80px 24px ${activeTab === 'RPA' ? '40px' : '60px'} 24px`,
+        backgroundColor: '#F3F6F9',
+        marginTop: '120px'
+      }}>
       {/* 메인 타이틀 영역 (AboutSection 컴포넌트 내부 상단) */}
       <div className="max-w-7xl mx-auto">
         {/*
@@ -204,16 +210,24 @@ export default function AboutSection() {
           - gap 및 marginBottom으로 버튼 간 간격 설정
         */}
         {isMobile ? (
-          <div style={{
-            position: 'relative',
-            top: '-50px',
-            margin: '0 16px',
-            backgroundColor: '#F3F6F9',
-            borderRadius: '16px',
-            padding: '30px 20px',
-            boxShadow: '0 8px 24px rgba(0,0,0,0.2)',
-            zIndex: 1
-          }}>
+          <>
+            {/* 모바일 메인 멘트 */}
+            <div style={{ textAlign: 'center', marginBottom: '20px' }}>
+              <h2 style={{
+                fontSize: '27px',
+                fontWeight: '700',
+                color: '#000000',
+                lineHeight: '1.4',
+                margin: 0
+              }}>
+                <span style={{ fontWeight: 400, display: 'block' }}>
+                  신뢰성 높은 DT서비스를 제공하여
+                </span>
+                <span style={{ fontWeight: 700, display: 'block', marginTop: '4px' }}>
+                  지속적인 고객 성공을 리딩합니다
+                </span>
+              </h2>
+            </div>
             
             {/* 모바일 필터 버튼들을 감싸는 div */}
             <div style={{ 
@@ -233,7 +247,7 @@ export default function AboutSection() {
                     color: activeTab === tab ? 'white' : '#000000',
                     border: activeTab === tab ? 'none' : '1px solid #00A3E0',
                     borderRadius: '20px',
-                    padding: '1px 16px',
+                    padding: '8px 16px',
                     fontSize: '14px',
                     fontWeight: '550',
                     cursor: 'pointer',
@@ -246,33 +260,68 @@ export default function AboutSection() {
               ))}
             </div>
 
-            {/* 모바일용 카드 컨테이너 (하늘색 배경) */}
+            {/* 모바일용 Swiper 카드 슬라이더 */}
             <div style={{
               backgroundColor: '#E6F7FF',
               borderRadius: '16px',
-              padding: '24px 20px 40px', // bottom padding 늘림
-              marginBottom: '25px',
-              margin: '0 8px 25px 8px'
+              padding: '24px 0 40px',
+              margin: '0 16px 25px 16px'
             }}>
-              {/* 현재 활성화된 탭의 첫 번째 카드만 표시 */}
-              <h3 style={{
-                fontSize: '20px',
-                fontWeight: '600',
-                color: '#000000',
-                margin: '0 0 30px 0'
-              }}>
-                {cards[currentSlide].title}
-              </h3>
-              <div style={{
-                fontSize: '16px',
-                color: '#000000',
-                fontWeight: '400',
-                lineHeight: '1.4'
-              }}>
-                {cards[currentSlide].description.map((line, i) => (
-                  <p key={i} style={{ marginBottom: '-15px', marginLeft: '0' }}>{line}</p>
+              {/* 모바일용 Swiper 무한루프 */}
+              <Swiper
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                onSwiper={(swiper: any) => { swiperRef.current = swiper }}
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                onSlideChange={(swiper: any) => setCurrentSlide(swiper.realIndex)}
+                spaceBetween={20}
+                slidesPerView={1}
+                loop={isMultiPage}
+                loopedSlides={isMultiPage ? duplicatedCards.length : 0}
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                onInit={(swiper: any) => { swiperRef.current = swiper }}
+                style={{ padding: '0 20px' }}
+              >
+                {(isMultiPage ? duplicatedCards : cards).map((card, i) => (
+                  <SwiperSlide key={i}>
+                    <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', minHeight: '12vw' }}>
+                      <div>
+                        <h3 style={{ fontSize: '20px', fontWeight: '600', color: '#000000', margin: '0 0 20px 0' }}>
+                          {card.title}
+                        </h3>
+                        <div style={{ fontSize: '16px', color: '#000000', fontWeight: '400', lineHeight: '1.5' }}>
+                          {card.description.map((line: string, j: number) => (
+                            <p key={j} style={{ margin: '0', marginLeft: '0' }}>{line}</p>
+                          ))}
+                        </div>
+                      </div>
+                      {activeTab === '솔루션' && (
+                        <div style={{ textAlign: 'left', marginTop: '20px', marginLeft: '8px' }}>
+                          <a
+                            href="https://www.naver.com"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{
+                              backgroundColor: "#00A3E0",
+                              color: "#ffffff",
+                              borderRadius: "20px",
+                              padding: "8px 20px",
+                              fontSize: "1rem",
+                              fontWeight: 600,
+                              textDecoration: "none",
+                              border: "none",
+                              cursor: "pointer",
+                              transition: "background-color 0.2s ease-in-out",
+                              display: "inline-block",
+                            }}
+                          >
+                            자세히 보기
+                          </a>
+                        </div>
+                      )}
+                    </div>
+                  </SwiperSlide>
                 ))}
-              </div>
+              </Swiper>
             </div>
 
             {/* 모바일용 슬라이더 인디케이터 */}
@@ -285,12 +334,15 @@ export default function AboutSection() {
               {Array.from({ length: cards.length }).map((_, i) => (
                 <button
                   key={i}
-                  onClick={() => setCurrentSlide(i)}
+                  onClick={() => {
+                    setCurrentSlide(i);
+                    swiperRef.current?.slideToLoop(i);
+                  }}
                   style={{
-                    width: i === currentSlide ? '24px' : '8px',
+                    width: i === (currentSlide % cards.length) ? '24px' : '8px',
                     height: '8px',
-                    borderRadius: i === currentSlide ? '4px' : '50%',
-                    backgroundColor: i === currentSlide ? '#00A3E0' : '#D1D5DB',
+                    borderRadius: i === (currentSlide % cards.length) ? '4px' : '50%',
+                    backgroundColor: i === (currentSlide % cards.length) ? '#00A3E0' : '#D1D5DB',
                     border: 'none',
                     padding: 0,
                     transition: 'all 0.3s ease',
@@ -300,7 +352,7 @@ export default function AboutSection() {
                 />
               ))}
             </div>
-          </div>
+          </>
         ) : (
           <>
             {/* 탭 컴포넌트 */}
@@ -381,7 +433,8 @@ export default function AboutSection() {
                             titleColor="#000000"
                             descriptionColor="#6B7280"
                             backgroundColor="#ffffff"
-                            minHeight="12vw"
+                            width={isMobile ? "380px" : undefined}
+                            minHeight={isMobile ? "200px" : "12vw"}
                           />
                         </div>
                       </SwiperSlide>
@@ -398,14 +451,16 @@ export default function AboutSection() {
                         .about-solution-swiper .swiper-wrapper {
                           overflow: visible !important;
                         }
-                        .about-solution-swiper .swiper-slide {
-                          width: 30vw !important; /* 카드 폭을 30vw로 조정 */
-                          flex-shrink: 0 !important;
+                        /* 모바일에서만 고정 폭 적용 */
+                        @media (max-width: 768px) {
+                          .about-solution-swiper .swiper-slide {
+                            width: 380px !important;
+                            flex-shrink: 0 !important;
+                          }
                         }
                         .about-solution-swiper .swiper-slide > div {
-                          margin: 10px 0; /* 수평 마진 제거, spaceBetween 사용 */
+                          margin: 10px 0;
                         }
-                        /* 무한 루프 보장 */
                         .about-solution-swiper .swiper-slide-duplicate {
                           opacity: 1 !important;
                           display: block !important;
@@ -469,7 +524,7 @@ export default function AboutSection() {
                 className="flex flex-1"
                 style={{ position: 'relative', overflow: 'visible', display: 'flex', gap: '5vw', flex: '1', justifyContent: 'center', marginLeft: '5vw', marginRight: '5vw' }}
               >
-                  {cards.map((card, idx) => (
+                  {cards.map((card: {title: string; description: string[]}, idx: number) => (
                     <div
                       key={`${activeTab}-${idx}`}
                       style={{
@@ -486,7 +541,8 @@ export default function AboutSection() {
                           titleColor="#000000"
                           descriptionColor="#6B7280"
                           backgroundColor="#ffffff"
-                          minHeight="12vw"
+                          width={isMobile ? "380px" : undefined}
+                          minHeight={isMobile ? "200px" : undefined}
                         />
                       ) : (
                         <AboutCard
