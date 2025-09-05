@@ -20,7 +20,7 @@ export default function ContactSection() {
 
   return (
     //contact & footer 사이 여백 100px
-    <div className="w-full px-6 bg-white" style={{ position: 'relative', paddingTop: '120px', paddingBottom: isMobile ? '0px' : '100px' }}>
+    <div className={`w-full px-6 ${isMobile ? 'bg-transparent' : 'bg-white'}`} style={{ position: 'relative', paddingTop: '120px', paddingBottom: isMobile ? '0px' : '100px', backgroundColor: isMobile ? 'transparent' : undefined }}>
       <div className="max-w-7xl mx-auto">
         {/* 검은 실선 (데스크탑에서만 표시) */}
         {!isMobile && (
@@ -187,10 +187,10 @@ export default function ContactSection() {
                 top: '50%',
                 left: '50%',
                 transform: 'translate(-50%, -50%)',
-                width: '90vw',
-                maxWidth: '400px',
+                width: '80vw',
+                maxWidth: '360px',
                 maxHeight: '90vh',
-                backgroundColor: 'white',
+                backgroundColor: 'transparent',
                 borderRadius: '8px',
                 padding: '20px',
                 overflow: 'auto'
@@ -220,10 +220,10 @@ export default function ContactSection() {
                 top: '50%',
                 left: '50%',
                 transform: 'translate(-50%, -50%)',
-                width: '90vw',
-                maxWidth: '400px',
+                width: '80vw',
+                maxWidth: '360px',
                 maxHeight: '90vh',
-                backgroundColor: 'white',
+                backgroundColor: 'transparent',
                 borderRadius: '8px',
                 padding: '20px',
                 overflow: 'auto'
