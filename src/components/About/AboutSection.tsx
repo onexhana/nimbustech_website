@@ -542,7 +542,7 @@ export default function AboutSection() {
                           descriptionColor="#6B7280"
                           backgroundColor="#ffffff"
                           width={isMobile ? "380px" : undefined}
-                          minHeight={isMobile ? "200px" : undefined}
+                          minHeight={isMobile ? "200px" : "12vw"}
                         />
                       ) : (
                         <AboutCard

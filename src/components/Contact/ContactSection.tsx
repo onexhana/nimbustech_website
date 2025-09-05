@@ -157,15 +157,6 @@ export default function ContactSection() {
                 인재 채용
               </span>
             </button>
-            {/* 회사소개서 다운로드 버튼 */}
-            <a
-              href="/company_brochure.pdf"
-              download
-              className={isMobile ? 'bg-white border border-[#00A3E0] w-full mt-4 h-[74px] px-8 flex items-center justify-center text-[24px] text-[#00A3E0] font-extrabold transition-all duration-300 hover:shadow-lg hover:-translate-y-1' : undefined}
-              style={isMobile ? undefined : { backgroundColor: '#ffffff', border: '1px solid #00A3E0', width: '530px', marginTop: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center', height: '80px', padding: '0 32px', fontSize: '28px', color: '#00A3E0', fontWeight: '900', textDecoration: 'none', cursor: 'pointer' }}
-            >
-              회사소개서 다운로드
-            </a>
           </div>
         </div>
 
