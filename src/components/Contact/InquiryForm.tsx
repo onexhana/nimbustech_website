@@ -20,10 +20,23 @@ export default function InquiryForm() {
   }, []);
 
   return (
-    <div
-      id="salesmap-web-form"
-      data-web-form="https://salesmap.kr/web-form/e2fb0363-5a7d-44db-878a-d24463b86765"
-      style={{ width: '100%', minHeight: '500px' }}
-    />
+    <>
+      <div
+        id="salesmap-web-form"
+        data-web-form="https://salesmap.kr/web-form/e2fb0363-5a7d-44db-878a-d24463b86765"
+        style={{ width: '100%', minHeight: '500px', backgroundColor: 'transparent' }}
+      />
+      <style>{`
+        /* 배경 투명 처리 */
+        #salesmap-web-form,
+        #salesmap-web-form * {
+          background: transparent !important;
+        }
+        /* 웹폼 상단 헤더 숨기기 */
+        #salesmap-web-form > *:first-child {
+          display: none !important;
+        }
+      `}</style>
+    </>
   );
 }

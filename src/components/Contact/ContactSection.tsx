@@ -20,7 +20,7 @@ export default function ContactSection() {
 
   return (
     //contact & footer 사이 여백 100px
-    <div className="w-full px-6 bg-white" style={{ position: 'relative', paddingTop: '120px', paddingBottom: isMobile ? '0px' : '100px' }}>
+    <div className={`w-full px-6 ${isMobile ? 'bg-transparent' : 'bg-white'}`} style={{ position: 'relative', paddingTop: '120px', paddingBottom: isMobile ? '0px' : '100px', backgroundColor: isMobile ? 'transparent' : undefined }}>
       <div className="max-w-7xl mx-auto">
         {/* 검은 실선 (데스크탑에서만 표시) */}
         {!isMobile && (
@@ -62,16 +62,18 @@ export default function ContactSection() {
                 fontWeight: '900',
                 color: '#00A3E0',
                 marginBottom: '2px',
-                letterSpacing: '-1.5px'
+                letterSpacing: '-1.5px',
+                marginLeft: isMobile ? '24px' : undefined
               }}>
                 TRUST
               </h3>
               <p style={{
-                fontSize: '21px',
+                fontSize: isMobile ? '17px' : '21px',
                 color: '#4b5563',
                 lineHeight: '1.6',
                 fontWeight: '700',
-                marginTop: '2px'
+                marginTop: '2px',
+                marginLeft: isMobile ? '24px' : undefined
               }}>
                 구성원 간의 신뢰, 고객과의 신뢰를 기반으로<br />
                 모든 협업과 서비스를 책임 있게 수행합니다.
@@ -85,16 +87,18 @@ export default function ContactSection() {
                 fontWeight: '900',
                 color: '#00A3E0',
                 marginBottom: '2px',
-                letterSpacing: '-1.5px'
+                letterSpacing: '-1.5px',
+                marginLeft: isMobile ? '24px' : undefined
               }}>
                 OWNERSHIP
               </h3>
               <p style={{
-                fontSize: '21px',
+                fontSize: isMobile ? '17px' : '21px',
                 color: '#4b5563',
                 lineHeight: '1.6',
                 fontWeight: '700',
-                marginTop: '2px'
+                marginTop: '2px',
+                marginLeft: isMobile ? '24px' : undefined
               }}>
                 각자의 역할에 책임을 가지고 임하며,<br />
                 스스로 문제를 해결하는 태도를 지향합니다.
@@ -108,16 +112,18 @@ export default function ContactSection() {
                 fontWeight: '900',
                 color: '#00A3E0',
                 marginBottom: '2px',
-                letterSpacing: '-1.5px'
+                letterSpacing: '-1.5px',
+                marginLeft: isMobile ? '24px' : undefined
               }}>
                 GROWTH
               </h3>
               <p style={{
-                fontSize: '21px',
+                fontSize: isMobile ? '17px' : '21px',
                 color: '#4b5563',
                 lineHeight: '1.6',
                 fontWeight: '700',
-                marginTop: '2px'
+                marginTop: '2px',
+                marginLeft: isMobile ? '24px' : undefined
               }}>
                 기술, AI, 프로젝트 경험을 통해<br />
                 개인과 조직이 함께 발전하는 문화를 만들어갑니다.
@@ -157,15 +163,6 @@ export default function ContactSection() {
                 인재 채용
               </span>
             </button>
-            {/* 회사소개서 다운로드 버튼 */}
-            <a
-              href="/company_brochure.pdf"
-              download
-              className={isMobile ? 'bg-white border border-[#00A3E0] w-full mt-4 h-[74px] px-8 flex items-center justify-center text-[24px] text-[#00A3E0] font-extrabold transition-all duration-300 hover:shadow-lg hover:-translate-y-1' : undefined}
-              style={isMobile ? undefined : { backgroundColor: '#ffffff', border: '1px solid #00A3E0', width: '530px', marginTop: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center', height: '80px', padding: '0 32px', fontSize: '28px', color: '#00A3E0', fontWeight: '900', textDecoration: 'none', cursor: 'pointer' }}
-            >
-              회사소개서 다운로드
-            </a>
           </div>
         </div>
 
@@ -190,10 +187,10 @@ export default function ContactSection() {
                 top: '50%',
                 left: '50%',
                 transform: 'translate(-50%, -50%)',
-                width: '90vw',
-                maxWidth: '400px',
+                width: '80vw',
+                maxWidth: '360px',
                 maxHeight: '90vh',
-                backgroundColor: 'white',
+                backgroundColor: 'transparent',
                 borderRadius: '8px',
                 padding: '20px',
                 overflow: 'auto'
@@ -223,10 +220,10 @@ export default function ContactSection() {
                 top: '50%',
                 left: '50%',
                 transform: 'translate(-50%, -50%)',
-                width: '90vw',
-                maxWidth: '400px',
+                width: '80vw',
+                maxWidth: '360px',
                 maxHeight: '90vh',
-                backgroundColor: 'white',
+                backgroundColor: 'transparent',
                 borderRadius: '8px',
                 padding: '20px',
                 overflow: 'auto'
