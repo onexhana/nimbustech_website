@@ -276,7 +276,7 @@ export default function HomeButton() {
             maxWidth: '1024px',
             width: '100%',
             margin: '16px',
-            maxHeight: '90vh',
+            maxHeight: '575px',//세로높이
             overflow: 'hidden'
           }}
           onClick={(e) => e.stopPropagation()}
