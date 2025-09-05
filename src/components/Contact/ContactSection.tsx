@@ -20,19 +20,22 @@ export default function ContactSection() {
 
   return (
     //contact & footer 사이 여백 100px
-    <div className="w-full px-6 bg-white" style={{ position: 'relative', paddingTop: '120px', paddingBottom: '100px' }}>
+    <div className="w-full px-6 bg-white" style={{ position: 'relative', paddingTop: '120px', paddingBottom: isMobile ? '0px' : '100px' }}>
       <div className="max-w-7xl mx-auto">
-        {/* 검은 실선 */}
-        <div style={{
-          width: '110px',
-          height: '3px',
-          backgroundColor: '#000000',
-          marginLeft: '50px',
-          marginBottom: '20px'
-        }}></div>
+        {/* 검은 실선 (데스크탑에서만 표시) */}
+        {!isMobile && (
+          <div style={{
+            width: '110px',
+            height: '3px',
+            backgroundColor: '#000000',
+            marginLeft: '50px',
+            marginBottom: '20px'
+          }} />
+        )}
         
-        {/* 메인 타이틀 */}
-        <h2 style={{
+        {/* 메인 타이틀 (데스크탑에서만 표시) */}
+        {!isMobile && (
+          <h2 style={{
           fontSize: '45px',
           fontWeight: '1100',
           marginBottom: '80px',
@@ -41,8 +44,9 @@ export default function ContactSection() {
           letterSpacing: '-3.5px',
           marginLeft: '50px'
         }}>
-          Contact
-        </h2>
+            Contact
+          </h2>
+        )}
 
         {/* 컨텐츠 영역 */}
         <div
@@ -128,8 +132,8 @@ export default function ContactSection() {
           >
             {/* 고객지원 버튼 */}
             <button
-              className={`text-white font-bold transition-all duration-300 hover:shadow-lg hover:-translate-y-1 ${isMobile ? 'bg-[#00A3E0] w-full mt-8 h-[74px] px-8 flex items-center justify-center text-[24px] relative overflow-hidden border-none text-white' : ''}`}
-              style={isMobile ? undefined : { backgroundColor: '#00A3E0', width: '530px', marginTop: '320px', display: 'flex', alignItems: 'center', justifyContent: 'center', height: '80px', padding: '0 32px', fontSize: '28px', color: '#ffffff', fontWeight: '700', borderRadius: '0px', border: 'none', cursor: 'pointer', position: 'relative', overflow: 'hidden' }}
+              className={`text-white ${isMobile ? 'bg-[#00A3E0] w-full mt-8 h-[74px] px-8 flex items-center justify-center text-[24px] relative overflow-hidden border-none text-white font-extrabold transition-all duration-300 hover:shadow-lg hover:-translate-y-1' : ''}`}
+              style={isMobile ? undefined : { backgroundColor: '#00A3E0', width: '530px', marginTop: '320px', display: 'flex', alignItems: 'center', justifyContent: 'center', height: '80px', padding: '0 32px', fontSize: '28px', color: '#ffffff', fontWeight: '900', borderRadius: '0px', border: 'none', cursor: 'pointer', position: 'relative', overflow: 'hidden' }}
               onClick={() => setUserType('inquiry')}
             >
               <span
@@ -142,8 +146,8 @@ export default function ContactSection() {
 
             {/* 인재채용 버튼 */}
             <button
-              className={`text-white font-bold transition-all duration-300 hover:shadow-lg hover:-translate-y-1 ${isMobile ? 'bg-[#6b7280] w-full mt-4 h-[74px] px-8 flex items-center justify-center text-[24px] relative overflow-hidden border-none text-white' : ''}`}
-              style={isMobile ? undefined : { backgroundColor: '#6b7280', width: '530px', marginTop: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center', height: '80px', padding: '0 32px', fontSize: '28px', color: '#ffffff', fontWeight: '700', borderRadius: '0px', border: 'none', cursor: 'pointer', position: 'relative', overflow: 'hidden' }}
+              className={`text-white ${isMobile ? 'bg-[#6b7280] w-full mt-4 h-[74px] px-8 flex items-center justify-center text-[24px] relative overflow-hidden border-none text-white font-extrabold transition-all duration-300 hover:shadow-lg hover:-translate-y-1' : ''}`}
+              style={isMobile ? undefined : { backgroundColor: '#6b7280', width: '530px', marginTop: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center', height: '80px', padding: '0 32px', fontSize: '28px', color: '#ffffff', fontWeight: '900', borderRadius: '0px', border: 'none', cursor: 'pointer', position: 'relative', overflow: 'hidden' }}
               onClick={() => setUserType('hiring')}
             >
               <span
@@ -153,6 +157,15 @@ export default function ContactSection() {
                 인재 채용
               </span>
             </button>
+            {/* 회사소개서 다운로드 버튼 */}
+            <a
+              href="/company_brochure.pdf"
+              download
+              className={isMobile ? 'bg-white border border-[#00A3E0] w-full mt-4 h-[74px] px-8 flex items-center justify-center text-[24px] text-[#00A3E0] font-extrabold transition-all duration-300 hover:shadow-lg hover:-translate-y-1' : undefined}
+              style={isMobile ? undefined : { backgroundColor: '#ffffff', border: '1px solid #00A3E0', width: '530px', marginTop: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center', height: '80px', padding: '0 32px', fontSize: '28px', color: '#00A3E0', fontWeight: '900', textDecoration: 'none', cursor: 'pointer' }}
+            >
+              회사소개서 다운로드
+            </a>
           </div>
         </div>
 

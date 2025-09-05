@@ -30,7 +30,7 @@ const MainPage = () => {
         {/* Portfolio Section */}
         <section 
           id="portfolio" 
-          className="w-full bg-white py-24"
+          className="w-full bg-white py-16"
         >
           <div className="w-full">
             <PortfolioSection />
@@ -40,7 +40,7 @@ const MainPage = () => {
         {/* Contact Section */}
         <section 
           id="contact" 
-          className="w-full bg-gray-50 py-16 lg:py-24"
+          className="w-full bg-gray-50 py-8 lg:py-16"
         >
           <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <ContactSection />
