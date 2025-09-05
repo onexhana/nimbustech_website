@@ -36,27 +36,58 @@ export default function PortfolioSection() {
       <div className="pt-[120px] pl-16 pr-12 pb-24 bg-white">
         {/* Portfolio 페이지 제목 */}
         <div className="max-w-7xl mx-auto">
-          {/* 검은 실선 */}
-          <div style={{
-            width: '110px',
-            height: '3px',
-            backgroundColor: '#000000',
-            marginLeft: '50px',
-            marginBottom: '20px'
-          }}></div>
-          
           {/* 메인 타이틀 */}
-          <h2 style={{
-            fontSize: '45px',
-            fontWeight: '1100',
-            marginBottom: '80px',
-            color: '#1f2937',
-            lineHeight: '1.2',
-            letterSpacing: '-3.5px',
-            marginLeft: '50px'
-          }}>
-            Portfolio
-          </h2>
+          {isMobile ? (
+            <div style={{
+              marginLeft: '20px',
+              marginRight: '20px',
+              marginBottom: '60px',
+              textAlign: 'center'
+            }}>
+              <h2 style={{
+                fontSize: '20px',
+                fontWeight: '600',
+                marginBottom: '12px',
+                color: '#000000',
+                lineHeight: '1.3',
+                letterSpacing: '-1px'
+              }}>
+                고객 성공의 발자취
+              </h2>
+              <p style={{
+                fontSize: '16px',
+                fontWeight: '400',
+                color: '#000000',
+                lineHeight: '1.5',
+                letterSpacing: '-0.5px'
+              }}>
+                함께한 프로젝트, 그것이 님버스테크입니다.
+              </p>
+            </div>
+          ) : (
+            <>
+              {/* 검은 실선 - 데스크톱만 */}
+              <div style={{
+                width: '110px',
+                height: '3px',
+                backgroundColor: '#000000',
+                marginLeft: '50px',
+                marginBottom: '20px'
+              }}></div>
+              
+              <h2 style={{
+                fontSize: '45px',
+                fontWeight: '1100',
+                marginBottom: '80px',
+                color: '#1f2937',
+                lineHeight: '1.2',
+                letterSpacing: '-3.5px',
+                marginLeft: '50px'
+              }}>
+                Portfolio
+              </h2>
+            </>
+          )}
         </div>
         
         {/* 모바일과 데스크톱 레이아웃 분기 */}
@@ -103,6 +134,7 @@ export default function PortfolioSection() {
                 spaceBetween={20}
                 slidesPerView={1.2}
                 centeredSlides={true}
+                loop={true}
                 onSlideChange={(swiper: any) => {
                   console.log(`슬라이드 변경: ${swiper.activeIndex}`);
                   setCurrentSlide(swiper.activeIndex);
@@ -182,48 +214,6 @@ export default function PortfolioSection() {
               </Swiper>
             </div>
 
-            {/* 모바일용 슬라이더 인디케이터 */}
-            {filtered.length > 1 && (
-              <div style={{
-                display: 'flex',
-                justifyContent: 'center',
-                gap: '8px',
-                marginTop: '20px'
-              }}>
-                {Array.from({ length: Math.ceil(filtered.length / 2) }).map((_, i) => {
-                  const isActive = Math.floor(currentSlide / 2) === i;
-                  return (
-                    <button
-                      key={i}
-                      onClick={() => {
-                        const targetSlide = i * 2;
-                        console.log(`점 ${i} 클릭: ${targetSlide}번 카드로 이동`);
-                        
-                        setCurrentSlide(targetSlide);
-                        
-                        if (swiperRef.current) {
-                          console.log('Swiper 참조 있음, slideTo 호출');
-                          swiperRef.current.slideTo(targetSlide, 300);
-                        } else {
-                          console.log('Swiper 참조 없음');
-                        }
-                      }}
-                      style={{
-                        width: isActive ? '30px' : '10px',
-                        height: '10px',
-                        borderRadius: isActive ? '5px' : '50%',
-                        backgroundColor: isActive ? '#00A3E0' : '#D1D5DB',
-                        border: 'none',
-                        padding: 0,
-                        transition: 'all 0.3s ease',
-                        cursor: 'pointer'
-                      }}
-                      aria-label={`슬라이드 그룹 ${i + 1}`}
-                    />
-                  );
-                })}
-              </div>
-            )}
           </>
         ) : (
           /* 데스크톱 레이아웃 */
