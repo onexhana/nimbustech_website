@@ -11,6 +11,7 @@ export default function PortfolioSection() {
   const [selectedCategory, setSelectedCategory] = useState("공공");
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 768);
+  const [swiperKey, setSwiperKey] = useState(0); // Swiper 강제 재초기화를 위한 키
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const swiperRef = useRef<any>(null);
   
@@ -23,10 +24,27 @@ export default function PortfolioSection() {
   }, []);
   
   const handleCategoryChange = (category: string) => {
+    const isSameCategory = selectedCategory === category;
+    
     setSelectedCategory(category);
     setCurrentSlide(0);
-    if (swiperRef.current && swiperRef.current.slideTo) {
-      swiperRef.current.slideTo(0);
+    
+    // 같은 카테고리를 다시 클릭한 경우 Swiper를 강제로 재초기화
+    if (isSameCategory) {
+      setSwiperKey(prev => prev + 1); // 키를 변경하여 Swiper 재초기화
+    }
+    
+    // 카테고리 변경 시 스와이퍼를 첫 번째 슬라이드로 이동 (다른 카테고리인 경우만)
+    if (swiperRef.current && !isSameCategory) {
+      setTimeout(() => {
+        if (swiperRef.current) {
+          if (swiperRef.current.slideToLoop) {
+            swiperRef.current.slideToLoop(0, 0); // 0ms 애니메이션으로 즉시 이동
+          } else if (swiperRef.current.slideTo) {
+            swiperRef.current.slideTo(0, 0);
+          }
+        }
+      }, 50);
     }
   };
 
@@ -130,6 +148,7 @@ export default function PortfolioSection() {
               marginBottom: '20px'
             }}>
               <Swiper
+                key={`${selectedCategory}-${swiperKey}`} // 카테고리 변경 시 또는 같은 카테고리 재클릭 시 Swiper 재초기화
                 ref={swiperRef}
                 spaceBetween={20}
                 slidesPerView={1.2}
