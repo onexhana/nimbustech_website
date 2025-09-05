@@ -195,7 +195,13 @@ export default function AboutSection() {
 
   return (
     <div id="about-gray-start">
-      <div className="w-full" style={{ padding: isMobile ? '100px 0 96px 0' : '100px 24px 96px 24px', backgroundColor: '#F3F6F9', marginTop: '120px' }}>
+      <div className="w-full" style={{
+        padding: isMobile
+          ? `80px 0 ${activeTab === 'RPA' ? '40px' : '55px'} 0`
+          : `80px 24px ${activeTab === 'RPA' ? '40px' : '60px'} 24px`,
+        backgroundColor: '#F3F6F9',
+        marginTop: '120px'
+      }}>
       {/* 메인 타이틀 영역 (AboutSection 컴포넌트 내부 상단) */}
       <div className="max-w-7xl mx-auto">
         {/*
@@ -208,7 +214,7 @@ export default function AboutSection() {
             {/* 모바일 메인 멘트 */}
             <div style={{ textAlign: 'center', marginBottom: '20px' }}>
               <h2 style={{
-                fontSize: '20px',
+                fontSize: '27px',
                 fontWeight: '700',
                 color: '#000000',
                 lineHeight: '1.4',
@@ -277,23 +283,41 @@ export default function AboutSection() {
               >
                 {(isMultiPage ? duplicatedCards : cards).map((card, i) => (
                   <SwiperSlide key={i}>
-                    <h3 style={{
-                      fontSize: '20px',
-                      fontWeight: '600',
-                      color: '#000000',
-                      margin: '0 0 20px 0'
-                    }}>
-                      {card.title}
-                    </h3>
-                    <div style={{
-                      fontSize: '16px',
-                      color: '#000000',
-                      fontWeight: '400',
-                      lineHeight: '1.4'
-                    }}>
-                      {card.description.map((line: string, j: number) => (
-                        <p key={j} style={{ marginBottom: '4px', marginLeft: '0' }}>{line}</p>
-                      ))}
+                    <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', minHeight: '12vw' }}>
+                      <div>
+                        <h3 style={{ fontSize: '20px', fontWeight: '600', color: '#000000', margin: '0 0 20px 0' }}>
+                          {card.title}
+                        </h3>
+                        <div style={{ fontSize: '16px', color: '#000000', fontWeight: '400', lineHeight: '1.5' }}>
+                          {card.description.map((line: string, j: number) => (
+                            <p key={j} style={{ margin: '0', marginLeft: '0' }}>{line}</p>
+                          ))}
+                        </div>
+                      </div>
+                      {activeTab === '솔루션' && (
+                        <div style={{ textAlign: 'left', marginTop: '20px', marginLeft: '8px' }}>
+                          <a
+                            href="https://www.naver.com"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{
+                              backgroundColor: "#00A3E0",
+                              color: "#ffffff",
+                              borderRadius: "20px",
+                              padding: "8px 20px",
+                              fontSize: "1rem",
+                              fontWeight: 600,
+                              textDecoration: "none",
+                              border: "none",
+                              cursor: "pointer",
+                              transition: "background-color 0.2s ease-in-out",
+                              display: "inline-block",
+                            }}
+                          >
+                            자세히 보기
+                          </a>
+                        </div>
+                      )}
                     </div>
                   </SwiperSlide>
                 ))}
@@ -409,7 +433,8 @@ export default function AboutSection() {
                             titleColor="#000000"
                             descriptionColor="#6B7280"
                             backgroundColor="#ffffff"
-                            minHeight="12vw"
+                            width={isMobile ? "380px" : undefined}
+                            minHeight={isMobile ? "200px" : "12vw"}
                           />
                         </div>
                       </SwiperSlide>
@@ -426,14 +451,16 @@ export default function AboutSection() {
                         .about-solution-swiper .swiper-wrapper {
                           overflow: visible !important;
                         }
-                        .about-solution-swiper .swiper-slide {
-                          width: 30vw !important; /* 카드 폭을 30vw로 조정 */
-                          flex-shrink: 0 !important;
+                        /* 모바일에서만 고정 폭 적용 */
+                        @media (max-width: 768px) {
+                          .about-solution-swiper .swiper-slide {
+                            width: 380px !important;
+                            flex-shrink: 0 !important;
+                          }
                         }
                         .about-solution-swiper .swiper-slide > div {
-                          margin: 10px 0; /* 수평 마진 제거, spaceBetween 사용 */
+                          margin: 10px 0;
                         }
-                        /* 무한 루프 보장 */
                         .about-solution-swiper .swiper-slide-duplicate {
                           opacity: 1 !important;
                           display: block !important;
@@ -514,7 +541,8 @@ export default function AboutSection() {
                           titleColor="#000000"
                           descriptionColor="#6B7280"
                           backgroundColor="#ffffff"
-                          minHeight="12vw"
+                          width={isMobile ? "380px" : undefined}
+                          minHeight={isMobile ? "200px" : undefined}
                         />
                       ) : (
                         <AboutCard
