@@ -82,10 +82,10 @@ export default function HeaderMobile() {
           }}
         >
           {/* 상단 헤더 영역 - 로고와 닫기 버튼 */}
-          <div className="flex justify-between items-center px-6 py-4 border-b border-gray-100">
+          <div className="flex justify-between items-center" style={{ margin: '32px 32px 32px 32px' }}>
             <img
-              src="/logo/logo-blue-wide.png"
-              alt="NIMBUS TECH 로고"
+              src="/logo/cloud-blue.png"
+              alt="Cloud 로고"
               style={{ height: '15px' }}
             />
             <button
