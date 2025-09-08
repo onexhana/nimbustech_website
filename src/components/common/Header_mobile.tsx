@@ -79,8 +79,8 @@ export default function HeaderMobile() {
           </div>
 
           {/* 네비게이션 */}
-                     <nav>
-             <ul className="flex flex-col px-6 py-6 space-y-3">
+          <nav>
+            <ul className="flex flex-col px-6 py-6 space-y-6">
               {navItems.map(({ to, label }) => (
                 <li
                   key={to}
