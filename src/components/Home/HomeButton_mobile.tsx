@@ -159,30 +159,30 @@ const buttons: ButtonItem[] = [
     subtitle: "미션&비전",
     description: "우리의 존재 이유와\n향하는 미래를 담습니다.",
     link: "/#about",
-    imagePath: "/popup_image/Mission&Vision.jpg",
-    titleFontSize: 30,
-    subtitleFontSize: 40,
-    descriptionFontSize: 20,
+    imagePath: "/popup_image_mobile/Mission&Vision_mobile.png",
+    titleFontSize: 20,
+    subtitleFontSize: 28,
+    descriptionFontSize: 14,
   },
   {
     title: "Core Values",
     subtitle: "핵심가치",
     description: "고객과 함께 성장하는\n신뢰·책임·전문성의 가치",
     link: "/#about",
-    imagePath: "/popup_image/Core%20Values.png",
-    titleFontSize: 30,
-    subtitleFontSize: 40,
-    descriptionFontSize: 20,
+    imagePath: "/popup_image_mobile/Core%20Values_mobile.png",
+    titleFontSize: 20,
+    subtitleFontSize: 28,
+    descriptionFontSize: 14,
   },
   {
     title: "Way of Working",
     subtitle: "일하는 방식",
     description: '모든 일의 궁극적인 목적은\n"고객창출" 곧 "고객성공"이다!',
     link: "/#about",
-    imagePath: "/popup_image/Way%20of%20Working.jpg",
-    titleFontSize: 30,
-    subtitleFontSize: 40,
-    descriptionFontSize: 20,
+    imagePath: "/popup_image_mobile/Way%20of%20Working_mobile.png",
+    titleFontSize: 20,
+    subtitleFontSize: 28,
+    descriptionFontSize: 14,
   },
   {
     title: "Employee Benefits",
@@ -190,10 +190,10 @@ const buttons: ButtonItem[] = [
     description:
       "최고의 열정과 패기를 갖춘\n인재들과 함께 일하고 성장하는 기업",
     link: "/#about",
-    imagePath: "/popup_image/Employee%20Benefits.jpg",
-    titleFontSize: 30,
-    subtitleFontSize: 40,
-    descriptionFontSize: 20,
+    imagePath: "/popup_image_mobile/Employee%20Benefits_mobile.png",
+    titleFontSize: 20,
+    subtitleFontSize: 28,
+    descriptionFontSize: 14,
   },
 ];
 
@@ -207,7 +207,7 @@ function renderTextWithBreaks(text: string) {
   ));
 }
 
-export default function HomeButton() {
+export default function HomeButtonMobile() {
   const [selectedIdx, setSelectedIdx] = useState<number | null>(null);
 
   // ESC 키로 모달 닫기
@@ -263,7 +263,8 @@ export default function HomeButton() {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          zIndex: 999998
+          zIndex: 999998,
+          padding: '16px'
         }}
         onClick={handleBackdropClick}
       >
@@ -273,10 +274,8 @@ export default function HomeButton() {
             backgroundColor: 'white',
             borderRadius: '8px',
             boxShadow: '0 10px 25px rgba(0, 0, 0, 0.2)',
-            maxWidth: '1024px',
             width: '100%',
-            margin: '16px',
-            maxHeight: '575px',//세로높이
+            maxHeight: '75vh', // 팝업창 세로 길이 조정
             overflow: 'hidden'
           }}
           onClick={(e) => e.stopPropagation()}
@@ -286,19 +285,19 @@ export default function HomeButton() {
             onClick={handleCloseModal}
             style={{
               position: 'absolute',
-              top: '16px',
-              right: '16px',
+              top: '12px',
+              right: '12px',
               zIndex: 10,
               backgroundColor: 'white',
               borderRadius: '50%',
-              width: '32px',
-              height: '32px',
+              width: '28px',
+              height: '28px',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               border: 'none',
               cursor: 'pointer',
-              fontSize: '18px',
+              fontSize: '16px',
               boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)'
             }}
             aria-label="모달 닫기"
@@ -315,7 +314,7 @@ export default function HomeButton() {
                 width: '100%', 
                 height: 'auto', 
                 objectFit: 'contain',
-                maxHeight: '85vh'
+                maxHeight: '80vh'
               }}
               onLoad={() => {}}
               onError={() => {}}
@@ -330,18 +329,25 @@ export default function HomeButton() {
     <>
       {renderModal()}
       <div className="w-full bg-white" style={{ marginTop: '100px' }}>
-        <div className="grid grid-cols-2 md:grid-cols-4 border-t border-gray-200">
+        {/* 모바일용 2x2 그리드 - 고정 크기 */}
+        <div className="border-t border-gray-200" style={{ width: '390px', height: '420px', margin: '0 auto' }}>
+          <div className="grid grid-cols-2 grid-rows-2" style={{ width: '100%', height: '100%' }}>
           {buttons.map((btn, idx) => {
             const isSelected = selectedIdx === idx;
             return (
               <div
                 key={idx}
                 onClick={() => handleButtonClick(idx)}
-                className={`aspect-square w-full flex flex-col cursor-pointer justify-center p-4 md:p-8 text-center transition-colors border-b border-gray-200 group ${
-                  idx % 2 === 0 ? "md:border-r" : ""
+                className={`flex flex-col cursor-pointer justify-center items-center transition-colors border-b border-gray-200 group ${
+                  idx % 2 === 0 ? "border-r border-gray-200" : ""
                 } ${isSelected ? "bg-gray-100" : "hover:bg-gray-50"}`}
+                style={{ 
+                  width: '100%', 
+                  height: '100%', 
+                  padding: '16px' 
+                }}
               >
-                <div className="mb-2">
+                <div className="mb-2 text-center">
                   <h3
                     className={`font-medium transition-colors ${
                       isSelected
@@ -364,7 +370,7 @@ export default function HomeButton() {
                   </p>
                 </div>
                 <p
-                  className={`mt-2 leading-tight transition-colors ${
+                  className={`mt-2 leading-tight transition-colors text-center ${
                     isSelected
                       ? "text-[#00A3E0]"
                       : "text-gray-600 group-hover:text-[#00A3E0]"
@@ -376,27 +382,29 @@ export default function HomeButton() {
               </div>
             );
           })}
+          </div>
         </div>
-                 <div className="w-full py-16 bg-gray-100" style={{ marginTop: '20px' }}>
-           <InfiniteTextSlider 
-             text="LEADINGCUSTOMERSUCESS"
-             fontSize={110}
-             textColor="#c2c2c2"
-             duration={25}
-             gap={10}
-             fontWeight={300}
-             coloredWords={{
-               "LEADING": "#b8e9ff",
-               "CUSTOMER": "#18a8f1",
-               "SUCESS": "#b8e9ff"
-             }}
-             fontWeights={{
-               "LEADING": 700,
-               "CUSTOMER": 700,
-               "SUCESS": 700
-             }}
-           />
-         </div>
+        {/* 모바일용 무한 텍스트 슬라이더 */}
+        <div className="w-full py-12 bg-gray-100" style={{ marginTop: '100px' }}> 
+          <InfiniteTextSlider 
+            text="LEADINGCUSTOMERSUCESS"
+            fontSize={60}
+            textColor="#c2c2c2"
+            duration={25}
+            gap={10}
+            fontWeight={300}
+            coloredWords={{
+              "LEADING": "#b8e9ff",
+              "CUSTOMER": "#18a8f1",
+              "SUCESS": "#b8e9ff"
+            }}
+            fontWeights={{
+              "LEADING": 700,
+              "CUSTOMER": 700,
+              "SUCESS": 700
+            }}
+          />
+        </div>
       </div>
     </>
   );
