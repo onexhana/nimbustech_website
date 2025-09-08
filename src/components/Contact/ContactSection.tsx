@@ -17,6 +17,24 @@ export default function ContactSection() {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+  // 회사소개서 다운로드 로직 (웹 Footer와 동일)
+  const handleCompanyDownload = () => {
+    const link = document.createElement('a');
+    link.href = '/회사소개서.pdf';
+    link.download = 'NIMBUS_TECH_회사소개서.pdf';
+    link.target = '_blank';
+    fetch('/회사소개서.pdf', { method: 'HEAD' })
+      .then(response => {
+        if (response.ok) {
+          link.click();
+        } else {
+          alert('회사소개서 파일을 준비 중입니다.');
+        }
+      })
+      .catch(() => {
+        alert('회사소개서 파일을 준비 중입니다.');
+      });
+  };
 
   return (
     //contact & footer 사이 여백 100px
@@ -32,7 +50,7 @@ export default function ContactSection() {
             marginBottom: '20px'
           }} />
         )}
-        
+
         {/* 메인 타이틀 (데스크탑에서만 표시) */}
         {!isMobile && (
           <h2 style={{
@@ -138,13 +156,13 @@ export default function ContactSection() {
           >
             {/* 고객지원 버튼 */}
             <button
-              className={`text-white ${isMobile ? 'bg-[#00A3E0] w-full mt-8 h-[74px] px-8 flex items-center justify-center text-[24px] relative overflow-hidden border-none text-white font-extrabold transition-all duration-300 hover:shadow-lg hover:-translate-y-1' : ''}`}
+              className={`text-white ${isMobile ? 'bg-[#00A3E0] w-full mt-8 h-[74px] px-8 flex items-center justify-center text-[24px] relative overflow-hidden border-none text-white !font-black transition-all duration-300 hover:shadow-lg hover:-translate-y-1' : ''}`}
               style={isMobile ? undefined : { backgroundColor: '#00A3E0', width: '530px', marginTop: '320px', display: 'flex', alignItems: 'center', justifyContent: 'center', height: '80px', padding: '0 32px', fontSize: '28px', color: '#ffffff', fontWeight: '900', borderRadius: '0px', border: 'none', cursor: 'pointer', position: 'relative', overflow: 'hidden' }}
               onClick={() => setUserType('inquiry')}
             >
               <span
                 className={isMobile ? 'relative z-10 text-white !text-white' : undefined}
-                style={isMobile ? {color: '#ffffff'} : { position: 'relative', zIndex: 1 }}
+                style={isMobile ? { color: '#ffffff', fontWeight: '900' } : { position: 'relative', zIndex: 1 }}
               >
                 고객사 직원
               </span>
@@ -152,17 +170,35 @@ export default function ContactSection() {
 
             {/* 인재채용 버튼 */}
             <button
-              className={`text-white ${isMobile ? 'bg-[#6b7280] w-full mt-4 h-[74px] px-8 flex items-center justify-center text-[24px] relative overflow-hidden border-none text-white font-extrabold transition-all duration-300 hover:shadow-lg hover:-translate-y-1' : ''}`}
-              style={isMobile ? undefined : { backgroundColor: '#6b7280', width: '530px', marginTop: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center', height: '80px', padding: '0 32px', fontSize: '28px', color: '#ffffff', fontWeight: '900', borderRadius: '0px', border: 'none', cursor: 'pointer', position: 'relative', overflow: 'hidden' }}
+              className={`${isMobile ? 'bg-white text-[#00A3E0] w-full mt-4 h-[74px] px-8 flex items-center justify-center text-[24px] relative overflow-hidden border-none font-black transition-all duration-300 hover:shadow-lg hover:-translate-y-1' : 'text-white'}`}
+              style={isMobile ? { backgroundColor: '#ffffff' } : { backgroundColor: '#6b7280', width: '530px', marginTop: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center', height: '80px', padding: '0 32px', fontSize: '28px', color: '#ffffff', fontWeight: '900', borderRadius: '0px', border: 'none', cursor: 'pointer', position: 'relative', overflow: 'hidden' }}
               onClick={() => setUserType('hiring')}
             >
               <span
-                className={isMobile ? 'relative z-10 text-white !text-white' : undefined}
-                style={isMobile ? {color: '#ffffff'} : { position: 'relative', zIndex: 1 }}
+                className={isMobile ? 'relative z-10 text-[#00A3E0]' : undefined}
+                style={isMobile ? { color: '#00A3E0', fontWeight: '900' } : { position: 'relative', zIndex: 1 }}
               >
                 인재 채용
               </span>
             </button>
+            {isMobile && (
+              <>
+                <button
+                  className="bg-[#00A3E0] text-white w-full mt-4 h-[74px] px-8 flex items-center justify-center text-[24px] relative overflow-hidden border-none font-black transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
+                  style={{ color: '#ffffff' }}
+                  onClick={handleCompanyDownload}
+                >
+                  <span className="relative z-10 text-white" style={{ fontWeight: '900' }}>회사소개서 다운로드</span>
+                </button>
+                <button
+                  className="bg-white w-full mt-4 h-[74px] px-8 flex items-center justify-center text-[24px] relative overflow-hidden border-none text-[#00A3E0] font-black transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
+                  style={{ backgroundColor: '#ffffff' }}
+                  onClick={() => window.open('/footer_pdf/개인정보+처리방침_v6.1.pdf', '_blank')}
+                >
+                  <span className="relative z-10" style={{ fontWeight: '900' }}>개인정보 처리방침</span>
+                </button>
+              </>
+            )}
           </div>
         </div>
 
@@ -205,7 +241,9 @@ export default function ContactSection() {
                 overflow: 'hidden'
               }}>
                 {isMobile ? (
-                  <InquiryForm />
+                  <div style={{ marginTop: '-51px', marginBottom: '-60px' }}>
+                    <InquiryForm />
+                  </div>
                 ) : (
                   <div style={{ position: 'absolute', top: '-31px', left: 0, width: '100%' }}>
                     <InquiryForm />
@@ -238,7 +276,9 @@ export default function ContactSection() {
                 overflow: 'hidden'
               }}>
                 {isMobile ? (
-                  <HiringForm />
+                  <div style={{ marginTop: '-51px', marginBottom: '-60px' }}>
+                    <HiringForm />
+                  </div>
                 ) : (
                   <div style={{ position: 'absolute', top: '-31px', left: 0, width: '100%' }}>
                     <HiringForm />
