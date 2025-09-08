@@ -69,7 +69,7 @@ export default function ContactSection() {
         {/* 컨텐츠 영역 */}
         <div
           className={`flex ${isMobile ? 'flex-col mx-4' : ''}`}
-          style={isMobile ? { gap: '5rem' } : { marginLeft: '50px', marginRight: '50px', gap: '100px' }}
+          style={isMobile ? { gap: '4rem' } : { marginLeft: '50px', marginRight: '50px', gap: '100px' }}
         >
           {/* 좌측 - 가치 섹션들 */}
           <div className="flex-1 space-y-16">
