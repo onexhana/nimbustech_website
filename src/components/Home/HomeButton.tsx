@@ -330,15 +330,15 @@ export default function HomeButton() {
     <>
       {renderModal()}
       <div className="w-full bg-white" style={{ marginTop: '100px' }}>
-        <div className="grid grid-cols-2 md:grid-cols-4 border-t border-gray-200">
+        <div className="grid grid-cols-4 border-t border-gray-200">
           {buttons.map((btn, idx) => {
             const isSelected = selectedIdx === idx;
             return (
               <div
                 key={idx}
                 onClick={() => handleButtonClick(idx)}
-                className={`aspect-square w-full flex flex-col cursor-pointer justify-center p-4 md:p-8 text-center transition-colors border-b border-gray-200 group ${
-                  idx % 2 === 0 ? "md:border-r" : ""
+                className={`aspect-square w-full flex flex-col cursor-pointer justify-center p-8 text-center transition-colors border-b border-gray-200 group ${
+                  idx !== buttons.length - 1 ? "border-r" : ""
                 } ${isSelected ? "bg-gray-100" : "hover:bg-gray-50"}`}
               >
                 <div className="mb-2">
@@ -348,7 +348,7 @@ export default function HomeButton() {
                         ? "text-[#00A3E0]"
                         : "text-black group-hover:text-[#00A3E0]"
                     }`}
-                    style={{ fontSize: `${btn.titleFontSize || 20}px` }}
+                    style={{ fontSize: `${btn.titleFontSize || 24}px` }}
                   >
                     {renderTextWithBreaks(btn.title)}
                   </h3>
@@ -358,7 +358,7 @@ export default function HomeButton() {
                         ? "text-[#00A3E0]"
                         : "text-black group-hover:text-[#00A3E0]"
                     }`}
-                    style={{ fontSize: `${btn.subtitleFontSize || 28}px` }}
+                    style={{ fontSize: `${btn.subtitleFontSize || 48}px` }}
                   >
                     {renderTextWithBreaks(btn.subtitle)}
                   </p>
@@ -369,7 +369,7 @@ export default function HomeButton() {
                       ? "text-[#00A3E0]"
                       : "text-gray-600 group-hover:text-[#00A3E0]"
                   }`}
-                  style={{ fontSize: `${btn.descriptionFontSize || 14}px` }}
+                  style={{ fontSize: `${btn.descriptionFontSize || 20}px` }}
                 >
                   {renderTextWithBreaks(btn.description)}
                 </p>
