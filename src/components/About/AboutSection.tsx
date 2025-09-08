@@ -221,7 +221,7 @@ export default function AboutSection() {
                 margin: 0
               }}>
                 <span style={{ fontWeight: 700, display: 'block' }}>
-                  "신뢰성 높은 DT 서비스 제공"
+                  신뢰성 높은 DT 서비스 제공
                 </span>
                 <span style={{ fontWeight: 400, display: 'block', marginTop: '4px' }}>
                   지속적인 고객 성공을 리딩합니다.
