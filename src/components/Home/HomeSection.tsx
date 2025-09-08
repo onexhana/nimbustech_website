@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import HomeButton from './HomeButton';
-import HomeSectionMobile from './HomeSection_mobile';
+import HomeButtonMobile from './HomeButton_mobile';
 
 export default function HomeSection() {
   const [isMobile, setIsMobile] = useState(false);
@@ -18,17 +18,6 @@ export default function HomeSection() {
     };
   }, []);
 
-  // 모바일이면 모바일 전용 컴포넌트 렌더링
-  if (isMobile) {
-    return <HomeSectionMobile />;
-  }
-
-  // 웹 버전 렌더링 (기존 코드 그대로)
-  return <HomeSectionWeb />;
-}
-
-// 웹 전용 컴포넌트
-function HomeSectionWeb() {
   // 타이핑 애니메이션을 위한 상태 관리
   const [currentLineIndex, setCurrentLineIndex] = useState(0);
   const [currentCharIndex, setCurrentCharIndex] = useState(0);
@@ -48,12 +37,20 @@ function HomeSectionWeb() {
   // 각 텍스트 줄의 폰트 두께 설정
   const fontWeights = [500, 500, 500, 700];
 
-  // 각 텍스트 줄의 폰트 크기 설정 (웹용)
+  // 모바일용 폰트 크기 설정
+  const mobileFontSizes = [
+    '30px',   // '고객을 빛나게'
+    '30px',   // '구성원을 빛나게' 
+    '30px',   // '미래를 빛나게'
+    '40px'    // 'NIMBUS TECH'
+  ];
+
+  // 웹용 폰트 크기 설정
   const webFontSizes = [
     '100px',   // '고객을 빛나게'
     '100px',   // '구성원을 빛나게' 
     '100px',   // '미래를 빛나게'
-    '120px'  // 'NIMBUS TECH' - 고정 크기
+    '120px'    // 'NIMBUS TECH'
   ];
 
   useEffect(() => {
@@ -82,21 +79,22 @@ function HomeSectionWeb() {
     <>
       <section
         id="home"
-        className="w-full h-screen bg-white flex items-center justify-end pr-6 md:pr-20"
+        className="w-full h-screen bg-white flex items-start justify-end px-4"
+        style={{ paddingTop: '100px' }}
       >
-        <div className="text-right" style={{ marginRight: '70px', marginTop: '120px' }}>
+        <div className="text-right" style={{ marginRight: '32px' }}>
           <div>
             {texts.map((text, index) => (
               <div key={index} style={{   
-                marginBottom: index < texts.length - 1 ? '-5px' : '0',
-                marginTop: index === 0 ? '120px' : '0'
+                marginBottom: index < texts.length - 1 ? '1px' : '0',
+                marginTop: index === 0 ? '0px' : '0'
               }}>
                 <span 
                   className={`tracking-tight ${colors[index]}`}
                   style={{ 
-                    fontWeight: fontWeights[index], // 각 줄별 폰트 두께 적용
-                    fontSize: webFontSizes[index], // 각 줄별 폰트 크기 적용
-                    ...(index === 3 && { textShadow: '0 0 1px currentColor' }) // NIMBUS TECH에만 텍스트 그림자
+                    fontWeight: fontWeights[index],
+                    fontSize: isMobile ? mobileFontSizes[index] : webFontSizes[index],
+                    ...(index === 3 && { textShadow: '0 0 1px currentColor' })
                   }}
                 >
                   <>
@@ -117,7 +115,7 @@ function HomeSectionWeb() {
           </div>
         </div>
       </section>
-      <HomeButton />
+      {isMobile ? <HomeButtonMobile /> : <HomeButton />}
     </>
   );
 }
