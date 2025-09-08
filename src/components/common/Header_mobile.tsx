@@ -100,7 +100,7 @@ export default function HeaderMobile() {
 
           {/* 네비게이션 메뉴 - 왼쪽 상단 정렬 */}
           <nav className="flex-1 px-6 py-8">
-            <ul className="flex flex-col items-start space-y-6">
+            <ul className="flex flex-col items-start space-y-6" style={{ listStyle: 'none', padding: 0, margin: 0 }}>
               {navItems.map(({ to, label }) => (
                 <li
                   key={to}
