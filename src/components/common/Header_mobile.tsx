@@ -103,20 +103,14 @@ export default function HeaderMobile() {
             <ul className="flex flex-col items-start" style={{ listStyle: 'none', padding: 0, margin: 0, gap: '30px' }}>
               {navItems.map(({ to, label }) => (
                 <li
-                  key={to}
-                  onClick={() => scrollToSection(to)}
-                  className={`nav-item-${to}`}
-                  style={{
-                    cursor: 'pointer'
-                  }}
+                key={to}
+                onClick={() => scrollToSection(to)}
+                className="cursor-pointer"
+              >
+                <span
+                 className="text-gray-800 font-bold text-[35px] transition-colors duration-300"
+                 style={{ fontSize: '35px' }}
                 >
-                  <span style={{ 
-                    fontSize: '35px', 
-                    fontWeight: 'bold', 
-                    color: '#1f2937',
-                    transition: 'color 0.3s ease',
-                    cursor: 'pointer'
-                  }}>
                     {label}
                   </span>
                 </li>
@@ -129,15 +123,6 @@ export default function HeaderMobile() {
         </div>
       )}
 
-      {/* 호버 효과를 위한 CSS */}
-      <style jsx>{`
-        .nav-item-home:hover span,
-        .nav-item-about-gray-start:hover span,
-        .nav-item-portfolio:hover span,
-        .nav-item-contact:hover span {
-          color: #00A3E0 !important;
-        }
-      `}</style>
     </header>
   );
 }
