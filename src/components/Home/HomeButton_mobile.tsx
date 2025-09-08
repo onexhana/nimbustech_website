@@ -328,7 +328,7 @@ export default function HomeButtonMobile() {
   return (
     <>
       {renderModal()}
-      <div className="w-full bg-white" style={{ marginTop: '-550px' }}>
+      <div className="w-full bg-white" style={{ marginTop: '-200px', position: 'relative' }}>
         {/* 모바일용 2x2 그리드 - 고정 크기 */}
         <div className="border-t border-gray-200" style={{ width: '390px', height: '420px', margin: '0 auto' }}>
           <div className="grid grid-cols-2 grid-rows-2" style={{ width: '100%', height: '100%' }}>
