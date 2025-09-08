@@ -106,3 +106,10 @@ h1 {
     color: #747bff;
   }
 }
+
+/* 모바일 환경에서도 hover 효과를 강제로 적용 */
+@media (hover: none) {
+  .force-hover:hover {
+    color: #00A3E0 !important;
+  }
+}
