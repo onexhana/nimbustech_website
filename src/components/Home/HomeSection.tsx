@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import HomeButton from './HomeButton';
-import HomeSectionMobile from './HomeSection_mobile';
+import HomeSectionMobile from './HomeButton_mobile';
 
 export default function HomeSection() {
   const [isMobile, setIsMobile] = useState(false);
