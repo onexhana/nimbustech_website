@@ -39,10 +39,10 @@ export default function HomeSection() {
 
   // 모바일용 폰트 크기 설정
   const mobileFontSizes = [
-    '30px',   // '고객을 빛나게'
-    '30px',   // '구성원을 빛나게' 
-    '30px',   // '미래를 빛나게'
-    '40px'    // 'NIMBUS TECH'
+    '35px',   // '고객을 빛나게'
+    '35px',   // '구성원을 빛나게' 
+    '35px',   // '미래를 빛나게'
+    '48px'    // 'NIMBUS TECH'
   ];
 
   // 웹용 폰트 크기 설정

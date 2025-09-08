@@ -34,10 +34,15 @@ export default function HeaderMobile() {
 
   return (
     <header
-      className="fixed top-0 left-0 w-full bg-white z-50 shadow-md"
-      style={{ paddingBottom: '16px' }}
+      className="fixed top-0 left-0 w-full z-50"
+      style={{ 
+        paddingBottom: '16px',
+        backgroundColor: '#ffffff',
+        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.15)',
+        borderBottom: '1px solid #e5e7eb'
+      }}
     >
-      <div className="mx-auto px-4 h-14 flex justify-between items-center">
+      <div className="mx-auto px-4 flex justify-between items-center" style={{ backgroundColor: '#ffffff', height: '40px' }}>
         {/* 로고 */}
         <a
           href="#home"
