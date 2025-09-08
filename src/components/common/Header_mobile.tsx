@@ -69,11 +69,11 @@ export default function HeaderMobile() {
       {isMobileMenuOpen && (
         <div className="fixed inset-0 bg-white flex flex-col" style={{ backgroundColor: '#ffffff', opacity: 1, width: '390px', height: '844px', zIndex: 9999, position: 'fixed', top: 0, left: 0, right: 0, bottom: 0 }}>
           {/* 상단 헤더 영역 - 로고와 닫기 버튼 */}
-          <div className="flex justify-between items-center px-6 py-4 border-b border-gray-100">
+          <div className="flex justify-between items-center px-6 py-4">
             <img
               src="/logo/logo-blue-wide.png"
               alt="NIMBUS TECH 로고"
-              style={{ height: '15px' }}
+              style={{ height: '18px', marginLeft: '8px' }}
             />
             <button
               onClick={() => setIsMobileMenuOpen(false)}
@@ -87,7 +87,7 @@ export default function HeaderMobile() {
 
           {/* 네비게이션 메뉴 - 왼쪽 상단 정렬 */}
           <nav className="flex-1 px-6 py-8">
-            <ul className="flex flex-col items-start space-y-6">
+            <ul className="flex flex-col items-start space-y-6" style={{ listStyle: 'none', padding: 0, margin: 0 }}>
               {navItems.map(({ to, label }) => (
                 <li
                   key={to}
