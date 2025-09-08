@@ -65,33 +65,45 @@ export default function HeaderMobile() {
         </button>
       </div>
 
-      {/* 풀스크린 흰색 메뉴 */}
+      {/* 풀스크린 모바일 메뉴 - 화면 전체를 가리는 불투명한 창 */}
       {isMobileMenuOpen && (
-        <div className="fixed inset-0 bg-white z-50">
-          {/* 상단 닫기 버튼 */}
-          <div className="flex justify-end items-center p-4 border-b border-gray-200">
+        <div className="fixed inset-0 bg-white flex flex-col" style={{ backgroundColor: '#ffffff', opacity: 1, width: '390px', height: '844px', zIndex: 9999, position: 'fixed', top: 0, left: 0, right: 0, bottom: 0 }}>
+          {/* 상단 헤더 영역 - 로고와 닫기 버튼 */}
+          <div className="flex justify-between items-center px-6 py-4 border-b border-gray-100">
+            <img
+              src="/logo/logo-blue-wide.png"
+              alt="NIMBUS TECH 로고"
+              style={{ height: '15px' }}
+            />
             <button
               onClick={() => setIsMobileMenuOpen(false)}
               aria-label="메뉴 닫기"
+              className="p-2 transition-colors"
+              style={{ border: 'none', background: 'none', outline: 'none' }}
             >
-              <FaTimes size={24} color="#00A3E0" />
+              <FaTimes size={22} color="#00A3E0" />
             </button>
           </div>
 
-          {/* 네비게이션 */}
-                     <nav>
-             <ul className="flex flex-col px-6 py-6 space-y-3">
+          {/* 네비게이션 메뉴 - 왼쪽 상단 정렬 */}
+          <nav className="flex-1 px-6 py-8">
+            <ul className="flex flex-col items-start space-y-6">
               {navItems.map(({ to, label }) => (
                 <li
                   key={to}
                   onClick={() => scrollToSection(to)}
-                  className="text-lg font-bold text-gray-800 hover:text-[#00A3E0] cursor-pointer"
+                  className="cursor-pointer group"
                 >
-                  {label}
+                  <span className="text-3xl font-semibold text-gray-800 group-hover:text-[#00A3E0] transition-colors duration-300 tracking-wide">
+                    {label}
+                  </span>
                 </li>
               ))}
             </ul>
           </nav>
+
+          {/* 하단 여백 */}
+          <div className="h-20"></div>
         </div>
       )}
     </header>
