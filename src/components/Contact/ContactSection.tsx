@@ -205,7 +205,9 @@ export default function ContactSection() {
                 overflow: 'hidden'
               }}>
                 {isMobile ? (
-                  <InquiryForm />
+                  <div style={{ marginTop: '-51px', marginBottom: '-60px' }}>
+                    <InquiryForm />
+                  </div>
                 ) : (
                   <div style={{ position: 'absolute', top: '-31px', left: 0, width: '100%' }}>
                     <InquiryForm />
@@ -238,7 +240,9 @@ export default function ContactSection() {
                 overflow: 'hidden'
               }}>
                 {isMobile ? (
-                  <HiringForm />
+                  <div style={{ marginTop: '-51px', marginBottom: '-60px' }}>
+                    <HiringForm />
+                  </div>
                 ) : (
                   <div style={{ position: 'absolute', top: '-31px', left: 0, width: '100%' }}>
                     <HiringForm />
