@@ -46,14 +46,14 @@ function HomeSectionWeb() {
   const colors = ['text-black', 'text-black', 'text-black', 'text-[#00A3E0]'];
   
   // 각 텍스트 줄의 폰트 두께 설정
-  const fontWeights = [550, 550, 550, 700];
+  const fontWeights = [500, 500, 500, 700];
 
   // 각 텍스트 줄의 폰트 크기 설정 (웹용)
   const webFontSizes = [
-    '120px',   // '고객을 빛나게'
-    '120px',   // '구성원을 빛나게' 
-    '120px',   // '미래를 빛나게'
-    '150px'  // 'NIMBUS TECH' - 고정 크기
+    '100px',   // '고객을 빛나게'
+    '100px',   // '구성원을 빛나게' 
+    '100px',   // '미래를 빛나게'
+    '120px'  // 'NIMBUS TECH' - 고정 크기
   ];
 
   useEffect(() => {
@@ -84,11 +84,11 @@ function HomeSectionWeb() {
         id="home"
         className="w-full h-screen bg-white flex items-center justify-end pr-6 md:pr-20"
       >
-        <div className="text-right" style={{ marginRight: '70px' }}>
+        <div className="text-right" style={{ marginRight: '70px', marginTop: '120px' }}>
           <div>
             {texts.map((text, index) => (
               <div key={index} style={{   
-                marginBottom: index < texts.length - 1 ? '1px' : '0',
+                marginBottom: index < texts.length - 1 ? '-5px' : '0',
                 marginTop: index === 0 ? '120px' : '0'
               }}>
                 <span 

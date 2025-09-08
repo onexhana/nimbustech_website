@@ -67,13 +67,26 @@ export default function HeaderMobile() {
 
       {/* 풀스크린 모바일 메뉴 - 화면 전체를 가리는 불투명한 창 */}
       {isMobileMenuOpen && (
-        <div className="fixed inset-0 bg-white flex flex-col" style={{ backgroundColor: '#ffffff', opacity: 1, width: '390px', height: '844px', zIndex: 9999, position: 'fixed', top: 0, left: 0, right: 0, bottom: 0 }}>
+        <div 
+          className="fixed bg-white flex flex-col" 
+          style={{ 
+            top: 0, 
+            left: 0, 
+            right: 0, 
+            bottom: 0, 
+            width: '100vw', 
+            height: '100vh', 
+            backgroundColor: '#ffffff', 
+            opacity: 1, 
+            zIndex: 9999 
+          }}
+        >
           {/* 상단 헤더 영역 - 로고와 닫기 버튼 */}
-          <div className="flex justify-between items-center px-6 py-4">
+          <div className="flex justify-between items-center" style={{ margin: '32px 32px 32px 32px' }}>
             <img
-              src="/logo/logo-blue-wide.png"
-              alt="NIMBUS TECH 로고"
-              style={{ height: '18px', marginLeft: '8px' }}
+              src="/logo/cloud-blue.png"
+              alt="Cloud 로고"
+              style={{ height: '15px' }}
             />
             <button
               onClick={() => setIsMobileMenuOpen(false)}
