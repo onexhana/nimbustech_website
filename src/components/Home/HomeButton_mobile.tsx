@@ -328,7 +328,7 @@ export default function HomeButtonMobile() {
   return (
     <>
       {renderModal()}
-      <div className="w-full bg-white" style={{ marginTop: '100px' }}>
+      <div className="w-full bg-white" style={{ marginTop: '-550px' }}>
         {/* 모바일용 2x2 그리드 - 고정 크기 */}
         <div className="border-t border-gray-200" style={{ width: '390px', height: '420px', margin: '0 auto' }}>
           <div className="grid grid-cols-2 grid-rows-2" style={{ width: '100%', height: '100%' }}>
@@ -385,7 +385,7 @@ export default function HomeButtonMobile() {
           </div>
         </div>
         {/* 모바일용 무한 텍스트 슬라이더 */}
-        <div className="w-full py-12 bg-gray-100" style={{ marginTop: '100px' }}> 
+        <div className="w-full py-12 bg-gray-100" style={{ marginTop: '60px' }}> 
           <InfiniteTextSlider 
             text="LEADINGCUSTOMERSUCESS"
             fontSize={60}
