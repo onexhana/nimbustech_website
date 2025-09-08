@@ -11,6 +11,7 @@ export default function PortfolioSection() {
   const [selectedCategory, setSelectedCategory] = useState("공공");
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 768);
+  const [swiperKey, setSwiperKey] = useState(0); // Swiper 강제 재초기화를 위한 키
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const swiperRef = useRef<any>(null);
   
@@ -23,10 +24,27 @@ export default function PortfolioSection() {
   }, []);
   
   const handleCategoryChange = (category: string) => {
+    const isSameCategory = selectedCategory === category;
+    
     setSelectedCategory(category);
     setCurrentSlide(0);
-    if (swiperRef.current && swiperRef.current.slideTo) {
-      swiperRef.current.slideTo(0);
+    
+    // 같은 카테고리를 다시 클릭한 경우 Swiper를 강제로 재초기화
+    if (isSameCategory) {
+      setSwiperKey(prev => prev + 1); // 키를 변경하여 Swiper 재초기화
+    }
+    
+    // 카테고리 변경 시 스와이퍼를 첫 번째 슬라이드로 이동 (다른 카테고리인 경우만)
+    if (swiperRef.current && !isSameCategory) {
+      setTimeout(() => {
+        if (swiperRef.current) {
+          if (swiperRef.current.slideToLoop) {
+            swiperRef.current.slideToLoop(0, 0); // 0ms 애니메이션으로 즉시 이동
+          } else if (swiperRef.current.slideTo) {
+            swiperRef.current.slideTo(0, 0);
+          }
+        }
+      }, 50);
     }
   };
 
@@ -45,9 +63,9 @@ export default function PortfolioSection() {
               textAlign: 'center'
             }}>
               <h2 style={{
-                fontSize: '20px',
-                fontWeight: '600',
-                marginBottom: '12px',
+                fontSize: '28px',
+                fontWeight: '700',
+                marginBottom: '8px',
                 color: '#000000',
                 lineHeight: '1.3',
                 letterSpacing: '-1px'
@@ -55,7 +73,7 @@ export default function PortfolioSection() {
                 고객 성공의 발자취
               </h2>
               <p style={{
-                fontSize: '16px',
+                fontSize: '21px',
                 fontWeight: '400',
                 color: '#000000',
                 lineHeight: '1.5',
@@ -130,6 +148,7 @@ export default function PortfolioSection() {
               marginBottom: '20px'
             }}>
               <Swiper
+                key={`${selectedCategory}-${swiperKey}`} // 카테고리 변경 시 또는 같은 카테고리 재클릭 시 Swiper 재초기화
                 ref={swiperRef}
                 spaceBetween={20}
                 slidesPerView={1.2}
@@ -146,13 +165,15 @@ export default function PortfolioSection() {
                 {filtered.map((project, index) => (
                   <SwiperSlide key={index}>
                     <div style={{
-                      backgroundColor: '#E6F7FF',
-                      borderRadius: '12px',
-                      padding: '10px 20px 20px 20px',
+                      backgroundColor: '#f9fafb',
+                      borderRadius: '24px',
+                      padding: '20px',
                       height: '300px',
                       display: 'flex',
                       flexDirection: 'column',
-                      justifyContent: 'space-between'
+                      justifyContent: 'space-between',
+                      boxShadow: '0 4px 10px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.04)',
+                      transition: 'all 0.3s ease'
                     }}>
                       <div>
                         <h3 style={{
@@ -166,8 +187,8 @@ export default function PortfolioSection() {
                         </h3>
                         <div style={{
                           fontSize: '16px',
-                          color: '#333',
-                          fontWeight: '500',
+                          color: '#000000',
+                          fontWeight: '600',
                           lineHeight: '1.5',
                           textAlign: 'center',
                           marginBottom: '16px',
@@ -192,9 +213,9 @@ export default function PortfolioSection() {
                           <div style={{
                             width: '280px',
                             height: '150px',
-                            borderRadius: '8px',
+                            borderRadius: '16px',
                             overflow: 'hidden',
-                            backgroundColor: '#f0f0f0'
+                            backgroundColor: '#f3f4f6'
                           }}>
                             <img 
                               src={project.image} 

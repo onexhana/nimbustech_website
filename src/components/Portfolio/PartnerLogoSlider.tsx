@@ -1,5 +1,5 @@
 // src/components/Portfolio/PartnerLogoSlider.tsx
-import { memo } from "react";
+import { memo, useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
 type Logo = { src: string; alt: string };
@@ -117,6 +117,20 @@ function PartnerLogoSlider({
   speedBottom,            // 아랫줄 전용 배속 (미지정 시 speed 사용)
 }: PartnerLogoSliderProps) {
 
+  // 모바일 감지
+  const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 768);
+  
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // 모바일과 웹에 따른 크기 설정
+  const finalLogoHeight = isMobile ? logoHeight * 0.6 : logoHeight; // 모바일에서 60% 크기
+  const finalGap = isMobile ? gap * 0.7 : gap; // 모바일에서 간격도 70% 크기
+  const finalRowSpacing = isMobile ? rowSpacing * 0.7 : rowSpacing; // 모바일에서 줄 간격도 70%
+
   // 배속 계산 (0 또는 음수 방지)
   const safeFactor = (v: number) => (v > 0 ? v : 1);
 
@@ -135,21 +149,21 @@ function PartnerLogoSlider({
       <p 
         className="text-center text-[35px] font-bold text-gray-700 mb-10"
         style={{
-          fontSize: "clamp(28px, 3vw, 40px)",  // 화면 크기에 따라 반응형 글씨
+          fontSize: isMobile ? "20px" : "clamp(28px, 3vw, 40px)",  // 모바일에서 더 작은 글씨
           fontWeight: 600,                     // 글씨 두께 (900 → extrabold보다 굵음)
-          marginTop: "120px",      // 위쪽 여백 크게
-          marginBottom: "80px",   // 아래쪽 여백 크게
+          marginTop: isMobile ? "60px" : "120px",      // 모바일에서 위쪽 여백 줄임
+          marginBottom: isMobile ? "40px" : "80px",   // 모바일에서 아래쪽 여백 줄임
           lineHeight: "1.4",      // 가독성을 위해 줄간격
         }}
         >
         님버스테크와 함께 하고 있습니다
       </p>
       {rows.map((row, i) => (
-        <div key={i} style={{ marginTop: i === 0 ? 0 : rowSpacing }}>
-          <Track {...row} logoHeight={logoHeight} gap={gap} />
+        <div key={i} style={{ marginTop: i === 0 ? 0 : finalRowSpacing }}>
+          <Track {...row} logoHeight={finalLogoHeight} gap={finalGap} />
         </div>
       ))}
-      {bottomSpacing > 0 && <div style={{ height: bottomSpacing }} />}
+      {bottomSpacing > 0 && <div style={{ height: isMobile ? bottomSpacing * 0.7 : bottomSpacing }} />}
     </section>
   );
 }
