@@ -241,7 +241,7 @@ export default function ContactSection() {
                 overflow: 'hidden'
               }}>
                 {isMobile ? (
-                  <div style={{ marginTop: '-51px', marginBottom: '-140px' }}>
+                  <div style={{ marginTop: '-51px', marginBottom: '-120px' }}>
                     <InquiryForm />
                   </div>
                 ) : (
