@@ -220,11 +220,11 @@ export default function AboutSection() {
                 lineHeight: '1.4',
                 margin: 0
               }}>
-                <span style={{ fontWeight: 700, display: 'block' }}>
-                  신뢰성 높은 DT 서비스 제공
+                <span style={{ fontWeight: 700, display: 'block', fontSize: '28px' }}>
+                  고객 성공 리딩
                 </span>
-                <span style={{ fontWeight: 400, display: 'block', marginTop: '4px' }}>
-                  지속적인 고객 성공을 리딩합니다.
+                <span style={{ fontWeight: 400, display: 'block', marginTop: '4px', marginBottom: '30px',fontSize: '19px' }}>
+                신뢰성 높은 DT 서비스를 제공합니다.
                 </span>
               </h2>
             </div>
