@@ -6,8 +6,7 @@
 // 📋 주요 기능:
 // - 4개 탭 네비게이션 (ITO, 클라우드, RPA, 솔루션)
 // - 각 탭별 카드 데이터 (ITO/클라우드/RPA: 3개, 솔루션: 7개)
-// - 솔루션: 무한 루프 슬라이더 (Swiper 기반)
-// - 기타 탭: 3개씩 고정 표시
+// - 모든 탭: 무한 루프 슬라이더 (Swiper 기반)
 // - 카드 등장 애니메이션 효과
 // - 카드 호버 효과
 // 
@@ -20,7 +19,7 @@
 // 🚀 애니메이션:
 // - 카드 순차 등장 (0.15초 간격)
 // - 카드 호버 시 위로 8px 이동
-// - 솔루션: 무한 루프 슬라이더
+// - 모든 탭: 무한 루프 슬라이더
 // 
 // ⚠️ 주의사항:
 // - 다른 팀과 merge 시 이 파일들만 수정됨
@@ -181,15 +180,26 @@ export default function AboutSection() {
   }, []);
   
   const cards = TAB_CONTENTS[activeTab];
-  const isMultiPage = activeTab === '솔루션';
+  const isMultiPage = true; // 모든 탭을 무한루프로 변경
   
-  // 솔루션 섹션용 무한 루프를 위한 카드 복제
-  const duplicatedCards = isMultiPage ? Array(3).fill(cards).flat() : cards;
+  // 모든 섹션용 무한 루프를 위한 카드 복제 (카드 수가 적은 경우 더 많이 복제)
+  const duplicatedCards = cards.length >= 7 ? Array(2).fill(cards).flat() : Array(4).fill(cards).flat();
 
   // 탭 변경 핸들러: activeTab, currentSlide 및 애니메이션 상태를 초기화합니다.
   const handleTabChange = (tab: string) => {
     setActiveTab(tab);
     setCurrentSlide(0);
+    
+    // 탭 변경 시 Swiper를 첫 번째 슬라이드로 이동
+    setTimeout(() => {
+      if (swiperRef.current) {
+        if (swiperRef.current.slideToLoop) {
+          swiperRef.current.slideToLoop(0, 0); // 0ms 애니메이션으로 즉시 이동
+        } else if (swiperRef.current.slideTo) {
+          swiperRef.current.slideTo(0, 0);
+        }
+      }
+    }, 50);
   };
 
 
@@ -363,197 +373,158 @@ export default function AboutSection() {
             />
 
             {/* ======================================== */}
-            {/* 카드 영역 (솔루션: Swiper 무한루프, 기타: 고정 표시) */}
+            {/* 카드 영역 (모든 섹션: Swiper 무한루프) */}
             {/* ======================================== */}
             <div className="flex items-start" style={{ position: 'relative', overflow: 'visible', display: 'flex', alignItems: 'flex-start', gap: '1vw', justifyContent: 'center', marginLeft: '5vw', marginRight: '5vw' }}>
 
-              {isMultiPage ? (
-                                /* 솔루션 섹션: 고정 위치 + 무한 루프 */
-                <>
-                  {/* 카드 컨테이너 - RPA와 동일한 중앙 정렬 */}
-                  <div
-                    className="flex flex-1"
-                    style={{ 
-                      position: 'relative', 
-                      overflow: 'visible', 
-                      display: 'flex', 
-                      flex: '1', 
-                      justifyContent: 'center'
-                    }}
-                  >
-                    <div 
-                      className="overflow-hidden"
-                      style={{ 
-                        width: 'calc(30vw * 3 + 1vw * 2)', // 3장 카드(30vw) + gap(5vw * 2)
-                        minWidth: 'calc(30vw * 3 + 1vw * 2)',
-                        margin: '0 auto' // 중아 정렬
-                      }}
-                    >
-                    <Swiper
-                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                      onSwiper={(swiper: any) => {
-                        swiperRef.current = swiper;
-                      }}
-                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                      onInit={(swiper: any) => {
-                        swiperRef.current = swiper;
-                      }}
-                      spaceBetween={window.innerWidth * 0.01} // 5vw에 해당하는 픽셀 값
-                      slidesPerView={3}
-                      slidesPerGroup={1}
-                      loop={true}
-                      loopedSlides={duplicatedCards.length}
-                      pagination={false}
-                      navigation={false}
-                      allowTouchMove={true}
-                      centeredSlides={false}
-                      speed={300}
-                      resistance={false}
-                      resistanceRatio={0}
-                      watchSlidesProgress={false}
-                      freeMode={false}
-                      className="about-solution-swiper"
-                    >
-                      {duplicatedCards.map((card, index) => (
-                      <SwiperSlide key={`${card.title}-${index}`}>
-                        <div
-                          style={{
-                            opacity: noEffect ? 1 : 0,
-                            transform: noEffect ? 'translateY(0)' : 'translateY(30px) scale(0.9)',
-                            ...(noEffect ? {} : { animation: `cardAppear 0.6s ease-out ${(index % 3) * 0.15}s forwards` })
-                          }}
-                        >
-                          <AboutCard
-                            title={card.title}
-                            description={card.description}
-                            detailLink='https://www.naver.com'
-                            linkAsButton
-                            linkText="자세히 보기"
-                            borderRadius="35px"
-                            titleColor="#000000"
-                            descriptionColor="#6B7280"
-                            backgroundColor="#ffffff"
-                            width={isMobile ? "380px" : undefined}
-                            minHeight={isMobile ? "200px" : "12vw"}
-                          />
-                        </div>
-                      </SwiperSlide>
-                      ))}
-                    </Swiper>
-                    
-                      {/* Swiper 스타일 - 솔루션 전용 */}
-                      <style>{`
-                        .about-solution-swiper {
-                          width: 100% !important;
-                          overflow: visible !important;
-                          margin: 0 auto !important;
-                        }
-                        .about-solution-swiper .swiper-wrapper {
-                          overflow: visible !important;
-                        }
-                        /* 모바일에서만 고정 폭 적용 */
-                        @media (max-width: 768px) {
-                          .about-solution-swiper .swiper-slide {
-                            width: 380px !important;
-                            flex-shrink: 0 !important;
-                          }
-                        }
-                        .about-solution-swiper .swiper-slide > div {
-                          margin: 10px 0;
-                        }
-                        .about-solution-swiper .swiper-slide-duplicate {
-                          opacity: 1 !important;
-                          display: block !important;
-                          visibility: visible !important;
-                        }
-                      `}</style>
-                    </div>
-
-                    {/* 솔루션 섹션 네비게이션 화살표 버튼 */}
-                    <button
-                      onClick={() => swiperRef.current?.slidePrev()}
-                      style={{
-                        position: 'absolute',
-                        top: '-5rem',
-                        right: '6rem',
-                        border: 'none',
-                        outline: 'none',
-                        width: '40px',
-                        height: '40px',
-                        borderRadius: '50%',
-                        backgroundColor: '#E5E7EB',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        cursor: 'pointer',
-                        zIndex: 10,
-                      }}
-                    >
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                        <path d="M15 6L9 12L15 18" stroke="#1F2937" strokeWidth="3" strokeLinecap="butt" strokeLinejoin="miter" />
-                      </svg>
-                    </button>
-                    <button
-                      onClick={() => swiperRef.current?.slideNext()}
-                      style={{
-                        position: 'absolute',
-                        top: '-5rem',
-                        right: '2rem',
-                        border: 'none',
-                        outline: 'none',
-                        width: '40px',
-                        height: '40px',
-                        borderRadius: '50%',
-                        backgroundColor: '#1F2937',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        cursor: 'pointer',
-                        zIndex: 10,
-                      }}
-                    >
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                        <path d="M9 6L15 12L9 18" stroke="#FFFFFF" strokeWidth="3" strokeLinecap="butt" strokeLinejoin="miter" />
-                      </svg>
-                    </button>
-                  </div>
-                </>
-              ) : (
-                /* 기타 섹션: 고정 표시 */
+              {/* 모든 섹션: 무한 루프 슬라이더 */}
               <div
                 className="flex flex-1"
-                style={{ position: 'relative', overflow: 'visible', display: 'flex', gap: '5vw', flex: '1', justifyContent: 'center', marginLeft: '5vw', marginRight: '5vw' }}
+                style={{ 
+                  position: 'relative', 
+                  overflow: 'visible', 
+                  display: 'flex', 
+                  flex: '1', 
+                  justifyContent: 'center'
+                }}
               >
-                  {cards.map((card: {title: string; description: string[]}, idx: number) => (
+                <div 
+                  className="overflow-hidden"
+                  style={{ 
+                    width: 'calc(30vw * 3 + 1vw * 2)', // 3장 카드(30vw) + gap(1vw * 2)
+                    minWidth: 'calc(30vw * 3 + 1vw * 2)',
+                    margin: '0 auto' // 중앙 정렬
+                  }}
+                >
+                <Swiper
+                  key={`${activeTab}-${cards.length}`} // 탭 변경 시 Swiper 재초기화
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  onSwiper={(swiper: any) => {
+                    swiperRef.current = swiper;
+                  }}
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  onInit={(swiper: any) => {
+                    swiperRef.current = swiper;
+                  }}
+                  spaceBetween={window.innerWidth * 0.01} // 1vw에 해당하는 픽셀 값
+                  slidesPerView={3}
+                  slidesPerGroup={1}
+                  loop={true}
+                  loopedSlides={Math.max(3, cards.length)} // 최소 3개 이상의 루프 슬라이드 보장
+                  pagination={false}
+                  navigation={false}
+                  allowTouchMove={true}
+                  centeredSlides={false}
+                  speed={300}
+                  resistance={false}
+                  resistanceRatio={0}
+                  watchSlidesProgress={false}
+                  freeMode={false}
+                  className="about-infinite-swiper"
+                >
+                  {duplicatedCards.map((card, index) => (
+                  <SwiperSlide key={`${card.title}-${index}`}>
                     <div
-                      key={`${activeTab}-${idx}`}
                       style={{
                         opacity: noEffect ? 1 : 0,
                         transform: noEffect ? 'translateY(0)' : 'translateY(30px) scale(0.9)',
-                        ...(noEffect ? {} : { animation: `cardAppear 0.6s ease-out ${idx * 0.15}s forwards` })
+                        ...(noEffect ? {} : { animation: `cardAppear 0.6s ease-out ${(index % 3) * 0.15}s forwards` })
                       }}
                     >
-                      {['ITO', '클라우드', 'RPA'].includes(activeTab) ? (
-                        <AboutCard
-                          title={card.title}
-                          description={card.description}
-                          borderRadius="35px"
-                          titleColor="#000000"
-                          descriptionColor="#6B7280"
-                          backgroundColor="#ffffff"
-                          width={isMobile ? "380px" : undefined}
-                          minHeight={isMobile ? "200px" : "12vw"}
-                        />
-                      ) : (
-                        <AboutCard
-                          title={card.title}
-                          description={card.description}
-                        />
-                      )}
+                      <AboutCard
+                        title={card.title}
+                        description={card.description}
+                        detailLink={activeTab === '솔루션' ? 'https://www.naver.com' : undefined}
+                        linkAsButton={activeTab === '솔루션'}
+                        linkText={activeTab === '솔루션' ? "자세히 보기" : undefined}
+                        borderRadius="35px"
+                        titleColor="#000000"
+                        descriptionColor="#6B7280"
+                        backgroundColor="#ffffff"
+                        width={isMobile ? "380px" : undefined}
+                        minHeight={isMobile ? "200px" : "12vw"}
+                      />
                     </div>
+                  </SwiperSlide>
                   ))}
+                </Swiper>
+                
+                  {/* Swiper 스타일 - 모든 섹션 공통 */}
+                  <style>{`
+                    .about-infinite-swiper {
+                      width: 100% !important;
+                      overflow: visible !important;
+                      margin: 0 auto !important;
+                    }
+                    .about-infinite-swiper .swiper-wrapper {
+                      overflow: visible !important;
+                    }
+                    /* 모바일에서만 고정 폭 적용 */
+                    @media (max-width: 768px) {
+                      .about-infinite-swiper .swiper-slide {
+                        width: 380px !important;
+                        flex-shrink: 0 !important;
+                      }
+                    }
+                    .about-infinite-swiper .swiper-slide > div {
+                      margin: 10px 0;
+                    }
+                    .about-infinite-swiper .swiper-slide-duplicate {
+                      opacity: 1 !important;
+                      display: block !important;
+                      visibility: visible !important;
+                    }
+                  `}</style>
+                </div>
+
+                {/* 네비게이션 화살표 버튼 */}
+                <button
+                  onClick={() => swiperRef.current?.slidePrev()}
+                  style={{
+                    position: 'absolute',
+                    top: '-5rem',
+                    right: '6rem',
+                    border: 'none',
+                    outline: 'none',
+                    width: '40px',
+                    height: '40px',
+                    borderRadius: '50%',
+                    backgroundColor: '#E5E7EB',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    cursor: 'pointer',
+                    zIndex: 10,
+                  }}
+                >
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path d="M15 6L9 12L15 18" stroke="#1F2937" strokeWidth="3" strokeLinecap="butt" strokeLinejoin="miter" />
+                  </svg>
+                </button>
+                <button
+                  onClick={() => swiperRef.current?.slideNext()}
+                  style={{
+                    position: 'absolute',
+                    top: '-5rem',
+                    right: '2rem',
+                    border: 'none',
+                    outline: 'none',
+                    width: '40px',
+                    height: '40px',
+                    borderRadius: '50%',
+                    backgroundColor: '#1F2937',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    cursor: 'pointer',
+                    zIndex: 10,
+                  }}
+                >
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path d="M9 6L15 12L9 18" stroke="#FFFFFF" strokeWidth="3" strokeLinecap="butt" strokeLinejoin="miter" />
+                  </svg>
+                </button>
               </div>
-              )}
 
               {/* ======================================== */}
               {/* CSS 애니메이션 스타일 (카드 등장 효과) */}
