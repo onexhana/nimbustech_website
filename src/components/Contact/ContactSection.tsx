@@ -76,17 +76,17 @@ export default function ContactSection() {
             {/* TRUST 섹션 */}
             <div>
               <h3 style={{
-                fontSize: '45px',
+                fontSize: '42px',
                 fontWeight: '900',
                 color: '#00A3E0',
                 marginBottom: '2px',
                 letterSpacing: '-1.5px',
-                marginLeft: isMobile ? '24px' : undefined
+                marginLeft: isMobile ? '20px' : undefined
               }}>
                 TRUST
               </h3>
               <p style={{
-                fontSize: isMobile ? '17px' : '21px',
+                fontSize: isMobile ? '15px' : '21px',
                 color: '#4b5563',
                 lineHeight: '1.6',
                 fontWeight: '700',
@@ -101,17 +101,17 @@ export default function ContactSection() {
             {/* OWNERSHIP 섹션 */}
             <div>
               <h3 style={{
-                fontSize: '45px',
+                fontSize: '42px',
                 fontWeight: '900',
                 color: '#00A3E0',
                 marginBottom: '2px',
                 letterSpacing: '-1.5px',
-                marginLeft: isMobile ? '24px' : undefined
+                marginLeft: isMobile ? '20px' : undefined
               }}>
                 OWNERSHIP
               </h3>
               <p style={{
-                fontSize: isMobile ? '17px' : '21px',
+                fontSize: isMobile ? '15px' : '21px',
                 color: '#4b5563',
                 lineHeight: '1.6',
                 fontWeight: '700',
@@ -126,17 +126,17 @@ export default function ContactSection() {
             {/* GROWTH 섹션 */}
             <div>
               <h3 style={{
-                fontSize: '45px',
+                fontSize: '42px',
                 fontWeight: '900',
                 color: '#00A3E0',
                 marginBottom: '2px',
                 letterSpacing: '-1.5px',
-                marginLeft: isMobile ? '24px' : undefined
+                marginLeft: isMobile ? '20px' : undefined
               }}>
                 GROWTH
               </h3>
               <p style={{
-                fontSize: isMobile ? '17px' : '21px',
+                fontSize: isMobile ? '15px' : '21px',
                 color: '#4b5563',
                 lineHeight: '1.6',
                 fontWeight: '700',
