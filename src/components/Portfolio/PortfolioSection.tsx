@@ -73,7 +73,7 @@ export default function PortfolioSection() {
                 고객 성공의 발자취
               </h2>
               <p style={{
-                fontSize: '21px',
+                fontSize: '19px',
                 fontWeight: '400',
                 color: '#000000',
                 lineHeight: '1.5',
