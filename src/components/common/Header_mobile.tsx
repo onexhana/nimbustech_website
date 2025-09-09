@@ -34,23 +34,27 @@ export default function HeaderMobile() {
 
   return (
     <header
-      className="fixed top-0 left-0 w-full bg-white z-50 shadow-md"
-      style={{ paddingBottom: "16px" }}
+      className="fixed top-0 left-0 w-full bg-white z-50"
+      style={{ 
+        backgroundColor: '#ffffff', paddingBottom: "12px",
+        boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.19), 0 2px 4px -2px rgba(0,0,0,0.1)'
+      }}
     >
-      <div className="mx-auto px-4 flex justify-between items-center" style={{ backgroundColor: '#ffffff', height: '40px' }}>
+      <div className="mx-auto px-4 flex justify-between items-center" 
+      style={{ backgroundColor: '#ffffff', height: '40px' }}>
         {/* 로고 */}
         <a
           href="#home"
           onClick={goHome}
           aria-label="홈으로 이동"
           className="flex items-center cursor-pointer focus:outline-none"
-          style={{ marginLeft: "16px", marginTop: "18px" }}
+          style={{ marginLeft: "16px", marginTop: "15px" }}
         >
           <img
             src="/logo/logo-blue-wide.png"
             alt="NIMBUS TECH 로고"
             className="mobile-logo"
-            style={{ height: "15px" }}
+            style={{ height: "13px" }}
           />
         </a>
 
@@ -93,7 +97,9 @@ export default function HeaderMobile() {
               className="p-2 transition-colors"
               style={{ border: "none", background: "none", outline: "none" }}
             >
-              <FaTimes size={22} color="#00A3E0" />
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M18 6L6 18M6 6L18 18" stroke="#00A3E0" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
             </button>
           </div>
 
