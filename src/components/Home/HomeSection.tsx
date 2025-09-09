@@ -96,7 +96,7 @@ export default function HomeSection() {
                     fontSize: isMobile ? mobileFontSizes[index] : webFontSizes[index],
                     ...(index === 3 && { textShadow: '0 0 1px currentColor' })
                   }}
-                >
+                >    
                   <>
                     {completedLines.includes(index) ? (
                       text
