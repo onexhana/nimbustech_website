@@ -206,7 +206,13 @@ function renderTextWithBreaks(text: string) {
   ));
 }
 
-export default function HomeButtonMobile() {
+interface HomeButtonMobileProps {
+  topOffset?: string; // e.g. '-40vh'
+  marginTopSpacing?: string; // e.g. '2rem'
+  marginBottomSpacing?: string; // e.g. '2rem'
+}
+// Add spacing props for flexible positioning
+export default function HomeButtonMobile({ topOffset = '-40vh', marginTopSpacing = '2rem', marginBottomSpacing = '2rem' }: HomeButtonMobileProps) {
   const [selectedIdx, setSelectedIdx] = useState<number | null>(null);
 
   // ESC 키로 모달 닫기
@@ -339,9 +345,15 @@ export default function HomeButtonMobile() {
   return (
     <>
       {renderModal()}
-      <div className="w-full bg-white" style={{ marginTop: '-540px', position: 'relative' }}>
+      <div className="w-full bg-white border-t border-gray-300" style={{ position: 'relative', top: topOffset, marginTop: marginTopSpacing, marginBottom: marginBottomSpacing }}>
         {/* 모바일용 2x2 그리드 - 동일한 크기로 분할 */}
-        <div className="border border-gray-300" style={{ width: '390px', height: '440px', margin: '0 auto', backgroundColor: '#ffffff' }}>
+        <div style={{ width: '100%', maxWidth: '390px', margin: '0 auto', position: 'relative' }}>
+          {/* 내부 세로 구분선 (상단 두 카드 사이) */}
+          <div style={{ position: 'absolute', top: 0, left: '50%', bottom: '50%', borderLeft: '1px solid #d1d5db' }} />
+          {/* 내부 세로 구분선 (하단 두 카드 사이) */}
+          <div style={{ position: 'absolute', top: '50%', left: '50%', bottom: 0, borderLeft: '1px solid #d1d5db' }} />
+          {/* 내부 가로 구분선 (중간) */}
+          <div style={{ position: 'absolute', top: '50%', left: -100, right: -100, borderTop: '1px solid #d1d5db' }} />
           <div style={{ 
             display: 'grid', 
             gridTemplateColumns: '1fr 1fr', 
@@ -360,8 +372,6 @@ export default function HomeButtonMobile() {
                   width: '100%', 
                   height: '100%', 
                   padding: '20px 16px',
-                  borderRight: idx % 2 === 0 ? '1px solid #d1d5db' : 'none',
-                  borderBottom: idx < 2 ? '1px solid #d1d5db' : 'none',
                   boxSizing: 'border-box'
                 }}
               >
@@ -410,7 +420,7 @@ export default function HomeButtonMobile() {
         {/* 모바일용 무한 텍스트 슬라이더 */}
         <div className="w-full py-12 bg-gray-100" style={{ marginTop: '30px' }}> 
           <InfiniteTextSlider 
-            text="LEADINGCUSTOMERSUCESS"
+            text="LEADINGCUSTOMERUCESS"
             fontSize={60}
             textColor="#c2c2c2"
             duration={25}
@@ -430,7 +440,7 @@ export default function HomeButtonMobile() {
         </div>
 
         {/* 호버 효과를 위한 CSS */}
-        <style jsx>{`
+        <style>{`
           .group:hover h3,
           .group:hover p {
             color: #00A3E0 !important;
