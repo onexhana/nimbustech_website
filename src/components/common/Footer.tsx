@@ -81,7 +81,7 @@ export default function Footer() {
             <div className={`text-left ${isMobile ? '' : 'text-left pl-10'}`} style={isMobile ? { margin: '16px 0', marginLeft: '24px' } : { margin: '0 0 0 48px' }}>
               <div className={`${isMobile ? 'space-y-0' : 'space-y-1'}`} style={{ lineHeight: '1.4' }}>
                 {/* 주소 및 연락처 */}
-                <p style={{ fontSize: isMobile ? '15px' : '18px', fontWeight: isMobile ? '300' : undefined, color: 'white', margin: '0', marginTop: isMobile ? '5px' : undefined, marginBottom: isMobile ? '5px' : undefined }}>
+                <p style={{ fontSize: isMobile ? '15px' : '18px', fontWeight: isMobile ? '450' : undefined, color: 'white', margin: '0', marginTop: isMobile ? '5px' : undefined, marginBottom: isMobile ? '5px' : undefined }}>
                   [세종 본사]
                   {isMobile ? (
                     <>
@@ -90,7 +90,7 @@ export default function Footer() {
                     </>
                   ) : ' 집현중앙7로6, B동 1110호 (세종대명벨리온)'}
                 </p>
-                <p style={{ fontSize: isMobile ? '14px' : '18px', fontWeight: isMobile ? '300' : undefined, color: 'white', margin: '0', marginBottom: isMobile ? '15px' : undefined }}>
+                <p style={{ fontSize: isMobile ? '14px' : '18px', fontWeight: isMobile ? '450' : undefined, color: 'white', margin: '0', marginBottom: isMobile ? '15px' : undefined }}>
                   [서울사무소]
                   {isMobile ? (
                     <>
@@ -99,11 +99,11 @@ export default function Footer() {
                     </>
                   ) : ' 강남구 선릉로90길 10, B동 407호 (대치동, 샹제리제센터)'}
                 </p>
-                <div style={{ paddingTop: '8px' }}>
+                <div style={{ paddingTop: '7px' }}>
                   <div className={`flex ${isMobile ? 'flex-col items-start' : 'items-center justify-between'}`}>
                     <div className={isMobile ? 'mb-4 text-left' : ''}>
-                      <p style={{ fontSize: isMobile ? '16px' : '18px', fontWeight: isMobile ? '300' : undefined, color: 'white', margin: '0', marginBottom: isMobile ? '3px' : undefined }}>T: 02-555-0099</p>
-                      <p style={{ fontSize: isMobile ? '16px' : '18px', fontWeight: isMobile ? '300' : undefined, color: 'white', margin: '0', marginBottom: isMobile ? '5px' : undefined }}>E: nimbustech@nimbustech.co.kr</p>
+                      <p style={{ fontSize: isMobile ? '15px' : '18px', fontWeight: isMobile ? '450' : undefined, color: 'white', margin: '0', marginBottom: isMobile ? '3px' : undefined }}>T: 02-555-0099</p>
+                      <p style={{ fontSize: isMobile ? '15px' : '18px', fontWeight: isMobile ? '450' : undefined, color: 'white', margin: '0', marginBottom: isMobile ? '5px' : undefined }}>E: nimbustech@nimbustech.co.kr</p>
                     </div>
                     {!isMobile && (
                       <div className="flex flex-col ml-8">
