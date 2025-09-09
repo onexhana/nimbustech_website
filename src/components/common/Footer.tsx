@@ -55,11 +55,14 @@ export default function Footer() {
           <div className="flex flex-col space-y-4">
             {isMobile ? (
               /* 모바일: 한 줄 로고+뱃지+텍스트 */
-              <div className="flex items-center justify-center space-x-8" style={isMobile ? { marginTop: '30px', gap: '1rem' } : { marginTop: '30px' }}>
-                <img src="/logo/logo_white.png" alt="NIMBUS TECH" style={{ width: '100px', height: 'auto' }} />
+              <div className="flex items-center justify-start space-x-4" style={isMobile ? { marginTop: '30px', marginLeft: '24px', gap: '0.5rem' } : { marginTop: '30px' }}>
+                <img src="/logo/logo_white.png" alt="NIMBUS TECH" style={{ width: '70px', height: 'auto' }} />
                 <div className="flex items-center space-x-2 bg-white rounded-full px-3 py-1">
                   <img src="/logo/fcs_logo.png" alt="FCS 배지" style={{ width: '40px', height: 'auto' }} />
-                  <span style={{ fontSize: '16px', fontWeight: 'bold', color: '#ffffff' }}>2025 미래창조경영우수기업</span>
+                  <div className="flex flex-col items-center space-y-0.1">
+                    <span className="self-start" style={{ fontSize: '11px', fontWeight: '500', color: '#ffffff' }}>2025</span>
+                    <span style={{ fontSize: '11px', fontWeight: '500', color: '#ffffff' }}>미래창조경영우수기업</span>
+                  </div>
                 </div>
               </div>
             ) : (
@@ -78,13 +81,29 @@ export default function Footer() {
             <div className={`text-left ${isMobile ? '' : 'text-left pl-10'}`} style={isMobile ? { margin: '16px 0', marginLeft: '24px' } : { margin: '0 0 0 48px' }}>
               <div className={`${isMobile ? 'space-y-0' : 'space-y-1'}`} style={{ lineHeight: '1.4' }}>
                 {/* 주소 및 연락처 */}
-                <p style={{ fontSize: isMobile ? '12px' : '18px', fontWeight: isMobile ? '300' : undefined, color: 'white', margin: '0', marginTop: isMobile ? '5px' : undefined, marginBottom: isMobile ? '5px' : undefined }}>[세종 본사] 집현중앙7로6, B동 1110호 (세종대명벨리온)</p>
-                <p style={{ fontSize: isMobile ? '12px' : '18px', fontWeight: isMobile ? '300' : undefined, color: 'white', margin: '0', marginBottom: isMobile ? '15px' : undefined }}>[서울사무소] 강남구 선릉로90길 10, B동 407호 (대치동, 샹제리제센터)</p>
+                <p style={{ fontSize: isMobile ? '15px' : '18px', fontWeight: isMobile ? '300' : undefined, color: 'white', margin: '0', marginTop: isMobile ? '5px' : undefined, marginBottom: isMobile ? '5px' : undefined }}>
+                  [세종 본사]
+                  {isMobile ? (
+                    <>
+                      <br />
+                      집현중앙7로6, B동 1110호 (세종대명벨리온)
+                    </>
+                  ) : ' 집현중앙7로6, B동 1110호 (세종대명벨리온)'}
+                </p>
+                <p style={{ fontSize: isMobile ? '14px' : '18px', fontWeight: isMobile ? '300' : undefined, color: 'white', margin: '0', marginBottom: isMobile ? '15px' : undefined }}>
+                  [서울사무소]
+                  {isMobile ? (
+                    <>
+                      <br />
+                      강남구 선릉로90길 10, B동 407호 (대치동, 샹제리제센터)
+                    </>
+                  ) : ' 강남구 선릉로90길 10, B동 407호 (대치동, 샹제리제센터)'}
+                </p>
                 <div style={{ paddingTop: '8px' }}>
                   <div className={`flex ${isMobile ? 'flex-col items-start' : 'items-center justify-between'}`}>
                     <div className={isMobile ? 'mb-4 text-left' : ''}>
-                      <p style={{ fontSize: isMobile ? '12px' : '18px', fontWeight: isMobile ? '300' : undefined, color: 'white', margin: '0', marginBottom: isMobile ? '3px' : undefined }}>T: 02-555-0099</p>
-                      <p style={{ fontSize: isMobile ? '12px' : '18px', fontWeight: isMobile ? '300' : undefined, color: 'white', margin: '0', marginBottom: isMobile ? '5px' : undefined }}>E: nimbustech@nimbustech.co.kr</p>
+                      <p style={{ fontSize: isMobile ? '16px' : '18px', fontWeight: isMobile ? '300' : undefined, color: 'white', margin: '0', marginBottom: isMobile ? '3px' : undefined }}>T: 02-555-0099</p>
+                      <p style={{ fontSize: isMobile ? '16px' : '18px', fontWeight: isMobile ? '300' : undefined, color: 'white', margin: '0', marginBottom: isMobile ? '5px' : undefined }}>E: nimbustech@nimbustech.co.kr</p>
                     </div>
                     {!isMobile && (
                       <div className="flex flex-col ml-8">
