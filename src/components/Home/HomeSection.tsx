@@ -115,7 +115,15 @@ export default function HomeSection() {
           </div>
         </div>
       </section>
-      {isMobile ? <HomeButtonMobile /> : <HomeButton />}
+      {isMobile ? (
+        <HomeButtonMobile
+          topOffset="-0vh"
+          marginTopSpacing="-60vh"
+          marginBottomSpacing="2rem"
+        />
+      ) : (
+        <HomeButton />
+      )}
     </>
   );
 }
