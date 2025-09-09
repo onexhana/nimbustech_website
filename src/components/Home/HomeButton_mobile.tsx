@@ -359,6 +359,7 @@ export default function HomeButtonMobile({ topOffset = '-40vh', marginTopSpacing
             gridTemplateColumns: '1fr 1fr', 
             gridTemplateRows: '1fr 1fr', 
             width: '100%', 
+            maxWidth: '390px',
             height: '100%' 
           }}>
           {buttons.map((btn, idx) => {
@@ -416,6 +417,8 @@ export default function HomeButtonMobile({ topOffset = '-40vh', marginTopSpacing
             );
           })}
           </div>
+          {/* 내부 하단 가로 구분선 */}
+          <div style={{ position: 'absolute', bottom: 0, left: -100, right: -100, borderTop: '1px solid #000000' }} />
         </div>
         {/* 모바일용 무한 텍스트 슬라이더 */}
         <div className="w-full py-12 bg-gray-100" style={{ marginTop: '30px' }}> 
