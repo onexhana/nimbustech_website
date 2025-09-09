@@ -187,8 +187,7 @@ const buttons: ButtonItem[] = [
   {
     title: "Employee Benefits",
     subtitle: "복지 혜택",
-    description:
-      "최고의 열정과 패기를 갖춘\n인재들과 함께 일하고 성장하는 기업",
+    description: "최고의 열정과 패기를\n갖춘 인재들과 함께\n일하고 성장하는 기업",
     link: "/#about",
     imagePath: "/popup_image_mobile/Employee%20Benefits_mobile.png",
     titleFontSize: 20,
@@ -328,64 +327,76 @@ export default function HomeButtonMobile() {
   return (
     <>
       {renderModal()}
-      <div className="w-full bg-white" style={{ marginTop: '-200px', position: 'relative' }}>
-        {/* 모바일용 2x2 그리드 - 고정 크기 */}
-        <div className="border-t border-gray-200" style={{ width: '390px', height: '420px', margin: '0 auto' }}>
-          <div className="grid grid-cols-2 grid-rows-2" style={{ width: '100%', height: '100%' }}>
+      <div className="w-full bg-white" style={{ marginTop: '-540px', position: 'relative' }}>
+        {/* 모바일용 2x2 그리드 - 동일한 크기로 분할 */}
+        <div className="border border-gray-300" style={{ width: '390px', height: '440px', margin: '0 auto', backgroundColor: '#ffffff' }}>
+          <div style={{ 
+            display: 'grid', 
+            gridTemplateColumns: '1fr 1fr', 
+            gridTemplateRows: '1fr 1fr', 
+            width: '100%', 
+            height: '100%' 
+          }}>
           {buttons.map((btn, idx) => {
             const isSelected = selectedIdx === idx;
             return (
               <div
                 key={idx}
                 onClick={() => handleButtonClick(idx)}
-                className={`flex flex-col cursor-pointer justify-center items-center transition-colors border-b border-gray-200 group ${
-                  idx % 2 === 0 ? "border-r border-gray-200" : ""
-                } ${isSelected ? "bg-gray-100" : "hover:bg-gray-50"}`}
+                className={`flex flex-col cursor-pointer justify-center items-center transition-colors border-gray-300 group ${isSelected ? "bg-blue-50" : "hover:bg-gray-50"}`}
                 style={{ 
                   width: '100%', 
                   height: '100%', 
-                  padding: '16px' 
+                  padding: '20px 16px',
+                  borderRight: idx % 2 === 0 ? '1px solid #d1d5db' : 'none',
+                  borderBottom: idx < 2 ? '1px solid #d1d5db' : 'none',
+                  boxSizing: 'border-box'
                 }}
               >
-                <div className="mb-2 text-center">
+                <div className="text-center">
                   <h3
-                    className={`font-medium transition-colors ${
+                    className={`font-semibold transition-colors ${
                       isSelected
                         ? "text-[#00A3E0]"
-                        : "text-black group-hover:text-[#00A3E0]"
+                        : "text-[#4a5568] group-hover:text-[#00A3E0]"
                     }`}
-                    style={{ fontSize: `${btn.titleFontSize || 20}px` }}
+                    style={{ fontSize: '18px', marginBottom: '8px' }}
                   >
                     {renderTextWithBreaks(btn.title)}
                   </h3>
                   <p
-                    className={`font-bold mt-1 transition-colors ${
+                    className={`font-bold transition-colors ${
                       isSelected
                         ? "text-[#00A3E0]"
                         : "text-black group-hover:text-[#00A3E0]"
                     }`}
-                    style={{ fontSize: `${btn.subtitleFontSize || 28}px` }}
+                    style={{ fontSize: '24px', marginBottom: '12px' }}
                   >
                     {renderTextWithBreaks(btn.subtitle)}
                   </p>
+                  <p
+                    className={`transition-colors text-center ${
+                      isSelected
+                        ? "text-[#00A3E0]"
+                        : "text-gray-600 group-hover:text-[#00A3E0]"
+                    }`}
+                    style={{ 
+                      fontSize: '12px', 
+                      lineHeight: '1.5',
+                      whiteSpace: 'pre-line',
+                      wordBreak: 'keep-all'
+                    }}
+                  >
+                    {renderTextWithBreaks(btn.description)}
+                  </p>
                 </div>
-                <p
-                  className={`mt-2 leading-tight transition-colors text-center ${
-                    isSelected
-                      ? "text-[#00A3E0]"
-                      : "text-gray-600 group-hover:text-[#00A3E0]"
-                  }`}
-                  style={{ fontSize: `${btn.descriptionFontSize || 14}px` }}
-                >
-                  {renderTextWithBreaks(btn.description)}
-                </p>
               </div>
             );
           })}
           </div>
         </div>
         {/* 모바일용 무한 텍스트 슬라이더 */}
-        <div className="w-full py-12 bg-gray-100" style={{ marginTop: '60px' }}> 
+        <div className="w-full py-12 bg-gray-100" style={{ marginTop: '30px' }}> 
           <InfiniteTextSlider 
             text="LEADINGCUSTOMERSUCESS"
             fontSize={60}
@@ -405,6 +416,14 @@ export default function HomeButtonMobile() {
             }}
           />
         </div>
+
+        {/* 호버 효과를 위한 CSS */}
+        <style jsx>{`
+          .group:hover h3,
+          .group:hover p {
+            color: #00A3E0 !important;
+          }
+        `}</style>
       </div>
     </>
   );

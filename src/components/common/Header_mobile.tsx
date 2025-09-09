@@ -37,7 +37,7 @@ export default function HeaderMobile() {
       className="fixed top-0 left-0 w-full bg-white z-50 shadow-md"
       style={{ paddingBottom: "16px" }}
     >
-      <div className="mx-auto px-4 h-14 flex justify-between items-center">
+      <div className="mx-auto px-4 flex justify-between items-center" style={{ backgroundColor: '#ffffff', height: '40px' }}>
         {/* 로고 */}
         <a
           href="#home"
