@@ -162,7 +162,7 @@ export default function ContactSection() {
             >
               <span
                 className={isMobile ? 'relative z-10 text-white !text-white' : undefined}
-                style={isMobile ? { color: '#ffffff', fontWeight: '900' } : { position: 'relative', zIndex: 1 }}
+                style={isMobile ? { color: '#ffffff', fontWeight: '700' } : { position: 'relative', zIndex: 1 }}
               >
                 고객사 직원
               </span>
@@ -176,7 +176,7 @@ export default function ContactSection() {
             >
               <span
                 className={isMobile ? 'relative z-10 text-[#00A3E0]' : undefined}
-                style={isMobile ? { color: '#00A3E0', fontWeight: '900' } : { position: 'relative', zIndex: 1 }}
+                style={isMobile ? { color: '#00A3E0', fontWeight: '700' } : { position: 'relative', zIndex: 1 }}
               >
                 인재 채용
               </span>
@@ -188,14 +188,14 @@ export default function ContactSection() {
                   style={{ color: '#ffffff' }}
                   onClick={handleCompanyDownload}
                 >
-                  <span className="relative z-10 text-white" style={{ fontWeight: '900' }}>회사소개서 다운로드</span>
+                  <span className="relative z-10 text-white" style={{ fontWeight: '700' }}>회사소개서 다운로드</span>
                 </button>
                 <button
                   className="bg-white w-full mt-4 h-[74px] px-8 flex items-center justify-center text-[24px] relative overflow-hidden border-none text-[#00A3E0] font-black transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
                   style={{ backgroundColor: '#ffffff' }}
                   onClick={() => window.open('/footer_pdf/개인정보+처리방침_v6.1.pdf', '_blank')}
                 >
-                  <span className="relative z-10" style={{ fontWeight: '900' }}>개인정보 처리방침</span>
+                  <span className="relative z-10" style={{ fontWeight: '700' }}>개인정보 처리방침</span>
                 </button>
               </>
             )}
