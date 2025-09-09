@@ -10,41 +10,73 @@ export default function Footer() {
   }, []);
 
   const handleDownload = () => {
-    const link = document.createElement('a');
-    link.href = '/회사소개서.pdf';
-    link.download = 'NIMBUS_TECH_회사소개서.pdf';
-    link.target = '_blank';
-    
-    fetch('/회사소개서.pdf', { method: 'HEAD' })
-      .then(response => {
-        if (response.ok) {
-          link.click();
-        } else {
+    // 모바일에서는 새 탭에서 PDF 열기, 데스크톱에서는 다운로드
+    if (isMobile) {
+      // 모바일: 파일 존재 확인 후 열기
+      fetch('/footer_pdf/님버스테크 회사소개_v3.4_20240701.pdf', { method: 'HEAD' })
+        .then(response => {
+          if (response.ok) {
+            // 파일이 존재하면 새 탭에서 열기
+            const link = document.createElement('a');
+            link.href = '/footer_pdf/님버스테크 회사소개_v3.4_20240701.pdf';
+            link.target = '_blank';
+            link.rel = 'noopener noreferrer';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+          } else {
+            alert('회사소개서 파일을 찾을 수 없습니다.');
+          }
+        })
+        .catch((error) => {
+          console.error('PDF 로드 오류:', error);
+          alert('회사소개서 파일을 로드할 수 없습니다.');
+        });
+    } else {
+      // 데스크톱: 다운로드
+      const link = document.createElement('a');
+      link.href = '/footer_pdf/님버스테크 회사소개_v3.4_20240701.pdf';
+      link.download = '님버스테크 회사소개_v3.4_20240701.pdf';
+      link.target = '_blank';
+      
+      fetch('/footer_pdf/님버스테크 회사소개_v3.4_20240701.pdf', { method: 'HEAD' })
+        .then(response => {
+          if (response.ok) {
+            link.click();
+          } else {
+            alert('회사소개서 파일을 준비 중입니다.');
+          }
+        })
+        .catch(() => {
           alert('회사소개서 파일을 준비 중입니다.');
-        }
-      })
-      .catch(() => {
-        alert('회사소개서 파일을 준비 중입니다.');
-      });
+        });
+    }
   };
 
   const handlePrivacyPolicyDownload = () => {
-    const link = document.createElement('a');
-    link.href = '/footer_pdf/개인정보+처리방침_v6.1.pdf';
-    link.download = 'NIMBUS_TECH_개인정보처리방침.pdf';
-    link.target = '_blank';
-    
-    fetch('/footer_pdf/개인정보+처리방침_v6.1.pdf', { method: 'HEAD' })
-      .then(response => {
-        if (response.ok) {
-          link.click();
-        } else {
+    // 모바일에서는 새 탭에서 PDF 열기, 데스크톱에서는 다운로드
+    if (isMobile) {
+      // 모바일: 새 탭에서 PDF 열기
+      window.open('/footer_pdf/개인정보+처리방침_v6.1.pdf', '_blank');
+    } else {
+      // 데스크톱: 다운로드
+      const link = document.createElement('a');
+      link.href = '/footer_pdf/개인정보+처리방침_v6.1.pdf';
+      link.download = 'NIMBUS_TECH_개인정보처리방침.pdf';
+      link.target = '_blank';
+      
+      fetch('/footer_pdf/개인정보+처리방침_v6.1.pdf', { method: 'HEAD' })
+        .then(response => {
+          if (response.ok) {
+            link.click();
+          } else {
+            alert('개인정보처리방침 파일을 준비 중입니다.');
+          }
+        })
+        .catch(() => {
           alert('개인정보처리방침 파일을 준비 중입니다.');
-        }
-      })
-      .catch(() => {
-        alert('개인정보처리방침 파일을 준비 중입니다.');
-      });
+        });
+    }
   };
 
   return (
