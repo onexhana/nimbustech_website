@@ -229,7 +229,7 @@ export default function ContactSection() {
                 backgroundColor: 'transparent',
                 borderRadius: '8px',
                 padding: '20px',
-                overflow: 'auto'
+                overflow: 'hidden'
               } : {
                 position: 'fixed',
                 zIndex: 1001,
@@ -264,7 +264,7 @@ export default function ContactSection() {
                 backgroundColor: 'transparent',
                 borderRadius: '8px',
                 padding: '20px',
-                overflow: 'auto'
+                overflow: 'hidden'
               } : {
                 position: 'fixed',
                 zIndex: 1001,
@@ -276,7 +276,7 @@ export default function ContactSection() {
                 overflow: 'hidden'
               }}>
                 {isMobile ? (
-                  <div style={{ marginTop: '-51px', marginBottom: '-140px' }}>
+                  <div style={{ marginTop: '-51px', marginBottom: '-130px' }}>
                     <HiringForm />
                   </div>
                 ) : (
