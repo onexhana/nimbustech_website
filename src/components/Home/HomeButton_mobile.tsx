@@ -270,12 +270,16 @@ export default function HomeButtonMobile() {
         <div 
           style={{
             position: 'relative',
-            backgroundColor: 'white',
+            backgroundColor: 'transparent', // 배경을 투명하게
             borderRadius: '8px',
             boxShadow: '0 10px 25px rgba(0, 0, 0, 0.2)',
-            width: '100%',
-            maxHeight: '75vh', // 팝업창 세로 길이 조정
-            overflow: 'hidden'
+            width: '90vw',
+            height: '80vh',
+            maxWidth: '400px',
+            maxHeight: '600px',
+            overflow: 'hidden',
+            display: 'flex',
+            flexDirection: 'column'
           }}
           onClick={(e) => e.stopPropagation()}
         >
@@ -304,16 +308,24 @@ export default function HomeButtonMobile() {
             ✕
           </button>
           
-          {/* 이미지 컨테이너 */}
-          <div style={{ width: '100%' }}>
+          {/* 이미지 컨테이너 - 고정 비율로 모든 기종에서 동일하게 */}
+          <div style={{ 
+            width: '100%', 
+            height: '100%',
+            display: 'flex', 
+            justifyContent: 'center',
+            alignItems: 'center',
+            padding: '0'
+          }}>
             <img
               src={selectedButton.imagePath}
               alt={selectedButton.subtitle}
               style={{ 
                 width: '100%', 
-                height: 'auto', 
-                objectFit: 'contain',
-                maxHeight: '80vh'
+                height: '100%', 
+                objectFit: 'contain', // 이미지가 잘리지 않도록 contain으로 변경
+                display: 'block',
+                borderRadius: '8px' // 모달과 동일한 둥근 모서리
               }}
               onLoad={() => {}}
               onError={() => {}}
