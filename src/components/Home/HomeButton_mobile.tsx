@@ -430,7 +430,7 @@ export default function HomeButtonMobile() {
         </div>
 
         {/* 호버 효과를 위한 CSS */}
-        <style jsx>{`
+        <style>{`
           .group:hover h3,
           .group:hover p {
             color: #00A3E0 !important;
