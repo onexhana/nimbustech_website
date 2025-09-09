@@ -270,7 +270,7 @@ export default function HomeButtonMobile() {
         <div 
           style={{
             position: 'relative',
-            backgroundColor: 'white',
+            backgroundColor: 'transparent', // 배경을 투명하게
             borderRadius: '8px',
             boxShadow: '0 10px 25px rgba(0, 0, 0, 0.2)',
             width: '90vw',
@@ -323,8 +323,9 @@ export default function HomeButtonMobile() {
               style={{ 
                 width: '100%', 
                 height: '100%', 
-                objectFit: 'contain', // 비율 유지하며 컨테이너에 맞춤
-                display: 'block'
+                objectFit: 'contain', // 이미지가 잘리지 않도록 contain으로 변경
+                display: 'block',
+                borderRadius: '8px' // 모달과 동일한 둥근 모서리
               }}
               onLoad={() => {}}
               onError={() => {}}
