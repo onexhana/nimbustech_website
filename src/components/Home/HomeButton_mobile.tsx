@@ -289,30 +289,6 @@ export default function HomeButtonMobile({ topOffset = '-40vh', marginTopSpacing
           }}
           onClick={(e) => e.stopPropagation()}
         >
-          {/* X 버튼 */}
-          <button
-            onClick={handleCloseModal}
-            style={{
-              position: 'absolute',
-              top: '12px',
-              right: '12px',
-              zIndex: 10,
-              backgroundColor: 'white',
-              borderRadius: '50%',
-              width: '28px',
-              height: '28px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              border: 'none',
-              cursor: 'pointer',
-              fontSize: '16px',
-              boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)'
-            }}
-            aria-label="모달 닫기"
-          >
-            ✕
-          </button>
           
           {/* 이미지 컨테이너 - 고정 비율로 모든 기종에서 동일하게 */}
           <div style={{ 
@@ -321,8 +297,10 @@ export default function HomeButtonMobile({ topOffset = '-40vh', marginTopSpacing
             display: 'flex', 
             justifyContent: 'center',
             alignItems: 'center',
-            padding: '0'
+            padding: '0',
+            position: 'relative'
           }}>
+            
             <img
               src={selectedButton.imagePath}
               alt={selectedButton.subtitle}
@@ -447,6 +425,15 @@ export default function HomeButtonMobile({ topOffset = '-40vh', marginTopSpacing
           .group:hover h3,
           .group:hover p {
             color: #00A3E0 !important;
+          }
+          
+          /* X 버튼 색상 통일 */
+          button[aria-label="모달 닫기"] {
+            color: #333333 !important;
+          }
+          
+          button[aria-label="모달 닫기"]:hover {
+            color: #000000 !important;
           }
         `}</style>
       </div>
