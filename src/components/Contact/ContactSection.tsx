@@ -19,21 +19,7 @@ export default function ContactSection() {
   }, []);
   // 회사소개서 다운로드 로직 (웹 Footer와 동일)
   const handleCompanyDownload = () => {
-    const link = document.createElement('a');
-    link.href = '/회사소개서.pdf';
-    link.download = 'NIMBUS_TECH_회사소개서.pdf';
-    link.target = '_blank';
-    fetch('/회사소개서.pdf', { method: 'HEAD' })
-      .then(response => {
-        if (response.ok) {
-          link.click();
-        } else {
-          alert('회사소개서 파일을 준비 중입니다.');
-        }
-      })
-      .catch(() => {
-        alert('회사소개서 파일을 준비 중입니다.');
-      });
+    window.open('/footer_pdf/님버스테크 회사소개_v3.4_20240701.pdf', '_blank');
   };
 
   return (
