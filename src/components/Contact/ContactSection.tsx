@@ -17,29 +17,9 @@ export default function ContactSection() {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
-  // 회사소개서 다운로드 로직 (웹 Footer와 동일)
+  
   const handleCompanyDownload = () => {
-    // 모바일: 새 탭에서 가로 버전 PDF 열기
-    if (isMobile) {
-      window.open(encodeURI('/footer_pdf/님버스테크 회사소개_v3.4_20240701.pdf'), '_blank');
-      return;
-    }
-    // 데스크톱: 다운로드 방식 (기존 로직 유지)
-    const link = document.createElement('a');
-    link.href = '/회사소개서.pdf';
-    link.download = 'NIMBUS_TECH_회사소개서.pdf';
-    link.target = '_blank';
-    fetch('/회사소개서.pdf', { method: 'HEAD' })
-      .then(response => {
-        if (response.ok) {
-          link.click();
-        } else {
-          alert('회사소개서 파일을 준비 중입니다.');
-        }
-      })
-      .catch(() => {
-        alert('회사소개서 파일을 준비 중입니다.');
-      });
+    window.open('/footer_pdf/님버스테크 회사소개_v3.4_20240701.pdf', '_blank');
   };
 
   return (
