@@ -12,8 +12,8 @@ export default function Footer() {
   const handleDownload = () => {
     // 모바일과 데스크톱 모두 새 탭에서 PDF 열기
     if (isMobile) {
-      // 모바일: 세로 버전 PDF 열기
-      window.open('/footer_pdf/님버스테크 회사소개_v3.4_20240701_세로.pdf', '_blank');
+      // 모바일: 가로 버전 PDF 열기
+      window.open(encodeURI('/footer_pdf/님버스테크 회사소개_v3.4_20240701.pdf'), '_blank');
     } else {
       // 데스크톱: 가로 버전 PDF 열기 (다운로드 대신)
       window.open('/footer_pdf/님버스테크 회사소개_v3.4_20240701.pdf', '_blank');
