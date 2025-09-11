@@ -28,7 +28,7 @@ interface InfiniteTextSliderProps {
 function InfiniteTextSlider({ 
   text, 
   fontSize = 48, // px 단위 기본값
-  textColor = "text-gray-300", 
+  textColor = "text-gray-300",
   duration = 20,
   gap = 100,
   coloredWords = {},
@@ -120,8 +120,8 @@ function InfiniteTextSlider({
         }}
         animate={{ x: ["0%", "-50%"] }}
         transition={{ 
-          duration, 
-          repeat: Infinity, 
+          duration,
+          repeat: Infinity,
           ease: "linear",
           repeatType: "loop",
           type: "tween"
@@ -426,7 +426,7 @@ export default function HomeButtonMobile({ topOffset = '-40vh', marginTopSpacing
             text="LEADINGCUSTOMERUCESS"
             fontSize={60}
             textColor="#c2c2c2"
-            duration={25}
+            duration={6}
             gap={10}
             fontWeight={300}
             coloredWords={{
