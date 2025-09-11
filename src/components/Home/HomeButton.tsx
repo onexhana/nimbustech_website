@@ -118,9 +118,9 @@ function InfiniteTextSlider({
           perspective: 1000,
           transform: "translateZ(0)"
         }}
-        animate={{ x: ["0%", "-50%"] }}
+        animate={{ x: ["0%", "-100%"] }}
         transition={{ 
-          duration, 
+          duration: duration * 2, 
           repeat: Infinity, 
           ease: "linear",
           repeatType: "loop",
