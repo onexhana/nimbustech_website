@@ -32,13 +32,7 @@ export default function Footer() {
                 style={isMobile ? { marginTop: '30px', marginLeft: '24px', gap: '0.5rem' } : { marginTop: '30px' }}
               >
                 <img src="/logo/logo_white.png" alt="NIMBUS TECH" style={{ width: '70px', height: 'auto' }} />
-                <div className="flex items-center space-x-2 bg-white rounded-full px-3 py-1">
-                  <img src="/logo/fcs_logo.png" alt="FCS 배지" style={{ width: '40px', height: 'auto' }} />
-                  <div className="flex flex-col items-center space-y-0.1">
-                    <span className="self-start" style={{ fontSize: '11px', fontWeight: '500', color: '#ffffff' }}>2025</span>
-                    <span style={{ fontSize: '11px', fontWeight: '500', color: '#ffffff' }}>미래창조경영우수기업</span>
-                  </div>
-                </div>
+                <img src="/logo/2022_special.png" alt="2022 Special Badge" style={{ width: '120px', height: 'auto' }} />
               </div>
             ) : (
               /* 데스크탑 원본 레이아웃 */
@@ -46,9 +40,8 @@ export default function Footer() {
                 <div className="flex items-center space-x-2">
                   <img src="/logo/logo-white-wide.png" alt="NIMBUS TECH" style={{ width: '200px', height: 'auto' }} />
                 </div>
-                <div className="bg-white rounded-full px-3 py-1 flex items-center space-x-2" style={{ marginLeft: '30px' }}>
-                  <img src="/logo/fcs_logo.png" alt="FCS 배지" style={{ width: '40px', height: 'auto' }} />
-                  <span style={{ fontSize: '18px', fontWeight: 'bold', color: '#ffffff' }}>2025 미래창조경영우수기업</span>
+                <div className="flex items-center" style={{ marginLeft: '30px' }}>
+                  <img src="/logo/2022_special.png" alt="2022 Special Badge" style={{ width: '160px', height: 'auto' }} />
                 </div>
               </div>
             )}
