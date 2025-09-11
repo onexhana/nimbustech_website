@@ -41,7 +41,7 @@ const ROW1: Logo[] = Array.from({ length: 17 }, (_, i) => {
 // 파트너사 로고 21개 자동 생성
 const ROW2: Logo[] = Array.from({ length: 21 }, (_, i) => {
   const num = String(i + 1).padStart(2, "0");
-  const ext = (num === "01" || num === "05"|| num === "14") ? "jpg" : "png"; // 일부 jpg 예외 처리
+  const ext = (num === "01" || num === "05"|| num === "14"|| num === "20") ? "jpg" : "png"; // 일부 jpg 예외 처리
   return { src: `/고객사 & 파트너사/파트너사${num}.${ext}`, alt: `파트너사${num}` };
 });
 
@@ -76,9 +76,9 @@ function Track({
           perspective: 1000,
           transform: "translateZ(0)" // GPU 가속 활성화
         }}
-        animate={{ x: reverse ? ["-60%", "0%"] : ["0%", "-60%"] }}
+        animate={{ x: reverse ? ["-100%", "0%"] : ["0%", "-100%"] }}
         transition={{ 
-          duration, 
+          duration: duration * 2, 
           repeat: Infinity, 
           ease: "linear",
           // 깜빡임 방지: 부드러운 반복 설정 (새로고침 대신 상태 변경)

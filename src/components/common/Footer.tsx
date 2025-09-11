@@ -11,7 +11,7 @@ export default function Footer() {
 
   // 개인정보처리방침 버튼
   const openPrivacyPolicy = () => {
-    window.open('/footer_pdf/개인정보+처리방침_v6.1.pdf', '_blank');
+    window.open('/footer_pdf/개인정보 처리방침_v1.0.pdf', '_blank');
   };
 
   // 회사소개서 버튼
