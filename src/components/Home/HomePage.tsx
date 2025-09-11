@@ -1,7 +1,7 @@
 // src/pages/HomePage.tsx
 
-import MainLayout from '../components/common/MainLayout';
-import HomeSection from '../components/Home/HomeSection';
+import MainLayout from '../common/MainLayout'; 
+import HomeSection from './HomeSection';
 
 export default function HomePage() {
   return (
