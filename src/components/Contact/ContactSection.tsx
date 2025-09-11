@@ -179,7 +179,7 @@ export default function ContactSection() {
                 <button
                   className="bg-white w-full mt-4 h-[74px] px-8 flex items-center justify-center text-[24px] relative overflow-hidden border-none text-[#00A3E0] font-black transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
                   style={{ backgroundColor: '#ffffff' }}
-                  onClick={() => window.open('/footer_pdf/개인정보+처리방침_v6.1.pdf', '_blank')}
+                  onClick={() => window.open('/footer_pdf/개인정보 처리방침_v1.0.pdf', '_blank')}
                 >
                   <span className="relative z-10" style={{ fontWeight: '700' }}>개인정보 처리방침</span>
                 </button>
