@@ -76,9 +76,9 @@ function Track({
           perspective: 1000,
           transform: "translateZ(0)" // GPU 가속 활성화
         }}
-        animate={{ x: reverse ? ["-60%", "0%"] : ["0%", "-60%"] }}
+        animate={{ x: reverse ? ["-100%", "0%"] : ["0%", "-100%"] }}
         transition={{ 
-          duration, 
+          duration: duration * 2, 
           repeat: Infinity, 
           ease: "linear",
           // 깜빡임 방지: 부드러운 반복 설정 (새로고침 대신 상태 변경)
