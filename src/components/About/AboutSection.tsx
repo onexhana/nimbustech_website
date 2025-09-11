@@ -42,7 +42,7 @@ const noEffect = AboutCard.name === 'AboutCardNoEffect';
 const TAB_LIST = ["ITO", "클라우드", "RPA", "솔루션"];
 
 // 각 탭별 카드 데이터 정의: title(제목)과 description(내용 배열) 형태로 구성된 객체입니다. (솔루션은 7개)
-const TAB_CONTENTS: Record<string, { title: string; description: string[] }[]> = {
+const TAB_CONTENTS: Record<string, { title: string; description: string[]; link?: string }[]> = {
   ITO: [
     {
       title: "풍부한 인재 자원",
@@ -115,46 +115,53 @@ const TAB_CONTENTS: Record<string, { title: string; description: string[] }[]> =
   ],
   솔루션: [
     {
+      title: "Extreme Networks",
+      description: [
+        "Extreme Networks, 연결해드립니다"
+      ],
+      link: "https://www.extremenetworks.com/kr/solutions"
+    },
+    {
+      title: "WeDataLab",
+      description: [
+        "WeDataLab 솔루션, 연결해드립니다"
+      ],
+      link: "https://wedatalab.com/solution"
+    },
+    {
       title: "SUSE",
       description: [
         "SUSE 솔루션, 연결해드립니다"
       ],
+      link: "https://www.suse.com/ko-kr/solutions/run-sap-solutions/"
     },
     {
-      title: "WEDATALAB",
+      title: "SK AX",
       description: [
-        "WEDATALAB 솔루션, 연결해드립니다"
+        "SK AX, 연결해드립니다"
       ],
+      link: "https://www.skax.co.kr/"
     },
     {
-      title: "IT STORY",
+      title: "T3Q",
       description: [
-        "IT STORY 솔루션, 연결해드립니다"
+        "T3Q, 연결해드립니다"
       ],
+      link: "https://t3q.com/t3q-ai/"
     },
     {
-      title: "ERP 솔루션",
+      title: "RPA",
       description: [
-        "1. 통합 업무 관리 시스템"
+        "RPA, 연결해드립니다"
       ],
+      link: "https://www.samsungsds.com/kr/collaboration-solution/brity-works.html?referrer=https://www.samsungsds.com/global/ko/solutions/off/brity/brity.html"
     },
     {
-      title: "모바일 앱 개발",
+      title: "BCP Solutions",
       description: [
-        "1. 크로스 플랫폼 개발"
+        "BCP Solutions, 연결해드립니다"
       ],
-    },
-    {
-      title: "데이터 분석 플랫폼",
-      description: [
-        "1. 빅데이터 처리 시스템"
-      ],
-    },
-    {
-      title: "클라우드 마이그레이션",
-      description: [
-        "1. 온프레미스 → 클라우드 전환"
-      ],
+      link: "https://www.krbcp.com/?act=board&bbs_code=brochure"
     },
   ],
 };
@@ -307,7 +314,7 @@ export default function AboutSection() {
                       {activeTab === '솔루션' && (
                         <div style={{ textAlign: 'left', marginTop: '20px', marginLeft: '8px' }}>
                           <a
-                            href="https://www.naver.com"
+                            href={card.link}
                             target="_blank"
                             rel="noopener noreferrer"
                             style={{
@@ -434,7 +441,7 @@ export default function AboutSection() {
                       <AboutCard
                         title={card.title}
                         description={card.description}
-                        detailLink={activeTab === '솔루션' ? 'https://www.naver.com' : undefined}
+                        detailLink={activeTab === '솔루션' ? card.link : undefined}
                         linkAsButton={activeTab === '솔루션'}
                         linkText={activeTab === '솔루션' ? "자세히 보기" : undefined}
                         borderRadius="35px"
