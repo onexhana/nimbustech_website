@@ -117,49 +117,42 @@ const TAB_CONTENTS: Record<string, { title: string; description: string[]; link?
     {
       title: "Extreme Networks",
       description: [
-        "Extreme Networks, 연결해드립니다"
+        "네트워크, 보안, AI를 통합해 복잡성을 단순화합니다"
       ],
       link: "https://www.extremenetworks.com/kr/solutions"
     },
     {
       title: "WeDataLab",
       description: [
-        "WeDataLab 솔루션, 연결해드립니다"
+        "데이터 인텔리전스로 비즈니스 혁신을 실현합니다"
       ],
       link: "https://wedatalab.com/solution"
     },
     {
       title: "SUSE",
       description: [
-        "SUSE 솔루션, 연결해드립니다"
+        "자동화와 모니터링으로 SAP 인프라를 관리합니다"
       ],
       link: "https://www.suse.com/ko-kr/solutions/run-sap-solutions/"
     },
     {
       title: "SK AX",
       description: [
-        "SK AX, 연결해드립니다"
+        "글로벌 톱10 AI 서비스 기업으로 성장합니다"
       ],
       link: "https://www.skax.co.kr/"
     },
     {
       title: "T3Q",
       description: [
-        "T3Q, 연결해드립니다"
+        "인공지능을 엑셀처럼 쉽게 활용할 수 있게 합니다"
       ],
       link: "https://t3q.com/t3q-ai/"
     },
     {
-      title: "RPA",
-      description: [
-        "RPA, 연결해드립니다"
-      ],
-      link: "https://www.samsungsds.com/kr/collaboration-solution/brity-works.html?referrer=https://www.samsungsds.com/global/ko/solutions/off/brity/brity.html"
-    },
-    {
       title: "BCP Solutions",
       description: [
-        "BCP Solutions, 연결해드립니다"
+        "솔루션과 컨설팅으로 비즈니스 연속성을 보장합니다"
       ],
       link: "https://www.krbcp.com/?act=board&bbs_code=brochure"
     },
