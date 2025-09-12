@@ -246,7 +246,7 @@ export default function PortfolioSection() {
 
             <div className="flex flex-col h-full items-start" style={{ marginLeft: '200px' }}>
               <div className="w-full">
-                <PortfolioCardList projects={filtered} />
+                <PortfolioCardList key={`${selectedCategory}-${swiperKey}`} projects={filtered} />
               </div>
             </div>
           </div>
