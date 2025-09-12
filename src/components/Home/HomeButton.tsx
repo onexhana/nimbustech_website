@@ -34,8 +34,8 @@ function InfiniteTextSlider({
   fontWeight = 300,
   fontWeights = {},
 }: InfiniteTextSliderProps) {
-  // 텍스트를 3개 복사해서 끊김 없는 무한 루프 구현
-  const repeatedText = Array(3).fill(text);
+  // 텍스트를 충분히 복사해서 끊김 없는 무한 루프 구현
+  const repeatedText = Array(6).fill(text);
 
   // 단어 색상/두께 처리
   const renderColoredText = (txt: string) => {
@@ -58,9 +58,9 @@ function InfiniteTextSlider({
           columnGap: gap,
           willChange: "transform",
         }}
-        animate={{ x: ["0%", "-100%"] }} // 3개 중 1개씩 이동으로 끊김 없는 반복
+        animate={{ x: ["0%", "-500%"] }} // 6개 중 1개씩 이동으로 끊김 없는 반복
         transition={{
-          duration: duration,
+          duration: duration*5,
           repeat: Infinity,
           ease: "linear",
           repeatType: "loop",
