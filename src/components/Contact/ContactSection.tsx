@@ -143,7 +143,7 @@ export default function ContactSection() {
             {/* 고객지원 버튼 */}
             <button
               className={`text-white ${isMobile ? 'bg-[#00A3E0] w-full mt-8 h-[74px] px-8 flex items-center justify-center text-[24px] relative overflow-hidden border-none text-white !font-black transition-all duration-300 hover:shadow-lg hover:-translate-y-1' : ''}`}
-              style={isMobile ? undefined : { backgroundColor: '#00A3E0', width: '530px', marginTop: '320px', display: 'flex', alignItems: 'center', justifyContent: 'center', height: '80px', padding: '0 32px', fontSize: '28px', color: '#ffffff', fontWeight: '900', borderRadius: '0px', border: 'none', cursor: 'pointer', position: 'relative', overflow: 'hidden' }}
+              style={isMobile ? undefined : { backgroundColor: '#00A3E0', width: '530px', marginTop: '320px', display: 'flex', alignItems: 'center', justifyContent: 'center', height: '80px', padding: '0 32px', fontSize: '32px', color: '#ffffff', fontWeight: '650', borderRadius: '0px', border: 'none', cursor: 'pointer', position: 'relative', overflow: 'hidden' }}
               onClick={() => setUserType(isMobile && userType === 'inquiry' ? null : 'inquiry')}
             >
               <span
@@ -157,12 +157,12 @@ export default function ContactSection() {
             {/* 인재채용 버튼 */}
             <button
               className={`${isMobile ? 'bg-white text-[#00A3E0] w-full mt-4 h-[74px] px-8 flex items-center justify-center text-[24px] relative overflow-hidden border-none font-black transition-all duration-300 hover:shadow-lg hover:-translate-y-1' : 'text-white'}`}
-              style={isMobile ? { backgroundColor: '#ffffff' } : { backgroundColor: '#6b7280', width: '530px', marginTop: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center', height: '80px', padding: '0 32px', fontSize: '28px', color: '#ffffff', fontWeight: '900', borderRadius: '0px', border: 'none', cursor: 'pointer', position: 'relative', overflow: 'hidden' }}
+              style={isMobile ? { backgroundColor: '#ffffff' } : { backgroundColor: '#6b7280', width: '530px', marginTop: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center', height: '80px', padding: '0 32px', fontSize: '32px', color: '#ffffff', fontWeight: '650', borderRadius: '0px', border: 'none', cursor: 'pointer', position: 'relative', overflow: 'hidden' }}
               onClick={() => setUserType(isMobile && userType === 'hiring' ? null : 'hiring')}
             >
               <span
                 className={isMobile ? 'relative z-10 text-[#00A3E0]' : undefined}
-                style={isMobile ? { color: '#00A3E0', fontWeight: '700' } : { position: 'relative', zIndex: 1 }}
+                style={isMobile ? { color: '#00A3E0', fontWeight: '650' } : { position: 'relative', zIndex: 1 }}
               >
                 인재 채용
               </span>
