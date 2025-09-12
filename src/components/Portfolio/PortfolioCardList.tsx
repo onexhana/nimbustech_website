@@ -137,6 +137,55 @@ const PortfolioCardList = ({ projects }: Props) => {
             }
           `}</style>
         </div>
+        {/* 네비게이션 화살표 버튼 */}
+        <>
+          <button
+            onClick={() => swiperRef.current?.slidePrev()}
+            style={{
+              position: 'absolute',
+              top: '-5rem',
+              right: '6rem',
+              border: 'none',
+              outline: 'none',
+              width: '40px',
+              height: '40px',
+              borderRadius: '50%',
+              backgroundColor: '#E5E7EB',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              cursor: 'pointer',
+              zIndex: 10,
+            }}
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path d="M15 6L9 12L15 18" stroke="#1F2937" strokeWidth="3" strokeLinecap="butt" strokeLinejoin="miter" />
+            </svg>
+          </button>
+          <button
+            onClick={() => swiperRef.current?.slideNext()}
+            style={{
+              position: 'absolute',
+              top: '-5rem',
+              right: '2rem',
+              border: 'none',
+              outline: 'none',
+              width: '40px',
+              height: '40px',
+              borderRadius: '50%',
+              backgroundColor: '#1F2937',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              cursor: 'pointer',
+              zIndex: 10,
+            }}
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path d="M9 6L15 12L9 18" stroke="#FFFFFF" strokeWidth="3" strokeLinecap="butt" strokeLinejoin="miter" />
+            </svg>
+          </button>
+        </>
       </div>
     </div>
   );
