@@ -7,146 +7,82 @@ interface ButtonItem {
   description: string;
   link: string;
   imagePath: string;
-  titleFontSize?: number;    // px 단위
-  subtitleFontSize?: number; // px 단위  
-  descriptionFontSize?: number; // px 단위
+  titleFontSize?: number;
+  subtitleFontSize?: number;
+  descriptionFontSize?: number;
 }
 
-// 무한 슬라이더 컴포넌트 props 타입
 interface InfiniteTextSliderProps {
   text: string;
-  fontSize?: number; // px 단위로 변경
+  fontSize?: number;
   textColor?: string;
   duration?: number;
   gap?: number;
-  coloredWords?: { [word: string]: string }; // 특정 단어별 색상 지정
-  fontWeight?: string | number; // 기본 글씨 두께
-  fontWeights?: { [word: string]: string | number }; // 특정 단어별 글씨 두께
+  coloredWords?: { [word: string]: string };
+  fontWeight?: string | number;
+  fontWeights?: { [word: string]: string | number };
 }
 
-// 무한 텍스트 슬라이더 컴포넌트
-function InfiniteTextSlider({ 
-  text, 
-  fontSize = 48, // px 단위 기본값
-  textColor = "text-gray-300", 
+// ✅ 끊김 없는 무한 텍스트 슬라이더
+function InfiniteTextSlider({
+  text,
+  fontSize = 48,
+  textColor = "#c2c2c2",
   duration = 20,
   gap = 100,
   coloredWords = {},
   fontWeight = 300,
-  fontWeights = {}
+  fontWeights = {},
 }: InfiniteTextSliderProps) {
-  // 텍스트를 여러 번 복제하여 무한 스크롤 효과 생성
-  const repeatedText = Array(6).fill(text);
+  // 텍스트를 3개 복사해서 끊김 없는 무한 루프 구현
+  const repeatedText = Array(3).fill(text);
 
-  // 텍스트를 단어별로 분할하고 색상/두께를 적용하는 함수
+  // 단어 색상/두께 처리
   const renderColoredText = (txt: string) => {
-    // coloredWords와 fontWeights가 모두 비어있으면 기존 방식으로 렌더링
-    if (Object.keys(coloredWords).length === 0 && Object.keys(fontWeights).length === 0) {
-      return txt.split('\n').map((line: string, lineIndex: number, array: string[]) => (
-        <span key={lineIndex}>
-          {line}
-          {lineIndex < array.length - 1 && <br />}
+    return txt.split(" ").map((word, idx) => {
+      const color = coloredWords[word] || textColor;
+      const weight = fontWeights[word] || fontWeight;
+      return (
+        <span key={idx} style={{ color, fontWeight: weight }}>
+          {word}&nbsp;
         </span>
-      ));
-    }
-
-    // 단어별로 색상과 두께 적용
-    let processedText = txt;
-    const wordElements: React.ReactNode[] = [];
-    
-    // 모든 특별한 단어들을 수집 (색상이나 두께가 지정된 단어들)
-    const specialWords = new Set([...Object.keys(coloredWords), ...Object.keys(fontWeights)]);
-    
-    // 각 특별한 단어를 찾아서 마킹
-    specialWords.forEach((word) => {
-      const regex = new RegExp(`(${word})`, 'gi');
-      processedText = processedText.replace(regex, `||${word}||SPECIAL||`);
+      );
     });
-
-    // 처리된 텍스트를 파싱하여 JSX 요소로 변환
-    const parts = processedText.split('||');
-    for (let i = 0; i < parts.length; i += 3) {
-      const beforeText = parts[i];
-      const specialWord = parts[i + 1];
-      const marker = parts[i + 2];
-
-      // 일반 텍스트 추가
-      if (beforeText) {
-        wordElements.push(
-          <span 
-            key={`text-${i}`} 
-            style={{ 
-              color: textColor.startsWith('#') || textColor.startsWith('rgb') ? textColor : undefined,
-              fontWeight: fontWeight
-            }}
-          >
-            {beforeText}
-          </span>
-        );
-      }
-
-      // 특별한 단어 (색상이나 두께가 적용된 단어) 추가
-      if (specialWord && marker === 'SPECIAL') {
-        const wordColor = coloredWords[specialWord] || (textColor.startsWith('#') || textColor.startsWith('rgb') ? textColor : undefined);
-        const wordWeight = fontWeights[specialWord] || fontWeight;
-        
-        wordElements.push(
-          <span 
-            key={`special-${i}`} 
-            style={{ 
-              color: wordColor,
-              fontWeight: wordWeight
-            }}
-          >
-            {specialWord}
-          </span>
-        );
-      }
-    }
-
-    return wordElements;
   };
 
   return (
     <div className="relative w-full overflow-hidden">
       <motion.div
         className="flex items-center whitespace-nowrap"
-        style={{ 
+        style={{
           columnGap: gap,
           willChange: "transform",
-          backfaceVisibility: "hidden",
-          perspective: 1000,
-          transform: "translateZ(0)"
         }}
-        animate={{ x: ["0%", "-100%"] }}
-        transition={{ 
-          duration: duration * 2, 
-          repeat: Infinity, 
+        animate={{ x: ["0%", "-100%"] }} // 3개 중 1개씩 이동으로 끊김 없는 반복
+        transition={{
+          duration: duration,
+          repeat: Infinity,
           ease: "linear",
           repeatType: "loop",
-          type: "tween"
         }}
       >
-        {repeatedText.map((txt, i) => {
-          return (
-            <span
-              key={i}
-              className="flex-none"
-              style={{ 
-                fontSize: `${fontSize}px`,
-                lineHeight: '1.2',
-                ...(Object.keys(coloredWords).length === 0 && Object.keys(fontWeights).length === 0 ? { 
-                  color: textColor.startsWith('#') || textColor.startsWith('rgb') ? textColor : undefined,
-                  fontWeight: fontWeight
-                } : {})
-              }}
-            >
-              {renderColoredText(txt)}
-            </span>
-          );
-        })}
+        {repeatedText.map((txt, i) => (
+          <span
+            key={i}
+            className="flex-none"
+            style={{
+              fontSize: `${fontSize}px`,
+              lineHeight: "1.2",
+              color: textColor,
+              fontWeight: fontWeight,
+            }}
+          >
+            {renderColoredText(txt)}
+          </span>
+        ))}
       </motion.div>
-      {/* 그라데이션 페이드 효과 */}
+
+      {/* 좌우 페이드 효과 */}
       <div className="pointer-events-none absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-gray-100 to-transparent" />
       <div className="pointer-events-none absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-gray-100 to-transparent" />
     </div>
@@ -197,12 +133,12 @@ const buttons: ButtonItem[] = [
   },
 ];
 
-// 줄바꿈 처리 함수
+// 줄바꿈 처리
 function renderTextWithBreaks(text: string) {
-  return text.split('\n').map((line: string, lineIndex: number, array: string[]) => (
-    <span key={lineIndex}>
+  return text.split("\n").map((line, i, arr) => (
+    <span key={i}>
       {line}
-      {lineIndex < array.length - 1 && <br />}
+      {i < arr.length - 1 && <br />}
     </span>
   ));
 }
@@ -210,115 +146,93 @@ function renderTextWithBreaks(text: string) {
 export default function HomeButton() {
   const [selectedIdx, setSelectedIdx] = useState<number | null>(null);
 
-  // ESC 키로 모달 닫기
+  // ESC 키 닫기
   useEffect(() => {
     const handleEscKey = (event: KeyboardEvent) => {
-      if (event.key === 'Escape' && selectedIdx !== null) {
+      if (event.key === "Escape" && selectedIdx !== null) {
         setSelectedIdx(null);
       }
     };
-
     if (selectedIdx !== null) {
-      document.addEventListener('keydown', handleEscKey);
-      // 스크롤 방지
-      document.body.style.overflow = 'hidden';
+      document.addEventListener("keydown", handleEscKey);
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = "unset";
     }
-
     return () => {
-      document.removeEventListener('keydown', handleEscKey);
-      document.body.style.overflow = 'unset';
+      document.removeEventListener("keydown", handleEscKey);
+      document.body.style.overflow = "unset";
     };
   }, [selectedIdx]);
 
-  const handleCloseModal = () => {
-    setSelectedIdx(null);
-  };
-
-  const handleButtonClick = (idx: number) => {
-    setSelectedIdx(idx);
-  };
-
-  const handleBackdropClick = (e: React.MouseEvent) => {
-    if (e.target === e.currentTarget) {
-      handleCloseModal();
-    }
-  };
+  const handleCloseModal = () => setSelectedIdx(null);
 
   const renderModal = () => {
     if (selectedIdx === null) return null;
-    const idx = selectedIdx;
-    const selectedButton = buttons[idx];
-    
+    const selectedButton = buttons[selectedIdx];
     return (
-      <div 
+      <div
         style={{
-          position: 'fixed',
+          position: "fixed",
           top: 0,
           left: 0,
           right: 0,
           bottom: 0,
-          backgroundColor: 'rgba(0, 0, 0, 0.5)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          zIndex: 999998
+          backgroundColor: "rgba(0, 0, 0, 0.5)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          zIndex: 999998,
         }}
-        onClick={handleBackdropClick}
+        onClick={() => handleCloseModal()}
       >
-        <div 
+        <div
           style={{
-            position: 'relative',
-            backgroundColor: 'white',
-            borderRadius: '8px',
-            boxShadow: '0 10px 25px rgba(0, 0, 0, 0.2)',
-            maxWidth: '1024px',
-            width: '100%',
-            margin: '16px',
-            maxHeight: '575px',//세로높이
-            overflow: 'hidden'
+            position: "relative",
+            backgroundColor: "white",
+            borderRadius: "8px",
+            boxShadow: "0 10px 25px rgba(0, 0, 0, 0.2)",
+            maxWidth: "1024px",
+            width: "100%",
+            margin: "16px",
+            maxHeight: "575px",
+            overflow: "hidden",
           }}
           onClick={(e) => e.stopPropagation()}
         >
-          {/* X 버튼 */}
           <button
             onClick={handleCloseModal}
             style={{
-              position: 'absolute',
-              top: '16px',
-              right: '16px',
+              position: "absolute",
+              top: "16px",
+              right: "16px",
               zIndex: 10,
-              backgroundColor: 'white',
-              borderRadius: '50%',
-              width: '32px',
-              height: '32px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              border: 'none',
-              cursor: 'pointer',
-              fontSize: '18px',
-              boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)'
+              backgroundColor: "white",
+              borderRadius: "50%",
+              width: "32px",
+              height: "32px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              border: "none",
+              cursor: "pointer",
+              fontSize: "18px",
+              boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
             }}
             aria-label="모달 닫기"
           >
             ✕
           </button>
-          
-          {/* 이미지 컨테이너 */}
-          <div style={{ width: '100%' }}>
+          <div style={{ width: "100%" }}>
             <img
               src={selectedButton.imagePath}
               alt={selectedButton.subtitle}
-              style={{ 
-                width: '100%', 
-                height: 'auto', 
-                objectFit: 'contain',
-                maxHeight: '85vh'
+              style={{
+                width: "100%",
+                height: "auto",
+                objectFit: "contain",
+                maxHeight: "85vh",
               }}
-              onLoad={() => {}}
-              onError={() => {}}
             />
           </div>
         </div>
@@ -329,14 +243,14 @@ export default function HomeButton() {
   return (
     <>
       {renderModal()}
-      <div className="w-full bg-white" style={{ marginTop: '100px' }}>
+      <div className="w-full bg-white" style={{ marginTop: "100px" }}>
         <div className="grid grid-cols-4 border-t border-gray-200">
           {buttons.map((btn, idx) => {
             const isSelected = selectedIdx === idx;
             return (
               <div
                 key={idx}
-                onClick={() => handleButtonClick(idx)}
+                onClick={() => setSelectedIdx(idx)}
                 className={`aspect-square w-full flex flex-col cursor-pointer justify-center p-8 text-center transition-colors border-b border-gray-200 group ${
                   idx !== buttons.length - 1 ? "border-r" : ""
                 } ${isSelected ? "bg-gray-100" : "hover:bg-gray-50"}`}
@@ -377,26 +291,28 @@ export default function HomeButton() {
             );
           })}
         </div>
-                 <div className="w-full py-16 bg-gray-100" style={{ marginTop: '20px' }}>
-           <InfiniteTextSlider 
-             text="LEADINGCUSTOMERSUCESS"
-             fontSize={110}
-             textColor="#c2c2c2"
-             duration={25}
-             gap={10}
-             fontWeight={300}
-             coloredWords={{
-               "LEADING": "#b8e9ff",
-               "CUSTOMER": "#18a8f1",
-               "SUCESS": "#b8e9ff"
-             }}
-             fontWeights={{
-               "LEADING": 700,
-               "CUSTOMER": 700,
-               "SUCESS": 700
-             }}
-           />
-         </div>
+
+        {/* 무한 텍스트 슬라이더 */}
+        <div className="w-full py-16 bg-gray-100" style={{ marginTop: "20px" }}>
+          <InfiniteTextSlider
+            text="LEADING CUSTOMER SUCCESS"
+            fontSize={110}
+            textColor="#c2c2c2"
+            duration={25}
+            gap={50}
+            fontWeight={300}
+            coloredWords={{
+              LEADING: "#b8e9ff",
+              CUSTOMER: "#18a8f1",
+              SUCCESS: "#b8e9ff",
+            }}
+            fontWeights={{
+              LEADING: 700,
+              CUSTOMER: 700,
+              SUCCESS: 700,
+            }}
+          />
+        </div>
       </div>
     </>
   );
