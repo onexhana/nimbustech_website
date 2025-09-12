@@ -291,7 +291,8 @@ export default function HomeButtonMobile({ topOffset = '-40vh', marginTopSpacing
         >
           
           {/* 이미지 컨테이너 - 고정 비율로 모든 기종에서 동일하게 */}
-          <div style={{ 
+          <div 
+          style={{
             width: '100%', 
             height: '100%',
             display: 'flex', 
@@ -299,7 +300,8 @@ export default function HomeButtonMobile({ topOffset = '-40vh', marginTopSpacing
             alignItems: 'center',
             padding: '0',
             position: 'relative'
-          }}>
+          }}
+          onClick={handleCloseModal}>
             
             <img
               src={selectedButton.imagePath}
