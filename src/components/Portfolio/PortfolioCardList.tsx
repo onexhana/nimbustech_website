@@ -80,10 +80,8 @@ const PortfolioCardList = ({ projects }: Props) => {
             {duplicatedProjects.map((project, index) => (
               <SwiperSlide key={`${project.id}-${index}`}>
                 <PortfolioCard
-                  id={project.id}
                   title={project.title}
                   description={project.description}
-                  category={project.category}
                   image={project.image}
                 />
               </SwiperSlide>
@@ -139,37 +137,55 @@ const PortfolioCardList = ({ projects }: Props) => {
             }
           `}</style>
         </div>
-
-        {/* 우측 화살표 버튼 */}
-        {projects.length > 1 && (
+        {/* 네비게이션 화살표 버튼 */}
+        <>
           <button
-            aria-label="다음 카드"
-            onClick={() => swiperRef.current?.slideNext()}
-            className="hover:bg-gray-100 transition-all duration-300"
+            onClick={() => swiperRef.current?.slidePrev()}
             style={{
-              backgroundColor: '#ffffff',
+              position: 'absolute',
+              top: '-5rem',
+              right: '6rem',
               border: 'none',
               outline: 'none',
-              padding: '0',
-              fontSize: '28px',
-              fontWeight: 700,
+              width: '40px',
+              height: '40px',
               borderRadius: '50%',
-              width: '50px',
-              height: '50px',
+              backgroundColor: '#E5E7EB',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               cursor: 'pointer',
-              boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
-              position: 'relative',
-              zIndex: 10
+              zIndex: 10,
             }}
           >
-            <svg width="50" height="50" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M9 6L15 12L9 18" stroke="#1f2937" strokeWidth="3" strokeLinecap="butt" strokeLinejoin="miter" />
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path d="M15 6L9 12L15 18" stroke="#1F2937" strokeWidth="3" strokeLinecap="butt" strokeLinejoin="miter" />
             </svg>
           </button>
-        )}
+          <button
+            onClick={() => swiperRef.current?.slideNext()}
+            style={{
+              position: 'absolute',
+              top: '-5rem',
+              right: '2rem',
+              border: 'none',
+              outline: 'none',
+              width: '40px',
+              height: '40px',
+              borderRadius: '50%',
+              backgroundColor: '#1F2937',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              cursor: 'pointer',
+              zIndex: 10,
+            }}
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path d="M9 6L15 12L9 18" stroke="#FFFFFF" strokeWidth="3" strokeLinecap="butt" strokeLinejoin="miter" />
+            </svg>
+          </button>
+        </>
       </div>
     </div>
   );
