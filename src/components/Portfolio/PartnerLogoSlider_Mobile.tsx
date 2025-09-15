@@ -58,7 +58,7 @@ function MobileTrack({
           perspective: 1000,
           transform: "translateZ(0)"
         }}
-        animate={{ x: reverse ? ["-200%", "0%"] : ["0%", "-200%"] }}
+        animate={{ x: ["0%", "-100%"] }}
         transition={{ 
           duration: duration, 
           repeat: Infinity, 
@@ -111,7 +111,7 @@ function PartnerLogoSliderMobile({
 
   const rows = [
     { logos: ROW1, duration: topDuration },
-    { logos: ROW2, duration: bottomDuration, reverse: true },
+    { logos: [...ROW2].reverse(), duration: bottomDuration },
   ];
 
   return (
