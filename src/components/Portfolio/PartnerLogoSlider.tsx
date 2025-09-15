@@ -134,7 +134,7 @@ function PartnerLogoSlider({
 
   // 모바일과 웹에 따른 크기 설정
   const finalLogoHeight = isMobile ? logoHeight * 0.6 : logoHeight; // 모바일에서 60% 크기
-  const finalGap = isMobile ? gap * 0.7 : gap; // 모바일에서 간격도 70% 크기
+  const finalGap = isMobile ? gap * 0.4 : gap; // 모바일에서 간격을 40%로 더 줄임
   const finalRowSpacing = isMobile ? rowSpacing * 0.7 : rowSpacing; // 모바일에서 줄 간격도 70%
 
   // 배속 계산 (0 또는 음수 방지)
