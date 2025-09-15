@@ -9,13 +9,18 @@ import 'swiper/swiper-bundle.css';
 
 export default function PortfolioSection() {
   const [selectedCategory, setSelectedCategory] = useState("공공");
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 768);
   const [swiperKey, setSwiperKey] = useState(0); // Swiper 강제 재초기화를 위한 키
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const swiperRef = useRef<any>(null);
   
-  const filtered = portfolioProjects.filter((p) => p.category === selectedCategory);
+  const filtered = portfolioProjects.filter((p) =>
+    selectedCategory === "일반 / 제조"
+      ? (p.category === "일반" || p.category === "제조")
+      : p.category === selectedCategory
+  );
   
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
@@ -129,7 +134,10 @@ export default function PortfolioSection() {
                     color: selectedCategory === category ? 'white' : '#00A3E0',
                     border: '1px solid #00A3E0',
                     borderRadius: '20px',
-                    padding: '8px 20px',
+                    width: '24%',
+                    padding: '8px 0',
+                    textAlign: 'center',
+                    boxSizing: 'border-box',
                     fontSize: '14px',
                     fontWeight: '600',
                     cursor: 'pointer'
@@ -154,12 +162,12 @@ export default function PortfolioSection() {
                 slidesPerView={1.2}
                 centeredSlides={true}
                 loop={true}
-                onSlideChange={(swiper: any) => {
+                onSlideChange={(swiper: { activeIndex: number }) => {
                   console.log(`슬라이드 변경: ${swiper.activeIndex}`);
                   setCurrentSlide(swiper.activeIndex);
                 }}
                 style={{
-                  paddingBottom: '20px'
+                  paddingBottom: '-100px'
                 }}
               >
                 {filtered.map((project, index) => (
@@ -168,19 +176,20 @@ export default function PortfolioSection() {
                       backgroundColor: '#f9fafb',
                       borderRadius: '24px',
                       padding: '20px',
-                      height: '300px',
+                      height: '280px',
                       display: 'flex',
                       flexDirection: 'column',
                       justifyContent: 'space-between',
                       boxShadow: '0 4px 10px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.04)',
-                      transition: 'all 0.3s ease'
+                      transition: 'all 0.3s ease',
+                      marginTop: '-0px'
                     }}>
                       <div>
                         <h3 style={{
                           fontSize: '22px',
                           fontWeight: '700',
                           color: '#00A3E0',
-                          marginBottom: '8px',
+                          marginBottom: '-15px',
                           textAlign: 'center'
                         }}>
                           {project.title}
@@ -191,14 +200,14 @@ export default function PortfolioSection() {
                           fontWeight: '600',
                           lineHeight: '1.5',
                           textAlign: 'center',
-                          marginBottom: '16px',
-                          minHeight: '50px',
+                          marginBottom: '0px',
+                          minHeight: '30px',
                           display: 'flex',
                           flexDirection: 'column',
                           justifyContent: 'center'
                         }}>
                           {project.description.split('\n').map((line, i) => (
-                            <p key={i} style={{ marginBottom: '-15px' }}>{line}</p>
+                            <p key={i} style={{ marginBottom: '-20px' }}>{line}</p>
                           ))}
                         </div>
                       </div>
@@ -208,11 +217,11 @@ export default function PortfolioSection() {
                         <div style={{
                           display: 'flex',
                           justifyContent: 'center',
-                          marginTop: '16px'
+                          marginTop: '-100px'
                         }}>
                           <div style={{
                             width: '280px',
-                            height: '150px',
+                            height: '180px',
                             borderRadius: '16px',
                             overflow: 'hidden',
                             backgroundColor: '#f3f4f6'
@@ -238,8 +247,8 @@ export default function PortfolioSection() {
           </>
         ) : (
           /* 데스크톱 레이아웃 */
-          <div className="flex gap-16 items-start" style={{ marginLeft: '64px', marginTop: '-0px' }}>
-            <CategoryFilter 
+          <div className="flex gap-16 items-start" style={{ marginLeft: '64px', marginTop: '0px' }}>
+            <CategoryFilter
               selectedCategory={selectedCategory}
               onCategoryChange={handleCategoryChange}
             />
