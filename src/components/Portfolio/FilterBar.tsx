@@ -5,7 +5,7 @@ type FilterBarProps = {
   onSelect: (category: string) => void;
 };
 
-const categories = ["공공", "금융", "일반", "제조", "유통", "기타"];
+const categories = ["공공", "금융", "일반 / 제조", "유통", "기타"];
 
 const FilterBar = ({ selected, onSelect }: FilterBarProps) => {
   return (

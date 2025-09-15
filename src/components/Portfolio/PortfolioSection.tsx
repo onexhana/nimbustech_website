@@ -15,7 +15,11 @@ export default function PortfolioSection() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const swiperRef = useRef<any>(null);
   
-  const filtered = portfolioProjects.filter((p) => p.category === selectedCategory);
+  const filtered = portfolioProjects.filter((p) =>
+    selectedCategory === "일반 / 제조"
+      ? (p.category === "일반" || p.category === "제조")
+      : p.category === selectedCategory
+  );
   
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
@@ -129,7 +133,10 @@ export default function PortfolioSection() {
                     color: selectedCategory === category ? 'white' : '#00A3E0',
                     border: '1px solid #00A3E0',
                     borderRadius: '20px',
-                    padding: '8px 20px',
+                    width: '24%',
+                    padding: '8px 0',
+                    textAlign: 'center',
+                    boxSizing: 'border-box',
                     fontSize: '14px',
                     fontWeight: '600',
                     cursor: 'pointer'
