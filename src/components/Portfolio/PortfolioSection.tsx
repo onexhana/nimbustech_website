@@ -247,8 +247,8 @@ export default function PortfolioSection() {
           </>
         ) : (
           /* 데스크톱 레이아웃 */
-          <div className="flex gap-16 items-start" style={{ marginLeft: '64px', marginTop: '-0px' }}>
-            <CategoryFilter 
+          <div className="flex gap-16 items-start" style={{ marginLeft: '64px', marginTop: '0px' }}>
+            <CategoryFilter
               selectedCategory={selectedCategory}
               onCategoryChange={handleCategoryChange}
             />

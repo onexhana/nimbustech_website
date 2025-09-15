@@ -14,12 +14,15 @@ const PortfolioCard = ({ title, description, image }: PortfolioCardProps) => {
     return '30px'; // 한 줄 설명 카드는 기본 간격
   };
 
+  // 모바일과 데스크톱 레이아웃 분리
+  const isMobile = window.innerWidth < 768;
+  
   return (
     <div 
       className="rounded-[24px] p-10 transition-all duration-300"
       style={{
-        width: '280px',
-        height: '360px',
+        width: isMobile ? '280px' : '380px',
+        height: isMobile ? '360px' : '400px',
         backgroundColor: '#f9fafb',
         boxShadow: '0 4px 10px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.04)'
       }} // 카드 최소 높이를 지정하여 내용에 따라 늘어납니다
@@ -28,10 +31,10 @@ const PortfolioCard = ({ title, description, image }: PortfolioCardProps) => {
       <div className="flex flex-col items-center h-full">
         {/* 제목과 설명 */}
         <div className="text-center" style={{ marginBottom: getMarginBottom() }}>
-          <h3 className="text-[#00A3E0] text-[28px] font-bold" style={{ marginBottom: '0px' }}>{title}</h3>
+          <h3 className="text-[#00A3E0] text-[28px] font-bold" style={{ marginBottom: isMobile ? '0px' : '2px' }}>{title}</h3>
           <p
           className="text-black text-[22px] text-center font-black"
-          style={{ marginTop: '0px', whiteSpace: 'pre-line' }}
+          style={{ marginTop: isMobile ? '0px' : '2px', whiteSpace: 'pre-line' }}
         >
           {description}
         </p>
@@ -41,9 +44,9 @@ const PortfolioCard = ({ title, description, image }: PortfolioCardProps) => {
         <div
           className="bg-gray-100 rounded-[16px] overflow-hidden flex items-end justify-center"
           style={{
-            width: '260px',
-            height: '240px',
-            marginTop: '-20px'
+            width: isMobile ? '260px' : '330px',
+            height: isMobile ? '240px' : '260px',
+            marginTop: isMobile ? '-20px' : '-42px'
           }}
         >
           {image ? (
