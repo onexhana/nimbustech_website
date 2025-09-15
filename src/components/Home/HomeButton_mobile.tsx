@@ -29,82 +29,26 @@ function InfiniteTextSlider({
   text, 
   fontSize = 48, // px 단위 기본값
   textColor = "text-gray-300",
-  duration = 20,
+  duration = 2,
   gap = 100,
   coloredWords = {},
   fontWeight = 300,
   fontWeights = {}
 }: InfiniteTextSliderProps) {
-  // 텍스트를 여러 번 복제하여 무한 스크롤 효과 생성
-  const repeatedText = Array(6).fill(text);
+  // 텍스트를 3개 복사해서 끊김 없는 무한 루프 구현
+  const repeatedText = Array(3).fill(text);
 
-  // 텍스트를 단어별로 분할하고 색상/두께를 적용하는 함수
+  // 단어 색상/두께 처리
   const renderColoredText = (txt: string) => {
-    // coloredWords와 fontWeights가 모두 비어있으면 기존 방식으로 렌더링
-    if (Object.keys(coloredWords).length === 0 && Object.keys(fontWeights).length === 0) {
-      return txt.split('\n').map((line: string, lineIndex: number, array: string[]) => (
-        <span key={lineIndex}>
-          {line}
-          {lineIndex < array.length - 1 && <br />}
+    return txt.split(" ").map((word, idx) => {
+      const color = coloredWords[word] || textColor;
+      const weight = fontWeights[word] || fontWeight;
+      return (
+        <span key={idx} style={{ color, fontWeight: weight }}>
+          {word}&nbsp;
         </span>
-      ));
-    }
-
-    // 단어별로 색상과 두께 적용
-    let processedText = txt;
-    const wordElements: React.ReactNode[] = [];
-    
-    // 모든 특별한 단어들을 수집 (색상이나 두께가 지정된 단어들)
-    const specialWords = new Set([...Object.keys(coloredWords), ...Object.keys(fontWeights)]);
-    
-    // 각 특별한 단어를 찾아서 마킹
-    specialWords.forEach((word) => {
-      const regex = new RegExp(`(${word})`, 'gi');
-      processedText = processedText.replace(regex, `||${word}||SPECIAL||`);
+      );
     });
-
-    // 처리된 텍스트를 파싱하여 JSX 요소로 변환
-    const parts = processedText.split('||');
-    for (let i = 0; i < parts.length; i += 3) {
-      const beforeText = parts[i];
-      const specialWord = parts[i + 1];
-      const marker = parts[i + 2];
-
-      // 일반 텍스트 추가
-      if (beforeText) {
-        wordElements.push(
-          <span 
-            key={`text-${i}`} 
-            style={{ 
-              color: textColor.startsWith('#') || textColor.startsWith('rgb') ? textColor : undefined,
-              fontWeight: fontWeight
-            }}
-          >
-            {beforeText}
-          </span>
-        );
-      }
-
-      // 특별한 단어 (색상이나 두께가 적용된 단어) 추가
-      if (specialWord && marker === 'SPECIAL') {
-        const wordColor = coloredWords[specialWord] || (textColor.startsWith('#') || textColor.startsWith('rgb') ? textColor : undefined);
-        const wordWeight = fontWeights[specialWord] || fontWeight;
-        
-        wordElements.push(
-          <span 
-            key={`special-${i}`} 
-            style={{ 
-              color: wordColor,
-              fontWeight: wordWeight
-            }}
-          >
-            {specialWord}
-          </span>
-        );
-      }
-    }
-
-    return wordElements;
   };
 
   return (
@@ -115,16 +59,20 @@ function InfiniteTextSlider({
           columnGap: gap,
           willChange: "transform",
           backfaceVisibility: "hidden",
-          perspective: 1000,
-          transform: "translateZ(0)"
+          perspective: "1000px",
+          transform: "translateZ(0)",
+          WebkitTransform: "translateZ(0)",
+          WebkitBackfaceVisibility: "hidden",
+          WebkitPerspective: "1000px"
         }}
-        animate={{ x: ["0%", "-50%"] }}
+        animate={{ x: ["0%", "-500%"] }} // 3개 중 1개씩 이동으로 끊김 없는 반복
         transition={{ 
-          duration,
+          duration: duration*5,
           repeat: Infinity,
           ease: "linear",
           repeatType: "loop",
-          type: "tween"
+          type: "tween",
+          times: [0, 1]
         }}
       >
         {repeatedText.map((txt, i) => {
@@ -132,13 +80,15 @@ function InfiniteTextSlider({
             <span
               key={i}
               className="flex-none"
-              style={{ 
+              style={{
                 fontSize: `${fontSize}px`,
-                lineHeight: '1.2',
-                ...(Object.keys(coloredWords).length === 0 && Object.keys(fontWeights).length === 0 ? { 
-                  color: textColor.startsWith('#') || textColor.startsWith('rgb') ? textColor : undefined,
-                  fontWeight: fontWeight
-                } : {})
+                lineHeight: "1.2",
+                color: textColor,
+                fontWeight: fontWeight,
+                WebkitFontSmoothing: "antialiased",
+                MozOsxFontSmoothing: "grayscale",
+                textRendering: "optimizeLegibility",
+                willChange: "transform"
               }}
             >
               {renderColoredText(txt)}
@@ -291,7 +241,8 @@ export default function HomeButtonMobile({ topOffset = '-40vh', marginTopSpacing
         >
           
           {/* 이미지 컨테이너 - 고정 비율로 모든 기종에서 동일하게 */}
-          <div style={{ 
+          <div 
+          style={{
             width: '100%', 
             height: '100%',
             display: 'flex', 
@@ -299,7 +250,8 @@ export default function HomeButtonMobile({ topOffset = '-40vh', marginTopSpacing
             alignItems: 'center',
             padding: '0',
             position: 'relative'
-          }}>
+          }}
+          onClick={handleCloseModal}>
             
             <img
               src={selectedButton.imagePath}
@@ -401,21 +353,21 @@ export default function HomeButtonMobile({ topOffset = '-40vh', marginTopSpacing
         {/* 모바일용 무한 텍스트 슬라이더 */}
         <div className="w-full py-12 bg-gray-100" style={{ marginTop: '30px' }}> 
           <InfiniteTextSlider 
-            text="LEADINGCUSTOMERUCESS"
+            text="LEADING CUSTOMER SUCCESS"
             fontSize={60}
             textColor="#c2c2c2"
-            duration={6}
+            duration={15}
             gap={10}
             fontWeight={300}
             coloredWords={{
               "LEADING": "#b8e9ff",
               "CUSTOMER": "#18a8f1",
-              "SUCESS": "#b8e9ff"
+              "SUCCESS": "#b8e9ff"
             }}
             fontWeights={{
               "LEADING": 700,
               "CUSTOMER": 700,
-              "SUCESS": 700
+              "SUCCESS": 700
             }}
           />
         </div>
