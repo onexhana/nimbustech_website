@@ -48,13 +48,11 @@ const ROW2: Logo[] = Array.from({ length: 21 }, (_, i) => {
 function Track({
   logos,
   duration = 28,
-  reverse = false,
   logoHeight,
   gap,
 }: {
   logos: Logo[];
   duration?: number;
-  reverse?: boolean;
   logoHeight: number;
   gap: number;
 }) {
@@ -75,9 +73,9 @@ function Track({
           perspective: 1000,
           transform: "translateZ(0)" // GPU 가속 활성화
         }}
-        animate={{ x: reverse ? ["-500%", "0%"] : ["0%", "-500%"] }}
+        animate={{ x: ["0%", "-100%"] }}
         transition={{ 
-          duration: duration * 6, 
+          duration: duration, 
           repeat: Infinity, 
           ease: "linear",
           // 깜빡임 방지: 부드러운 반복 설정 (새로고침 대신 상태 변경)
@@ -147,7 +145,7 @@ function PartnerLogoSlider({
 
   const rows = [
     { logos: ROW1, duration: topDuration },           // 윗줄 (오른쪽 → 왼쪽)
-    { logos: ROW2, duration: bottomDuration, reverse: true }, // 아랫줄 (왼쪽 → 오른쪽)
+    { logos: [...ROW2].reverse(), duration: bottomDuration }, // 아랫줄 (배열 순서 뒤집어서 반대 효과)
   ];
 
   return (
