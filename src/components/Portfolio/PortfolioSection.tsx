@@ -167,7 +167,7 @@ export default function PortfolioSection() {
                   setCurrentSlide(swiper.activeIndex);
                 }}
                 style={{
-                  paddingBottom: '60px'
+                  paddingBottom: '15px'
                 }}
               >
                 {filtered.map((project, index) => (
@@ -175,14 +175,14 @@ export default function PortfolioSection() {
                     <div style={{
                       backgroundColor: '#f9fafb',
                       borderRadius: '24px',
-                      padding: '20px',
+                      padding: isMobile ? '2px 20px 20px 20px' : '20px',
                       height: '280px',
                       display: 'flex',
                       flexDirection: 'column',
                       justifyContent: 'space-between',
                       boxShadow: '0 4px 10px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.04)',
                       transition: 'all 0.3s ease',
-                      marginTop: '-0px'
+                      marginTop: '20px'
                     }}>
                       <div>
                         <h3 style={{
@@ -217,7 +217,7 @@ export default function PortfolioSection() {
                         <div style={{
                           display: 'flex',
                           justifyContent: 'center',
-                          marginTop: '-100px'
+                          marginTop: '20px'
                         }}>
                           <div style={{
                             width: '280px',
