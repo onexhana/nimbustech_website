@@ -167,7 +167,7 @@ export default function PortfolioSection() {
                   setCurrentSlide(swiper.activeIndex);
                 }}
                 style={{
-                  paddingBottom: '-100px'
+                  paddingBottom: '60px'
                 }}
               >
                 {filtered.map((project, index) => (
