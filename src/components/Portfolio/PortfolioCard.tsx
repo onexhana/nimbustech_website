@@ -45,8 +45,8 @@ const PortfolioCard = ({ title, description, image }: PortfolioCardProps) => {
           className="bg-gray-100 rounded-[16px] overflow-hidden flex items-end justify-center"
           style={{
             width: isMobile ? '260px' : '330px',
-            height: isMobile ? '240px' : '260px',
-            marginTop: isMobile ? '-20px' : '-42px'
+            height: isMobile ? '240px' : '250px',
+            marginTop: isMobile ? '-20px' : '-30px'
           }}
         >
           {image ? (
