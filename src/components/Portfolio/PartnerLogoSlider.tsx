@@ -75,9 +75,9 @@ function Track({
           perspective: 1000,
           transform: "translateZ(0)" // GPU 가속 활성화
         }}
-        animate={{ x: reverse ? ["-100%", "0%"] : ["0%", "-100%"] }}
+        animate={{ x: reverse ? ["-500%", "0%"] : ["0%", "-500%"] }}
         transition={{ 
-          duration: duration * 2, 
+          duration: duration * 6, 
           repeat: Infinity, 
           ease: "linear",
           // 깜빡임 방지: 부드러운 반복 설정 (새로고침 대신 상태 변경)
@@ -94,8 +94,8 @@ function Track({
             className="w-auto flex-none object-contain opacity-80 hover:opacity-100 transition"
             style={{ 
               height: logoHeight,
-              minWidth: '120px', // 최소 너비 보장
-              maxWidth: '300px', // 최대 너비 확장
+              width: 'auto', // 원본 비율에 맞는 너비 자동 계산
+              maxWidth: '300px', // 최대 너비만 제한
               imageRendering: 'auto', // 고화질 렌더링 설정
               filter: 'contrast(1.1) saturate(1.05)', // 선명도 향상
               objectFit: 'contain' // 비율 유지하면서 크기 맞춤
@@ -134,7 +134,7 @@ function PartnerLogoSlider({
 
   // 모바일과 웹에 따른 크기 설정
   const finalLogoHeight = isMobile ? logoHeight * 0.6 : logoHeight; // 모바일에서 60% 크기
-  const finalGap = isMobile ? gap * 0.7 : gap; // 모바일에서 간격도 70% 크기
+  const finalGap = isMobile ? gap * 0.4 : gap; // 모바일에서 간격을 40%로 더 줄임
   const finalRowSpacing = isMobile ? rowSpacing * 0.7 : rowSpacing; // 모바일에서 줄 간격도 70%
 
   // 배속 계산 (0 또는 음수 방지)
