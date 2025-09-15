@@ -58,7 +58,7 @@ function MobileTrack({
           perspective: 1000,
           transform: "translateZ(0)"
         }}
-        animate={{ x: reverse ? ["-200%", "0%"] : ["0%", "-200%"] }}
+        animate={{ x: reverse ? ["-100%", "0%"] : ["0%", "-100%"] }}
         transition={{ 
           duration: duration, 
           repeat: Infinity, 
@@ -110,8 +110,8 @@ function PartnerLogoSliderMobile({
   const bottomDuration = durationBottom / safeFactor(speedBottom ?? speed);
 
   const rows = [
-    { logos: ROW1, duration: topDuration },
-    { logos: ROW2, duration: bottomDuration, reverse: true },
+    { logos: ROW1, duration: topDuration, reverse: false },
+    { logos: [...ROW2].reverse(), duration: bottomDuration, reverse: true },
   ];
 
   return (
@@ -130,7 +130,7 @@ function PartnerLogoSliderMobile({
       </p>
       {rows.map((row, i) => (
         <div key={i} style={{ marginTop: i === 0 ? 0 : rowSpacing }}>
-          <MobileTrack {...row} logoHeight={logoHeight} gap={gap} />
+          <MobileTrack {...row} logoHeight={logoHeight} gap={gap} reverse={row.reverse} />
         </div>
       ))}
       {bottomSpacing > 0 && <div style={{ height: bottomSpacing }} />}
