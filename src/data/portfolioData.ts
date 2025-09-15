@@ -37,4 +37,4 @@ export const portfolioProjects = [
 ];
 
 // 카테고리 목록
-export const portfolioCategories = ["공공", "금융", "일반", "제조"];
+export const portfolioCategories = ["공공", "금융", "일반 / 제조"];
