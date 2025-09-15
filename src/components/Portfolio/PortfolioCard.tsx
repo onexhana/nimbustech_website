@@ -17,29 +17,35 @@ const PortfolioCard = ({ title, description, image }: PortfolioCardProps) => {
   return (
     <div 
       className="rounded-[24px] p-10 transition-all duration-300"
-      style={{ 
-        width: '380px', 
-        marginTop: '0px',
-        height: '400px', 
+      style={{
+        width: '280px',
+        height: '360px',
         backgroundColor: '#f9fafb',
-       boxShadow: '0 4px 10px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.04)'
+        boxShadow: '0 4px 10px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.04)'
       }} // 카드 최소 높이를 지정하여 내용에 따라 늘어납니다
     >
       {/* 컨텐츠 그룹 - 제목/설명/이미지 묶음 */}
       <div className="flex flex-col items-center h-full">
         {/* 제목과 설명 */}
         <div className="text-center" style={{ marginBottom: getMarginBottom() }}>
-          <h3 className="text-[#00A3E0] text-[28px] font-bold" style={{ marginBottom: '2px' }}>{title}</h3>
+          <h3 className="text-[#00A3E0] text-[28px] font-bold" style={{ marginBottom: '0px' }}>{title}</h3>
           <p
           className="text-black text-[22px] text-center font-black"
-          style={{ marginTop: '2px', whiteSpace: 'pre-line' }}
+          style={{ marginTop: '0px', whiteSpace: 'pre-line' }}
         >
           {description}
         </p>
         </div>
         
         {/* 이미지 영역 */}
-        <div className="bg-gray-100 rounded-[16px] overflow-hidden flex items-end justify-center w-[330px] h-[260px]" style={{ marginTop: '-42px' }}>
+        <div
+          className="bg-gray-100 rounded-[16px] overflow-hidden flex items-end justify-center"
+          style={{
+            width: '260px',
+            height: '240px',
+            marginTop: '-20px'
+          }}
+        >
           {image ? (
             <img 
               src={image} 
