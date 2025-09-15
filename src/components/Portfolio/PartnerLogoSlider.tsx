@@ -32,17 +32,16 @@ type PartnerLogoSliderProps = {
 /** 화면을 충분히 채우기 위해 한 절반(half)에 logos를 몇 번 반복할지 지정 */
 const COPIES_PER_HALF = 4;
 
-/// 고객사 로고 17개 자동 생성
-const ROW1: Logo[] = Array.from({ length: 17 }, (_, i) => {
+/// 고객사 로고 17개 자동 생성 (고화질)
+const ROW1: Logo[] = Array.from({ length: 16 }, (_, i) => {
   const num = String(i + 1).padStart(2, "0");
-  return { src: `/고객사 & 파트너사/고객사${num}.png`, alt: `고객사${num}` };
+  return { src: `/고객사 & 파트너사_고화질/고객사${num}.png`, alt: `고객사${num}` };
 });
 
-// 파트너사 로고 21개 자동 생성
+// 파트너사 로고 21개 자동 생성 (고화질 - 모든 파일 PNG)
 const ROW2: Logo[] = Array.from({ length: 21 }, (_, i) => {
-  const num = String(i + 1).padStart(2, "0");
-  const ext = (num === "01" || num === "05"|| num === "14"|| num === "20") ? "jpg" : "png"; // 일부 jpg 예외 처리
-  return { src: `/고객사 & 파트너사/파트너사${num}.${ext}`, alt: `파트너사${num}` };
+  const num = String(i + 1).padStart(2, "0");  
+  return { src: `/고객사 & 파트너사_고화질/파트너사${num}.png`, alt: `파트너사${num}` };
 });
 
 
@@ -93,7 +92,14 @@ function Track({
             src={logo.src}
             alt={logo.alt}
             className="w-auto flex-none object-contain opacity-80 hover:opacity-100 transition"
-            style={{ height: logoHeight }}
+            style={{ 
+              height: logoHeight,
+              minWidth: '120px', // 최소 너비 보장
+              maxWidth: '300px', // 최대 너비 확장
+              imageRendering: 'auto', // 고화질 렌더링 설정
+              filter: 'contrast(1.1) saturate(1.05)', // 선명도 향상
+              objectFit: 'contain' // 비율 유지하면서 크기 맞춤
+            }}
             loading="lazy"
           />
         ))}
