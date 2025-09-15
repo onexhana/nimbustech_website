@@ -39,7 +39,7 @@ const PortfolioCard = ({ title, description, image }: PortfolioCardProps) => {
         </div>
         
         {/* 이미지 영역 */}
-        <div className="bg-gray-100 rounded-[16px] overflow-hidden flex items-end justify-center w-[330px] h-[220px]">
+        <div className="bg-gray-100 rounded-[16px] overflow-hidden flex items-end justify-center w-[330px] h-[260px]" style={{ marginTop: '-42px' }}>
           {image ? (
             <img 
               src={image} 
