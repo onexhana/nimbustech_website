@@ -74,9 +74,9 @@ function MobileTrack({
             alt={logo.alt}
             className="w-auto flex-none object-contain opacity-80 hover:opacity-100 transition"
              style={{ 
-               height: logoHeight,
+               height: `${logoHeight}px`,
                width: 'auto',
-               maxWidth: '80px',
+               maxWidth: 'none',
                imageRendering: 'auto',
                filter: 'contrast(1.1) saturate(1.05)',
                objectFit: 'contain'
@@ -93,7 +93,7 @@ function MobileTrack({
 }
 
 function PartnerLogoSliderMobile({
-  logoHeight = 10,  // 로고 크기 더 작게
+  logoHeight = 10,  // 로고 크기 (픽셀 단위로 변경: 8rem → 40px)
   gap = 20,         // 간격 더 좁게
   durationTop = 6, // 속도 더 빠르게
   durationBottom = 8,
