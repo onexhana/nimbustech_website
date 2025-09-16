@@ -21,7 +21,7 @@ export const portfolioProjects = [
   { id: 31, title: "ACE 손해보험", description: "대응개발", category: "금융", image: "/portfolio_photo/금융_ACE.jpg" },
   // 일반/제조 카테고리
   { id: 32, title: "삼성전자", description: "RPA 개발 및 운영사업", category: "일반", image: "/portfolio_photo/일반_삼성전자.jpg" },
-  { id: 33, title: "태평양물산", description: "RPA 시범사업", category: "일반", image: "/portfolio_photo/일반_태평양물산.jpg" },
+  { id: 33, title: "태평양물산", description: "RPA 시범사업", category: "일반", image: "/portfolio_photo/일반_태평양물산.png" },
   { id: 34, title: "LG", description: "RPA 구축", category: "일반", image: "/portfolio_photo/일반_LG.jpg" },
   { id: 35, title: "H에너지", description: "태양광 발전 운영시스템 구축", category: "일반", image: "/portfolio_photo/일반_태양광.jpg" },
   { id: 36, title: "CJ", description: "DB 구축 기술지원", category: "일반", image: "/portfolio_photo/일반_CJ.jpg" },
