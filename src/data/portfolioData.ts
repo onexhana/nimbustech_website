@@ -28,10 +28,6 @@ export const portfolioProjects = [
   { id: 37, title: "강원랜드", description: "DBA 운영", category: "일반", image: "/portfolio_photo/일반_강원랜드.jpg" },
   { id: 38, title: "한국신용정보원", description: "Operator", category: "일반", image: "/portfolio_photo/일반_한국신용정보원.jpg" },
   { id: 39, title: "현대백화점", description: "DR구축", category: "일반", image: "/portfolio_photo/일반_현대.jpg" },
-  // 제조 카테고리
-  { id: 4, title: "포스코", description: "스마트 팩토리", category: "제조" },
-  { id: 16, title: "두산중공업", description: "제조 관리 시스템", category: "제조" },
-  { id: 17, title: "SK하이닉스", description: "반도체 생산 시스템", category: "제조" },
   
   
 ];
