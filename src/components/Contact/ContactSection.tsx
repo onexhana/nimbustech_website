@@ -24,7 +24,7 @@ export default function ContactSection() {
 
   return (
     //contact & footer 사이 여백 100px
-    <div className={`w-full px-6 ${isMobile ? 'bg-transparent' : 'bg-white'}`} style={{ position: 'relative', paddingTop: '120px', paddingBottom: isMobile ? '0px' : '100px', backgroundColor: isMobile ? 'transparent' : undefined }}>
+    <div className={`w-full px-6 ${isMobile ? 'bg-transparent' : 'bg-white'}`} style={{ position: 'relative', paddingTop: isMobile ? '50px' : '120px', paddingBottom: isMobile ? '0px' : '100px', backgroundColor: isMobile ? 'transparent' : undefined }}>
       <div className="max-w-7xl mx-auto">
         {/* 검은 실선 (데스크탑에서만 표시) */}
         {!isMobile && (

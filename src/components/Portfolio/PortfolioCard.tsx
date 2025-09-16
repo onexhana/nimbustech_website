@@ -46,7 +46,7 @@ const PortfolioCard = ({ title, description, image }: PortfolioCardProps) => {
           style={{
             width: isMobile ? '260px' : '330px',
             height: isMobile ? '240px' : '250px',
-            marginTop: isMobile ? '-20px' : '-30px'
+            marginTop: isMobile ? '-40px' : '-30px'
           }}
         >
           {image ? (
