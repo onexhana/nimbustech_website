@@ -131,7 +131,7 @@ function PartnerLogoSliderMobile({
           fontSize: "23px",
           fontWeight: 600,
           marginTop: "50px",
-          marginBottom: "20px",
+          marginBottom: "50px",
           lineHeight: "1",
         }}
       >
