@@ -72,11 +72,13 @@ function MobileTrack({
             key={`${logo.alt}-${i}`}
             src={logo.src}
             alt={logo.alt}
-            className="w-auto flex-none object-contain opacity-80 hover:opacity-100 transition"
+            className="flex-none object-contain opacity-80 hover:opacity-100 transition"
              style={{ 
-               height: `${logoHeight}px`,
+               height: `${logoHeight}px !important`,
                width: 'auto',
                maxWidth: 'none',
+               maxHeight: `${logoHeight}px`,
+               minHeight: `${logoHeight}px`,
                imageRendering: 'auto',
                filter: 'contrast(1.1) saturate(1.05)',
                objectFit: 'contain'
@@ -93,7 +95,7 @@ function MobileTrack({
 }
 
 function PartnerLogoSliderMobile({
-  logoHeight = 10,  // 로고 크기 (픽셀 단위로 변경: 8rem → 40px)
+  logoHeight = 17,  // 로고 크기를 1/3로 줄임 (기존 대비)
   gap = 20,         // 간격 더 좁게
   durationTop = 6, // 속도 더 빠르게
   durationBottom = 8,
@@ -103,6 +105,9 @@ function PartnerLogoSliderMobile({
   speedTop,
   speedBottom,
 }: PartnerLogoSliderMobileProps) {
+  // 모바일에서는 강제로 작은 크기 사용
+  const mobileLogoHeight = 15;
+  console.log('PartnerLogoSliderMobile 렌더링됨 - 원래 logoHeight:', logoHeight, '실제 사용:', mobileLogoHeight);
 
   const safeFactor = (v: number) => (v > 0 ? v : 1);
   
@@ -130,7 +135,7 @@ function PartnerLogoSliderMobile({
       </p>
       {rows.map((row, i) => (
         <div key={i} style={{ marginTop: i === 0 ? 0 : rowSpacing }}>
-          <MobileTrack {...row} logoHeight={logoHeight} gap={gap} reverse={row.reverse} />
+          <MobileTrack {...row} logoHeight={mobileLogoHeight} gap={gap} reverse={row.reverse} />
         </div>
       ))}
       {bottomSpacing > 0 && <div style={{ height: bottomSpacing }} />}
