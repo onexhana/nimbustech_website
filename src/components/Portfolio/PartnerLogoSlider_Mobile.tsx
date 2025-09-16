@@ -106,7 +106,7 @@ function PartnerLogoSliderMobile({
   speedBottom,
 }: PartnerLogoSliderMobileProps) {
   // 모바일에서는 강제로 작은 크기 사용
-  const mobileLogoHeight = 15;
+  const mobileLogoHeight = 20;
   console.log('PartnerLogoSliderMobile 렌더링됨 - 원래 logoHeight:', logoHeight, '실제 사용:', mobileLogoHeight);
 
   const safeFactor = (v: number) => (v > 0 ? v : 1);
