@@ -29,7 +29,7 @@ type PartnerLogoSliderProps = {
 };
 
 function PartnerLogoSlider({
-  logoHeight = 50,
+  logoHeight = 50, // 웹 버전 기본값 복원
   gap = 80,
   durationTop = 50,
   durationBottom = 50,
@@ -50,6 +50,7 @@ function PartnerLogoSlider({
   }, []);
 
   // 조건부 렌더링: 모바일과 웹 버전 분리
+  console.log('PartnerLogoSlider - isMobile:', isMobile, 'window.innerWidth:', window.innerWidth);
   if (isMobile) {
     return (
       <PartnerLogoSliderMobile

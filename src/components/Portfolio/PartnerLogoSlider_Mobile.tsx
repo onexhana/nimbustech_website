@@ -16,7 +16,7 @@ type PartnerLogoSliderMobileProps = {
   speedBottom?: number;
 };
 
-const COPIES_PER_HALF = 6;
+const COPIES_PER_HALF = 3; // 복사본 수를 줄여서 전체 너비 감소
 
 // 고객사 로고 16개 자동 생성 (고화질)
 const ROW1: Logo[] = Array.from({ length: 16 }, (_, i) => {
@@ -50,15 +50,18 @@ function MobileTrack({
   return (
     <div className="relative w-full overflow-hidden">
       <motion.div
-        className="flex items-center min-w-[200%] whitespace-nowrap py-2"
+        className="flex items-center whitespace-nowrap py-2"
         style={{ 
           columnGap: gap, 
           willChange: "transform",
           backfaceVisibility: "hidden",
           perspective: 1000,
-          transform: "translateZ(0)"
+          transform: "translateZ(0)",
+          height: `${logoHeight + 16}px`, // 고정 높이 설정
+          overflow: "hidden",
+          width: "max-content" // 내용에 맞게 너비 설정
         }}
-        animate={{ x: reverse ? ["-100%", "0%"] : ["0%", "-100%"] }}
+        animate={{ x: reverse ? ["0%", "-33.33%"] : ["-33.33%", "0%"] }}
         transition={{ 
           duration: duration, 
           repeat: Infinity, 
@@ -81,9 +84,11 @@ function MobileTrack({
                minHeight: `${logoHeight}px`,
                imageRendering: 'auto',
                filter: 'contrast(1.1) saturate(1.05)',
-               objectFit: 'contain'
+               objectFit: 'contain',
+               verticalAlign: 'middle',
+               display: 'inline-block'
              }}
-            loading="lazy"
+            loading="eager"
           />
         ))}
       </motion.div>
@@ -97,11 +102,11 @@ function MobileTrack({
 function PartnerLogoSliderMobile({
   logoHeight = 17,  // 로고 크기를 1/3로 줄임 (기존 대비)
   gap = 20,         // 간격 더 좁게
-  durationTop = 6, // 속도 더 빠르게
-  durationBottom = 8,
+  durationTop = 350, // 속도를 매우 크게 늦춤
+  durationBottom = 350, // 위아래 동일한 속도
   rowSpacing = 15,
   bottomSpacing = 15,
-  speed = 4,        // 속도 더 빠르게
+  speed = 1,        // 속도 배수 (1은 기본 속도)
   speedTop,
   speedBottom,
 }: PartnerLogoSliderMobileProps) {
@@ -109,10 +114,9 @@ function PartnerLogoSliderMobile({
   const mobileLogoHeight = 20;
   console.log('PartnerLogoSliderMobile 렌더링됨 - 원래 logoHeight:', logoHeight, '실제 사용:', mobileLogoHeight);
 
-  const safeFactor = (v: number) => (v > 0 ? v : 1);
-  
-  const topDuration = durationTop / safeFactor(speedTop ?? speed);
-  const bottomDuration = durationBottom / safeFactor(speedBottom ?? speed);
+  // 모바일에서는 고정된 느린 속도 사용 (부모 props 무시)
+  const topDuration = 300; // 모바일 전용 매우 느린 속도
+  const bottomDuration = 300; // 모바일 전용 매우 느린 속도
 
   const rows = [
     { logos: ROW1, duration: topDuration, reverse: false },
