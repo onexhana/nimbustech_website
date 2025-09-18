@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FaBars, FaTimes } from "react-icons/fa";
+import { FaBars } from "react-icons/fa";
 
 export default function HeaderMobile() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);

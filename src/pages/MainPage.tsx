@@ -1,4 +1,3 @@
-import React from 'react';
 import HomeSection from '../components/Home/HomeSection';
 import AboutSection from '../components/About/AboutSection';
 import PortfolioSection from '../components/Portfolio/PortfolioSection';

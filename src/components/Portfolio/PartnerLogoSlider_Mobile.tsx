@@ -102,13 +102,8 @@ function MobileTrack({
 function PartnerLogoSliderMobile({
   logoHeight = 17,  // 로고 크기를 1/3로 줄임 (기존 대비)
   gap = 20,         // 간격 더 좁게
-  durationTop = 350, // 속도를 매우 크게 늦춤
-  durationBottom = 350, // 위아래 동일한 속도
   rowSpacing = 15,
   bottomSpacing = 15,
-  speed = 1,        // 속도 배수 (1은 기본 속도)
-  speedTop,
-  speedBottom,
 }: PartnerLogoSliderMobileProps) {
   // 모바일에서는 강제로 작은 크기 사용
   const mobileLogoHeight = 20;

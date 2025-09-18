@@ -1,5 +1,4 @@
 // src/components/FilterBar.tsx
-import React from 'react';
 
 type FilterBarProps = {
   categories: string[];
