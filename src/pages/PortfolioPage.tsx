@@ -7,7 +7,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
 
 const PortfolioPage = () => {
-  const [selectedCategory, setSelectedCategory] = useState("공공");
+  const [selectedCategory, setSelectedCategory] = useState("일반 / 제조");
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 768);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
