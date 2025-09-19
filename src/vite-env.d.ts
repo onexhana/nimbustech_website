@@ -1,5 +1,4 @@
 /// <reference types="vite/client" />
-<<<<<<< HEAD
 
 declare global {
   interface Window {
@@ -8,5 +7,3 @@ declare global {
     };
   }
 }
-=======
->>>>>>> feat/sumin-portfolio
