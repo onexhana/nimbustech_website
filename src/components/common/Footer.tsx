@@ -16,7 +16,7 @@ export default function Footer() {
 
   // 회사소개서 버튼
   const openCompanyIntro = () => {
-    window.open('/footer_pdf/님버스테크 회사소개_v3.4_20240701.pdf', '_blank');
+    window.open('/footer_pdf/님버스테크 회사소개_v3.5_20250923.pdf', '_blank');
   };
 
   return (
