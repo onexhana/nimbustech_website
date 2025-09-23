@@ -19,7 +19,7 @@ export default function ContactSection() {
   }, []);
   
   const handleCompanyDownload = () => {
-    window.open('/footer_pdf/님버스테크 회사소개_v3.4_20240701.pdf', '_blank');
+    window.open('/footer_pdf/님버스테크 회사소개_v3.5_20250923.pdf', '_blank');
   };
 
   return (
