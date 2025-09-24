@@ -89,44 +89,137 @@ export default function AdminContact() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div style={{
+      minHeight: '100vh',
+      background: 'linear-gradient(135deg, #f8fafc 0%, #e0f2fe 50%, #e0e7ff 100%)'
+    }}>
       {/* 헤더 */}
-      <header className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center space-x-4">
+      <header style={{
+        background: 'rgba(255, 255, 255, 0.9)',
+        backdropFilter: 'blur(10px)',
+        borderBottom: '1px solid rgba(255, 255, 255, 0.2)',
+        position: 'sticky',
+        top: 0,
+        zIndex: 10
+      }}>
+        <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 1rem' }}>
+          <div style={{ 
+            display: 'flex', 
+            justifyContent: 'space-between', 
+            alignItems: 'center', 
+            height: '80px' 
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
               <Link 
                 to="/admin/dashboard"
-                className="text-blue-600 hover:text-blue-800"
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.5rem',
+                  color: '#2563eb',
+                  textDecoration: 'none',
+                  fontWeight: '500',
+                  transition: 'color 0.2s ease'
+                }}
               >
-                ← 대시보드로 돌아가기
+                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+                <span>대시보드로 돌아가기</span>
               </Link>
-              <h1 className="text-xl font-semibold text-gray-900">
-                Contact 페이지 관리
-              </h1>
+              <div style={{ height: '24px', width: '1px', background: '#d1d5db' }}></div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                <div style={{
+                  width: '40px',
+                  height: '40px',
+                  background: 'linear-gradient(135deg, #3b82f6, #6366f1)',
+                  borderRadius: '12px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}>
+                  <svg width="24" height="24" fill="none" stroke="white" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                  </svg>
+                </div>
+                <div>
+                  <h1 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#111827', margin: 0 }}>
+                    Contact 페이지 관리
+                  </h1>
+                  <p style={{ fontSize: '0.875rem', color: '#6b7280', margin: 0 }}>콘텐츠를 편집하고 관리하세요</p>
+                </div>
+              </div>
             </div>
-            <div className="flex items-center space-x-4">
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
               {isEditing ? (
                 <>
                   <button
                     onClick={() => setIsEditing(false)}
-                    className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50"
+                    style={{
+                      padding: '0.75rem 1.5rem',
+                      fontSize: '0.875rem',
+                      fontWeight: '500',
+                      color: '#374151',
+                      background: 'rgba(255, 255, 255, 0.8)',
+                      border: '1px solid #d1d5db',
+                      borderRadius: '12px',
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.5rem',
+                      transition: 'all 0.2s ease'
+                    }}
                   >
-                    취소
+                    <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                    <span>취소</span>
                   </button>
                   <button
                     onClick={handleSave}
-                    className="px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md hover:bg-blue-700"
+                    style={{
+                      padding: '0.75rem 1.5rem',
+                      fontSize: '0.875rem',
+                      fontWeight: '500',
+                      color: 'white',
+                      background: 'linear-gradient(135deg, #2563eb, #6366f1)',
+                      border: 'none',
+                      borderRadius: '12px',
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.5rem',
+                      transition: 'all 0.2s ease'
+                    }}
                   >
-                    저장
+                    <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span>저장</span>
                   </button>
                 </>
               ) : (
                 <button
                   onClick={() => setIsEditing(true)}
-                  className="px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md hover:bg-blue-700"
+                  style={{
+                    padding: '0.75rem 1.5rem',
+                    fontSize: '0.875rem',
+                    fontWeight: '500',
+                    color: 'white',
+                    background: 'linear-gradient(135deg, #2563eb, #6366f1)',
+                    border: 'none',
+                    borderRadius: '12px',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.5rem',
+                    transition: 'all 0.2s ease'
+                  }}
                 >
-                  편집
+                  <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                  </svg>
+                  <span>편집</span>
                 </button>
               )}
             </div>
@@ -135,189 +228,443 @@ export default function AdminContact() {
       </header>
 
       {/* 메인 콘텐츠 */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <main style={{ maxWidth: '1200px', margin: '0 auto', padding: '2rem 1rem' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', alignItems: 'start' }}>
           {/* 가치 섹션 관리 */}
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">
-              가치 섹션 관리
-            </h3>
-            <div className="space-y-6">
-              {contactData.sections.map((section, index) => (
-                <div key={index} className="border border-gray-200 rounded-lg p-4">
-                  <h4 className="font-medium text-gray-900 mb-3">
-                    {section.title} 섹션
-                  </h4>
-                  <div className="space-y-3">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
-                        제목
-                      </label>
-                      <input
-                        type="text"
-                        value={section.title}
-                        onChange={(e) => updateSection(index, 'title', e.target.value)}
-                        disabled={!isEditing}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
-                      />
+          <div>
+            <div style={{
+              background: 'rgba(255, 255, 255, 0.8)',
+              backdropFilter: 'blur(10px)',
+              borderRadius: '12px',
+              boxShadow: '0 10px 15px rgba(0, 0, 0, 0.1)',
+              border: '1px solid rgba(255, 255, 255, 0.2)',
+              padding: '1.5rem',
+              transition: 'all 0.3s ease'
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.5rem' }}>
+                <div style={{
+                  width: '32px',
+                  height: '32px',
+                  background: 'linear-gradient(135deg, #8b5cf6, #ec4899)',
+                  borderRadius: '8px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}>
+                  <svg width="20" height="20" fill="none" stroke="white" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#111827', margin: 0 }}>
+                  가치 섹션 관리
+                </h3>
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                {contactData.sections.map((section, index) => (
+                  <div key={index} style={{
+                    background: 'rgba(255, 255, 255, 0.6)',
+                    backdropFilter: 'blur(10px)',
+                    border: '1px solid rgba(229, 231, 235, 0.5)',
+                    borderRadius: '12px',
+                    padding: '1rem',
+                    transition: 'all 0.3s ease'
+                  }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1rem' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                        <div style={{
+                          width: '32px',
+                          height: '32px',
+                          background: 'linear-gradient(135deg, #f59e0b, #f97316)',
+                          borderRadius: '8px',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center'
+                        }}>
+                          <span style={{ color: 'white', fontWeight: 'bold', fontSize: '0.875rem' }}>{index + 1}</span>
+                        </div>
+                        <h4 style={{ fontSize: '1.125rem', fontWeight: 'bold', color: '#111827', margin: 0 }}>
+                          {section.title} 섹션
+                        </h4>
+                      </div>
                     </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
-                        설명 (줄바꿈으로 구분)
-                      </label>
-                      <textarea
-                        value={section.description}
-                        onChange={(e) => updateSection(index, 'description', e.target.value)}
-                        disabled={!isEditing}
-                        rows={3}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
-                      />
+                    
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                      <div>
+                        <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                          제목
+                        </label>
+                        <input
+                          type="text"
+                          value={section.title}
+                          onChange={(e) => updateSection(index, 'title', e.target.value)}
+                          disabled={!isEditing}
+                          style={{
+                            width: '100%',
+                            maxWidth: '300px',
+                            padding: '0.3rem 0.5rem',
+                            border: '1px solid #e5e7eb',
+                            borderRadius: '4px',
+                            outline: 'none',
+                            fontSize: '0.75rem',
+                            transition: 'all 0.2s ease',
+                            background: !isEditing ? '#f9fafb' : 'white',
+                            color: !isEditing ? '#6b7280' : '#111827'
+                          }}
+                        />
+                      </div>
+                      <div>
+                        <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                          설명 (줄바꿈으로 구분)
+                        </label>
+                        <textarea
+                          value={section.description}
+                          onChange={(e) => updateSection(index, 'description', e.target.value)}
+                          disabled={!isEditing}
+                          rows={3}
+                          style={{
+                            width: '100%',
+                            maxWidth: '650px',
+                            padding: '0.3rem 0.5rem',
+                            border: '1px solid #e5e7eb',
+                            borderRadius: '4px',
+                            outline: 'none',
+                            fontSize: '0.75rem',
+                            transition: 'all 0.2s ease',
+                            background: !isEditing ? '#f9fafb' : 'white',
+                            color: !isEditing ? '#6b7280' : '#111827',
+                            resize: 'none',
+                            minHeight: '40px'
+                          }}
+                        />
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
 
           {/* 버튼 관리 */}
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">
-              버튼 관리
-            </h3>
-            <div className="space-y-4">
-              {contactData.buttons.map((button, index) => (
-                <div key={index} className="border border-gray-200 rounded-lg p-4">
-                  <h4 className="font-medium text-gray-900 mb-3">
-                    버튼 {index + 1}
-                  </h4>
-                  <div className="space-y-3">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
-                        버튼 텍스트
-                      </label>
-                      <input
-                        type="text"
-                        value={button.text}
-                        onChange={(e) => updateButton(index, 'text', e.target.value)}
-                        disabled={!isEditing}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
-                      />
+          <div>
+            <div style={{
+              background: 'rgba(255, 255, 255, 0.8)',
+              backdropFilter: 'blur(10px)',
+              borderRadius: '12px',
+              boxShadow: '0 10px 15px rgba(0, 0, 0, 0.1)',
+              border: '1px solid rgba(255, 255, 255, 0.2)',
+              padding: '1.5rem',
+              transition: 'all 0.3s ease'
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.5rem' }}>
+                <div style={{
+                  width: '32px',
+                  height: '32px',
+                  background: 'linear-gradient(135deg, #10b981, #14b8a6)',
+                  borderRadius: '8px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}>
+                  <svg width="20" height="20" fill="none" stroke="white" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" />
+                  </svg>
+                </div>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#111827', margin: 0 }}>
+                  버튼 관리
+                </h3>
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                {contactData.buttons.map((button, index) => (
+                  <div key={index} style={{
+                    background: 'rgba(255, 255, 255, 0.6)',
+                    backdropFilter: 'blur(10px)',
+                    border: '1px solid rgba(229, 231, 235, 0.5)',
+                    borderRadius: '12px',
+                    padding: '1rem',
+                    transition: 'all 0.3s ease'
+                  }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1rem' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                        <div style={{
+                          width: '32px',
+                          height: '32px',
+                          background: 'linear-gradient(135deg, #3b82f6, #6366f1)',
+                          borderRadius: '8px',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center'
+                        }}>
+                          <span style={{ color: 'white', fontWeight: 'bold', fontSize: '0.875rem' }}>{index + 1}</span>
+                        </div>
+                        <h4 style={{ fontSize: '1.125rem', fontWeight: 'bold', color: '#111827', margin: 0 }}>
+                          버튼 {index + 1}
+                        </h4>
+                      </div>
                     </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
-                        버튼 타입
-                      </label>
-                      <select
-                        value={button.type}
-                        onChange={(e) => updateButton(index, 'type', e.target.value)}
-                        disabled={!isEditing}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
-                      >
-                        <option value="inquiry">고객사 직원</option>
-                        <option value="hiring">인재 채용</option>
-                      </select>
+                    
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                      <div>
+                        <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                          버튼 텍스트
+                        </label>
+                        <input
+                          type="text"
+                          value={button.text}
+                          onChange={(e) => updateButton(index, 'text', e.target.value)}
+                          disabled={!isEditing}
+                          style={{
+                            width: '100%',
+                            maxWidth: '300px',
+                            padding: '0.3rem 0.5rem',
+                            border: '1px solid #e5e7eb',
+                            borderRadius: '4px',
+                            outline: 'none',
+                            fontSize: '0.75rem',
+                            transition: 'all 0.2s ease',
+                            background: !isEditing ? '#f9fafb' : 'white',
+                            color: !isEditing ? '#6b7280' : '#111827'
+                          }}
+                        />
+                      </div>
+                      <div>
+                        <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                          버튼 타입
+                        </label>
+                        <select
+                          value={button.type}
+                          onChange={(e) => updateButton(index, 'type', e.target.value)}
+                          disabled={!isEditing}
+                          style={{
+                            width: '100%',
+                            maxWidth: '300px',
+                            padding: '0.3rem 0.5rem',
+                            border: '1px solid #e5e7eb',
+                            borderRadius: '4px',
+                            outline: 'none',
+                            fontSize: '0.75rem',
+                            transition: 'all 0.2s ease',
+                            background: !isEditing ? '#f9fafb' : 'white',
+                            color: !isEditing ? '#6b7280' : '#111827'
+                          }}
+                        >
+                          <option value="inquiry">고객사 직원</option>
+                          <option value="hiring">인재 채용</option>
+                        </select>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
 
           {/* 회사 정보 관리 */}
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">
-              회사 정보 관리
-            </h3>
-            <div className="space-y-6">
-              {/* 세종 본사 */}
-              <div className="border border-gray-200 rounded-lg p-4">
-                <h4 className="font-medium text-gray-900 mb-3">세종 본사</h4>
-                <div className="space-y-3">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      제목
-                    </label>
-                    <input
-                      type="text"
-                      value={contactData.companyInfo.sejong.title}
-                      onChange={(e) => updateCompanyInfo('sejong', 'title', e.target.value)}
-                      disabled={!isEditing}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      주소
-                    </label>
-                    <input
-                      type="text"
-                      value={contactData.companyInfo.sejong.address}
-                      onChange={(e) => updateCompanyInfo('sejong', 'address', e.target.value)}
-                      disabled={!isEditing}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
-                    />
+          <div>
+            <div style={{
+              background: 'rgba(255, 255, 255, 0.8)',
+              backdropFilter: 'blur(10px)',
+              borderRadius: '12px',
+              boxShadow: '0 10px 15px rgba(0, 0, 0, 0.1)',
+              border: '1px solid rgba(255, 255, 255, 0.2)',
+              padding: '1.5rem',
+              transition: 'all 0.3s ease'
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.5rem' }}>
+                <div style={{
+                  width: '32px',
+                  height: '32px',
+                  background: 'linear-gradient(135deg, #f59e0b, #f97316)',
+                  borderRadius: '8px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}>
+                  <svg width="20" height="20" fill="none" stroke="white" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                  </svg>
+                </div>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#111827', margin: 0 }}>
+                  회사 정보 관리
+                </h3>
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                {/* 세종 본사 */}
+                <div style={{
+                  background: 'rgba(255, 255, 255, 0.6)',
+                  backdropFilter: 'blur(10px)',
+                  border: '1px solid rgba(229, 231, 235, 0.5)',
+                  borderRadius: '12px',
+                  padding: '1rem',
+                  transition: 'all 0.3s ease'
+                }}>
+                  <h4 style={{ fontSize: '1rem', fontWeight: 'bold', color: '#111827', margin: '0 0 1rem 0' }}>세종 본사</h4>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                        제목
+                      </label>
+                      <input
+                        type="text"
+                        value={contactData.companyInfo.sejong.title}
+                        onChange={(e) => updateCompanyInfo('sejong', 'title', e.target.value)}
+                        disabled={!isEditing}
+                        style={{
+                          width: '100%',
+                          maxWidth: '300px',
+                          padding: '0.3rem 0.5rem',
+                          border: '1px solid #e5e7eb',
+                          borderRadius: '4px',
+                          outline: 'none',
+                          fontSize: '0.75rem',
+                          transition: 'all 0.2s ease',
+                          background: !isEditing ? '#f9fafb' : 'white',
+                          color: !isEditing ? '#6b7280' : '#111827'
+                        }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                        주소
+                      </label>
+                      <input
+                        type="text"
+                        value={contactData.companyInfo.sejong.address}
+                        onChange={(e) => updateCompanyInfo('sejong', 'address', e.target.value)}
+                        disabled={!isEditing}
+                        style={{
+                          width: '100%',
+                          maxWidth: '650px',
+                          padding: '0.3rem 0.5rem',
+                          border: '1px solid #e5e7eb',
+                          borderRadius: '4px',
+                          outline: 'none',
+                          fontSize: '0.75rem',
+                          transition: 'all 0.2s ease',
+                          background: !isEditing ? '#f9fafb' : 'white',
+                          color: !isEditing ? '#6b7280' : '#111827'
+                        }}
+                      />
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              {/* 서울사무소 */}
-              <div className="border border-gray-200 rounded-lg p-4">
-                <h4 className="font-medium text-gray-900 mb-3">서울사무소</h4>
-                <div className="space-y-3">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      제목
-                    </label>
-                    <input
-                      type="text"
-                      value={contactData.companyInfo.seoul.title}
-                      onChange={(e) => updateCompanyInfo('seoul', 'title', e.target.value)}
-                      disabled={!isEditing}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      주소
-                    </label>
-                    <input
-                      type="text"
-                      value={contactData.companyInfo.seoul.address}
-                      onChange={(e) => updateCompanyInfo('seoul', 'address', e.target.value)}
-                      disabled={!isEditing}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
-                    />
+                {/* 서울사무소 */}
+                <div style={{
+                  background: 'rgba(255, 255, 255, 0.6)',
+                  backdropFilter: 'blur(10px)',
+                  border: '1px solid rgba(229, 231, 235, 0.5)',
+                  borderRadius: '12px',
+                  padding: '1rem',
+                  transition: 'all 0.3s ease'
+                }}>
+                  <h4 style={{ fontSize: '1rem', fontWeight: 'bold', color: '#111827', margin: '0 0 1rem 0' }}>서울사무소</h4>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                        제목
+                      </label>
+                      <input
+                        type="text"
+                        value={contactData.companyInfo.seoul.title}
+                        onChange={(e) => updateCompanyInfo('seoul', 'title', e.target.value)}
+                        disabled={!isEditing}
+                        style={{
+                          width: '100%',
+                          maxWidth: '300px',
+                          padding: '0.3rem 0.5rem',
+                          border: '1px solid #e5e7eb',
+                          borderRadius: '4px',
+                          outline: 'none',
+                          fontSize: '0.75rem',
+                          transition: 'all 0.2s ease',
+                          background: !isEditing ? '#f9fafb' : 'white',
+                          color: !isEditing ? '#6b7280' : '#111827'
+                        }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                        주소
+                      </label>
+                      <input
+                        type="text"
+                        value={contactData.companyInfo.seoul.address}
+                        onChange={(e) => updateCompanyInfo('seoul', 'address', e.target.value)}
+                        disabled={!isEditing}
+                        style={{
+                          width: '100%',
+                          maxWidth: '650px',
+                          padding: '0.3rem 0.5rem',
+                          border: '1px solid #e5e7eb',
+                          borderRadius: '4px',
+                          outline: 'none',
+                          fontSize: '0.75rem',
+                          transition: 'all 0.2s ease',
+                          background: !isEditing ? '#f9fafb' : 'white',
+                          color: !isEditing ? '#6b7280' : '#111827'
+                        }}
+                      />
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              {/* 연락처 정보 */}
-              <div className="border border-gray-200 rounded-lg p-4">
-                <h4 className="font-medium text-gray-900 mb-3">연락처 정보</h4>
-                <div className="space-y-3">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      전화번호
-                    </label>
-                    <input
-                      type="text"
-                      value={contactData.companyInfo.contact.phone}
-                      onChange={(e) => updateCompanyInfo('contact', 'phone', e.target.value)}
-                      disabled={!isEditing}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      이메일
-                    </label>
-                    <input
-                      type="email"
-                      value={contactData.companyInfo.contact.email}
-                      onChange={(e) => updateCompanyInfo('contact', 'email', e.target.value)}
-                      disabled={!isEditing}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
-                    />
+                {/* 연락처 정보 */}
+                <div style={{
+                  background: 'rgba(255, 255, 255, 0.6)',
+                  backdropFilter: 'blur(10px)',
+                  border: '1px solid rgba(229, 231, 235, 0.5)',
+                  borderRadius: '12px',
+                  padding: '1rem',
+                  transition: 'all 0.3s ease'
+                }}>
+                  <h4 style={{ fontSize: '1rem', fontWeight: 'bold', color: '#111827', margin: '0 0 1rem 0' }}>연락처 정보</h4>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                        전화번호
+                      </label>
+                      <input
+                        type="text"
+                        value={contactData.companyInfo.contact.phone}
+                        onChange={(e) => updateCompanyInfo('contact', 'phone', e.target.value)}
+                        disabled={!isEditing}
+                        style={{
+                          width: '100%',
+                          maxWidth: '300px',
+                          padding: '0.3rem 0.5rem',
+                          border: '1px solid #e5e7eb',
+                          borderRadius: '4px',
+                          outline: 'none',
+                          fontSize: '0.75rem',
+                          transition: 'all 0.2s ease',
+                          background: !isEditing ? '#f9fafb' : 'white',
+                          color: !isEditing ? '#6b7280' : '#111827'
+                        }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                        이메일
+                      </label>
+                      <input
+                        type="email"
+                        value={contactData.companyInfo.contact.email}
+                        onChange={(e) => updateCompanyInfo('contact', 'email', e.target.value)}
+                        disabled={!isEditing}
+                        style={{
+                          width: '100%',
+                          maxWidth: '650px',
+                          padding: '0.3rem 0.5rem',
+                          border: '1px solid #e5e7eb',
+                          borderRadius: '4px',
+                          outline: 'none',
+                          fontSize: '0.75rem',
+                          transition: 'all 0.2s ease',
+                          background: !isEditing ? '#f9fafb' : 'white',
+                          color: !isEditing ? '#6b7280' : '#111827'
+                        }}
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -325,72 +672,177 @@ export default function AdminContact() {
           </div>
 
           {/* PDF 파일 관리 */}
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">
-              PDF 파일 관리
-            </h3>
-            <div className="space-y-4">
-              {contactData.pdfFiles.map((file, index) => (
-                <div key={index} className="border border-gray-200 rounded-lg p-4">
-                  <h4 className="font-medium text-gray-900 mb-3">
-                    {file.name}
-                  </h4>
-                  <div className="space-y-3">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
-                        파일명
-                      </label>
-                      <input
-                        type="text"
-                        value={file.name}
-                        disabled={!isEditing}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
-                      />
+          <div>
+            <div style={{
+              background: 'rgba(255, 255, 255, 0.8)',
+              backdropFilter: 'blur(10px)',
+              borderRadius: '12px',
+              boxShadow: '0 10px 15px rgba(0, 0, 0, 0.1)',
+              border: '1px solid rgba(255, 255, 255, 0.2)',
+              padding: '1.5rem',
+              transition: 'all 0.3s ease'
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.5rem' }}>
+                <div style={{
+                  width: '32px',
+                  height: '32px',
+                  background: 'linear-gradient(135deg, #ef4444, #dc2626)',
+                  borderRadius: '8px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}>
+                  <svg width="20" height="20" fill="none" stroke="white" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                </div>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#111827', margin: 0 }}>
+                  PDF 파일 관리
+                </h3>
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                {contactData.pdfFiles.map((file, index) => (
+                  <div key={index} style={{
+                    background: 'rgba(255, 255, 255, 0.6)',
+                    backdropFilter: 'blur(10px)',
+                    border: '1px solid rgba(229, 231, 235, 0.5)',
+                    borderRadius: '12px',
+                    padding: '1rem',
+                    transition: 'all 0.3s ease'
+                  }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1rem' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                        <div style={{
+                          width: '32px',
+                          height: '32px',
+                          background: 'linear-gradient(135deg, #6b7280, #4b5563)',
+                          borderRadius: '8px',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center'
+                        }}>
+                          <span style={{ color: 'white', fontWeight: 'bold', fontSize: '0.875rem' }}>{index + 1}</span>
+                        </div>
+                        <h4 style={{ fontSize: '1.125rem', fontWeight: 'bold', color: '#111827', margin: 0 }}>
+                          {file.name}
+                        </h4>
+                      </div>
                     </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
-                        파일 경로
-                      </label>
-                      <input
-                        type="text"
-                        value={file.path}
-                        disabled={!isEditing}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
-                      />
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <a
-                        href={file.path}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-blue-600 hover:text-blue-800 text-sm"
-                      >
-                        파일 미리보기
-                      </a>
+                    
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                      <div>
+                        <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                          파일명
+                        </label>
+                        <input
+                          type="text"
+                          value={file.name}
+                          disabled={!isEditing}
+                          style={{
+                            width: '100%',
+                            maxWidth: '300px',
+                            padding: '0.3rem 0.5rem',
+                            border: '1px solid #e5e7eb',
+                            borderRadius: '4px',
+                            outline: 'none',
+                            fontSize: '0.75rem',
+                            transition: 'all 0.2s ease',
+                            background: !isEditing ? '#f9fafb' : 'white',
+                            color: !isEditing ? '#6b7280' : '#111827'
+                          }}
+                        />
+                      </div>
+                      <div>
+                        <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                          파일 경로
+                        </label>
+                        <input
+                          type="text"
+                          value={file.path}
+                          disabled={!isEditing}
+                          style={{
+                            width: '100%',
+                            maxWidth: '650px',
+                            padding: '0.3rem 0.5rem',
+                            border: '1px solid #e5e7eb',
+                            borderRadius: '4px',
+                            outline: 'none',
+                            fontSize: '0.75rem',
+                            transition: 'all 0.2s ease',
+                            background: !isEditing ? '#f9fafb' : 'white',
+                            color: !isEditing ? '#6b7280' : '#111827'
+                          }}
+                        />
+                      </div>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                        <a
+                          href={file.path}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          style={{
+                            color: '#3b82f6',
+                            textDecoration: 'none',
+                            fontSize: '0.875rem',
+                            fontWeight: '500'
+                          }}
+                        >
+                          파일 미리보기
+                        </a>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
         </div>
 
         {/* 미리보기 */}
-        <div className="mt-8 bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">
-            미리보기
-          </h3>
-          <div className="bg-gray-100 p-4 rounded-lg">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div style={{
+          marginTop: '2rem',
+          background: 'rgba(255, 255, 255, 0.8)',
+          backdropFilter: 'blur(10px)',
+          borderRadius: '12px',
+          boxShadow: '0 10px 15px rgba(0, 0, 0, 0.1)',
+          border: '1px solid rgba(255, 255, 255, 0.2)',
+          padding: '1.5rem',
+          transition: 'all 0.3s ease'
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.5rem' }}>
+            <div style={{
+              width: '32px',
+              height: '32px',
+              background: 'linear-gradient(135deg, #8b5cf6, #7c3aed)',
+              borderRadius: '8px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}>
+              <svg width="20" height="20" fill="none" stroke="white" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+              </svg>
+            </div>
+            <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#111827', margin: 0 }}>
+              실시간 미리보기
+            </h3>
+          </div>
+          <div style={{
+            background: 'rgba(243, 244, 246, 0.5)',
+            borderRadius: '8px',
+            padding: '1.5rem',
+            border: '1px solid rgba(229, 231, 235, 0.5)'
+          }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem' }}>
               {/* 가치 섹션 미리보기 */}
               <div>
-                <h4 className="font-medium text-gray-700 mb-3">가치 섹션</h4>
+                <h4 style={{ fontSize: '1rem', fontWeight: 'bold', color: '#374151', margin: '0 0 1rem 0' }}>가치 섹션</h4>
                 {contactData.sections.map((section, index) => (
-                  <div key={index} className="mb-4">
-                    <h5 className="text-lg font-bold text-blue-600 mb-1">
+                  <div key={index} style={{ marginBottom: '1rem' }}>
+                    <h5 style={{ fontSize: '1.125rem', fontWeight: 'bold', color: '#3b82f6', margin: '0 0 0.5rem 0' }}>
                       {section.title}
                     </h5>
-                    <p className="text-sm text-gray-600 whitespace-pre-line">
+                    <p style={{ fontSize: '0.875rem', color: '#6b7280', margin: 0, whiteSpace: 'pre-line' }}>
                       {section.description}
                     </p>
                   </div>
@@ -399,12 +851,12 @@ export default function AdminContact() {
               
               {/* 회사 정보 미리보기 */}
               <div>
-                <h4 className="font-medium text-gray-700 mb-3">회사 정보</h4>
-                <div className="text-sm text-gray-600 space-y-1">
-                  <p>{contactData.companyInfo.sejong.title} {contactData.companyInfo.sejong.address}</p>
-                  <p>{contactData.companyInfo.seoul.title} {contactData.companyInfo.seoul.address}</p>
-                  <p>T: {contactData.companyInfo.contact.phone}</p>
-                  <p>E: {contactData.companyInfo.contact.email}</p>
+                <h4 style={{ fontSize: '1rem', fontWeight: 'bold', color: '#374151', margin: '0 0 1rem 0' }}>회사 정보</h4>
+                <div style={{ fontSize: '0.875rem', color: '#6b7280', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                  <p style={{ margin: 0 }}>{contactData.companyInfo.sejong.title} {contactData.companyInfo.sejong.address}</p>
+                  <p style={{ margin: 0 }}>{contactData.companyInfo.seoul.title} {contactData.companyInfo.seoul.address}</p>
+                  <p style={{ margin: 0 }}>T: {contactData.companyInfo.contact.phone}</p>
+                  <p style={{ margin: 0 }}>E: {contactData.companyInfo.contact.email}</p>
                 </div>
               </div>
             </div>

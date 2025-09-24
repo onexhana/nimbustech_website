@@ -3,6 +3,11 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 export default function AdminAbout() {
+  // 링크 URL 필드 위치 조정을 위한 state
+  const [urlFieldPosition, setUrlFieldPosition] = useState({ x: 0, y: 0 });
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
+
   // Mock 데이터 (나중에 API로 교체)
   const [aboutData, setAboutData] = useState({
     mainTitle: "고객 성공 리딩",
@@ -140,6 +145,28 @@ export default function AdminAbout() {
   const [isEditing, setIsEditing] = useState(false);
   const [activeTab, setActiveTab] = useState(0);
 
+  // 드래그 이벤트 핸들러들
+  const handleMouseDown = (e: React.MouseEvent) => {
+    setIsDragging(true);
+    setDragStart({
+      x: e.clientX - urlFieldPosition.x,
+      y: e.clientY - urlFieldPosition.y
+    });
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (isDragging) {
+      setUrlFieldPosition({
+        x: e.clientX - dragStart.x,
+        y: e.clientY - dragStart.y
+      });
+    }
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
   const handleSave = () => {
     console.log('저장된 About 데이터:', aboutData);
     setIsEditing(false);
@@ -167,44 +194,138 @@ export default function AdminAbout() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div style={{
+      minHeight: '100vh',
+      background: 'linear-gradient(135deg, #f8fafc 0%, #e0f2fe 50%, #e0e7ff 100%)'
+    }}>
       {/* 헤더 */}
-      <header className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center space-x-4">
+      <header style={{
+        background: 'rgba(255, 255, 255, 0.9)',
+        backdropFilter: 'blur(10px)',
+        boxShadow: '0 10px 25px rgba(0, 0, 0, 0.1)',
+        borderBottom: '1px solid rgba(255, 255, 255, 0.2)',
+        position: 'sticky',
+        top: 0,
+        zIndex: 10
+      }}>
+        <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 1rem' }}>
+          <div style={{ 
+            display: 'flex', 
+            justifyContent: 'space-between', 
+            alignItems: 'center', 
+            height: '80px' 
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
               <Link 
                 to="/admin/dashboard"
-                className="text-blue-600 hover:text-blue-800"
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.5rem',
+                  color: '#2563eb',
+                  textDecoration: 'none',
+                  fontWeight: '500',
+                  transition: 'color 0.2s ease'
+                }}
               >
-                ← 대시보드로 돌아가기
+                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+                <span>대시보드로 돌아가기</span>
               </Link>
-              <h1 className="text-xl font-semibold text-gray-900">
-                About 페이지 관리
-              </h1>
+              <div style={{ height: '24px', width: '1px', background: '#d1d5db' }}></div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                <div style={{
+                  width: '40px',
+                  height: '40px',
+                  background: 'linear-gradient(135deg, #3b82f6, #6366f1)',
+                  borderRadius: '12px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}>
+                  <svg width="24" height="24" fill="none" stroke="white" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                </div>
+                <div>
+                  <h1 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#111827', margin: 0 }}>
+                    About 페이지 관리
+                  </h1>
+                  <p style={{ fontSize: '0.875rem', color: '#6b7280', margin: 0 }}>콘텐츠를 편집하고 관리하세요</p>
+                </div>
+              </div>
             </div>
-            <div className="flex items-center space-x-4">
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
               {isEditing ? (
                 <>
                   <button
                     onClick={() => setIsEditing(false)}
-                    className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50"
+                    style={{
+                      padding: '0.75rem 1.5rem',
+                      fontSize: '0.875rem',
+                      fontWeight: '500',
+                      color: '#374151',
+                      background: 'rgba(255, 255, 255, 0.8)',
+                      border: '1px solid #d1d5db',
+                      borderRadius: '12px',
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.5rem',
+                      transition: 'all 0.2s ease'
+                    }}
                   >
-                    취소
+                    <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                    <span>취소</span>
                   </button>
                   <button
                     onClick={handleSave}
-                    className="px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md hover:bg-blue-700"
+                    style={{
+                      padding: '0.75rem 1.5rem',
+                      fontSize: '0.875rem',
+                      fontWeight: '500',
+                      color: 'white',
+                      background: 'linear-gradient(135deg, #2563eb, #6366f1)',
+                      border: 'none',
+                      borderRadius: '12px',
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.5rem',
+                      transition: 'all 0.2s ease'
+                    }}
                   >
-                    저장
+                    <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span>저장</span>
                   </button>
                 </>
               ) : (
                 <button
                   onClick={() => setIsEditing(true)}
-                  className="px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md hover:bg-blue-700"
+                  style={{
+                    padding: '0.75rem 1.5rem',
+                    fontSize: '0.875rem',
+                    fontWeight: '500',
+                    color: 'white',
+                    background: 'linear-gradient(135deg, #2563eb, #6366f1)',
+                    border: 'none',
+                    borderRadius: '12px',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.5rem',
+                    transition: 'all 0.2s ease'
+                  }}
                 >
-                  편집
+                  <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                  </svg>
+                  <span>편집</span>
                 </button>
               )}
             </div>
@@ -213,17 +334,40 @@ export default function AdminAbout() {
       </header>
 
       {/* 메인 콘텐츠 */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <main style={{ maxWidth: '1200px', margin: '0 auto', padding: '2rem 1rem' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '1.5rem', alignItems: 'start' }}>
           {/* 메인 타이틀 편집 */}
-          <div className="lg:col-span-1">
-            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">
-                메인 타이틀
-              </h3>
-              <div className="space-y-4">
+          <div>
+            <div style={{
+              background: 'rgba(255, 255, 255, 0.8)',
+              backdropFilter: 'blur(10px)',
+              borderRadius: '12px',
+              boxShadow: '0 10px 15px rgba(0, 0, 0, 0.1)',
+              border: '1px solid rgba(255, 255, 255, 0.2)',
+              padding: '1.5rem',
+              transition: 'all 0.3s ease'
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
+                <div style={{
+                  width: '32px',
+                  height: '32px',
+                  background: 'linear-gradient(135deg, #8b5cf6, #ec4899)',
+                  borderRadius: '8px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}>
+                  <svg width="20" height="20" fill="none" stroke="white" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+                  </svg>
+                </div>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#111827', margin: 0 }}>
+                  메인 타이틀
+                </h3>
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.75rem' }}>
                     메인 제목
                   </label>
                   <input
@@ -231,11 +375,32 @@ export default function AdminAbout() {
                     value={aboutData.mainTitle}
                     onChange={(e) => setAboutData({...aboutData, mainTitle: e.target.value})}
                     disabled={!isEditing}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
+                    style={{
+                      width: '100%',
+                      maxWidth: '300px',
+                      padding: '0.3rem 0.5rem',
+                      border: '1px solid #e5e7eb',
+                      borderRadius: '4px',
+                      outline: 'none',
+                      fontSize: '0.75rem',
+                      transition: 'all 0.2s ease',
+                      background: !isEditing ? '#f9fafb' : 'white',
+                      color: !isEditing ? '#6b7280' : '#111827'
+                    }}
+                    onFocus={(e) => {
+                      if (isEditing) {
+                        e.target.style.borderColor = '#3b82f6';
+                        e.target.style.boxShadow = '0 0 0 4px rgba(59, 130, 246, 0.1)';
+                      }
+                    }}
+                    onBlur={(e) => {
+                      e.target.style.borderColor = '#e5e7eb';
+                      e.target.style.boxShadow = 'none';
+                    }}
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.75rem' }}>
                     부제목
                   </label>
                   <input
@@ -243,7 +408,28 @@ export default function AdminAbout() {
                     value={aboutData.subtitle}
                     onChange={(e) => setAboutData({...aboutData, subtitle: e.target.value})}
                     disabled={!isEditing}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
+                    style={{
+                      width: '100%',
+                      maxWidth: '300px',
+                      padding: '0.3rem 0.5rem',
+                      border: '1px solid #e5e7eb',
+                      borderRadius: '4px',
+                      outline: 'none',
+                      fontSize: '0.75rem',
+                      transition: 'all 0.2s ease',
+                      background: !isEditing ? '#f9fafb' : 'white',
+                      color: !isEditing ? '#6b7280' : '#111827'
+                    }}
+                    onFocus={(e) => {
+                      if (isEditing) {
+                        e.target.style.borderColor = '#3b82f6';
+                        e.target.style.boxShadow = '0 0 0 4px rgba(59, 130, 246, 0.1)';
+                      }
+                    }}
+                    onBlur={(e) => {
+                      e.target.style.borderColor = '#e5e7eb';
+                      e.target.style.boxShadow = 'none';
+                    }}
                   />
                 </div>
               </div>
@@ -251,60 +437,160 @@ export default function AdminAbout() {
           </div>
 
           {/* 탭별 카드 관리 */}
-          <div className="lg:col-span-2">
-            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-              <div className="flex justify-between items-center mb-6">
-                <h3 className="text-lg font-semibold text-gray-900">
-                  탭별 카드 관리
-                </h3>
+          <div>
+            <div style={{
+              background: 'rgba(255, 255, 255, 0.8)',
+              backdropFilter: 'blur(10px)',
+              borderRadius: '12px',
+              boxShadow: '0 10px 15px rgba(0, 0, 0, 0.1)',
+              border: '1px solid rgba(255, 255, 255, 0.2)',
+              padding: '1.5rem',
+              transition: 'all 0.3s ease'
+            }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                  <div style={{
+                    width: '32px',
+                    height: '32px',
+                    background: 'linear-gradient(135deg, #10b981, #14b8a6)',
+                    borderRadius: '8px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                  }}>
+                    <svg width="20" height="20" fill="none" stroke="white" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                    </svg>
+                  </div>
+                  <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#111827', margin: 0 }}>
+                    탭별 카드 관리
+                  </h3>
+                </div>
                 {isEditing && (
                   <button
                     onClick={() => addCard(activeTab)}
-                    className="px-4 py-2 text-sm font-medium text-white bg-green-600 border border-transparent rounded-md hover:bg-green-700"
+                    style={{
+                      padding: '0.5rem 1rem',
+                      fontSize: '0.8rem',
+                      fontWeight: '500',
+                      color: 'white',
+                      background: 'linear-gradient(135deg, #10b981, #14b8a6)',
+                      border: 'none',
+                      borderRadius: '8px',
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.25rem',
+                      transition: 'all 0.2s ease'
+                    }}
                   >
-                    카드 추가
+                    <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                    </svg>
+                    <span>카드 추가</span>
                   </button>
                 )}
               </div>
 
               {/* 탭 선택 */}
-              <div className="flex space-x-2 mb-6">
+              <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1.5rem' }}>
                 {aboutData.tabs.map((tab, index) => (
                   <button
                     key={index}
                     onClick={() => setActiveTab(index)}
-                    className={`px-4 py-2 text-sm font-medium rounded-md ${
-                      activeTab === index
-                        ? 'bg-blue-600 text-white'
-                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                    }`}
+                    style={{
+                      padding: '0.5rem 1rem',
+                      fontSize: '0.8rem',
+                      fontWeight: '600',
+                      borderRadius: '8px',
+                      border: 'none',
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.25rem',
+                      transition: 'all 0.2s ease',
+                      ...(activeTab === index ? {
+                        background: 'linear-gradient(135deg, #2563eb, #6366f1)',
+                        color: 'white',
+                        boxShadow: '0 10px 15px rgba(0, 0, 0, 0.2)',
+                        transform: 'scale(1.05)'
+                      } : {
+                        background: 'rgba(255, 255, 255, 0.5)',
+                        color: '#374151',
+                        border: '1px solid #e5e7eb'
+                      })
+                    }}
                   >
-                    {tab.name}
+                    <span>{tab.name}</span>
+                    <span style={{
+                      padding: '0.25rem 0.5rem',
+                      fontSize: '0.75rem',
+                      borderRadius: '9999px',
+                      ...(activeTab === index ? {
+                        background: 'rgba(255, 255, 255, 0.2)',
+                        color: 'white'
+                      } : {
+                        background: '#f3f4f6',
+                        color: '#6b7280'
+                      })
+                    }}>
+                      {tab.cards.length}
+                    </span>
                   </button>
                 ))}
               </div>
 
               {/* 카드 목록 */}
-              <div className="space-y-4">
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                 {aboutData.tabs[activeTab].cards.map((card, cardIndex) => (
-                  <div key={cardIndex} className="border border-gray-200 rounded-lg p-4">
-                    <div className="flex justify-between items-start mb-3">
-                      <h4 className="font-medium text-gray-900">
-                        카드 {cardIndex + 1}
-                      </h4>
+                  <div key={cardIndex} style={{
+                    background: 'rgba(255, 255, 255, 0.6)',
+                    backdropFilter: 'blur(10px)',
+                    border: '1px solid rgba(229, 231, 235, 0.5)',
+                    borderRadius: '12px',
+                    padding: '1rem',
+                    transition: 'all 0.3s ease'
+                  }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1rem' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                        <div style={{
+                          width: '32px',
+                          height: '32px',
+                          background: 'linear-gradient(135deg, #f97316, #ef4444)',
+                          borderRadius: '8px',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center'
+                        }}>
+                          <span style={{ color: 'white', fontWeight: 'bold', fontSize: '0.875rem' }}>{cardIndex + 1}</span>
+                        </div>
+                        <h4 style={{ fontSize: '1.125rem', fontWeight: 'bold', color: '#111827', margin: 0 }}>
+                          카드 {cardIndex + 1}
+                        </h4>
+                      </div>
                       {isEditing && (
                         <button
                           onClick={() => removeCard(activeTab, cardIndex)}
-                          className="text-red-600 hover:text-red-800 text-sm"
+                          style={{
+                            padding: '0.5rem',
+                            color: '#ef4444',
+                            background: 'transparent',
+                            border: 'none',
+                            borderRadius: '8px',
+                            cursor: 'pointer',
+                            transition: 'all 0.2s ease'
+                          }}
                         >
-                          삭제
+                          <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                          </svg>
                         </button>
                       )}
                     </div>
                     
-                    <div className="space-y-3">
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                        <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
                           제목
                         </label>
                         <input
@@ -316,12 +602,33 @@ export default function AdminAbout() {
                             setAboutData({...aboutData, tabs: newTabs});
                           }}
                           disabled={!isEditing}
-                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
+                          style={{
+                            width: '100%',
+                            maxWidth: '650px',
+                            padding: '0.5rem 0.75rem',
+                            border: '2px solid #e5e7eb',
+                            borderRadius: '8px',
+                            outline: 'none',
+                            fontSize: '0.875rem',
+                            transition: 'all 0.2s ease',
+                            background: !isEditing ? '#f9fafb' : 'white',
+                            color: !isEditing ? '#6b7280' : '#111827'
+                          }}
+                          onFocus={(e) => {
+                            if (isEditing) {
+                              e.target.style.borderColor = '#3b82f6';
+                              e.target.style.boxShadow = '0 0 0 4px rgba(59, 130, 246, 0.1)';
+                            }
+                          }}
+                          onBlur={(e) => {
+                            e.target.style.borderColor = '#e5e7eb';
+                            e.target.style.boxShadow = 'none';
+                          }}
                         />
                       </div>
                       
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                        <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
                           설명 (줄바꿈으로 구분)
                         </label>
                         <textarea
@@ -332,28 +639,121 @@ export default function AdminAbout() {
                             setAboutData({...aboutData, tabs: newTabs});
                           }}
                           disabled={!isEditing}
-                          rows={3}
-                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
+                          rows={2}
+                          style={{
+                            width: '100%',
+                            maxWidth: '660px',
+                            padding: '0.3rem 0.5rem',
+                            border: '1px solid #e5e7eb',
+                            borderRadius: '4px',
+                            outline: 'none',
+                            fontSize: '0.75rem',
+                            transition: 'all 0.2s ease',
+                            background: !isEditing ? '#f9fafb' : 'white',
+                            color: !isEditing ? '#6b7280' : '#111827',
+                            resize: 'none',
+                            minHeight: '40px'
+                          }}
                         />
                       </div>
                       
                       {aboutData.tabs[activeTab].name === "솔루션" && (
                         <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-1">
-                            링크 URL
-                          </label>
-                          <input
-                            type="url"
-                            value={card.link || ''}
-                            onChange={(e) => {
-                              const newTabs = [...aboutData.tabs];
-                              newTabs[activeTab].cards[cardIndex].link = e.target.value;
-                              setAboutData({...aboutData, tabs: newTabs});
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
+                            <label style={{ fontSize: '0.875rem', fontWeight: '600', color: '#374151', margin: 0 }}>
+                              링크 URL
+                            </label>
+                            <button
+                              onClick={() => setUrlFieldPosition({ x: 0, y: 0 })}
+                              style={{
+                                padding: '0.25rem 0.5rem',
+                                fontSize: '0.7rem',
+                                background: '#f3f4f6',
+                                border: '1px solid #d1d5db',
+                                borderRadius: '4px',
+                                cursor: 'pointer',
+                                color: '#6b7280'
+                              }}
+                            >
+                              위치 초기화
+                            </button>
+                          </div>
+                          <div 
+                            style={{ 
+                              position: 'relative',
+                              transform: `translate(${urlFieldPosition.x}px, ${urlFieldPosition.y}px)`,
+                              cursor: isDragging ? 'grabbing' : 'grab'
                             }}
-                            disabled={!isEditing}
-                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
-                            placeholder="https://example.com"
-                          />
+                            onMouseDown={handleMouseDown}
+                            onMouseMove={handleMouseMove}
+                            onMouseUp={handleMouseUp}
+                            onMouseLeave={handleMouseUp}
+                          >
+                            {/* 드래그 핸들 */}
+                            <div style={{
+                              position: 'absolute',
+                              top: '-8px',
+                              right: '-8px',
+                              width: '16px',
+                              height: '16px',
+                              background: '#3b82f6',
+                              borderRadius: '50%',
+                              cursor: 'grab',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              zIndex: 10,
+                              boxShadow: '0 2px 4px rgba(0,0,0,0.2)'
+                            }}>
+                              <svg width="8" height="8" fill="white" viewBox="0 0 24 24">
+                                <path d="M3 15h18v-2H3v2zm0-4h18V9H3v2zm0-4v2h18V7H3z"/>
+                              </svg>
+                            </div>
+                            <div style={{ position: 'absolute', top: '50%', left: '0.6rem', transform: 'translateY(-50%)', pointerEvents: 'none' }}>
+                              <svg width="20" height="20" fill="none" stroke="#9ca3af" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                              </svg>
+                            </div>
+                            <input
+                              type="url"
+                              value={'link' in card ? card.link || '' : ''}
+                              onChange={(e) => {
+                                const newTabs = [...aboutData.tabs];
+                                if ('link' in newTabs[activeTab].cards[cardIndex]) {
+                                  (newTabs[activeTab].cards[cardIndex] as { link: string }).link = e.target.value;
+                                }
+                                setAboutData({...aboutData, tabs: newTabs});
+                              }}
+                              disabled={!isEditing}
+                              style={{
+                                width: '100%',
+                                maxHeight: '60px',
+                                maxWidth: '645px',
+                                paddingLeft: '1.5rem',
+                                paddingRight: '0.5rem',
+                                paddingTop: '0.3rem',
+                                paddingBottom: '0.3rem',
+                                border: '1px solid #e5e7eb',
+                                borderRadius: '4px',
+                                outline: 'none',
+                                fontSize: '0.75rem',
+                                transition: 'all 0.2s ease',
+                                background: !isEditing ? '#f9fafb' : 'white',
+                                color: !isEditing ? '#6b7280' : '#111827'
+                              }}
+                              onFocus={(e) => {
+                                if (isEditing) {
+                                  e.target.style.borderColor = '#3b82f6';
+                                  e.target.style.boxShadow = '0 0 0 4px rgba(59, 130, 246, 0.1)';
+                                }
+                              }}
+                              onBlur={(e) => {
+                                e.target.style.borderColor = '#e5e7eb';
+                                e.target.style.boxShadow = 'none';
+                              }}
+                              placeholder="https://example.com"
+                            />
+                          </div>
                         </div>
                       )}
                     </div>
@@ -365,19 +765,112 @@ export default function AdminAbout() {
         </div>
 
         {/* 미리보기 */}
-        <div className="mt-8 bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">
-            미리보기
-          </h3>
-          <div className="bg-gray-100 p-4 rounded-lg">
-            <h2 className="text-2xl font-bold text-gray-800 mb-2">
-              {aboutData.mainTitle}
-            </h2>
-            <p className="text-gray-600 mb-4">
-              {aboutData.subtitle}
-            </p>
-            <div className="text-sm text-gray-500">
-              현재 선택된 탭: {aboutData.tabs[activeTab].name} ({aboutData.tabs[activeTab].cards.length}개 카드)
+        <div style={{
+          marginTop: '2rem',
+          background: 'rgba(255, 255, 255, 0.8)',
+          backdropFilter: 'blur(10px)',
+          borderRadius: '12px',
+          boxShadow: '0 10px 15px rgba(0, 0, 0, 0.1)',
+          border: '1px solid rgba(255, 255, 255, 0.2)',
+          padding: '1.5rem',
+          transition: 'all 0.3s ease'
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.5rem' }}>
+            <div style={{
+              width: '32px',
+              height: '32px',
+              background: 'linear-gradient(135deg, #8b5cf6, #7c3aed)',
+              borderRadius: '8px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}>
+              <svg width="20" height="20" fill="none" stroke="white" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+              </svg>
+            </div>
+            <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#111827', margin: 0 }}>
+              실시간 미리보기
+            </h3>
+          </div>
+          
+          <div style={{
+            background: 'linear-gradient(135deg, #f9fafb, #f3f4f6)',
+            borderRadius: '12px',
+            padding: '1.5rem',
+            border: '1px solid rgba(229, 231, 235, 0.5)'
+          }}>
+            <div style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
+              <h2 style={{ fontSize: '1.875rem', fontWeight: 'bold', color: '#1f2937', marginBottom: '0.75rem', margin: 0 }}>
+                {aboutData.mainTitle}
+              </h2>
+              <p style={{ fontSize: '1.125rem', color: '#6b7280', margin: 0 }}>
+                {aboutData.subtitle}
+              </p>
+            </div>
+            
+            <div style={{
+              background: 'white',
+              borderRadius: '8px',
+              padding: '1rem',
+              boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
+              border: '1px solid rgba(229, 231, 235, 0.5)'
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
+                <h4 style={{ fontSize: '1.125rem', fontWeight: '600', color: '#1f2937', margin: 0 }}>
+                  {aboutData.tabs[activeTab].name} 섹션
+                </h4>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <div style={{
+                    width: '8px',
+                    height: '8px',
+                    background: '#10b981',
+                    borderRadius: '50%',
+                    animation: 'pulse 2s infinite'
+                  }}></div>
+                  <span style={{ fontSize: '0.875rem', color: '#6b7280' }}>
+                    {aboutData.tabs[activeTab].cards.length}개 카드
+                  </span>
+                </div>
+              </div>
+              
+              <div style={{ 
+                display: 'grid', 
+                gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', 
+                gap: '0.75rem' 
+              }}>
+                {aboutData.tabs[activeTab].cards.slice(0, 3).map((card, index) => (
+                  <div key={index} style={{
+                    background: 'linear-gradient(135deg, #eff6ff, #dbeafe)',
+                    borderRadius: '8px',
+                    padding: '1rem',
+                    border: '1px solid rgba(59, 130, 246, 0.2)'
+                  }}>
+                    <h5 style={{ fontWeight: '600', color: '#1f2937', marginBottom: '0.5rem', fontSize: '0.875rem', margin: 0 }}>
+                      {card.title}
+                    </h5>
+                    <p style={{ fontSize: '0.75rem', color: '#6b7280', lineHeight: '1.5', margin: 0 }}>
+                      {card.description.slice(0, 2).join(' ')}
+                    </p>
+                  </div>
+                ))}
+                {aboutData.tabs[activeTab].cards.length > 3 && (
+                  <div style={{
+                    background: 'linear-gradient(135deg, #f9fafb, #f3f4f6)',
+                    borderRadius: '8px',
+                    padding: '1rem',
+                    border: '1px solid #e5e7eb',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                  }}>
+                    <span style={{ fontSize: '0.875rem', color: '#6b7280' }}>
+                      +{aboutData.tabs[activeTab].cards.length - 3}개 더
+                    </span>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>
