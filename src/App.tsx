@@ -1,14 +1,13 @@
-import Header from './components/common/Header';
-import MainPage from './pages/MainPage';
+import { BrowserRouter } from 'react-router-dom';
+import MainRouter from './routes/MainRouter';
 
 function App() {
   return (
-    <div className="min-h-screen font-sans">
-      <Header />
-      <main>
-        <MainPage />
-      </main>
-    </div>
+    <BrowserRouter>
+      <div className="min-h-screen font-sans">
+        <MainRouter />
+      </div>
+    </BrowserRouter>
   );
 }
 
