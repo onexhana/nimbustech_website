@@ -116,28 +116,90 @@ export default function AdminAssets() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div style={{
+      minHeight: '100vh',
+      background: 'linear-gradient(135deg, #f8fafc 0%, #e0f2fe 50%, #e0e7ff 100%)'
+    }}>
       {/* 헤더 */}
-      <header className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center space-x-4">
+      <header style={{
+        background: 'rgba(255, 255, 255, 0.9)',
+        backdropFilter: 'blur(10px)',
+        boxShadow: '0 10px 25px rgba(0, 0, 0, 0.1)',
+        borderBottom: '1px solid rgba(255, 255, 255, 0.2)',
+        position: 'sticky',
+        top: 0,
+        zIndex: 10
+      }}>
+        <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 1rem' }}>
+          <div style={{ 
+            display: 'flex', 
+            justifyContent: 'space-between', 
+            alignItems: 'center', 
+            height: '80px' 
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
               <Link 
                 to="/admin/dashboard"
-                className="text-blue-600 hover:text-blue-800"
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.5rem',
+                  color: '#2563eb',
+                  textDecoration: 'none',
+                  fontWeight: '500',
+                  transition: 'color 0.2s ease'
+                }}
               >
-                ← 대시보드로 돌아가기
+                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+                <span>대시보드로 돌아가기</span>
               </Link>
-              <h1 className="text-xl font-semibold text-gray-900">
+              <div style={{ height: '24px', width: '1px', background: '#d1d5db' }}></div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                <div style={{
+                  width: '40px',
+                  height: '40px',
+                  background: 'linear-gradient(135deg, #3b82f6, #6366f1)',
+                  borderRadius: '12px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}>
+                  <svg width="24" height="24" fill="none" stroke="white" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                  </svg>
+                </div>
+                <div>
+                  <h1 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#111827', margin: 0 }}>
                 파일 관리
               </h1>
+                  <p style={{ fontSize: '0.875rem', color: '#6b7280', margin: 0 }}>이미지와 문서를 관리하세요</p>
+                </div>
+              </div>
             </div>
-            <div className="flex items-center space-x-4">
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
               <button
                 onClick={() => setShowUploadForm(true)}
-                className="px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md hover:bg-blue-700"
+                style={{
+                  padding: '0.75rem 1.5rem',
+                  fontSize: '0.875rem',
+                  fontWeight: '500',
+                  color: 'white',
+                  background: 'linear-gradient(135deg, #2563eb, #6366f1)',
+                  border: 'none',
+                  borderRadius: '12px',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.5rem',
+                  transition: 'all 0.2s ease'
+                }}
               >
-                파일 업로드
+                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                </svg>
+                <span>파일 업로드</span>
               </button>
             </div>
           </div>
@@ -145,34 +207,96 @@ export default function AdminAssets() {
       </header>
 
       {/* 메인 콘텐츠 */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main style={{ maxWidth: '1200px', margin: '0 auto', padding: '2rem 1rem' }}>
         {/* 파일 업로드 폼 */}
         {showUploadForm && (
-          <div className="mb-8 bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">
+          <div style={{
+            background: 'rgba(255, 255, 255, 0.8)',
+            backdropFilter: 'blur(10px)',
+            borderRadius: '12px',
+            boxShadow: '0 10px 15px rgba(0, 0, 0, 0.1)',
+            border: '1px solid rgba(255, 255, 255, 0.2)',
+            padding: '1.5rem',
+            marginBottom: '2rem',
+            transition: 'all 0.3s ease'
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
+              <div style={{
+                width: '32px',
+                height: '32px',
+                background: 'linear-gradient(135deg, #10b981, #14b8a6)',
+                borderRadius: '8px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}>
+                <svg width="20" height="20" fill="none" stroke="white" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                </svg>
+              </div>
+              <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#111827', margin: 0 }}>
               새 파일 업로드
             </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
                   파일명
                 </label>
                 <input
                   type="text"
                   value={newFile.name}
                   onChange={(e) => setNewFile({...newFile, name: e.target.value})}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  style={{
+                    width: '100%',
+                    maxWidth: '650px',
+                    padding: '0.5rem 0.75rem',
+                    border: '2px solid #e5e7eb',
+                    borderRadius: '8px',
+                    outline: 'none',
+                    fontSize: '0.875rem',
+                    transition: 'all 0.2s ease',
+                    background: 'white',
+                    color: '#111827'
+                  }}
+                  onFocus={(e) => {
+                    e.target.style.borderColor = '#3b82f6';
+                    e.target.style.boxShadow = '0 0 0 4px rgba(59, 130, 246, 0.1)';
+                  }}
+                  onBlur={(e) => {
+                    e.target.style.borderColor = '#e5e7eb';
+                    e.target.style.boxShadow = 'none';
+                  }}
                   placeholder="파일명을 입력하세요"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
                   카테고리
                 </label>
                 <select
                   value={newFile.category}
                   onChange={(e) => setNewFile({...newFile, category: e.target.value})}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  style={{
+                    width: '100%',
+                    maxWidth: '650px',
+                    padding: '0.5rem 0.75rem',
+                    border: '2px solid #e5e7eb',
+                    borderRadius: '8px',
+                    outline: 'none',
+                    fontSize: '0.875rem',
+                    transition: 'all 0.2s ease',
+                    background: 'white',
+                    color: '#111827'
+                  }}
+                  onFocus={(e) => {
+                    e.target.style.borderColor = '#3b82f6';
+                    e.target.style.boxShadow = '0 0 0 4px rgba(59, 130, 246, 0.1)';
+                  }}
+                  onBlur={(e) => {
+                    e.target.style.borderColor = '#e5e7eb';
+                    e.target.style.boxShadow = 'none';
+                  }}
                 >
                   <option value="로고">로고</option>
                   <option value="팝업이미지">팝업이미지</option>
@@ -181,16 +305,36 @@ export default function AdminAssets() {
                 </select>
               </div>
             </div>
-            <div className="flex justify-end space-x-2 mt-4">
+            <div style={{ display: 'flex', justifyContent: 'end', gap: '0.75rem', marginTop: '1.5rem' }}>
               <button
                 onClick={() => setShowUploadForm(false)}
-                className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50"
+                style={{
+                  padding: '0.75rem 1.5rem',
+                  fontSize: '0.875rem',
+                  fontWeight: '500',
+                  color: '#374151',
+                  background: 'rgba(255, 255, 255, 0.8)',
+                  border: '1px solid #d1d5db',
+                  borderRadius: '12px',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease'
+                }}
               >
                 취소
               </button>
               <button
                 onClick={handleFileUpload}
-                className="px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md hover:bg-blue-700"
+                style={{
+                  padding: '0.75rem 1.5rem',
+                  fontSize: '0.875rem',
+                  fontWeight: '500',
+                  color: 'white',
+                  background: 'linear-gradient(135deg, #2563eb, #6366f1)',
+                  border: 'none',
+                  borderRadius: '12px',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease'
+                }}
               >
                 업로드
               </button>
@@ -198,184 +342,526 @@ export default function AdminAssets() {
           </div>
         )}
 
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '1.5rem', alignItems: 'start' }}>
           {/* 카테고리 필터 */}
-          <div className="lg:col-span-1">
-            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">
-                카테고리
+          <div>
+            <div style={{
+              background: 'rgba(255, 255, 255, 0.8)',
+              backdropFilter: 'blur(10px)',
+              borderRadius: '12px',
+              boxShadow: '0 10px 15px rgba(0, 0, 0, 0.1)',
+              border: '1px solid rgba(255, 255, 255, 0.2)',
+              padding: '1.5rem',
+              transition: 'all 0.3s ease'
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
+                <div style={{
+                  width: '32px',
+                  height: '32px',
+                  background: 'linear-gradient(135deg, #8b5cf6, #ec4899)',
+                  borderRadius: '8px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}>
+                  <svg width="20" height="20" fill="none" stroke="white" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+                  </svg>
+                </div>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#111827', margin: 0 }}>
+                  카테고리 관리
               </h3>
-              <div className="space-y-2">
-                {categories.map((category) => (
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                {categories.map((category) => {
+                  const count = category === "전체" 
+                    ? assetsData.images.length + assetsData.pdfs.length
+                    : category === "PDF"
+                    ? assetsData.pdfs.length
+                    : assetsData.images.filter(img => img.category === category).length;
+                  
+                  return (
                   <button
                     key={category}
                     onClick={() => setSelectedCategory(category)}
-                    className={`w-full text-left px-3 py-2 text-sm rounded-md ${
-                      selectedCategory === category
-                        ? 'bg-blue-600 text-white'
-                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                    }`}
-                  >
-                    {category}
+                      style={{
+                        padding: '0.75rem 1rem',
+                        fontSize: '0.875rem',
+                        fontWeight: '600',
+                        borderRadius: '8px',
+                        border: 'none',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.5rem',
+                        transition: 'all 0.2s ease',
+                        ...(selectedCategory === category ? {
+                          background: 'linear-gradient(135deg, #2563eb, #6366f1)',
+                          color: 'white',
+                          boxShadow: '0 4px 12px rgba(37, 99, 235, 0.3)'
+                        } : {
+                          background: 'rgba(255, 255, 255, 0.5)',
+                          color: '#374151',
+                          border: '1px solid #e5e7eb'
+                        })
+                      }}
+                    >
+                      <span>{category}</span>
+                      <span style={{
+                        padding: '0.25rem 0.5rem',
+                        fontSize: '0.75rem',
+                        borderRadius: '9999px',
+                        ...(selectedCategory === category ? {
+                          background: 'rgba(255, 255, 255, 0.2)',
+                          color: 'white'
+                        } : {
+                          background: '#f3f4f6',
+                          color: '#6b7280'
+                        })
+                      }}>
+                        {count}
+                      </span>
                   </button>
-                ))}
+                  );
+                })}
               </div>
             </div>
           </div>
 
-          {/* 이미지 파일 목록 */}
-          <div className="lg:col-span-3">
-            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">
-                이미지 파일 ({filteredImages.length}개)
+          {/* 파일 목록 */}
+          <div>
+            <div style={{
+              background: 'rgba(255, 255, 255, 0.8)',
+              backdropFilter: 'blur(10px)',
+              borderRadius: '12px',
+              boxShadow: '0 10px 15px rgba(0, 0, 0, 0.1)',
+              border: '1px solid rgba(255, 255, 255, 0.2)',
+              padding: '1.5rem',
+              transition: 'all 0.3s ease'
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.5rem' }}>
+                <div style={{
+                  width: '32px',
+                  height: '32px',
+                  background: 'linear-gradient(135deg, #10b981, #14b8a6)',
+                  borderRadius: '8px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}>
+                  <svg width="20" height="20" fill="none" stroke="white" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                  </svg>
+                </div>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#111827', margin: 0 }}>
+                  {selectedCategory === "전체" ? "전체 파일" : selectedCategory === "PDF" ? "PDF 파일" : "이미지 파일"} 관리
               </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {filteredImages.map((image) => (
-                  <div key={image.id} className="border border-gray-200 rounded-lg p-4">
-                    <div className="flex items-start space-x-3">
-                      {/* 이미지 미리보기 */}
-                      <div className="flex-shrink-0">
-                        <div className="w-16 h-16 bg-gray-200 rounded-lg overflow-hidden">
-                          <img 
-                            src={image.path} 
-                            alt={image.name}
-                            className="w-full h-full object-cover"
-                            onError={(e) => {
-                              const target = e.target as HTMLImageElement;
-                              target.style.display = 'none';
-                              target.nextElementSibling?.classList.remove('hidden');
-                            }}
-                          />
-                          <div className="w-full h-full flex items-center justify-center text-gray-400 text-xs hidden">
-                            이미지 없음
+              </div>
+
+              {/* 파일 목록 */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                {selectedCategory === "PDF" ? (
+                  assetsData.pdfs.map((pdf, index) => (
+                    <div key={pdf.id} style={{
+                      background: 'rgba(255, 255, 255, 0.6)',
+                      backdropFilter: 'blur(10px)',
+                      border: '1px solid rgba(229, 231, 235, 0.5)',
+                      borderRadius: '12px',
+                      padding: '1rem',
+                      transition: 'all 0.3s ease'
+                    }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1rem' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                          <div style={{
+                            width: '32px',
+                            height: '32px',
+                            background: 'linear-gradient(135deg, #f97316, #ef4444)',
+                            borderRadius: '8px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center'
+                          }}>
+                            <span style={{ color: 'white', fontWeight: 'bold', fontSize: '0.875rem' }}>{index + 1}</span>
                           </div>
+                          <h4 style={{ fontSize: '1.125rem', fontWeight: 'bold', color: '#111827', margin: 0 }}>
+                            PDF {index + 1}
+                          </h4>
                         </div>
+                        <button
+                          onClick={() => removeFile(pdf.id, 'pdf')}
+                          style={{
+                            padding: '0.5rem',
+                            color: '#ef4444',
+                            background: 'transparent',
+                            border: 'none',
+                            borderRadius: '8px',
+                            cursor: 'pointer',
+                            transition: 'all 0.2s ease'
+                          }}
+                        >
+                          <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                          </svg>
+                        </button>
                       </div>
                       
-                      {/* 파일 정보 */}
-                      <div className="flex-1 min-w-0">
-                        <h4 className="text-sm font-medium text-gray-900 truncate">
-                          {image.name}
-                        </h4>
-                        <p className="text-xs text-gray-500">
-                          {image.category} • {image.size}
-                        </p>
-                        <p className="text-xs text-gray-400">
-                          {image.uploadDate}
-                        </p>
-                        <div className="flex items-center space-x-2 mt-2">
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                        <div>
+                          <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                            파일명
+                          </label>
+                          <div style={{
+                            width: '100%',
+                            padding: '0.5rem 0.75rem',
+                            border: '2px solid #e5e7eb',
+                            borderRadius: '8px',
+                            fontSize: '0.875rem',
+                            background: '#f9fafb',
+                            color: '#6b7280',
+                            boxSizing: 'border-box'
+                          }}>
+                            {pdf.name}
+                          </div>
+                        </div>
+                        
+                        <div style={{ display: 'flex', gap: '1rem' }}>
+                          <div style={{ flex: 1 }}>
+                            <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                              파일 크기
+                            </label>
+                            <div style={{
+                              width: '100%',
+                              padding: '0.5rem 0.75rem',
+                              border: '2px solid #e5e7eb',
+                              borderRadius: '8px',
+                              fontSize: '0.875rem',
+                              background: '#f9fafb',
+                              color: '#6b7280',
+                              boxSizing: 'border-box'
+                            }}>
+                              {pdf.size}
+                            </div>
+                          </div>
+                          <div style={{ flex: 1 }}>
+                            <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                              업로드 날짜
+                            </label>
+                            <div style={{
+                              width: '100%',
+                              padding: '0.5rem 0.75rem',
+                              border: '2px solid #e5e7eb',
+                              borderRadius: '8px',
+                              fontSize: '0.875rem',
+                              background: '#f9fafb',
+                              color: '#6b7280',
+                              boxSizing: 'border-box'
+                            }}>
+                              {pdf.uploadDate}
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.5rem' }}>
+                          <a
+                            href={pdf.path}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{
+                              padding: '0.5rem 1rem',
+                              fontSize: '0.875rem',
+                              fontWeight: '500',
+                              color: 'white',
+                              background: 'linear-gradient(135deg, #2563eb, #6366f1)',
+                              border: 'none',
+                              borderRadius: '8px',
+                              cursor: 'pointer',
+                              textDecoration: 'none',
+                              transition: 'all 0.2s ease'
+                            }}
+                          >
+                            미리보기
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  filteredImages.map((image, index) => (
+                    <div key={image.id} style={{
+                      background: 'rgba(255, 255, 255, 0.6)',
+                      backdropFilter: 'blur(10px)',
+                      border: '1px solid rgba(229, 231, 235, 0.5)',
+                      borderRadius: '12px',
+                      padding: '1rem',
+                      transition: 'all 0.3s ease'
+                    }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1rem' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                          <div style={{
+                            width: '32px',
+                            height: '32px',
+                            background: 'linear-gradient(135deg, #f97316, #ef4444)',
+                            borderRadius: '8px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center'
+                          }}>
+                            <span style={{ color: 'white', fontWeight: 'bold', fontSize: '0.875rem' }}>{index + 1}</span>
+                          </div>
+                          <h4 style={{ fontSize: '1.125rem', fontWeight: 'bold', color: '#111827', margin: 0 }}>
+                            이미지 {index + 1}
+                          </h4>
+                        </div>
+                        <button
+                          onClick={() => removeFile(image.id, 'image')}
+                          style={{
+                            padding: '0.5rem',
+                            color: '#ef4444',
+                            background: 'transparent',
+                            border: 'none',
+                            borderRadius: '8px',
+                            cursor: 'pointer',
+                            transition: 'all 0.2s ease'
+                          }}
+                        >
+                          <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                          </svg>
+                        </button>
+                      </div>
+                      
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                        <div>
+                          <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                            파일명
+                          </label>
+                          <div style={{
+                            width: '100%',
+                            padding: '0.5rem 0.75rem',
+                            border: '2px solid #e5e7eb',
+                            borderRadius: '8px',
+                            fontSize: '0.875rem',
+                            background: '#f9fafb',
+                            color: '#6b7280',
+                            boxSizing: 'border-box'
+                          }}>
+                            {image.name}
+                          </div>
+                        </div>
+                        
+                        <div style={{ display: 'flex', gap: '1rem' }}>
+                          <div style={{ flex: 1 }}>
+                            <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                              카테고리
+                            </label>
+                            <div style={{
+                              width: '100%',
+                              padding: '0.5rem 0.75rem',
+                              border: '2px solid #e5e7eb',
+                              borderRadius: '8px',
+                              fontSize: '0.875rem',
+                              background: '#f9fafb',
+                              color: '#6b7280',
+                              boxSizing: 'border-box'
+                            }}>
+                              {image.category}
+                            </div>
+                          </div>
+                          <div style={{ flex: 1 }}>
+                            <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                              파일 크기
+                            </label>
+                            <div style={{
+                              width: '100%',
+                              padding: '0.5rem 0.75rem',
+                              border: '2px solid #e5e7eb',
+                              borderRadius: '8px',
+                              fontSize: '0.875rem',
+                              background: '#f9fafb',
+                              color: '#6b7280',
+                              boxSizing: 'border-box'
+                            }}>
+                              {image.size}
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <div>
+                          <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                            업로드 날짜
+                          </label>
+                          <div style={{
+                            width: '100%',
+                            padding: '0.5rem 0.75rem',
+                            border: '2px solid #e5e7eb',
+                            borderRadius: '8px',
+                            fontSize: '0.875rem',
+                            background: '#f9fafb',
+                            color: '#6b7280',
+                            boxSizing: 'border-box'
+                          }}>
+                            {image.uploadDate}
+                          </div>
+                        </div>
+                        
+                        <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.5rem' }}>
                           <a
                             href={image.path}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-blue-600 hover:text-blue-800 text-xs"
+                            style={{
+                              padding: '0.5rem 1rem',
+                              fontSize: '0.875rem',
+                              fontWeight: '500',
+                              color: 'white',
+                              background: 'linear-gradient(135deg, #2563eb, #6366f1)',
+                              border: 'none',
+                              borderRadius: '8px',
+                              cursor: 'pointer',
+                              textDecoration: 'none',
+                              transition: 'all 0.2s ease'
+                            }}
                           >
                             미리보기
                           </a>
-                          <button
-                            onClick={() => removeFile(image.id, 'image')}
-                            className="text-red-600 hover:text-red-800 text-xs"
-                          >
-                            삭제
-                          </button>
                         </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  ))
+                )}
               </div>
             </div>
           </div>
         </div>
 
-        {/* PDF 파일 목록 */}
-        <div className="mt-8 bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">
-            PDF 파일 ({assetsData.pdfs.length}개)
-          </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {assetsData.pdfs.map((pdf) => (
-              <div key={pdf.id} className="border border-gray-200 rounded-lg p-4">
-                <div className="flex items-start space-x-3">
-                  {/* PDF 아이콘 */}
-                  <div className="flex-shrink-0">
-                    <div className="w-16 h-16 bg-red-100 rounded-lg flex items-center justify-center">
-                      <svg className="w-8 h-8 text-red-600" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clipRule="evenodd" />
+        {/* 미리보기 */}
+        <div style={{
+          marginTop: '2rem',
+          background: 'rgba(255, 255, 255, 0.8)',
+          backdropFilter: 'blur(10px)',
+          borderRadius: '12px',
+          boxShadow: '0 10px 15px rgba(0, 0, 0, 0.1)',
+          border: '1px solid rgba(255, 255, 255, 0.2)',
+          padding: '1.5rem',
+          transition: 'all 0.3s ease'
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.5rem' }}>
+            <div style={{
+              width: '32px',
+              height: '32px',
+              background: 'linear-gradient(135deg, #8b5cf6, #7c3aed)',
+              borderRadius: '8px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}>
+              <svg width="20" height="20" fill="none" stroke="white" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                       </svg>
                     </div>
+            <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#111827', margin: 0 }}>
+              파일 관리 통계
+            </h3>
                   </div>
                   
-                  {/* 파일 정보 */}
-                  <div className="flex-1 min-w-0">
-                    <h4 className="text-sm font-medium text-gray-900 truncate">
-                      {pdf.name}
-                    </h4>
-                    <p className="text-xs text-gray-500">
-                      PDF • {pdf.size}
-                    </p>
-                    <p className="text-xs text-gray-400">
-                      {pdf.uploadDate}
-                    </p>
-                    <div className="flex items-center space-x-2 mt-2">
-                      <a
-                        href={pdf.path}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-blue-600 hover:text-blue-800 text-xs"
-                      >
-                        미리보기
-                      </a>
-                      <button
-                        onClick={() => removeFile(pdf.id, 'pdf')}
-                        className="text-red-600 hover:text-red-800 text-xs"
-                      >
-                        삭제
-                      </button>
+          <div style={{
+            background: 'linear-gradient(135deg, #f9fafb, #f3f4f6)',
+            borderRadius: '12px',
+            padding: '1.5rem',
+            border: '1px solid rgba(229, 231, 235, 0.5)'
+          }}>
+            <div style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
+              <h2 style={{ fontSize: '1.875rem', fontWeight: 'bold', color: '#1f2937', marginBottom: '0.75rem', margin: 0 }}>
+                파일 관리 현황
+              </h2>
+              <p style={{ fontSize: '1.125rem', color: '#6b7280', margin: 0 }}>
+                총 {assetsData.images.length + assetsData.pdfs.length}개 파일 관리 중
+              </p>
                     </div>
-                  </div>
-                </div>
-              </div>
-            ))}
+            
+            <div style={{
+              background: 'white',
+              borderRadius: '8px',
+              padding: '1rem',
+              boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
+              border: '1px solid rgba(229, 231, 235, 0.5)'
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
+                <h4 style={{ fontSize: '1.125rem', fontWeight: '600', color: '#1f2937', margin: 0 }}>
+                  파일 통계
+                </h4>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <div style={{
+                    width: '8px',
+                    height: '8px',
+                    background: '#10b981',
+                    borderRadius: '50%',
+                    animation: 'pulse 2s infinite'
+                  }}></div>
+                  <span style={{ fontSize: '0.875rem', color: '#6b7280' }}>
+                    실시간 업데이트
+                  </span>
           </div>
         </div>
 
-        {/* 통계 정보 */}
-        <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">
-              총 파일 수
-            </h3>
-            <p className="text-3xl font-bold text-blue-600">
-              {assetsData.images.length + assetsData.pdfs.length}
-            </p>
-            <p className="text-sm text-gray-500">
+              <div style={{ 
+                display: 'grid', 
+                gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', 
+                gap: '1rem' 
+              }}>
+                <div style={{
+                  background: 'linear-gradient(135deg, #eff6ff, #dbeafe)',
+                  borderRadius: '8px',
+                  padding: '1rem',
+                  border: '1px solid rgba(59, 130, 246, 0.2)'
+                }}>
+                  <h5 style={{ fontWeight: '600', color: '#1f2937', marginBottom: '0.5rem', fontSize: '0.875rem', margin: 0 }}>
+                    총 파일 수
+                  </h5>
+                  <p style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#2563eb', margin: 0 }}>
+                    {assetsData.images.length + assetsData.pdfs.length}개
+                  </p>
+                  <p style={{ fontSize: '0.75rem', color: '#6b7280', lineHeight: '1.5', margin: 0 }}>
               이미지 {assetsData.images.length}개, PDF {assetsData.pdfs.length}개
             </p>
           </div>
           
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">
-              총 용량
-            </h3>
-            <p className="text-3xl font-bold text-green-600">
+                <div style={{
+                  background: 'linear-gradient(135deg, #f0fdf4, #dcfce7)',
+                  borderRadius: '8px',
+                  padding: '1rem',
+                  border: '1px solid rgba(34, 197, 94, 0.2)'
+                }}>
+                  <h5 style={{ fontWeight: '600', color: '#1f2937', marginBottom: '0.5rem', fontSize: '0.875rem', margin: 0 }}>
+                    총 용량
+                  </h5>
+                  <p style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#16a34a', margin: 0 }}>
               15.6MB
             </p>
-            <p className="text-sm text-gray-500">
+                  <p style={{ fontSize: '0.75rem', color: '#6b7280', lineHeight: '1.5', margin: 0 }}>
               평균 파일 크기: 1.2MB
             </p>
           </div>
           
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                <div style={{
+                  background: 'linear-gradient(135deg, #faf5ff, #f3e8ff)',
+                  borderRadius: '8px',
+                  padding: '1rem',
+                  border: '1px solid rgba(168, 85, 247, 0.2)'
+                }}>
+                  <h5 style={{ fontWeight: '600', color: '#1f2937', marginBottom: '0.5rem', fontSize: '0.875rem', margin: 0 }}>
               최근 업로드
-            </h3>
-            <p className="text-3xl font-bold text-purple-600">
+                  </h5>
+                  <p style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#a855f7', margin: 0 }}>
               3일 전
             </p>
-            <p className="text-sm text-gray-500">
+                  <p style={{ fontSize: '0.75rem', color: '#6b7280', lineHeight: '1.5', margin: 0 }}>
               마지막 업로드: {assetsData.pdfs[0]?.uploadDate}
             </p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </main>
