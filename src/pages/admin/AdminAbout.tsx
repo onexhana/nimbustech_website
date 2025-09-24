@@ -227,8 +227,6 @@ export default function AdminAbout() {
                   fontWeight: '500',
                   transition: 'color 0.2s ease'
                 }}
-                onMouseEnter={(e) => (e.target as HTMLElement).style.color = '#1d4ed8'}
-                onMouseLeave={(e) => (e.target as HTMLElement).style.color = '#2563eb'}
               >
                 <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -277,14 +275,6 @@ export default function AdminAbout() {
                       gap: '0.5rem',
                       transition: 'all 0.2s ease'
                     }}
-                    onMouseEnter={(e) => {
-                      (e.target as HTMLElement).style.background = '#f9fafb';
-                      (e.target as HTMLElement).style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
-                    }}
-                    onMouseLeave={(e) => {
-                      (e.target as HTMLElement).style.background = 'rgba(255, 255, 255, 0.8)';
-                      (e.target as HTMLElement).style.boxShadow = 'none';
-                    }}
                   >
                     <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -306,16 +296,6 @@ export default function AdminAbout() {
                       alignItems: 'center',
                       gap: '0.5rem',
                       transition: 'all 0.2s ease'
-                    }}
-                    onMouseEnter={(e) => {
-                      (e.target as HTMLElement).style.background = 'linear-gradient(135deg, #1d4ed8, #4f46e5)';
-                      (e.target as HTMLElement).style.boxShadow = '0 10px 15px rgba(0, 0, 0, 0.2)';
-                      (e.target as HTMLElement).style.transform = 'translateY(-2px)';
-                    }}
-                    onMouseLeave={(e) => {
-                      (e.target as HTMLElement).style.background = 'linear-gradient(135deg, #2563eb, #6366f1)';
-                      (e.target as HTMLElement).style.boxShadow = 'none';
-                      (e.target as HTMLElement).style.transform = 'translateY(0)';
                     }}
                   >
                     <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -340,16 +320,6 @@ export default function AdminAbout() {
                     alignItems: 'center',
                     gap: '0.5rem',
                     transition: 'all 0.2s ease'
-                  }}
-                  onMouseEnter={(e) => {
-                    (e.target as HTMLElement).style.background = 'linear-gradient(135deg, #1d4ed8, #4f46e5)';
-                    (e.target as HTMLElement).style.boxShadow = '0 10px 15px rgba(0, 0, 0, 0.2)';
-                    (e.target as HTMLElement).style.transform = 'translateY(-2px)';
-                  }}
-                  onMouseLeave={(e) => {
-                    (e.target as HTMLElement).style.background = 'linear-gradient(135deg, #2563eb, #6366f1)';
-                    (e.target as HTMLElement).style.boxShadow = 'none';
-                    (e.target as HTMLElement).style.transform = 'translateY(0)';
                   }}
                 >
                   <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -376,9 +346,7 @@ export default function AdminAbout() {
               border: '1px solid rgba(255, 255, 255, 0.2)',
               padding: '1.5rem',
               transition: 'all 0.3s ease'
-            }}
-            onMouseEnter={(e) => (e.target as HTMLElement).style.boxShadow = '0 25px 50px rgba(0, 0, 0, 0.15)'}
-            onMouseLeave={(e) => (e.target as HTMLElement).style.boxShadow = '0 20px 25px rgba(0, 0, 0, 0.1)'}>
+            }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
                 <div style={{
                   width: '32px',
@@ -478,9 +446,7 @@ export default function AdminAbout() {
               border: '1px solid rgba(255, 255, 255, 0.2)',
               padding: '1.5rem',
               transition: 'all 0.3s ease'
-            }}
-            onMouseEnter={(e) => (e.target as HTMLElement).style.boxShadow = '0 25px 50px rgba(0, 0, 0, 0.15)'}
-            onMouseLeave={(e) => (e.target as HTMLElement).style.boxShadow = '0 20px 25px rgba(0, 0, 0, 0.1)'}>
+            }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
                   <div style={{
@@ -516,16 +482,6 @@ export default function AdminAbout() {
                       alignItems: 'center',
                       gap: '0.25rem',
                       transition: 'all 0.2s ease'
-                    }}
-                    onMouseEnter={(e) => {
-                      (e.target as HTMLElement).style.background = 'linear-gradient(135deg, #059669, #0d9488)';
-                      (e.target as HTMLElement).style.boxShadow = '0 10px 15px rgba(0, 0, 0, 0.2)';
-                      (e.target as HTMLElement).style.transform = 'translateY(-2px)';
-                    }}
-                    onMouseLeave={(e) => {
-                      (e.target as HTMLElement).style.background = 'linear-gradient(135deg, #10b981, #14b8a6)';
-                      (e.target as HTMLElement).style.boxShadow = 'none';
-                      (e.target as HTMLElement).style.transform = 'translateY(0)';
                     }}
                   >
                     <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -564,18 +520,6 @@ export default function AdminAbout() {
                         border: '1px solid #e5e7eb'
                       })
                     }}
-                    onMouseEnter={(e) => {
-                      if (activeTab !== index) {
-                        (e.target as HTMLElement).style.background = 'white';
-                        (e.target as HTMLElement).style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
-                      }
-                    }}
-                    onMouseLeave={(e) => {
-                      if (activeTab !== index) {
-                        (e.target as HTMLElement).style.background = 'rgba(255, 255, 255, 0.5)';
-                        (e.target as HTMLElement).style.boxShadow = 'none';
-                      }
-                    }}
                   >
                     <span>{tab.name}</span>
                     <span style={{
@@ -606,9 +550,7 @@ export default function AdminAbout() {
                     borderRadius: '12px',
                     padding: '1rem',
                     transition: 'all 0.3s ease'
-                  }}
-                  onMouseEnter={(e) => (e.target as HTMLElement).style.boxShadow = '0 10px 15px rgba(0, 0, 0, 0.1)'}
-                  onMouseLeave={(e) => (e.target as HTMLElement).style.boxShadow = 'none'}>
+                  }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1rem' }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
                         <div style={{
@@ -637,14 +579,6 @@ export default function AdminAbout() {
                             borderRadius: '8px',
                             cursor: 'pointer',
                             transition: 'all 0.2s ease'
-                          }}
-                          onMouseEnter={(e) => {
-                            (e.target as HTMLElement).style.color = '#dc2626';
-                            (e.target as HTMLElement).style.background = '#fef2f2';
-                          }}
-                          onMouseLeave={(e) => {
-                            (e.target as HTMLElement).style.color = '#ef4444';
-                            (e.target as HTMLElement).style.background = 'transparent';
                           }}
                         >
                           <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -720,16 +654,6 @@ export default function AdminAbout() {
                             resize: 'none',
                             minHeight: '40px'
                           }}
-                          onFocus={(e) => {
-                            if (isEditing) {
-                              e.target.style.borderColor = '#3b82f6';
-                              e.target.style.boxShadow = '0 0 0 4px rgba(59, 130, 246, 0.1)';
-                            }
-                          }}
-                          onBlur={(e) => {
-                            e.target.style.borderColor = '#e5e7eb';
-                            e.target.style.boxShadow = 'none';
-                          }}
                         />
                       </div>
                       
@@ -749,12 +673,6 @@ export default function AdminAbout() {
                                 borderRadius: '4px',
                                 cursor: 'pointer',
                                 color: '#6b7280'
-                              }}
-                              onMouseEnter={(e) => {
-                                (e.target as HTMLElement).style.background = '#e5e7eb';
-                              }}
-                              onMouseLeave={(e) => {
-                                (e.target as HTMLElement).style.background = '#f3f4f6';
                               }}
                             >
                               위치 초기화
@@ -856,9 +774,7 @@ export default function AdminAbout() {
           border: '1px solid rgba(255, 255, 255, 0.2)',
           padding: '1.5rem',
           transition: 'all 0.3s ease'
-        }}
-        onMouseEnter={(e) => (e.target as HTMLElement).style.boxShadow = '0 25px 50px rgba(0, 0, 0, 0.15)'}
-        onMouseLeave={(e) => (e.target as HTMLElement).style.boxShadow = '0 20px 25px rgba(0, 0, 0, 0.1)'}>
+        }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.5rem' }}>
             <div style={{
               width: '32px',
