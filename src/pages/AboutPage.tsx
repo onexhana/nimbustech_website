@@ -3,10 +3,9 @@
 // ABOUT 페이지 메인 페이지 컴포넌트
 // 담당자: About 페이지 팀
 // 주요 기능: About 섹션 렌더링
-// 수정 사항: Header 추가
+// 수정 사항: 없음 (기본 구조 유지)
 // ========================================
-import Header from '../components/common/Header';
-import Footer from '../components/common/Footer';
+// AboutSection 컴포넌트: About 페이지의 메인 섹션 컴포넌트를 가져옵니다.
 import AboutSection from '../components/About/AboutSection';
 
 // AboutPage 컴포넌트: 라우터에 의해 호출되는 About 페이지 최상위 컴포넌트입니다.
@@ -14,11 +13,9 @@ import AboutSection from '../components/About/AboutSection';
 export default function AboutPage() {
   return (
     <>
-      <Header />
       <div className="about-page">
         <AboutSection />
       </div>
-      <Footer />
       <style>{`
         .about-page ~ footer {
           display: none;

@@ -1,9 +1,7 @@
 // src/routes/MainRouter.tsx
 import { Routes, Route } from 'react-router-dom';
-import HomePage from '../pages/HomePage';
-import AboutPage from '../pages/AboutPage';
-import PortfolioPage from '../pages/PortfolioPage';
-import ContactPage from '../pages/ContactPage';
+import Header from '../components/common/Header';
+import MainPage from '../pages/MainPage';
 
 // Admin 관련 import
 import AdminLayout from '../pages/admin/AdminLayout';
@@ -19,10 +17,13 @@ import AdminSettings from '../pages/admin/AdminSettings';
 export default function MainRouter() {
   return (
     <Routes>
-      <Route path="/" element={<HomePage />} />
-      <Route path="/about" element={<AboutPage />} />
-      <Route path="/portfolio" element={<PortfolioPage />} />
-      <Route path="/contact" element={<ContactPage />} />
+      {/* 메인 사이트 - 원래 구조로 복구 */}
+      <Route path="/" element={
+        <>
+          <Header />
+          <MainPage />
+        </>
+      } />
       
       {/* Admin 라우트 */}
       <Route path="/admin/login" element={<AdminLogin />} />

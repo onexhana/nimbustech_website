@@ -1,6 +1,4 @@
 import { useState, useEffect, useRef } from 'react';
-import Header from '../components/common/Header';
-import Footer from '../components/common/Footer';
 import PortfolioCardList from '../components/Portfolio/PortfolioCardList';
 import PortfolioSection from '../components/Portfolio/PortfolioSection';
 import CategoryFilter from '../components/Portfolio/CategoryFilter';
@@ -33,7 +31,6 @@ const PortfolioPage = () => {
 
   return (
     <>
-      <Header />
       <section className="pt-[100px] pl-16 pr-12 pb-24 bg-white">
         {/* 모바일과 데스크톱 레이아웃 분기 */}
         {isMobile ? (
@@ -220,7 +217,6 @@ const PortfolioPage = () => {
       </section>
 
       <PortfolioSection />
-      <Footer />
     </>
   );
 };
