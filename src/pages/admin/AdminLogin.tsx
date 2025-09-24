@@ -33,9 +33,13 @@ export default function AdminLogin() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-600 to-blue-800 flex items-center justify-center p-4">
       {/* 로그인 카드 */}
-      <div className="bg-blue-600 p-8 rounded-lg shadow-2xl w-full max-w-sm">
+      <div className="bg-blue-600 p-6 rounded-lg shadow-2xl w-full max-w-[380px]">
         {/* 로고 영역 */}
         <div className="text-center mb-8">
+          <h1 className="text-white text-2xl font-bold mb-4 tracking-wide">
+            NIMBUS TECH<br />
+            ADMIN
+          </h1>
           <div className="inline-flex items-center justify-center w-16 h-16 border-2 border-white rounded-lg mb-6">
             <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
@@ -55,7 +59,7 @@ export default function AdminLogin() {
                 type="text"
                 value={credentials.username}
                 onChange={(e) => setCredentials({...credentials, username: e.target.value})}
-                className="w-full pl-10 pr-4 py-3 bg-transparent border border-white/30 rounded text-white placeholder-white/70 focus:outline-none focus:border-white/60 transition-all duration-200"
+                className="w-full pl-8 pr-3 py-2 bg-transparent border border-white/30 rounded text-white placeholder-white/70 focus:outline-none focus:border-white/60 transition-all duration-200 text-sm"
                 placeholder="USERNAME"
                 required
                 disabled={isLoading}
@@ -74,7 +78,7 @@ export default function AdminLogin() {
                 type="password"
                 value={credentials.password}
                 onChange={(e) => setCredentials({...credentials, password: e.target.value})}
-                className="w-full pl-10 pr-4 py-3 bg-transparent border border-white/30 rounded text-white placeholder-white/70 focus:outline-none focus:border-white/60 transition-all duration-200"
+                className="w-full pl-8 pr-3 py-2 bg-transparent border border-white/30 rounded text-white placeholder-white/70 focus:outline-none focus:border-white/60 transition-all duration-200 text-sm"
                 placeholder="PASSWORD"
                 required
                 disabled={isLoading}
@@ -96,7 +100,7 @@ export default function AdminLogin() {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full bg-white text-blue-600 py-3 px-4 rounded font-semibold hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-white/50 transition-all duration-200 disabled:opacity-70 disabled:cursor-not-allowed"
+            className="w-full bg-white text-blue-600 py-2 px-4 rounded font-semibold hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-white/50 transition-all duration-200 disabled:opacity-70 disabled:cursor-not-allowed text-sm"
           >
             {isLoading ? (
               <div className="flex items-center justify-center">
@@ -133,7 +137,7 @@ export default function AdminLogin() {
       </div>
 
       {/* 애니메이션 스타일 */}
-      <style jsx>{`
+      <style>{`
         @keyframes shake {
           0%, 100% { transform: translateX(0); }
           25% { transform: translateX(-5px); }
