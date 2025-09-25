@@ -2,18 +2,19 @@ import { useState, useEffect, useRef } from 'react';
 import PortfolioCardList from '../components/Portfolio/PortfolioCardList';
 import PortfolioSection from '../components/Portfolio/PortfolioSection';
 import CategoryFilter from '../components/Portfolio/CategoryFilter';
-import { portfolioProjects, portfolioCategories } from '../data/portfolioData';
+import { usePortfolioData } from '../context/PortfolioContext';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
 
 const PortfolioPage = () => {
+  const { portfolioData } = usePortfolioData();
   const [selectedCategory, setSelectedCategory] = useState("일반 / 제조");
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 768);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const swiperRef = useRef<any>(null);
   
-  const filtered = portfolioProjects.filter((p) => p.category === selectedCategory);
+  const filtered = portfolioData.projects.filter((p) => p.category === selectedCategory);
   
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
@@ -45,7 +46,7 @@ const PortfolioPage = () => {
               paddingLeft: '20px',
               paddingRight: '20px'
             }}>
-              {portfolioCategories.map((category) => (
+              {portfolioData.categories.map((category) => (
                 <button
                   key={category}
                   style={{

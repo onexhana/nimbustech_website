@@ -1,44 +1,10 @@
 // src/pages/admin/AdminPortfolio.tsx
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { usePortfolioData } from '../../context/PortfolioContext';
 
 export default function AdminPortfolio() {
-  // Mock 데이터 (나중에 API로 교체)
-  const [portfolioData, setPortfolioData] = useState({
-    categories: ["공공", "금융", "일반 / 제조"],
-    projects: [
-      // 공공 카테고리
-      { id: 1, title: "다산콜센터", description: "다산콜센터 업무자동화", category: "공공", image: "/portfolio_photo/공공_다산콜센터.jpg" },
-      { id: 2, title: "중구청", description: "중구청 업무자동화", category: "공공", image: "/portfolio_photo/공공_중구청.jpg" },
-      { id: 3, title: "국가정보자원관리원", description: "범정부 정보자원 통합구축", category: "공공", image: "/portfolio_photo/공공_범정부.png" },
-      { id: 4, title: "국가정보자원관리원", description: "정보시스템 유지관리 사업", category: "공공", image: "/portfolio_photo/공공_정보시스템.png" },
-      { id: 5, title: "국방통합데이터센터", description: "국방데이터센터 구축 사업", category: "공공", image: "/portfolio_photo/공공_국방데이터센터.jpg" },
-      { id: 6, title: "국민연금공단", description: "국민연금 차세대 개발", category: "공공", image: "/portfolio_photo/공공_국민연금.jpg" },
-      
-      // 금융 카테고리
-      { id: 22, title: "신한금융투자", description: "RPA개발 및 운영사업", category: "금융", image: "/portfolio_photo/금융_신한금융투자.jpg" },
-      { id: 23, title: "메트라이프금융서비스", description: "RPA 시범사업", category: "금융", image: "/portfolio_photo/금융_메트라이프금융서비스.jpg" },
-      { id: 24, title: "미래에셋", description: "보안포탈", category: "금융", image: "/portfolio_photo/금융_미래에셋.jpg" },
-      { id: 25, title: "하나은행", description: "마이데이터 구축", category: "금융", image: "/portfolio_photo/금융_하나은행.jpg" },
-      { id: 26, title: "AIA생명", description: "서버 운영", category: "금융", image: "/portfolio_photo/금융_AIA생명.jpg" },
-      { id: 27, title: "한국투자증권", description: "AIX 서버 운영", category: "금융", image: "/portfolio_photo/금융_한국투자증권.jpg" },
-      { id: 28, title: "메트라이프", description: "데이터센터 운영", category: "금융", image: "/portfolio_photo/금융_메트라이프.jpg" },
-      { id: 29, title: "DB생명보험", description: "서버 운영", category: "금융", image: "/portfolio_photo/금융_DB생명보험.jpg" },
-      { id: 30, title: "국민카드", description: "클라우드 사업", category: "금융", image: "/portfolio_photo/금융_국민카드.png" },
-      { id: 31, title: "ACE 손해보험", description: "대응개발", category: "금융", image: "/portfolio_photo/금융_ACE.jpg" },
-      
-      // 일반/제조 카테고리
-      { id: 32, title: "삼성전자", description: "RPA 개발 및 운영사업", category: "일반 / 제조", image: "/portfolio_photo/일반_삼성전자.jpg" },
-      { id: 33, title: "태평양물산", description: "RPA 시범사업", category: "일반 / 제조", image: "/portfolio_photo/일반_태평양물산.png" },
-      { id: 34, title: "LG", description: "RPA 구축", category: "일반 / 제조", image: "/portfolio_photo/일반_LG.jpg" },
-      { id: 35, title: "H에너지", description: "태양광 발전 운영시스템 구축", category: "일반 / 제조", image: "/portfolio_photo/일반_태양광.jpg" },
-      { id: 36, title: "CJ", description: "DB 구축 기술지원", category: "일반 / 제조", image: "/portfolio_photo/일반_CJ.jpg" },
-      { id: 37, title: "강원랜드", description: "DBA 운영", category: "일반 / 제조", image: "/portfolio_photo/일반_강원랜드.jpg" },
-      { id: 38, title: "한국신용정보원", description: "Operator", category: "일반 / 제조", image: "/portfolio_photo/일반_한국신용정보원.jpg" },
-      { id: 39, title: "현대백화점", description: "DR구축", category: "일반 / 제조", image: "/portfolio_photo/일반_현대.jpg" }
-    ]
-  });
-
+  const { portfolioData, updateProject, addProject, deleteProject, updateCategories } = usePortfolioData();
   const [isEditing, setIsEditing] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("공공");
   const [showAddForm, setShowAddForm] = useState(false);
@@ -50,41 +16,24 @@ export default function AdminPortfolio() {
   });
 
   const handleSave = () => {
+    // 데이터는 Context에서 자동으로 localStorage에 저장됨
     console.log('저장된 포트폴리오 데이터:', portfolioData);
     setIsEditing(false);
     alert('저장되었습니다!');
   };
 
-  const addProject = () => {
-    const newId = Math.max(...portfolioData.projects.map(p => p.id)) + 1;
-    const project = {
-      id: newId,
-      ...newProject
-    };
-    
-    setPortfolioData({
-      ...portfolioData,
-      projects: [...portfolioData.projects, project]
-    });
-    
+  const handleAddProject = () => {
+    addProject(newProject);
     setNewProject({ title: "", description: "", category: "공공", image: "" });
     setShowAddForm(false);
   };
 
-  const removeProject = (id: number) => {
-    setPortfolioData({
-      ...portfolioData,
-      projects: portfolioData.projects.filter(p => p.id !== id)
-    });
+  const handleRemoveProject = (id: number) => {
+    deleteProject(id);
   };
 
-  const updateProject = (id: number, field: string, value: string) => {
-    setPortfolioData({
-      ...portfolioData,
-      projects: portfolioData.projects.map(p => 
-        p.id === id ? { ...p, [field]: value } : p
-      )
-    });
+  const handleUpdateProject = (id: number, field: string, value: string) => {
+    updateProject(id, { [field]: value });
   };
 
   const filteredProjects = portfolioData.projects.filter(p => p.category === selectedCategory);
@@ -569,7 +518,7 @@ export default function AdminPortfolio() {
                       취소
                     </button>
                     <button
-                      onClick={addProject}
+                      onClick={handleAddProject}
                       style={{
                         padding: '0.75rem 1.5rem',
                         fontSize: '0.875rem',
@@ -618,7 +567,7 @@ export default function AdminPortfolio() {
                       </div>
                       {isEditing && (
                         <button
-                          onClick={() => removeProject(project.id)}
+                          onClick={() => handleRemoveProject(project.id)}
                           style={{
                             padding: '0.5rem',
                             color: '#ef4444',
@@ -644,7 +593,7 @@ export default function AdminPortfolio() {
                         <input
                           type="text"
                           value={project.title}
-                          onChange={(e) => updateProject(project.id, 'title', e.target.value)}
+                          onChange={(e) => handleUpdateProject(project.id, 'title', e.target.value)}
                           disabled={!isEditing}
                           style={{
                             width: '100%',
@@ -677,7 +626,7 @@ export default function AdminPortfolio() {
                         </label>
                         <select
                           value={project.category}
-                          onChange={(e) => updateProject(project.id, 'category', e.target.value)}
+                          onChange={(e) => handleUpdateProject(project.id, 'category', e.target.value)}
                           disabled={!isEditing}
                           style={{
                             width: '100%',
@@ -715,7 +664,7 @@ export default function AdminPortfolio() {
                         <input
                           type="text"
                           value={project.description}
-                          onChange={(e) => updateProject(project.id, 'description', e.target.value)}
+                          onChange={(e) => handleUpdateProject(project.id, 'description', e.target.value)}
                           disabled={!isEditing}
                           style={{
                             width: '100%',
@@ -749,7 +698,7 @@ export default function AdminPortfolio() {
                         <input
                           type="text"
                           value={project.image}
-                          onChange={(e) => updateProject(project.id, 'image', e.target.value)}
+                          onChange={(e) => handleUpdateProject(project.id, 'image', e.target.value)}
                           disabled={!isEditing}
                           style={{
                             width: '100%',

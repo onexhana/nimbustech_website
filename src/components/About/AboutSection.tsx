@@ -36,6 +36,9 @@ import 'swiper/swiper-bundle.css';
 const noEffect = AboutCard.name === 'AboutCardNoEffect';
 
 // ========================================
+// Context에서 데이터 가져오기
+import { useAboutData } from '../../context/AboutContext';
+
 // 탭 및 카드 데이터 (각 섹션별 6개씩 확장됨)
 // ========================================
 // 탭 리스트 정의: 네비게이션에 표시될 탭명을 배열로 지정합니다.
@@ -163,6 +166,8 @@ const TAB_CONTENTS: Record<string, { title: string; description: string[]; link?
 // 메인 컴포넌트 함수
 // ========================================
 export default function AboutSection() {
+  const { aboutData } = useAboutData();
+  
   // 상태 관리:
   // activeTab - 선택된 탭, currentSlide - 현재 슬라이드 인덱스
   const [activeTab, setActiveTab] = useState("ITO");
@@ -179,7 +184,7 @@ export default function AboutSection() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
   
-  const cards = TAB_CONTENTS[activeTab];
+  const cards = aboutData.tabs.find(tab => tab.name === activeTab)?.cards || [];
   const isMultiPage = true; // 모든 탭을 무한루프로 변경
   
   // 모든 섹션용 무한 루프를 위한 카드 복제 (카드 수가 적은 경우 더 많이 복제)
@@ -231,10 +236,10 @@ export default function AboutSection() {
                 margin: 0
               }}>
                 <span style={{ fontWeight: 700, display: 'block', fontSize: '28px' }}>
-                  고객 성공 리딩
+                  {aboutData.mainTitle}
                 </span>
                 <span style={{ fontWeight: 400, display: 'block', marginTop: '4px', marginBottom: '30px',fontSize: '19px' }}>
-                신뢰성 높은 DT 서비스를 제공합니다.
+                {aboutData.subtitle}
                 </span>
               </h2>
             </div>
@@ -248,14 +253,14 @@ export default function AboutSection() {
               marginBottom: '25px'
             }}>
               {/* TAB_LIST 배열을 순회하며 각각 버튼 생성 */}
-              {TAB_LIST.map((tab) => (
+              {aboutData.tabs.map((tab) => (
                 <button
-                  key={tab}
+                  key={tab.name}
                   /* 버튼 스타일: 활성 탭은 파란색, 비활성 탭은 흰색 배경 */
                   style={{
-                    backgroundColor: activeTab === tab ? '#00A3E0' : 'white',
-                    color: activeTab === tab ? 'white' : '#000000',
-                    border: activeTab === tab ? 'none' : '1px solid #00A3E0',
+                    backgroundColor: activeTab === tab.name ? '#00A3E0' : 'white',
+                    color: activeTab === tab.name ? 'white' : '#000000',
+                    border: activeTab === tab.name ? 'none' : '1px solid #00A3E0',
                     borderRadius: '20px',
                     padding: '8px 16px',
                     fontSize: '14px',
@@ -263,9 +268,9 @@ export default function AboutSection() {
                     cursor: 'pointer',
                     minWidth: '60px'
                   }}
-                  onClick={() => handleTabChange(tab)}
+                  onClick={() => handleTabChange(tab.name)}
                 >
-                  {tab} {/* 탭명 표시 */}
+                  {tab.name} {/* 탭명 표시 */}
                 </button>
               ))}
             </div>
@@ -367,7 +372,7 @@ export default function AboutSection() {
           <>
             {/* 탭 컴포넌트 */}
             <AboutTab 
-              tabs={TAB_LIST}
+              tabs={aboutData.tabs.map(tab => tab.name)}
               activeTab={activeTab}
               onTabChange={handleTabChange}
             />

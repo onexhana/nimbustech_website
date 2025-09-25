@@ -1,6 +1,7 @@
 // src/pages/admin/AdminAbout.tsx
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useAboutData } from '../../context/AboutContext';
 
 export default function AdminAbout() {
   // 링크 URL 필드 위치 조정을 위한 state
@@ -8,140 +9,7 @@ export default function AdminAbout() {
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
 
-  // Mock 데이터 (나중에 API로 교체)
-  const [aboutData, setAboutData] = useState({
-    mainTitle: "고객 성공 리딩",
-    subtitle: "신뢰성 높은 DT 서비스를 제공합니다.",
-    tabs: [
-      {
-        name: "ITO",
-        cards: [
-          {
-            title: "풍부한 인재 자원",
-            description: [
-              "5,500명 이상의 IT 전문가",
-              "데이터베이스 보유"
-            ]
-          },
-          {
-            title: "검증된 신뢰성",
-            description: [
-              "주요 파트너사와 8년 이상의",
-              "지속적 협력 관계"
-            ]
-          },
-          {
-            title: "체계적 인재 매칭",
-            description: [
-              "CRM 기반 전담 매니저 배치로",
-              "최적화된 인재 선별"
-            ]
-          }
-        ]
-      },
-      {
-        name: "클라우드",
-        cards: [
-          {
-            title: "전략적 파트너십",
-            description: [
-              "클라우드 MSP 전문기업 및 종합 IT",
-              "인프라 솔루션 기업과의 협력 체계"
-            ]
-          },
-          {
-            title: "공공 클라우드 운영 실적",
-            description: [
-              "국가정보자원관리원 G-클라우드",
-              "구축 및 운영 5년 이상 지속"
-            ]
-          },
-          {
-            title: "민간 클라우드 인프라 관리",
-            description: [
-              "메트라이프생명, 한국투자증권,",
-              "DB손해보험 인프라 운영 중"
-            ]
-          }
-        ]
-      },
-      {
-        name: "RPA",
-        cards: [
-          {
-            title: "삼성SDS Brity RPA 파트너",
-            description: [
-              "국내 대표 RPA 솔루션 Brity의",
-              "공인 공급업체"
-            ]
-          },
-          {
-            title: "RPA 프로젝트 수행 이력",
-            description: [
-              "1. 반복 업무 자동화",
-              "2. 업무 효율성 극대화",
-              "3. 에러율 최소화"
-            ]
-          },
-          {
-            title: "RPA 전문 인력 확보",
-            description: [
-              "자동화 솔루션 구축 및 운영 가능한",
-              "전문 엔지니어 보유"
-            ]
-          }
-        ]
-      },
-      {
-        name: "솔루션",
-        cards: [
-          {
-            title: "Extreme Networks",
-            description: [
-              "네트워크, 보안, AI를 통합해 복잡성을 단순화합니다"
-            ],
-            link: "https://www.extremenetworks.com/kr/solutions"
-          },
-          {
-            title: "WeDataLab",
-            description: [
-              "데이터 인텔리전스로 비즈니스 혁신을 실현합니다"
-            ],
-            link: "https://wedatalab.com/solution"
-          },
-          {
-            title: "SUSE",
-            description: [
-              "자동화와 모니터링으로 SAP 인프라를 관리합니다"
-            ],
-            link: "https://www.suse.com/ko-kr/solutions/run-sap-solutions/"
-          },
-          {
-            title: "SK AX",
-            description: [
-              "글로벌 톱10 AI 서비스 기업으로 성장합니다"
-            ],
-            link: "https://www.skax.co.kr/"
-          },
-          {
-            title: "T3Q",
-            description: [
-              "인공지능을 엑셀처럼 쉽게 활용할 수 있게 합니다"
-            ],
-            link: "https://t3q.com/t3q-ai/"
-          },
-          {
-            title: "BCP Solutions",
-            description: [
-              "솔루션과 컨설팅으로 비즈니스 연속성을 보장합니다"
-            ],
-            link: "https://www.krbcp.com/?act=board&bbs_code=brochure"
-          }
-        ]
-      }
-    ]
-  });
-
+  const { aboutData, updateMainTitle, updateSubtitle, updateCard } = useAboutData();
   const [isEditing, setIsEditing] = useState(false);
   const [activeTab, setActiveTab] = useState(0);
 
@@ -168,29 +36,10 @@ export default function AdminAbout() {
   };
 
   const handleSave = () => {
+    // 데이터는 Context에서 자동으로 localStorage에 저장됨
     console.log('저장된 About 데이터:', aboutData);
     setIsEditing(false);
     alert('저장되었습니다!');
-  };
-
-  const addCard = (tabIndex: number) => {
-    const newCards = [...aboutData.tabs[tabIndex].cards];
-    newCards.push({
-      title: "새 카드",
-      description: ["설명을 입력하세요"],
-      ...(aboutData.tabs[tabIndex].name === "솔루션" && { link: "" })
-    });
-    
-    const newTabs = [...aboutData.tabs];
-    newTabs[tabIndex].cards = newCards;
-    setAboutData({...aboutData, tabs: newTabs});
-  };
-
-  const removeCard = (tabIndex: number, cardIndex: number) => {
-    const newCards = aboutData.tabs[tabIndex].cards.filter((_, index) => index !== cardIndex);
-    const newTabs = [...aboutData.tabs];
-    newTabs[tabIndex].cards = newCards;
-    setAboutData({...aboutData, tabs: newTabs});
   };
 
   return (
@@ -245,14 +94,14 @@ export default function AdminAbout() {
                   justifyContent: 'center'
                 }}>
                   <svg width="24" height="24" fill="none" stroke="white" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                 </div>
                 <div>
                   <h1 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#111827', margin: 0 }}>
                     About 페이지 관리
                   </h1>
-                  <p style={{ fontSize: '0.875rem', color: '#6b7280', margin: 0 }}>콘텐츠를 편집하고 관리하세요</p>
+                  <p style={{ fontSize: '0.875rem', color: '#6b7280', margin: 0 }}>About 페이지 콘텐츠를 편집하고 관리하세요</p>
                 </div>
               </div>
             </div>
@@ -335,542 +184,197 @@ export default function AdminAbout() {
 
       {/* 메인 콘텐츠 */}
       <main style={{ maxWidth: '1200px', margin: '0 auto', padding: '2rem 1rem' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '1.5rem', alignItems: 'start' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', alignItems: 'start' }}>
           {/* 메인 타이틀 편집 */}
-          <div>
-            <div style={{
-              background: 'rgba(255, 255, 255, 0.8)',
-              backdropFilter: 'blur(10px)',
-              borderRadius: '12px',
-              boxShadow: '0 10px 15px rgba(0, 0, 0, 0.1)',
-              border: '1px solid rgba(255, 255, 255, 0.2)',
-              padding: '1.5rem',
-              transition: 'all 0.3s ease'
-            }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
-                <div style={{
-                  width: '32px',
-                  height: '32px',
-                  background: 'linear-gradient(135deg, #8b5cf6, #ec4899)',
-                  borderRadius: '8px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center'
-                }}>
-                  <svg width="20" height="20" fill="none" stroke="white" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
-                  </svg>
-                </div>
-                <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#111827', margin: 0 }}>
-                  메인 타이틀
-                </h3>
-              </div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                <div>
-                  <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.75rem' }}>
-                    메인 제목
-                  </label>
-                  <input
-                    type="text"
-                    value={aboutData.mainTitle}
-                    onChange={(e) => setAboutData({...aboutData, mainTitle: e.target.value})}
-                    disabled={!isEditing}
-                    style={{
-                      width: '100%',
-                      maxWidth: '300px',
-                      padding: '0.3rem 0.5rem',
-                      border: '1px solid #e5e7eb',
-                      borderRadius: '4px',
-                      outline: 'none',
-                      fontSize: '0.75rem',
-                      transition: 'all 0.2s ease',
-                      background: !isEditing ? '#f9fafb' : 'white',
-                      color: !isEditing ? '#6b7280' : '#111827'
-                    }}
-                    onFocus={(e) => {
-                      if (isEditing) {
-                        e.target.style.borderColor = '#3b82f6';
-                        e.target.style.boxShadow = '0 0 0 4px rgba(59, 130, 246, 0.1)';
-                      }
-                    }}
-                    onBlur={(e) => {
-                      e.target.style.borderColor = '#e5e7eb';
-                      e.target.style.boxShadow = 'none';
-                    }}
-                  />
-                </div>
-                <div>
-                  <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.75rem' }}>
-                    부제목
-                  </label>
-                  <input
-                    type="text"
-                    value={aboutData.subtitle}
-                    onChange={(e) => setAboutData({...aboutData, subtitle: e.target.value})}
-                    disabled={!isEditing}
-                    style={{
-                      width: '100%',
-                      maxWidth: '300px',
-                      padding: '0.3rem 0.5rem',
-                      border: '1px solid #e5e7eb',
-                      borderRadius: '4px',
-                      outline: 'none',
-                      fontSize: '0.75rem',
-                      transition: 'all 0.2s ease',
-                      background: !isEditing ? '#f9fafb' : 'white',
-                      color: !isEditing ? '#6b7280' : '#111827'
-                    }}
-                    onFocus={(e) => {
-                      if (isEditing) {
-                        e.target.style.borderColor = '#3b82f6';
-                        e.target.style.boxShadow = '0 0 0 4px rgba(59, 130, 246, 0.1)';
-                      }
-                    }}
-                    onBlur={(e) => {
-                      e.target.style.borderColor = '#e5e7eb';
-                      e.target.style.boxShadow = 'none';
-                    }}
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* 탭별 카드 관리 */}
-          <div>
-            <div style={{
-              background: 'rgba(255, 255, 255, 0.8)',
-              backdropFilter: 'blur(10px)',
-              borderRadius: '12px',
-              boxShadow: '0 10px 15px rgba(0, 0, 0, 0.1)',
-              border: '1px solid rgba(255, 255, 255, 0.2)',
-              padding: '1.5rem',
-              transition: 'all 0.3s ease'
-            }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                  <div style={{
-                    width: '32px',
-                    height: '32px',
-                    background: 'linear-gradient(135deg, #10b981, #14b8a6)',
-                    borderRadius: '8px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center'
-                  }}>
-                    <svg width="20" height="20" fill="none" stroke="white" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-                    </svg>
-                  </div>
-                  <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#111827', margin: 0 }}>
-                    탭별 카드 관리
-                  </h3>
-                </div>
-                {isEditing && (
-                  <button
-                    onClick={() => addCard(activeTab)}
-                    style={{
-                      padding: '0.5rem 1rem',
-                      fontSize: '0.8rem',
-                      fontWeight: '500',
-                      color: 'white',
-                      background: 'linear-gradient(135deg, #10b981, #14b8a6)',
-                      border: 'none',
-                      borderRadius: '8px',
-                      cursor: 'pointer',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '0.25rem',
-                      transition: 'all 0.2s ease'
-                    }}
-                  >
-                    <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                    </svg>
-                    <span>카드 추가</span>
-                  </button>
-                )}
-              </div>
-
-              {/* 탭 선택 */}
-              <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1.5rem' }}>
-                {aboutData.tabs.map((tab, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setActiveTab(index)}
-                    style={{
-                      padding: '0.5rem 1rem',
-                      fontSize: '0.8rem',
-                      fontWeight: '600',
-                      borderRadius: '8px',
-                      border: 'none',
-                      cursor: 'pointer',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '0.25rem',
-                      transition: 'all 0.2s ease',
-                      ...(activeTab === index ? {
-                        background: 'linear-gradient(135deg, #2563eb, #6366f1)',
-                        color: 'white',
-                        boxShadow: '0 10px 15px rgba(0, 0, 0, 0.2)',
-                        transform: 'scale(1.05)'
-                      } : {
-                        background: 'rgba(255, 255, 255, 0.5)',
-                        color: '#374151',
-                        border: '1px solid #e5e7eb'
-                      })
-                    }}
-                  >
-                    <span>{tab.name}</span>
-                    <span style={{
-                      padding: '0.25rem 0.5rem',
-                      fontSize: '0.75rem',
-                      borderRadius: '9999px',
-                      ...(activeTab === index ? {
-                        background: 'rgba(255, 255, 255, 0.2)',
-                        color: 'white'
-                      } : {
-                        background: '#f3f4f6',
-                        color: '#6b7280'
-                      })
-                    }}>
-                      {tab.cards.length}
-                    </span>
-                  </button>
-                ))}
-              </div>
-
-              {/* 카드 목록 */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                {aboutData.tabs[activeTab].cards.map((card, cardIndex) => (
-                  <div key={cardIndex} style={{
-                    background: 'rgba(255, 255, 255, 0.6)',
-                    backdropFilter: 'blur(10px)',
-                    border: '1px solid rgba(229, 231, 235, 0.5)',
-                    borderRadius: '12px',
-                    padding: '1rem',
-                    transition: 'all 0.3s ease'
-                  }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1rem' }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                        <div style={{
-                          width: '32px',
-                          height: '32px',
-                          background: 'linear-gradient(135deg, #f97316, #ef4444)',
-                          borderRadius: '8px',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center'
-                        }}>
-                          <span style={{ color: 'white', fontWeight: 'bold', fontSize: '0.875rem' }}>{cardIndex + 1}</span>
-                        </div>
-                        <h4 style={{ fontSize: '1.125rem', fontWeight: 'bold', color: '#111827', margin: 0 }}>
-                          카드 {cardIndex + 1}
-                        </h4>
-                      </div>
-                      {isEditing && (
-                        <button
-                          onClick={() => removeCard(activeTab, cardIndex)}
-                          style={{
-                            padding: '0.5rem',
-                            color: '#ef4444',
-                            background: 'transparent',
-                            border: 'none',
-                            borderRadius: '8px',
-                            cursor: 'pointer',
-                            transition: 'all 0.2s ease'
-                          }}
-                        >
-                          <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                          </svg>
-                        </button>
-                      )}
-                    </div>
-                    
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                      <div>
-                        <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
-                          제목
-                        </label>
-                        <input
-                          type="text"
-                          value={card.title}
-                          onChange={(e) => {
-                            const newTabs = [...aboutData.tabs];
-                            newTabs[activeTab].cards[cardIndex].title = e.target.value;
-                            setAboutData({...aboutData, tabs: newTabs});
-                          }}
-                          disabled={!isEditing}
-                          style={{
-                            width: '100%',
-                            maxWidth: '650px',
-                            padding: '0.5rem 0.75rem',
-                            border: '2px solid #e5e7eb',
-                            borderRadius: '8px',
-                            outline: 'none',
-                            fontSize: '0.875rem',
-                            transition: 'all 0.2s ease',
-                            background: !isEditing ? '#f9fafb' : 'white',
-                            color: !isEditing ? '#6b7280' : '#111827'
-                          }}
-                          onFocus={(e) => {
-                            if (isEditing) {
-                              e.target.style.borderColor = '#3b82f6';
-                              e.target.style.boxShadow = '0 0 0 4px rgba(59, 130, 246, 0.1)';
-                            }
-                          }}
-                          onBlur={(e) => {
-                            e.target.style.borderColor = '#e5e7eb';
-                            e.target.style.boxShadow = 'none';
-                          }}
-                        />
-                      </div>
-                      
-                      <div>
-                        <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
-                          설명 (줄바꿈으로 구분)
-                        </label>
-                        <textarea
-                          value={card.description.join('\n')}
-                          onChange={(e) => {
-                            const newTabs = [...aboutData.tabs];
-                            newTabs[activeTab].cards[cardIndex].description = e.target.value.split('\n');
-                            setAboutData({...aboutData, tabs: newTabs});
-                          }}
-                          disabled={!isEditing}
-                          rows={2}
-                          style={{
-                            width: '100%',
-                            maxWidth: '660px',
-                            padding: '0.3rem 0.5rem',
-                            border: '1px solid #e5e7eb',
-                            borderRadius: '4px',
-                            outline: 'none',
-                            fontSize: '0.75rem',
-                            transition: 'all 0.2s ease',
-                            background: !isEditing ? '#f9fafb' : 'white',
-                            color: !isEditing ? '#6b7280' : '#111827',
-                            resize: 'none',
-                            minHeight: '40px'
-                          }}
-                        />
-                      </div>
-                      
-                      {aboutData.tabs[activeTab].name === "솔루션" && (
-                        <div>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
-                            <label style={{ fontSize: '0.875rem', fontWeight: '600', color: '#374151', margin: 0 }}>
-                              링크 URL
-                            </label>
-                            <button
-                              onClick={() => setUrlFieldPosition({ x: 0, y: 0 })}
-                              style={{
-                                padding: '0.25rem 0.5rem',
-                                fontSize: '0.7rem',
-                                background: '#f3f4f6',
-                                border: '1px solid #d1d5db',
-                                borderRadius: '4px',
-                                cursor: 'pointer',
-                                color: '#6b7280'
-                              }}
-                            >
-                              위치 초기화
-                            </button>
-                          </div>
-                          <div 
-                            style={{ 
-                              position: 'relative',
-                              transform: `translate(${urlFieldPosition.x}px, ${urlFieldPosition.y}px)`,
-                              cursor: isDragging ? 'grabbing' : 'grab'
-                            }}
-                            onMouseDown={handleMouseDown}
-                            onMouseMove={handleMouseMove}
-                            onMouseUp={handleMouseUp}
-                            onMouseLeave={handleMouseUp}
-                          >
-                            {/* 드래그 핸들 */}
-                            <div style={{
-                              position: 'absolute',
-                              top: '-8px',
-                              right: '-8px',
-                              width: '16px',
-                              height: '16px',
-                              background: '#3b82f6',
-                              borderRadius: '50%',
-                              cursor: 'grab',
-                              display: 'flex',
-                              alignItems: 'center',
-                              justifyContent: 'center',
-                              zIndex: 10,
-                              boxShadow: '0 2px 4px rgba(0,0,0,0.2)'
-                            }}>
-                              <svg width="8" height="8" fill="white" viewBox="0 0 24 24">
-                                <path d="M3 15h18v-2H3v2zm0-4h18V9H3v2zm0-4v2h18V7H3z"/>
-                              </svg>
-                            </div>
-                            <div style={{ position: 'absolute', top: '50%', left: '0.6rem', transform: 'translateY(-50%)', pointerEvents: 'none' }}>
-                              <svg width="20" height="20" fill="none" stroke="#9ca3af" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
-                              </svg>
-                            </div>
-                            <input
-                              type="url"
-                              value={'link' in card ? card.link || '' : ''}
-                              onChange={(e) => {
-                                const newTabs = [...aboutData.tabs];
-                                if ('link' in newTabs[activeTab].cards[cardIndex]) {
-                                  (newTabs[activeTab].cards[cardIndex] as { link: string }).link = e.target.value;
-                                }
-                                setAboutData({...aboutData, tabs: newTabs});
-                              }}
-                              disabled={!isEditing}
-                              style={{
-                                width: '100%',
-                                maxHeight: '60px',
-                                maxWidth: '645px',
-                                paddingLeft: '1.5rem',
-                                paddingRight: '0.5rem',
-                                paddingTop: '0.3rem',
-                                paddingBottom: '0.3rem',
-                                border: '1px solid #e5e7eb',
-                                borderRadius: '4px',
-                                outline: 'none',
-                                fontSize: '0.75rem',
-                                transition: 'all 0.2s ease',
-                                background: !isEditing ? '#f9fafb' : 'white',
-                                color: !isEditing ? '#6b7280' : '#111827'
-                              }}
-                              onFocus={(e) => {
-                                if (isEditing) {
-                                  e.target.style.borderColor = '#3b82f6';
-                                  e.target.style.boxShadow = '0 0 0 4px rgba(59, 130, 246, 0.1)';
-                                }
-                              }}
-                              onBlur={(e) => {
-                                e.target.style.borderColor = '#e5e7eb';
-                                e.target.style.boxShadow = 'none';
-                              }}
-                              placeholder="https://example.com"
-                            />
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* 미리보기 */}
-        <div style={{
-          marginTop: '2rem',
-          background: 'rgba(255, 255, 255, 0.8)',
-          backdropFilter: 'blur(10px)',
-          borderRadius: '12px',
-          boxShadow: '0 10px 15px rgba(0, 0, 0, 0.1)',
-          border: '1px solid rgba(255, 255, 255, 0.2)',
-          padding: '1.5rem',
-          transition: 'all 0.3s ease'
-        }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.5rem' }}>
-            <div style={{
-              width: '32px',
-              height: '32px',
-              background: 'linear-gradient(135deg, #8b5cf6, #7c3aed)',
-              borderRadius: '8px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center'
-            }}>
-              <svg width="20" height="20" fill="none" stroke="white" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-              </svg>
-            </div>
-            <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#111827', margin: 0 }}>
-              실시간 미리보기
-            </h3>
-          </div>
-          
           <div style={{
-            background: 'linear-gradient(135deg, #f9fafb, #f3f4f6)',
+            background: 'rgba(255, 255, 255, 0.8)',
+            backdropFilter: 'blur(10px)',
             borderRadius: '12px',
+            boxShadow: '0 10px 15px rgba(0, 0, 0, 0.1)',
+            border: '1px solid rgba(255, 255, 255, 0.2)',
             padding: '1.5rem',
-            border: '1px solid rgba(229, 231, 235, 0.5)'
+            transition: 'all 0.3s ease'
           }}>
-            <div style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
-              <h2 style={{ fontSize: '1.875rem', fontWeight: 'bold', color: '#1f2937', marginBottom: '0.75rem', margin: 0 }}>
-                {aboutData.mainTitle}
-              </h2>
-              <p style={{ fontSize: '1.125rem', color: '#6b7280', margin: 0 }}>
-                {aboutData.subtitle}
-              </p>
-            </div>
-            
-            <div style={{
-              background: 'white',
-              borderRadius: '8px',
-              padding: '1rem',
-              boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
-              border: '1px solid rgba(229, 231, 235, 0.5)'
-            }}>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
-                <h4 style={{ fontSize: '1.125rem', fontWeight: '600', color: '#1f2937', margin: 0 }}>
-                  {aboutData.tabs[activeTab].name} 섹션
-                </h4>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  <div style={{
-                    width: '8px',
-                    height: '8px',
-                    background: '#10b981',
-                    borderRadius: '50%',
-                    animation: 'pulse 2s infinite'
-                  }}></div>
-                  <span style={{ fontSize: '0.875rem', color: '#6b7280' }}>
-                    {aboutData.tabs[activeTab].cards.length}개 카드
-                  </span>
-                </div>
-              </div>
-              
-              <div style={{ 
-                display: 'grid', 
-                gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', 
-                gap: '0.75rem' 
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
+              <div style={{
+                width: '32px',
+                height: '32px',
+                background: 'linear-gradient(135deg, #8b5cf6, #ec4899)',
+                borderRadius: '8px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
               }}>
-                {aboutData.tabs[activeTab].cards.slice(0, 3).map((card, index) => (
-                  <div key={index} style={{
-                    background: 'linear-gradient(135deg, #eff6ff, #dbeafe)',
-                    borderRadius: '8px',
-                    padding: '1rem',
-                    border: '1px solid rgba(59, 130, 246, 0.2)'
-                  }}>
-                    <h5 style={{ fontWeight: '600', color: '#1f2937', marginBottom: '0.5rem', fontSize: '0.875rem', margin: 0 }}>
-                      {card.title}
-                    </h5>
-                    <p style={{ fontSize: '0.75rem', color: '#6b7280', lineHeight: '1.5', margin: 0 }}>
-                      {card.description.slice(0, 2).join(' ')}
-                    </p>
-                  </div>
-                ))}
-                {aboutData.tabs[activeTab].cards.length > 3 && (
-                  <div style={{
-                    background: 'linear-gradient(135deg, #f9fafb, #f3f4f6)',
-                    borderRadius: '8px',
-                    padding: '1rem',
-                    border: '1px solid #e5e7eb',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center'
-                  }}>
-                    <span style={{ fontSize: '0.875rem', color: '#6b7280' }}>
-                      +{aboutData.tabs[activeTab].cards.length - 3}개 더
-                    </span>
-                  </div>
-                )}
+                <svg width="20" height="20" fill="none" stroke="white" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
+                </svg>
               </div>
+              <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#111827', margin: 0 }}>
+                메인 타이틀
+              </h3>
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              <div>
+                <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.75rem' }}>
+                  메인 타이틀
+                </label>
+                <input
+                  type="text"
+                  value={aboutData.mainTitle}
+                  onChange={(e) => updateMainTitle(e.target.value)}
+                  disabled={!isEditing}
+                  style={{
+                    width: '100%',
+                    maxWidth: '300px',
+                    padding: '0.5rem 0.75rem',
+                    border: '2px solid #e5e7eb',
+                    borderRadius: '8px',
+                    outline: 'none',
+                    fontSize: '0.875rem',
+                    transition: 'all 0.2s ease',
+                    background: !isEditing ? '#f9fafb' : 'white',
+                    color: !isEditing ? '#6b7280' : '#111827'
+                  }}
+                />
+              </div>
+              <div>
+                <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.75rem' }}>
+                  서브타이틀
+                </label>
+                <input
+                  type="text"
+                  value={aboutData.subtitle}
+                  onChange={(e) => updateSubtitle(e.target.value)}
+                  disabled={!isEditing}
+                  style={{
+                    width: '100%',
+                    maxWidth: '300px',
+                    padding: '0.5rem 0.75rem',
+                    border: '2px solid #e5e7eb',
+                    borderRadius: '8px',
+                    outline: 'none',
+                    fontSize: '0.875rem',
+                    transition: 'all 0.2s ease',
+                    background: !isEditing ? '#f9fafb' : 'white',
+                    color: !isEditing ? '#6b7280' : '#111827'
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* 탭별 카드 편집 */}
+          <div style={{
+            background: 'rgba(255, 255, 255, 0.8)',
+            backdropFilter: 'blur(10px)',
+            borderRadius: '12px',
+            boxShadow: '0 10px 15px rgba(0, 0, 0, 0.1)',
+            border: '1px solid rgba(255, 255, 255, 0.2)',
+            padding: '1.5rem',
+            transition: 'all 0.3s ease'
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
+              <div style={{
+                width: '32px',
+                height: '32px',
+                background: 'linear-gradient(135deg, #10b981, #14b8a6)',
+                borderRadius: '8px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}>
+                <svg width="20" height="20" fill="none" stroke="white" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" />
+                </svg>
+              </div>
+              <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#111827', margin: 0 }}>
+                탭별 카드 관리
+              </h3>
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              {aboutData.tabs.map((tab, tabIndex) => (
+                <div key={tabIndex} style={{
+                  background: 'rgba(255, 255, 255, 0.6)',
+                  backdropFilter: 'blur(10px)',
+                  border: '1px solid rgba(229, 231, 235, 0.5)',
+                  borderRadius: '12px',
+                  padding: '1rem',
+                  transition: 'all 0.3s ease'
+                }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
+                    <div style={{
+                      width: '24px',
+                      height: '24px',
+                      background: 'linear-gradient(135deg, #f97316, #ef4444)',
+                      borderRadius: '6px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center'
+                    }}>
+                      <span style={{ color: 'white', fontWeight: 'bold', fontSize: '0.75rem' }}>{tabIndex + 1}</span>
+                    </div>
+                    <h4 style={{ fontSize: '1rem', fontWeight: 'bold', color: '#111827', margin: 0 }}>
+                      {tab.name} 탭
+                    </h4>
+                  </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                    {tab.cards.map((card, cardIndex) => (
+                      <div key={cardIndex} style={{
+                        background: 'rgba(255, 255, 255, 0.8)',
+                        borderRadius: '8px',
+                        padding: '0.75rem',
+                        border: '1px solid rgba(229, 231, 235, 0.3)'
+                      }}>
+                        <div>
+                          <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                            제목
+                          </label>
+                          <input
+                            type="text"
+                            value={card.title}
+                            onChange={(e) => updateCard(tabIndex, cardIndex, { title: e.target.value })}
+                            disabled={!isEditing}
+                            style={{
+                              width: '100%',
+                              padding: '0.5rem 0.75rem',
+                              border: '1px solid #e5e7eb',
+                              borderRadius: '6px',
+                              outline: 'none',
+                              fontSize: '0.875rem',
+                              transition: 'all 0.2s ease',
+                              background: !isEditing ? '#f9fafb' : 'white',
+                              color: !isEditing ? '#6b7280' : '#111827'
+                            }}
+                          />
+                        </div>
+                        <div style={{ marginTop: '0.5rem' }}>
+                          <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                            설명
+                          </label>
+                          <textarea
+                            value={card.description.join('\n')}
+                            onChange={(e) => updateCard(tabIndex, cardIndex, { description: e.target.value.split('\n') })}
+                            disabled={!isEditing}
+                            rows={2}
+                            style={{
+                              width: '100%',
+                              padding: '0.5rem 0.75rem',
+                              border: '1px solid #e5e7eb',
+                              borderRadius: '6px',
+                              outline: 'none',
+                              fontSize: '0.875rem',
+                              transition: 'all 0.2s ease',
+                              background: !isEditing ? '#f9fafb' : 'white',
+                              color: !isEditing ? '#6b7280' : '#111827',
+                              resize: 'none'
+                            }}
+                          />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
