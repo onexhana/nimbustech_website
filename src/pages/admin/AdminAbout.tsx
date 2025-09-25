@@ -1,6 +1,8 @@
 // src/pages/admin/AdminAbout.tsx
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { getAboutData, saveAboutData } from '../../api/contact';
+import type { AboutData } from '../../types/contact';
 
 export default function AdminAbout() {
   // 링크 URL 필드 위치 조정을 위한 state
@@ -8,142 +10,69 @@ export default function AdminAbout() {
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
 
-  // Mock 데이터 (나중에 API로 교체)
-  const [aboutData, setAboutData] = useState({
-    mainTitle: "고객 성공 리딩",
-    subtitle: "신뢰성 높은 DT 서비스를 제공합니다.",
-    tabs: [
-      {
-        name: "ITO",
-        cards: [
-          {
-            title: "풍부한 인재 자원",
-            description: [
-              "5,500명 이상의 IT 전문가",
-              "데이터베이스 보유"
-            ]
-          },
-          {
-            title: "검증된 신뢰성",
-            description: [
-              "주요 파트너사와 8년 이상의",
-              "지속적 협력 관계"
-            ]
-          },
-          {
-            title: "체계적 인재 매칭",
-            description: [
-              "CRM 기반 전담 매니저 배치로",
-              "최적화된 인재 선별"
-            ]
-          }
-        ]
-      },
-      {
-        name: "클라우드",
-        cards: [
-          {
-            title: "전략적 파트너십",
-            description: [
-              "클라우드 MSP 전문기업 및 종합 IT",
-              "인프라 솔루션 기업과의 협력 체계"
-            ]
-          },
-          {
-            title: "공공 클라우드 운영 실적",
-            description: [
-              "국가정보자원관리원 G-클라우드",
-              "구축 및 운영 5년 이상 지속"
-            ]
-          },
-          {
-            title: "민간 클라우드 인프라 관리",
-            description: [
-              "메트라이프생명, 한국투자증권,",
-              "DB손해보험 인프라 운영 중"
-            ]
-          }
-        ]
-      },
-      {
-        name: "RPA",
-        cards: [
-          {
-            title: "삼성SDS Brity RPA 파트너",
-            description: [
-              "국내 대표 RPA 솔루션 Brity의",
-              "공인 공급업체"
-            ]
-          },
-          {
-            title: "RPA 프로젝트 수행 이력",
-            description: [
-              "1. 반복 업무 자동화",
-              "2. 업무 효율성 극대화",
-              "3. 에러율 최소화"
-            ]
-          },
-          {
-            title: "RPA 전문 인력 확보",
-            description: [
-              "자동화 솔루션 구축 및 운영 가능한",
-              "전문 엔지니어 보유"
-            ]
-          }
-        ]
-      },
-      {
-        name: "솔루션",
-        cards: [
-          {
-            title: "Extreme Networks",
-            description: [
-              "네트워크, 보안, AI를 통합해 복잡성을 단순화합니다"
-            ],
-            link: "https://www.extremenetworks.com/kr/solutions"
-          },
-          {
-            title: "WeDataLab",
-            description: [
-              "데이터 인텔리전스로 비즈니스 혁신을 실현합니다"
-            ],
-            link: "https://wedatalab.com/solution"
-          },
-          {
-            title: "SUSE",
-            description: [
-              "자동화와 모니터링으로 SAP 인프라를 관리합니다"
-            ],
-            link: "https://www.suse.com/ko-kr/solutions/run-sap-solutions/"
-          },
-          {
-            title: "SK AX",
-            description: [
-              "글로벌 톱10 AI 서비스 기업으로 성장합니다"
-            ],
-            link: "https://www.skax.co.kr/"
-          },
-          {
-            title: "T3Q",
-            description: [
-              "인공지능을 엑셀처럼 쉽게 활용할 수 있게 합니다"
-            ],
-            link: "https://t3q.com/t3q-ai/"
-          },
-          {
-            title: "BCP Solutions",
-            description: [
-              "솔루션과 컨설팅으로 비즈니스 연속성을 보장합니다"
-            ],
-            link: "https://www.krbcp.com/?act=board&bbs_code=brochure"
-          }
-        ]
-      }
-    ]
-  });
-
+  const [aboutData, setAboutData] = useState<AboutData | null>(null);
   const [isEditing, setIsEditing] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [activeTab, setActiveTab] = useState(0);
+
+  useEffect(() => {
+    const loadAboutData = async () => {
+      try {
+        const data = await getAboutData();
+        setAboutData(data);
+      } catch (error) {
+        console.error('About 데이터 로드 실패:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    loadAboutData();
+  }, []);
+
+  const handleSave = async () => {
+    if (!aboutData) return;
+    
+    try {
+      await saveAboutData(aboutData);
+      setIsEditing(false);
+      alert('저장되었습니다!');
+    } catch (error) {
+      console.error('저장 실패:', error);
+      alert('저장에 실패했습니다.');
+    }
+  };
+
+  if (isLoading) {
+    return (
+      <div style={{
+        minHeight: '100vh',
+        background: 'linear-gradient(135deg, #f8fafc 0%, #e0f2fe 50%, #e0e7ff 100%)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
+      }}>
+        <div style={{ textAlign: 'center' }}>
+          <p>데이터를 불러오는 중...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!aboutData) {
+    return (
+      <div style={{
+        minHeight: '100vh',
+        background: 'linear-gradient(135deg, #f8fafc 0%, #e0f2fe 50%, #e0e7ff 100%)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
+      }}>
+        <div style={{ textAlign: 'center' }}>
+          <p>데이터를 불러올 수 없습니다.</p>
+        </div>
+      </div>
+    );
+  }
 
   // 드래그 이벤트 핸들러들
   const handleMouseDown = (e: React.MouseEvent) => {
@@ -167,13 +96,10 @@ export default function AdminAbout() {
     setIsDragging(false);
   };
 
-  const handleSave = () => {
-    console.log('저장된 About 데이터:', aboutData);
-    setIsEditing(false);
-    alert('저장되었습니다!');
-  };
+  // 기존 handleSave 함수는 위에서 이미 정의됨
 
   const addCard = (tabIndex: number) => {
+    if (!aboutData) return;
     const newCards = [...aboutData.tabs[tabIndex].cards];
     newCards.push({
       title: "새 카드",
@@ -187,6 +113,7 @@ export default function AdminAbout() {
   };
 
   const removeCard = (tabIndex: number, cardIndex: number) => {
+    if (!aboutData) return;
     const newCards = aboutData.tabs[tabIndex].cards.filter((_, index) => index !== cardIndex);
     const newTabs = [...aboutData.tabs];
     newTabs[tabIndex].cards = newCards;
@@ -373,7 +300,7 @@ export default function AdminAbout() {
                   <input
                     type="text"
                     value={aboutData.mainTitle}
-                    onChange={(e) => setAboutData({...aboutData, mainTitle: e.target.value})}
+                    onChange={(e) => aboutData && setAboutData({...aboutData, mainTitle: e.target.value})}
                     disabled={!isEditing}
                     style={{
                       width: '100%',
@@ -406,7 +333,7 @@ export default function AdminAbout() {
                   <input
                     type="text"
                     value={aboutData.subtitle}
-                    onChange={(e) => setAboutData({...aboutData, subtitle: e.target.value})}
+                    onChange={(e) => aboutData && setAboutData({...aboutData, subtitle: e.target.value})}
                     disabled={!isEditing}
                     style={{
                       width: '100%',
@@ -597,6 +524,7 @@ export default function AdminAbout() {
                           type="text"
                           value={card.title}
                           onChange={(e) => {
+                            if (!aboutData) return;
                             const newTabs = [...aboutData.tabs];
                             newTabs[activeTab].cards[cardIndex].title = e.target.value;
                             setAboutData({...aboutData, tabs: newTabs});
@@ -634,6 +562,7 @@ export default function AdminAbout() {
                         <textarea
                           value={card.description.join('\n')}
                           onChange={(e) => {
+                            if (!aboutData) return;
                             const newTabs = [...aboutData.tabs];
                             newTabs[activeTab].cards[cardIndex].description = e.target.value.split('\n');
                             setAboutData({...aboutData, tabs: newTabs});
@@ -718,6 +647,7 @@ export default function AdminAbout() {
                               type="url"
                               value={'link' in card ? card.link || '' : ''}
                               onChange={(e) => {
+                                if (!aboutData) return;
                                 const newTabs = [...aboutData.tabs];
                                 if ('link' in newTabs[activeTab].cards[cardIndex]) {
                                   (newTabs[activeTab].cards[cardIndex] as { link: string }).link = e.target.value;

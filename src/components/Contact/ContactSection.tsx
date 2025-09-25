@@ -8,19 +8,60 @@
 import { useState, useEffect } from 'react';
 import InquiryForm from './InquiryForm';
 import HiringForm from './HiringForm';
+import { getContactData } from '../../api/contact';
+import type { ContactData } from '../../types/contact';
 
 export default function ContactSection() {
   const [userType, setUserType] = useState<'inquiry' | 'hiring' | null>(null);
   const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 768);
+  const [contactData, setContactData] = useState<ContactData | null>(null);
+  
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  useEffect(() => {
+    const loadContactData = async () => {
+      try {
+        const data = await getContactData();
+        setContactData(data);
+      } catch (error) {
+        console.error('Contact 데이터 로드 실패:', error);
+      }
+    };
+    loadContactData();
+  }, []);
   
   const handleCompanyDownload = () => {
-    window.open('/footer_pdf/님버스테크 회사소개_v3.5_20250923.pdf', '_blank');
+    if (contactData?.pdfFiles[1]) {
+      window.open(contactData.pdfFiles[1].path, '_blank');
+    } else {
+      window.open('/footer_pdf/님버스테크 회사소개_v3.5_20250923.pdf', '_blank');
+    }
   };
+
+  const handlePrivacyPolicy = () => {
+    if (contactData?.pdfFiles[0]) {
+      window.open(contactData.pdfFiles[0].path, '_blank');
+    } else {
+      window.open('/footer_pdf/개인정보 처리방침_v1.0.pdf', '_blank');
+    }
+  };
+
+  // 데이터가 로드되지 않았으면 로딩 표시
+  if (!contactData) {
+    return (
+      <div className="w-full px-6 bg-white" style={{ position: 'relative', paddingTop: '120px', paddingBottom: '100px' }}>
+        <div className="max-w-7xl mx-auto">
+          <div style={{ textAlign: 'center', padding: '50px' }}>
+            <p>데이터를 불러오는 중...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     //contact & footer 사이 여백 100px
@@ -59,80 +100,31 @@ export default function ContactSection() {
         >
           {/* 좌측 - 가치 섹션들 */}
           <div className="flex-1 space-y-16">
-            {/* TRUST 섹션 */}
-            <div>
-              <h3 style={{
-                fontSize: '42px',
-                fontWeight: '900',
-                color: '#00A3E0',
-                marginBottom: '2px',
-                letterSpacing: '-1.5px',
-                marginLeft: isMobile ? '20px' : undefined
-              }}>
-                TRUST
-              </h3>
-              <p style={{
-                fontSize: isMobile ? '15px' : '21px',
-                color: '#4b5563',
-                lineHeight: '1.6',
-                fontWeight: '700',
-                marginTop: '2px',
-                marginLeft: isMobile ? '24px' : undefined
-              }}>
-                구성원 간의 신뢰, 고객과의 신뢰를 기반으로<br />
-                모든 협업과 서비스를 책임 있게 수행합니다.
-              </p>
-            </div>
-
-            {/* OWNERSHIP 섹션 */}
-            <div>
-              <h3 style={{
-                fontSize: '42px',
-                fontWeight: '900',
-                color: '#00A3E0',
-                marginBottom: '2px',
-                letterSpacing: '-1.5px',
-                marginLeft: isMobile ? '20px' : undefined
-              }}>
-                OWNERSHIP
-              </h3>
-              <p style={{
-                fontSize: isMobile ? '15px' : '21px',
-                color: '#4b5563',
-                lineHeight: '1.6',
-                fontWeight: '700',
-                marginTop: '2px',
-                marginLeft: isMobile ? '24px' : undefined
-              }}>
-                각자의 역할에 책임을 가지고 임하며,<br />
-                스스로 문제를 해결하는 태도를 지향합니다.
-              </p>
-            </div>
-
-            {/* GROWTH 섹션 */}
-            <div>
-              <h3 style={{
-                fontSize: '42px',
-                fontWeight: '900',
-                color: '#00A3E0',
-                marginBottom: '2px',
-                letterSpacing: '-1.5px',
-                marginLeft: isMobile ? '20px' : undefined
-              }}>
-                GROWTH
-              </h3>
-              <p style={{
-                fontSize: isMobile ? '15px' : '21px',
-                color: '#4b5563',
-                lineHeight: '1.6',
-                fontWeight: '700',
-                marginTop: '2px',
-                marginLeft: isMobile ? '24px' : undefined
-              }}>
-                기술, AI, 프로젝트 경험을 통해<br />
-                개인과 조직이 함께 발전하는 문화를 만들어갑니다.
-              </p>
-            </div>
+            {contactData.sections.map((section, index) => (
+              <div key={index}>
+                <h3 style={{
+                  fontSize: '42px',
+                  fontWeight: '900',
+                  color: '#00A3E0',
+                  marginBottom: '2px',
+                  letterSpacing: '-1.5px',
+                  marginLeft: isMobile ? '20px' : undefined
+                }}>
+                  {section.title}
+                </h3>
+                <p style={{
+                  fontSize: isMobile ? '15px' : '21px',
+                  color: '#4b5563',
+                  lineHeight: '1.6',
+                  fontWeight: '700',
+                  marginTop: '2px',
+                  marginLeft: isMobile ? '24px' : undefined,
+                  whiteSpace: 'pre-line'
+                }}>
+                  {section.description}
+                </p>
+              </div>
+            ))}
           </div>
 
           {/* 우측 - 버튼 영역 */}
@@ -140,33 +132,30 @@ export default function ContactSection() {
             className={`flex flex-col gap-8 ${isMobile ? 'min-w-full' : ''}`}
             style={isMobile ? undefined : { minWidth: '300px' }}
           >
-            {/* 고객지원 버튼 */}
-            <button
-              className={`text-white ${isMobile ? 'bg-[#00A3E0] w-full mt-8 h-[74px] px-8 flex items-center justify-center text-[24px] relative overflow-hidden border-none text-white !font-black transition-all duration-300 hover:shadow-lg hover:-translate-y-1' : ''}`}
-              style={isMobile ? undefined : { backgroundColor: '#00A3E0', width: '530px', marginTop: '320px', display: 'flex', alignItems: 'center', justifyContent: 'center', height: '80px', padding: '0 32px', fontSize: '32px', color: '#ffffff', fontWeight: '650', borderRadius: '0px', border: 'none', cursor: 'pointer', position: 'relative', overflow: 'hidden' }}
-              onClick={() => setUserType(isMobile && userType === 'inquiry' ? null : 'inquiry')}
-            >
-              <span
-                className={isMobile ? 'relative z-10 text-white !text-white' : undefined}
-                style={isMobile ? { color: '#ffffff', fontWeight: '700' } : { position: 'relative', zIndex: 1 }}
+            {contactData.buttons.map((button, index) => (
+              <button
+                key={index}
+                className={`${button.type === 'inquiry' 
+                  ? (isMobile ? 'bg-[#00A3E0] w-full mt-8 h-[74px] px-8 flex items-center justify-center text-[24px] relative overflow-hidden border-none text-white !font-black transition-all duration-300 hover:shadow-lg hover:-translate-y-1' : 'text-white')
+                  : (isMobile ? 'bg-white text-[#00A3E0] w-full mt-4 h-[74px] px-8 flex items-center justify-center text-[24px] relative overflow-hidden border-none font-black transition-all duration-300 hover:shadow-lg hover:-translate-y-1' : 'text-white')
+                }`}
+                style={button.type === 'inquiry' 
+                  ? (isMobile ? undefined : { backgroundColor: '#00A3E0', width: '530px', marginTop: '320px', display: 'flex', alignItems: 'center', justifyContent: 'center', height: '80px', padding: '0 32px', fontSize: '32px', color: '#ffffff', fontWeight: '650', borderRadius: '0px', border: 'none', cursor: 'pointer', position: 'relative', overflow: 'hidden' })
+                  : (isMobile ? { backgroundColor: '#ffffff' } : { backgroundColor: '#6b7280', width: '530px', marginTop: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center', height: '80px', padding: '0 32px', fontSize: '32px', color: '#ffffff', fontWeight: '650', borderRadius: '0px', border: 'none', cursor: 'pointer', position: 'relative', overflow: 'hidden' })
+                }
+                onClick={() => setUserType(isMobile && userType === button.type ? null : button.type)}
               >
-                고객사 직원
-              </span>
-            </button>
-
-            {/* 인재채용 버튼 */}
-            <button
-              className={`${isMobile ? 'bg-white text-[#00A3E0] w-full mt-4 h-[74px] px-8 flex items-center justify-center text-[24px] relative overflow-hidden border-none font-black transition-all duration-300 hover:shadow-lg hover:-translate-y-1' : 'text-white'}`}
-              style={isMobile ? { backgroundColor: '#ffffff' } : { backgroundColor: '#6b7280', width: '530px', marginTop: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center', height: '80px', padding: '0 32px', fontSize: '32px', color: '#ffffff', fontWeight: '650', borderRadius: '0px', border: 'none', cursor: 'pointer', position: 'relative', overflow: 'hidden' }}
-              onClick={() => setUserType(isMobile && userType === 'hiring' ? null : 'hiring')}
-            >
-              <span
-                className={isMobile ? 'relative z-10 text-[#00A3E0]' : undefined}
-                style={isMobile ? { color: '#00A3E0', fontWeight: '650' } : { position: 'relative', zIndex: 1 }}
-              >
-                인재 채용
-              </span>
-            </button>
+                <span
+                  className={isMobile ? `relative z-10 ${button.type === 'inquiry' ? 'text-white !text-white' : 'text-[#00A3E0]'}` : undefined}
+                  style={isMobile 
+                    ? { color: button.type === 'inquiry' ? '#ffffff' : '#00A3E0', fontWeight: '700' } 
+                    : { position: 'relative', zIndex: 1 }
+                  }
+                >
+                  {button.text}
+                </span>
+              </button>
+            ))}
             {isMobile && (
               <>
                 <button
@@ -179,7 +168,7 @@ export default function ContactSection() {
                 <button
                   className="bg-white w-full mt-4 h-[74px] px-8 flex items-center justify-center text-[24px] relative overflow-hidden border-none text-[#00A3E0] font-black transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
                   style={{ backgroundColor: '#ffffff' }}
-                  onClick={() => window.open('/footer_pdf/개인정보 처리방침_v1.0.pdf', '_blank')}
+                  onClick={handlePrivacyPolicy}
                 >
                   <span className="relative z-10" style={{ fontWeight: '700' }}>개인정보 처리방침</span>
                 </button>

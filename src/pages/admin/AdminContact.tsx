@@ -1,81 +1,57 @@
 // src/pages/admin/AdminContact.tsx
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { getContactData, saveContactData } from '../../api/contact';
+import type { ContactData } from '../../types/contact';
 
 export default function AdminContact() {
-  // Mock 데이터 (나중에 API로 교체)
-  const [contactData, setContactData] = useState({
-    sections: [
-      {
-        title: "TRUST",
-        description: "구성원 간의 신뢰, 고객과의 신뢰를 기반으로\n모든 협업과 서비스를 책임 있게 수행합니다."
-      },
-      {
-        title: "OWNERSHIP", 
-        description: "각자의 역할에 책임을 가지고 임하며,\n스스로 문제를 해결하는 태도를 지향합니다."
-      },
-      {
-        title: "GROWTH",
-        description: "기술, AI, 프로젝트 경험을 통해\n개인과 조직이 함께 발전하는 문화를 만들어갑니다."
-      }
-    ],
-    buttons: [
-      {
-        text: "고객사 직원",
-        type: "inquiry"
-      },
-      {
-        text: "인재 채용", 
-        type: "hiring"
-      }
-    ],
-    companyInfo: {
-      sejong: {
-        title: "[세종 본사]",
-        address: "집현중앙7로6, B동 1110호 (세종대명벨리온)"
-      },
-      seoul: {
-        title: "[서울사무소]",
-        address: "강남구 선릉로90길 10, B동 407호 (대치동, 샹제리제센터)"
-      },
-      contact: {
-        phone: "02-555-0099",
-        email: "nimbustech@nimbustech.co.kr"
-      }
-    },
-    pdfFiles: [
-      {
-        name: "개인정보 처리방침",
-        path: "/footer_pdf/개인정보 처리방침_v1.0.pdf"
-      },
-      {
-        name: "님버스테크 회사소개서",
-        path: "/footer_pdf/님버스테크 회사소개_v3.5_20250923.pdf"
-      }
-    ]
-  });
-
+  const [contactData, setContactData] = useState<ContactData | null>(null);
   const [isEditing, setIsEditing] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const handleSave = () => {
-    console.log('저장된 Contact 데이터:', contactData);
-    setIsEditing(false);
-    alert('저장되었습니다!');
+  useEffect(() => {
+    const loadContactData = async () => {
+      try {
+        const data = await getContactData();
+        setContactData(data);
+      } catch (error) {
+        console.error('Contact 데이터 로드 실패:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    loadContactData();
+  }, []);
+
+  const handleSave = async () => {
+    if (!contactData) return;
+    
+    try {
+      await saveContactData(contactData);
+      setIsEditing(false);
+      alert('저장되었습니다!');
+    } catch (error) {
+      console.error('저장 실패:', error);
+      alert('저장에 실패했습니다.');
+    }
   };
 
   const updateSection = (index: number, field: string, value: string) => {
+    if (!contactData) return;
     const newSections = [...contactData.sections];
     newSections[index] = { ...newSections[index], [field]: value };
     setContactData({ ...contactData, sections: newSections });
   };
 
   const updateButton = (index: number, field: string, value: string) => {
+    if (!contactData) return;
     const newButtons = [...contactData.buttons];
     newButtons[index] = { ...newButtons[index], [field]: value };
     setContactData({ ...contactData, buttons: newButtons });
   };
 
   const updateCompanyInfo = (section: string, field: string, value: string) => {
+    if (!contactData) return;
     setContactData({
       ...contactData,
       companyInfo: {
@@ -87,6 +63,38 @@ export default function AdminContact() {
       }
     });
   };
+
+  if (isLoading) {
+    return (
+      <div style={{
+        minHeight: '100vh',
+        background: 'linear-gradient(135deg, #f8fafc 0%, #e0f2fe 50%, #e0e7ff 100%)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
+      }}>
+        <div style={{ textAlign: 'center' }}>
+          <p>데이터를 불러오는 중...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!contactData) {
+    return (
+      <div style={{
+        minHeight: '100vh',
+        background: 'linear-gradient(135deg, #f8fafc 0%, #e0f2fe 50%, #e0e7ff 100%)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
+      }}>
+        <div style={{ textAlign: 'center' }}>
+          <p>데이터를 불러올 수 없습니다.</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div style={{

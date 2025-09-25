@@ -31,133 +31,15 @@ import AboutTab from './AboutTab';
 import AboutCard from './AboutCard'; // 효과 버전 (호버 애니메이션 활성화)
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
+import { getAboutData } from '../../api/contact';
+import type { AboutData } from '../../types/contact';
 //import AboutCard from './AboutCardNoEffect'; // 무효화 버전 (호버 효과 없음)
 
 const noEffect = AboutCard.name === 'AboutCardNoEffect';
 
 // ========================================
-// 탭 및 카드 데이터 (각 섹션별 6개씩 확장됨)
+// 동적 데이터를 사용하므로 하드코딩된 데이터 제거
 // ========================================
-// 탭 리스트 정의: 네비게이션에 표시될 탭명을 배열로 지정합니다.
-const TAB_LIST = ["ITO", "클라우드", "RPA", "솔루션"];
-
-// 각 탭별 카드 데이터 정의: title(제목)과 description(내용 배열) 형태로 구성된 객체입니다. (솔루션은 7개)
-const TAB_CONTENTS: Record<string, { title: string; description: string[]; link?: string }[]> = {
-  ITO: [
-    {
-      title: "풍부한 인재 자원",
-      description: [
-        "5,500명 이상의 IT 전문가",
-        "데이터베이스 보유"
-      ],
-    },
-    {
-      title: "검증된 신뢰성",
-      description: [
-        "주요 파트너사와 8년 이상의",
-        "지속적 협력 관계"
-      ],
-    },
-    {
-      title: "체계적 인재 매칭",
-      description: [
-        "CRM 기반 전담 매니저 배치로",
-        "최적화된 인재 선별"
-      ],
-    },
-  ],
-  클라우드: [
-    {
-      title: "전략적 파트너십",
-      description: [
-        "클라우드 MSP 전문기업 및 종합 IT",
-        "인프라 솔루션 기업과의 협력 체계"
-      ],
-    },
-    {
-      title: "공공 클라우드 운영 실적",
-      description: [
-        "국가정보자원관리원 G-클라우드",
-        "구축 및 운영 5년 이상 지속",
-      ],
-    },
-    {
-      title: "민간 클라우드 인프라 관리",
-      description: [
-        "메트라이프생명, 한국투자증권,",
-        "DB손해보험 인프라 운영 중"
-      ],
-    },
-  ],
-  RPA: [
-    {
-      title: "삼성SDS Brity RPA 파트너",
-      description: [
-        "국내 대표 RPA 솔루션 Brity의",
-        "공인 공급업체"
-      ],
-    },
-    {
-      title: "RPA 프로젝트 수행 이력",
-      description: [
-        "1. 반복 업무 자동화",
-        "2. 업무 효율성 극대화",
-        "3. 에러율 최소화"
-      ],
-    },
-    {
-      title: "RPA 전문 인력 확보",
-      description: [
-        "자동화 솔루션 구축 및 운영 가능한",
-        "전문 엔지니어 보유"
-      ],
-    },
-  ],
-  솔루션: [
-    {
-      title: "Extreme Networks",
-      description: [
-        "네트워크, 보안, AI를 통합해 복잡성을 단순화합니다"
-      ],
-      link: "https://www.extremenetworks.com/kr/solutions"
-    },
-    {
-      title: "WeDataLab",
-      description: [
-        "데이터 인텔리전스로 비즈니스 혁신을 실현합니다"
-      ],
-      link: "https://wedatalab.com/solution"
-    },
-    {
-      title: "SUSE",
-      description: [
-        "자동화와 모니터링으로 SAP 인프라를 관리합니다"
-      ],
-      link: "https://www.suse.com/ko-kr/solutions/run-sap-solutions/"
-    },
-    {
-      title: "SK AX",
-      description: [
-        "글로벌 톱10 AI 서비스 기업으로 성장합니다"
-      ],
-      link: "https://www.skax.co.kr/"
-    },
-    {
-      title: "T3Q",
-      description: [
-        "인공지능을 엑셀처럼 쉽게 활용할 수 있게 합니다"
-      ],
-      link: "https://t3q.com/t3q-ai/"
-    },
-    {
-      title: "BCP Solutions",
-      description: [
-        "솔루션과 컨설팅으로 비즈니스 연속성을 보장합니다"
-      ],
-      link: "https://www.krbcp.com/?act=board&bbs_code=brochure"
-    },
-  ],
-};
 
 // ========================================
 // 메인 컴포넌트 함수
@@ -168,6 +50,7 @@ export default function AboutSection() {
   const [activeTab, setActiveTab] = useState("ITO");
   const [currentSlide, setCurrentSlide] = useState(0); // 슬라이더 현재 위치
   const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 768);
+  const [aboutData, setAboutData] = useState<AboutData | null>(null);
   
   // Swiper ref for infinite loop (솔루션 섹션용)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -178,8 +61,43 @@ export default function AboutSection() {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  useEffect(() => {
+    const loadAboutData = async () => {
+      try {
+        const data = await getAboutData();
+        setAboutData(data);
+        // 첫 번째 탭을 기본값으로 설정
+        if (data.tabs.length > 0) {
+          setActiveTab(data.tabs[0].name);
+        }
+      } catch (error) {
+        console.error('About 데이터 로드 실패:', error);
+      }
+    };
+    loadAboutData();
+  }, []);
   
-  const cards = TAB_CONTENTS[activeTab];
+  // 데이터가 로드되지 않았으면 로딩 표시
+  if (!aboutData) {
+    return (
+      <div style={{ 
+        minHeight: '100vh', 
+        display: 'flex', 
+        alignItems: 'center', 
+        justifyContent: 'center',
+        backgroundColor: '#f8fafc'
+      }}>
+        <div style={{ textAlign: 'center' }}>
+          <p>데이터를 불러오는 중...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // 현재 활성 탭의 데이터 찾기
+  const currentTab = aboutData.tabs.find(tab => tab.name === activeTab);
+  const cards = currentTab?.cards || [];
   const isMultiPage = true; // 모든 탭을 무한루프로 변경
   
   // 모든 섹션용 무한 루프를 위한 카드 복제 (카드 수가 적은 경우 더 많이 복제)
@@ -231,10 +149,10 @@ export default function AboutSection() {
                 margin: 0
               }}>
                 <span style={{ fontWeight: 700, display: 'block', fontSize: '28px' }}>
-                  고객 성공 리딩
+                  {aboutData.mainTitle}
                 </span>
                 <span style={{ fontWeight: 400, display: 'block', marginTop: '4px', marginBottom: '30px',fontSize: '19px' }}>
-                신뢰성 높은 DT 서비스를 제공합니다.
+                {aboutData.subtitle}
                 </span>
               </h2>
             </div>
@@ -247,15 +165,15 @@ export default function AboutSection() {
               gap: '8px',
               marginBottom: '25px'
             }}>
-              {/* TAB_LIST 배열을 순회하며 각각 버튼 생성 */}
-              {TAB_LIST.map((tab) => (
+              {/* aboutData.tabs 배열을 순회하며 각각 버튼 생성 */}
+              {aboutData.tabs.map((tab) => (
                 <button
-                  key={tab}
+                  key={tab.name}
                   /* 버튼 스타일: 활성 탭은 파란색, 비활성 탭은 흰색 배경 */
                   style={{
-                    backgroundColor: activeTab === tab ? '#00A3E0' : 'white',
-                    color: activeTab === tab ? 'white' : '#000000',
-                    border: activeTab === tab ? 'none' : '1px solid #00A3E0',
+                    backgroundColor: activeTab === tab.name ? '#00A3E0' : 'white',
+                    color: activeTab === tab.name ? 'white' : '#000000',
+                    border: activeTab === tab.name ? 'none' : '1px solid #00A3E0',
                     borderRadius: '20px',
                     padding: '8px 16px',
                     fontSize: '14px',
@@ -263,9 +181,9 @@ export default function AboutSection() {
                     cursor: 'pointer',
                     minWidth: '60px'
                   }}
-                  onClick={() => handleTabChange(tab)}
+                  onClick={() => handleTabChange(tab.name)}
                 >
-                  {tab} {/* 탭명 표시 */}
+                  {tab.name} {/* 탭명 표시 */}
                 </button>
               ))}
             </div>
@@ -365,9 +283,31 @@ export default function AboutSection() {
           </>
         ) : (
           <>
+            {/* 데스크탑 메인 타이틀 */}
+            <div style={{ textAlign: 'left', marginBottom: '40px', marginLeft: '50px' }}>
+              <h2 style={{
+                fontSize: '45px',
+                fontWeight: '1100',
+                color: '#1f2937',
+                lineHeight: '1.2',
+                letterSpacing: '-3.5px',
+                margin: '0 0 10px 0'
+              }}>
+                {aboutData.mainTitle}
+              </h2>
+              <p style={{
+                fontSize: '24px',
+                fontWeight: '400',
+                color: '#6b7280',
+                margin: 0
+              }}>
+                {aboutData.subtitle}
+              </p>
+            </div>
+
             {/* 탭 컴포넌트 */}
             <AboutTab 
-              tabs={TAB_LIST}
+              tabs={aboutData.tabs.map(tab => tab.name)}
               activeTab={activeTab}
               onTabChange={handleTabChange}
             />
