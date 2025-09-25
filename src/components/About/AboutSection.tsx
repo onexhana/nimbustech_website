@@ -55,7 +55,6 @@ export default function AboutSection() {
   const [activeTab, setActiveTab] = useState("ITO");
   const [currentSlide, setCurrentSlide] = useState(0); // 슬라이더 현재 위치
   const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 768);
-  const [aboutData, setAboutData] = useState<AboutData | null>(null);
   
   // Swiper ref for infinite loop (솔루션 섹션용)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

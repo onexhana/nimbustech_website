@@ -1,99 +1,11 @@
 // src/pages/admin/AdminAbout.tsx
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAboutData } from '../../context/AboutContext';
 
 export default function AdminAbout() {
-  // 링크 URL 필드 위치 조정을 위한 state
-  const [urlFieldPosition, setUrlFieldPosition] = useState({ x: 0, y: 0 });
-  const [isDragging, setIsDragging] = useState(false);
-  const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
-
   const { aboutData, updateMainTitle, updateSubtitle, updateCard } = useAboutData();
   const [isEditing, setIsEditing] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState(0);
-
-  useEffect(() => {
-    const loadAboutData = async () => {
-      try {
-        const data = await getAboutData();
-        setAboutData(data);
-      } catch (error) {
-        console.error('About 데이터 로드 실패:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    loadAboutData();
-  }, []);
-
-  const handleSave = async () => {
-    if (!aboutData) return;
-    
-    try {
-      await saveAboutData(aboutData);
-      setIsEditing(false);
-      alert('저장되었습니다!');
-    } catch (error) {
-      console.error('저장 실패:', error);
-      alert('저장에 실패했습니다.');
-    }
-  };
-
-  if (isLoading) {
-    return (
-      <div style={{
-        minHeight: '100vh',
-        background: 'linear-gradient(135deg, #f8fafc 0%, #e0f2fe 50%, #e0e7ff 100%)',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center'
-      }}>
-        <div style={{ textAlign: 'center' }}>
-          <p>데이터를 불러오는 중...</p>
-        </div>
-      </div>
-    );
-  }
-
-  if (!aboutData) {
-    return (
-      <div style={{
-        minHeight: '100vh',
-        background: 'linear-gradient(135deg, #f8fafc 0%, #e0f2fe 50%, #e0e7ff 100%)',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center'
-      }}>
-        <div style={{ textAlign: 'center' }}>
-          <p>데이터를 불러올 수 없습니다.</p>
-        </div>
-      </div>
-    );
-  }
-
-  // 드래그 이벤트 핸들러들
-  const handleMouseDown = (e: React.MouseEvent) => {
-    setIsDragging(true);
-    setDragStart({
-      x: e.clientX - urlFieldPosition.x,
-      y: e.clientY - urlFieldPosition.y
-    });
-  };
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (isDragging) {
-      setUrlFieldPosition({
-        x: e.clientX - dragStart.x,
-        y: e.clientY - dragStart.y
-      });
-    }
-  };
-
-  const handleMouseUp = () => {
-    setIsDragging(false);
-  };
 
   const handleSave = () => {
     // 데이터는 Context에서 자동으로 localStorage에 저장됨

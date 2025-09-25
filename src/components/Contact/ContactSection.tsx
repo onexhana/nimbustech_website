@@ -14,7 +14,6 @@ export default function ContactSection() {
   const { contactData } = useContactData();
   const [userType, setUserType] = useState<'inquiry' | 'hiring' | null>(null);
   const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 768);
-  const [contactData, setContactData] = useState<ContactData | null>(null);
   
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
@@ -22,46 +21,13 @@ export default function ContactSection() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  useEffect(() => {
-    const loadContactData = async () => {
-      try {
-        const data = await getContactData();
-        setContactData(data);
-      } catch (error) {
-        console.error('Contact 데이터 로드 실패:', error);
-      }
-    };
-    loadContactData();
-  }, []);
-  
   const handleCompanyDownload = () => {
-    if (contactData?.pdfFiles[1]) {
-      window.open(contactData.pdfFiles[1].path, '_blank');
-    } else {
-      window.open('/footer_pdf/님버스테크 회사소개_v3.5_20250923.pdf', '_blank');
-    }
+    window.open('/footer_pdf/님버스테크 회사소개_v3.5_20250923.pdf', '_blank');
   };
 
   const handlePrivacyPolicy = () => {
-    if (contactData?.pdfFiles[0]) {
-      window.open(contactData.pdfFiles[0].path, '_blank');
-    } else {
-      window.open('/footer_pdf/개인정보 처리방침_v1.0.pdf', '_blank');
-    }
+    window.open('/footer_pdf/개인정보 처리방침_v1.0.pdf', '_blank');
   };
-
-  // 데이터가 로드되지 않았으면 로딩 표시
-  if (!contactData) {
-    return (
-      <div className="w-full px-6 bg-white" style={{ position: 'relative', paddingTop: '120px', paddingBottom: '100px' }}>
-        <div className="max-w-7xl mx-auto">
-          <div style={{ textAlign: 'center', padding: '50px' }}>
-            <p>데이터를 불러오는 중...</p>
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   return (
     //contact & footer 사이 여백 100px
