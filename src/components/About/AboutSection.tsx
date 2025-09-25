@@ -38,13 +38,18 @@ import type { AboutData } from '../../types/contact';
 const noEffect = AboutCard.name === 'AboutCardNoEffect';
 
 // ========================================
-// 동적 데이터를 사용하므로 하드코딩된 데이터 제거
+// Context에서 데이터 가져오기
+import { useAboutData } from '../../context/AboutContext';
+
+// 탭 및 카드 데이터 (각 섹션별 6개씩 확장됨)
 // ========================================
 
 // ========================================
 // 메인 컴포넌트 함수
 // ========================================
 export default function AboutSection() {
+  const { aboutData } = useAboutData();
+  
   // 상태 관리:
   // activeTab - 선택된 탭, currentSlide - 현재 슬라이드 인덱스
   const [activeTab, setActiveTab] = useState("ITO");
@@ -78,26 +83,7 @@ export default function AboutSection() {
     loadAboutData();
   }, []);
   
-  // 데이터가 로드되지 않았으면 로딩 표시
-  if (!aboutData) {
-    return (
-      <div style={{ 
-        minHeight: '100vh', 
-        display: 'flex', 
-        alignItems: 'center', 
-        justifyContent: 'center',
-        backgroundColor: '#f8fafc'
-      }}>
-        <div style={{ textAlign: 'center' }}>
-          <p>데이터를 불러오는 중...</p>
-        </div>
-      </div>
-    );
-  }
-
-  // 현재 활성 탭의 데이터 찾기
-  const currentTab = aboutData.tabs.find(tab => tab.name === activeTab);
-  const cards = currentTab?.cards || [];
+  const cards = aboutData.tabs.find(tab => tab.name === activeTab)?.cards || [];
   const isMultiPage = true; // 모든 탭을 무한루프로 변경
   
   // 모든 섹션용 무한 루프를 위한 카드 복제 (카드 수가 적은 경우 더 많이 복제)
@@ -165,7 +151,7 @@ export default function AboutSection() {
               gap: '8px',
               marginBottom: '25px'
             }}>
-              {/* aboutData.tabs 배열을 순회하며 각각 버튼 생성 */}
+              {/* TAB_LIST 배열을 순회하며 각각 버튼 생성 */}
               {aboutData.tabs.map((tab) => (
                 <button
                   key={tab.name}

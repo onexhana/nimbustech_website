@@ -1,49 +1,14 @@
 // src/pages/admin/AdminHome.tsx
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useHomeData } from '../../context/HomeContext';
 
 export default function AdminHome() {
-  // Mock 데이터 (나중에 API로 교체)
-  const [homeData, setHomeData] = useState({
-    typingTexts: [
-      '고객을 빛나게',
-      '구성원을 빛나게', 
-      '미래를 빛나게',
-      'NIMBUS TECH'
-    ],
-    buttonData: [
-      {
-        title: "Mission&Vision",
-        subtitle: "미션&비전",
-        description: "우리의 존재 이유와\n향하는 미래를 담습니다.",
-        imagePath: "/popup_image/Mission&Vision.jpg"
-      },
-      {
-        title: "Core Values",
-        subtitle: "핵심가치",
-        description: "고객과 함께 성장하는\n신뢰·책임·전문성의 가치",
-        imagePath: "/popup_image/Core%20Values.png"
-      },
-      {
-        title: "Way of Working",
-        subtitle: "일하는 방식",
-        description: '모든 일의 궁극적인 목적은\n"고객창출" 곧 "고객성공"이다!',
-        imagePath: "/popup_image/Way%20of%20Working.jpg"
-      },
-      {
-        title: "Employee Benefits",
-        subtitle: "복지 혜택",
-        description: "최고의 열정과 패기를 갖춘\n인재들과 함께 일하고 성장하는 기업",
-        imagePath: "/popup_image/Employee%20Benefits.jpg"
-      }
-    ],
-    sliderText: "LEADING CUSTOMER SUCCESS"
-  });
-
+  const { homeData, updateTypingText, updateButtonData, updateSliderText } = useHomeData();
   const [isEditing, setIsEditing] = useState(false);
 
   const handleSave = () => {
-    // 나중에 API 호출로 교체
+    // 데이터는 Context에서 자동으로 localStorage에 저장됨
     console.log('저장된 데이터:', homeData);
     setIsEditing(false);
     alert('저장되었습니다!');
@@ -230,9 +195,7 @@ export default function AdminHome() {
                     type="text"
                     value={text}
                     onChange={(e) => {
-                      const newTexts = [...homeData.typingTexts];
-                      newTexts[index] = e.target.value;
-                      setHomeData({...homeData, typingTexts: newTexts});
+                      updateTypingText(index, e.target.value);
                     }}
                     disabled={!isEditing}
                     style={{
@@ -326,9 +289,7 @@ export default function AdminHome() {
                         type="text"
                         value={button.title}
                         onChange={(e) => {
-                          const newButtons = [...homeData.buttonData];
-                          newButtons[index].title = e.target.value;
-                          setHomeData({...homeData, buttonData: newButtons});
+                          updateButtonData(index, { title: e.target.value });
                         }}
                         disabled={!isEditing}
                         style={{
@@ -353,9 +314,7 @@ export default function AdminHome() {
                         type="text"
                         value={button.subtitle}
                         onChange={(e) => {
-                          const newButtons = [...homeData.buttonData];
-                          newButtons[index].subtitle = e.target.value;
-                          setHomeData({...homeData, buttonData: newButtons});
+                          updateButtonData(index, { subtitle: e.target.value });
                         }}
                         disabled={!isEditing}
                         style={{
@@ -379,9 +338,7 @@ export default function AdminHome() {
                       <textarea
                         value={button.description}
                         onChange={(e) => {
-                          const newButtons = [...homeData.buttonData];
-                          newButtons[index].description = e.target.value;
-                          setHomeData({...homeData, buttonData: newButtons});
+                          updateButtonData(index, { description: e.target.value });
                         }}
                         disabled={!isEditing}
                         rows={2}
@@ -441,7 +398,7 @@ export default function AdminHome() {
               <input
                 type="text"
                 value={homeData.sliderText}
-                onChange={(e) => setHomeData({...homeData, sliderText: e.target.value})}
+                onChange={(e) => updateSliderText(e.target.value)}
                 disabled={!isEditing}
                 style={{
                   width: '100%',

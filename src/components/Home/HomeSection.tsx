@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
 import HomeButton from './HomeButton';
 import HomeButtonMobile from './HomeButton_mobile';
+import { useHomeData } from '../../context/HomeContext';
 
 export default function HomeSection() {
   const [isMobile, setIsMobile] = useState(false);
+  const { homeData } = useHomeData();
 
   useEffect(() => {
     const checkMobile = () => {
@@ -23,13 +25,8 @@ export default function HomeSection() {
   const [currentCharIndex, setCurrentCharIndex] = useState(0);
   const [completedLines, setCompletedLines] = useState<number[]>([]);
 
-  // 타이핑할 텍스트 배열
-  const texts = [
-    '고객을 빛나게',
-    '구성원을 빛나게', 
-    '미래를 빛나게',
-    'NIMBUS TECH'
-  ];
+  // 타이핑할 텍스트 배열 (Context에서 가져오기)
+  const texts = homeData.typingTexts;
 
   // 각 텍스트 줄의 색상 설정
   const colors = ['text-black', 'text-black', 'text-black', 'text-[#00A3E0]'];

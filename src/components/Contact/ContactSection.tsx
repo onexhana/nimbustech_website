@@ -8,10 +8,10 @@
 import { useState, useEffect } from 'react';
 import InquiryForm from './InquiryForm';
 import HiringForm from './HiringForm';
-import { getContactData } from '../../api/contact';
-import type { ContactData } from '../../types/contact';
+import { useContactData } from '../../context/ContactContext';
 
 export default function ContactSection() {
+  const { contactData } = useContactData();
   const [userType, setUserType] = useState<'inquiry' | 'hiring' | null>(null);
   const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 768);
   const [contactData, setContactData] = useState<ContactData | null>(null);
@@ -118,10 +118,14 @@ export default function ContactSection() {
                   lineHeight: '1.6',
                   fontWeight: '700',
                   marginTop: '2px',
-                  marginLeft: isMobile ? '24px' : undefined,
-                  whiteSpace: 'pre-line'
+                  marginLeft: isMobile ? '24px' : undefined
                 }}>
-                  {section.description}
+                  {section.description.split('\n').map((line, i) => (
+                    <span key={i}>
+                      {line}
+                      {i < section.description.split('\n').length - 1 && <br />}
+                    </span>
+                  ))}
                 </p>
               </div>
             ))}
@@ -135,22 +139,30 @@ export default function ContactSection() {
             {contactData.buttons.map((button, index) => (
               <button
                 key={index}
-                className={`${button.type === 'inquiry' 
-                  ? (isMobile ? 'bg-[#00A3E0] w-full mt-8 h-[74px] px-8 flex items-center justify-center text-[24px] relative overflow-hidden border-none text-white !font-black transition-all duration-300 hover:shadow-lg hover:-translate-y-1' : 'text-white')
-                  : (isMobile ? 'bg-white text-[#00A3E0] w-full mt-4 h-[74px] px-8 flex items-center justify-center text-[24px] relative overflow-hidden border-none font-black transition-all duration-300 hover:shadow-lg hover:-translate-y-1' : 'text-white')
-                }`}
-                style={button.type === 'inquiry' 
-                  ? (isMobile ? undefined : { backgroundColor: '#00A3E0', width: '530px', marginTop: '320px', display: 'flex', alignItems: 'center', justifyContent: 'center', height: '80px', padding: '0 32px', fontSize: '32px', color: '#ffffff', fontWeight: '650', borderRadius: '0px', border: 'none', cursor: 'pointer', position: 'relative', overflow: 'hidden' })
-                  : (isMobile ? { backgroundColor: '#ffffff' } : { backgroundColor: '#6b7280', width: '530px', marginTop: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center', height: '80px', padding: '0 32px', fontSize: '32px', color: '#ffffff', fontWeight: '650', borderRadius: '0px', border: 'none', cursor: 'pointer', position: 'relative', overflow: 'hidden' })
-                }
-                onClick={() => setUserType(isMobile && userType === button.type ? null : button.type)}
+                className={`text-white ${isMobile ? 'bg-[#00A3E0] w-full mt-8 h-[74px] px-8 flex items-center justify-center text-[24px] relative overflow-hidden border-none text-white !font-black transition-all duration-300 hover:shadow-lg hover:-translate-y-1' : ''}`}
+                style={isMobile ? undefined : { 
+                  backgroundColor: index === 0 ? '#00A3E0' : '#6b7280', 
+                  width: '530px', 
+                  marginTop: index === 0 ? '320px' : '40px', 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  justifyContent: 'center', 
+                  height: '80px', 
+                  padding: '0 32px', 
+                  fontSize: '32px', 
+                  color: '#ffffff', 
+                  fontWeight: '650', 
+                  borderRadius: '0px', 
+                  border: 'none', 
+                  cursor: 'pointer', 
+                  position: 'relative', 
+                  overflow: 'hidden' 
+                }}
+                onClick={() => setUserType(isMobile && userType === button.type ? null : button.type as 'inquiry' | 'hiring')}
               >
                 <span
-                  className={isMobile ? `relative z-10 ${button.type === 'inquiry' ? 'text-white !text-white' : 'text-[#00A3E0]'}` : undefined}
-                  style={isMobile 
-                    ? { color: button.type === 'inquiry' ? '#ffffff' : '#00A3E0', fontWeight: '700' } 
-                    : { position: 'relative', zIndex: 1 }
-                  }
+                  className={isMobile ? 'relative z-10 text-white !text-white' : undefined}
+                  style={isMobile ? { color: '#ffffff', fontWeight: '700' } : { position: 'relative', zIndex: 1 }}
                 >
                   {button.text}
                 </span>
