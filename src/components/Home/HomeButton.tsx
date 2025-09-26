@@ -255,7 +255,10 @@ export default function HomeButton() {
   return (
     <>
       {renderModal()}
-      <div className="w-full bg-white" style={{ marginTop: "100px" }}>
+      <div 
+        className="w-full bg-white" 
+        style={{ marginTop: "100px" }}
+      >
         <div className="grid grid-cols-4 border-t border-gray-200">
           {homeData.buttonData.map((btn, idx) => {
             const isSelected = selectedIdx === idx;
@@ -274,6 +277,28 @@ export default function HomeButton() {
               <div
                 key={idx}
                 onClick={() => setSelectedIdx(idx)}
+                onMouseEnter={(e) => {
+                  if (!isSelected) {
+                    const title = e.currentTarget.querySelector('h3') as HTMLElement;
+                    const subtitle = e.currentTarget.querySelector('p:first-of-type') as HTMLElement;
+                    const description = e.currentTarget.querySelector('p:last-of-type') as HTMLElement;
+                    
+                    if (title) title.style.color = hoverColor;
+                    if (subtitle) subtitle.style.color = hoverColor;
+                    if (description) description.style.color = hoverColor;
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (!isSelected) {
+                    const title = e.currentTarget.querySelector('h3') as HTMLElement;
+                    const subtitle = e.currentTarget.querySelector('p:first-of-type') as HTMLElement;
+                    const description = e.currentTarget.querySelector('p:last-of-type') as HTMLElement;
+                    
+                    if (title) title.style.color = "#000000";
+                    if (subtitle) subtitle.style.color = "#000000";
+                    if (description) description.style.color = "#6b7280";
+                  }
+                }}
                 className={`aspect-square w-full flex flex-col cursor-pointer justify-center p-8 text-center transition-colors border-b border-gray-200 group ${
                   idx !== homeData.buttonData.length - 1 ? "border-r" : ""
                 } ${isSelected ? "bg-gray-100" : "hover:bg-gray-50"}`}
@@ -285,16 +310,6 @@ export default function HomeButton() {
                       fontSize: `${titleSize}px`,
                       color: isSelected ? hoverColor : "#000000"
                     }}
-                    onMouseEnter={(e) => {
-                      if (!isSelected) {
-                        e.currentTarget.style.color = hoverColor;
-                      }
-                    }}
-                    onMouseLeave={(e) => {
-                      if (!isSelected) {
-                        e.currentTarget.style.color = "#000000";
-                      }
-                    }}
                   >
                     {renderTextWithBreaks(btn.title)}
                   </h3>
@@ -303,16 +318,6 @@ export default function HomeButton() {
                     style={{ 
                       fontSize: `${subtitleSize}px`,
                       color: isSelected ? hoverColor : "#000000"
-                    }}
-                    onMouseEnter={(e) => {
-                      if (!isSelected) {
-                        e.currentTarget.style.color = hoverColor;
-                      }
-                    }}
-                    onMouseLeave={(e) => {
-                      if (!isSelected) {
-                        e.currentTarget.style.color = "#000000";
-                      }
                     }}
                   >
                     {renderTextWithBreaks(btn.subtitle)}
@@ -324,16 +329,6 @@ export default function HomeButton() {
                     fontSize: `${descriptionSize}px`,
                     color: isSelected ? hoverColor : "#6b7280"
                   }}
-                  onMouseEnter={(e) => {
-                    if (!isSelected) {
-                      e.currentTarget.style.color = hoverColor;
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    if (!isSelected) {
-                      e.currentTarget.style.color = "#6b7280";
-                    }
-                  }}
                 >
                   {renderTextWithBreaks(btn.description)}
                 </p>
@@ -343,7 +338,18 @@ export default function HomeButton() {
         </div>
 
         {/* 무한 텍스트 슬라이더 */}
-        <div className="w-full py-16 bg-gray-100" style={{ marginTop: "20px" }}>
+        <div 
+          className="slider-container w-full py-16 bg-gray-100 transition-all duration-300 ease-in-out cursor-pointer" 
+          style={{ marginTop: "20px" }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.backgroundColor = "#e5f3ff";
+            e.currentTarget.style.transform = "scale(1.02)";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.backgroundColor = "#f3f4f6";
+            e.currentTarget.style.transform = "scale(1)";
+          }}
+        >
           <InfiniteTextSlider
             text={homeData.sliderText || "LEADING CUSTOMER SUCCESS"}
             fontSize={homeData.sliderTextSizes?.desktop || 110}
