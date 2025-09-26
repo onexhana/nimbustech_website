@@ -282,6 +282,20 @@ export default function AdminPortfolio() {
                   <button
                     key={index}
                     onClick={() => setSelectedCategory(category)}
+                    onMouseEnter={(e) => {
+                      if (selectedCategory !== category) {
+                        e.currentTarget.style.background = 'linear-gradient(135deg, #f3f4f6, #e5e7eb)';
+                        e.currentTarget.style.transform = 'translateY(-1px)';
+                        e.currentTarget.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.1)';
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      if (selectedCategory !== category) {
+                        e.currentTarget.style.background = 'rgba(255, 255, 255, 0.5)';
+                        e.currentTarget.style.transform = 'translateY(0)';
+                        e.currentTarget.style.boxShadow = 'none';
+                      }
+                    }}
                     style={{
                       padding: '0.75rem 1rem',
                       fontSize: `${portfolioData.fontSize?.category || 16}px`,
@@ -304,7 +318,13 @@ export default function AdminPortfolio() {
                       })
                     }}
                   >
-                    <span>{category}</span>
+                    <span style={{ 
+                      fontSize: `${portfolioData.fontSize?.category || 16}px`,
+                      fontWeight: portfolioData.fontWeight?.category || 600,
+                      color: selectedCategory === category ? 'white' : (portfolioData.fontColor?.category || '#374151')
+                    }}>
+                      {category}
+                    </span>
                     <span style={{
                       padding: '0.25rem 0.5rem',
                       fontSize: '0.75rem',
