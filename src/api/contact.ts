@@ -82,7 +82,15 @@ export async function getContactData(): Promise<ContactData> {
         name: "님버스테크 회사소개서",
         path: "/footer_pdf/님버스테크 회사소개_v3.5_20250923.pdf"
       }
-    ]
+    ],
+    fontSize: {
+      mainTitle: 30,
+      subtitle: 18,
+      sectionTitle: 16,
+      sectionDescription: 14,
+      buttonText: 16,
+      companyInfo: 14
+    }
   };
 }
 
@@ -231,7 +239,14 @@ export async function getAboutData(): Promise<AboutData> {
           }
         ]
       }
-    ]
+    ],
+    fontSize: {
+      mainTitle: 30,
+      subtitle: 18,
+      cardTitle: 16,
+      cardDescription: 14,
+      tabName: 16
+    }
   };
 }
 

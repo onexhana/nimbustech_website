@@ -237,7 +237,7 @@ export default function AdminContact() {
 
       {/* 메인 콘텐츠 */}
       <main style={{ maxWidth: '1200px', margin: '0 auto', padding: '2rem 1rem' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', alignItems: 'start' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '1.5rem', alignItems: 'start' }}>
           {/* 가치 섹션 관리 */}
           <div>
             <div style={{
@@ -348,6 +348,250 @@ export default function AdminContact() {
                     </div>
                   </div>
                 ))}
+              </div>
+            </div>
+          </div>
+
+          {/* 글꼴 사이즈 관리 */}
+          <div>
+            <div style={{
+              background: 'rgba(255, 255, 255, 0.8)',
+              backdropFilter: 'blur(10px)',
+              borderRadius: '12px',
+              boxShadow: '0 10px 15px rgba(0, 0, 0, 0.1)',
+              border: '1px solid rgba(255, 255, 255, 0.2)',
+              padding: '1.5rem',
+              transition: 'all 0.3s ease'
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
+                <div style={{
+                  width: '32px',
+                  height: '32px',
+                  background: 'linear-gradient(135deg, #f59e0b, #f97316)',
+                  borderRadius: '8px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}>
+                  <svg width="20" height="20" fill="none" stroke="white" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                  </svg>
+                </div>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#111827', margin: 0 }}>
+                  글꼴 사이즈 관리
+                </h3>
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                    메인 제목 크기
+                  </label>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <input
+                      type="range"
+                      min="12"
+                      max="48"
+                      value={contactData.fontSize?.mainTitle || 30}
+                      onChange={(e) => contactData && setContactData({
+                        ...contactData, 
+                        fontSize: { ...contactData.fontSize, mainTitle: parseInt(e.target.value) }
+                      })}
+                      disabled={!isEditing}
+                      style={{
+                        flex: 1,
+                        height: '6px',
+                        background: '#e5e7eb',
+                        borderRadius: '3px',
+                        outline: 'none',
+                        cursor: isEditing ? 'pointer' : 'not-allowed'
+                      }}
+                    />
+                    <span style={{ 
+                      fontSize: '0.75rem', 
+                      fontWeight: '600', 
+                      color: '#374151',
+                      minWidth: '30px',
+                      textAlign: 'center'
+                    }}>
+                      {contactData.fontSize?.mainTitle || 30}px
+                    </span>
+                  </div>
+                </div>
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                    부제목 크기
+                  </label>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <input
+                      type="range"
+                      min="10"
+                      max="32"
+                      value={contactData.fontSize?.subtitle || 18}
+                      onChange={(e) => contactData && setContactData({
+                        ...contactData, 
+                        fontSize: { ...contactData.fontSize, subtitle: parseInt(e.target.value) }
+                      })}
+                      disabled={!isEditing}
+                      style={{
+                        flex: 1,
+                        height: '6px',
+                        background: '#e5e7eb',
+                        borderRadius: '3px',
+                        outline: 'none',
+                        cursor: isEditing ? 'pointer' : 'not-allowed'
+                      }}
+                    />
+                    <span style={{ 
+                      fontSize: '0.75rem', 
+                      fontWeight: '600', 
+                      color: '#374151',
+                      minWidth: '30px',
+                      textAlign: 'center'
+                    }}>
+                      {contactData.fontSize?.subtitle || 18}px
+                    </span>
+                  </div>
+                </div>
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                    섹션 제목 크기
+                  </label>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <input
+                      type="range"
+                      min="10"
+                      max="28"
+                      value={contactData.fontSize?.sectionTitle || 16}
+                      onChange={(e) => contactData && setContactData({
+                        ...contactData, 
+                        fontSize: { ...contactData.fontSize, sectionTitle: parseInt(e.target.value) }
+                      })}
+                      disabled={!isEditing}
+                      style={{
+                        flex: 1,
+                        height: '6px',
+                        background: '#e5e7eb',
+                        borderRadius: '3px',
+                        outline: 'none',
+                        cursor: isEditing ? 'pointer' : 'not-allowed'
+                      }}
+                    />
+                    <span style={{ 
+                      fontSize: '0.75rem', 
+                      fontWeight: '600', 
+                      color: '#374151',
+                      minWidth: '30px',
+                      textAlign: 'center'
+                    }}>
+                      {contactData.fontSize?.sectionTitle || 16}px
+                    </span>
+                  </div>
+                </div>
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                    섹션 설명 크기
+                  </label>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <input
+                      type="range"
+                      min="8"
+                      max="20"
+                      value={contactData.fontSize?.sectionDescription || 14}
+                      onChange={(e) => contactData && setContactData({
+                        ...contactData, 
+                        fontSize: { ...contactData.fontSize, sectionDescription: parseInt(e.target.value) }
+                      })}
+                      disabled={!isEditing}
+                      style={{
+                        flex: 1,
+                        height: '6px',
+                        background: '#e5e7eb',
+                        borderRadius: '3px',
+                        outline: 'none',
+                        cursor: isEditing ? 'pointer' : 'not-allowed'
+                      }}
+                    />
+                    <span style={{ 
+                      fontSize: '0.75rem', 
+                      fontWeight: '600', 
+                      color: '#374151',
+                      minWidth: '30px',
+                      textAlign: 'center'
+                    }}>
+                      {contactData.fontSize?.sectionDescription || 14}px
+                    </span>
+                  </div>
+                </div>
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                    버튼 텍스트 크기
+                  </label>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <input
+                      type="range"
+                      min="10"
+                      max="24"
+                      value={contactData.fontSize?.buttonText || 16}
+                      onChange={(e) => contactData && setContactData({
+                        ...contactData, 
+                        fontSize: { ...contactData.fontSize, buttonText: parseInt(e.target.value) }
+                      })}
+                      disabled={!isEditing}
+                      style={{
+                        flex: 1,
+                        height: '6px',
+                        background: '#e5e7eb',
+                        borderRadius: '3px',
+                        outline: 'none',
+                        cursor: isEditing ? 'pointer' : 'not-allowed'
+                      }}
+                    />
+                    <span style={{ 
+                      fontSize: '0.75rem', 
+                      fontWeight: '600', 
+                      color: '#374151',
+                      minWidth: '30px',
+                      textAlign: 'center'
+                    }}>
+                      {contactData.fontSize?.buttonText || 16}px
+                    </span>
+                  </div>
+                </div>
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                    회사 정보 크기
+                  </label>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <input
+                      type="range"
+                      min="8"
+                      max="20"
+                      value={contactData.fontSize?.companyInfo || 14}
+                      onChange={(e) => contactData && setContactData({
+                        ...contactData, 
+                        fontSize: { ...contactData.fontSize, companyInfo: parseInt(e.target.value) }
+                      })}
+                      disabled={!isEditing}
+                      style={{
+                        flex: 1,
+                        height: '6px',
+                        background: '#e5e7eb',
+                        borderRadius: '3px',
+                        outline: 'none',
+                        cursor: isEditing ? 'pointer' : 'not-allowed'
+                      }}
+                    />
+                    <span style={{ 
+                      fontSize: '0.75rem', 
+                      fontWeight: '600', 
+                      color: '#374151',
+                      minWidth: '30px',
+                      textAlign: 'center'
+                    }}>
+                      {contactData.fontSize?.companyInfo || 14}px
+                    </span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -847,10 +1091,20 @@ export default function AdminContact() {
                 <h4 style={{ fontSize: '1rem', fontWeight: 'bold', color: '#374151', margin: '0 0 1rem 0' }}>가치 섹션</h4>
                 {contactData.sections.map((section, index) => (
                   <div key={index} style={{ marginBottom: '1rem' }}>
-                    <h5 style={{ fontSize: '1.125rem', fontWeight: 'bold', color: '#3b82f6', margin: '0 0 0.5rem 0' }}>
+                    <h5 style={{ 
+                      fontSize: `${contactData.fontSize?.sectionTitle || 16}px`, 
+                      fontWeight: 'bold', 
+                      color: '#3b82f6', 
+                      margin: '0 0 0.5rem 0' 
+                    }}>
                       {section.title}
                     </h5>
-                    <p style={{ fontSize: '0.875rem', color: '#6b7280', margin: 0, whiteSpace: 'pre-line' }}>
+                    <p style={{ 
+                      fontSize: `${contactData.fontSize?.sectionDescription || 14}px`, 
+                      color: '#6b7280', 
+                      margin: 0, 
+                      whiteSpace: 'pre-line' 
+                    }}>
                       {section.description}
                     </p>
                   </div>
@@ -860,7 +1114,13 @@ export default function AdminContact() {
               {/* 회사 정보 미리보기 */}
               <div>
                 <h4 style={{ fontSize: '1rem', fontWeight: 'bold', color: '#374151', margin: '0 0 1rem 0' }}>회사 정보</h4>
-                <div style={{ fontSize: '0.875rem', color: '#6b7280', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                <div style={{ 
+                  fontSize: `${contactData.fontSize?.companyInfo || 14}px`, 
+                  color: '#6b7280', 
+                  display: 'flex', 
+                  flexDirection: 'column', 
+                  gap: '0.5rem' 
+                }}>
                   <p style={{ margin: 0 }}>{contactData.companyInfo.sejong.title} {contactData.companyInfo.sejong.address}</p>
                   <p style={{ margin: 0 }}>{contactData.companyInfo.seoul.title} {contactData.companyInfo.seoul.address}</p>
                   <p style={{ margin: 0 }}>T: {contactData.companyInfo.contact.phone}</p>
