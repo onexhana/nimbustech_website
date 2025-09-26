@@ -394,7 +394,7 @@ export default function AdminAbout() {
                   글꼴 사이즈 관리
                 </h3>
               </div>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem' }}>
                 <div>
                   <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
                     모바일 메인 제목 크기
@@ -444,78 +444,6 @@ export default function AdminAbout() {
                       onChange={(e) => aboutData && setAboutData({
                         ...aboutData, 
                         fontSize: { ...aboutData.fontSize, subtitle: parseInt(e.target.value) || 18 }
-                      })}
-                      disabled={!isEditing}
-                      style={{
-                        width: '80px',
-                        padding: '0.3rem 0.5rem',
-                        border: '1px solid #e5e7eb',
-                        borderRadius: '4px',
-                        outline: 'none',
-                        fontSize: '0.75rem',
-                        textAlign: 'center',
-                        background: !isEditing ? '#f9fafb' : 'white',
-                        color: !isEditing ? '#6b7280' : '#111827'
-                      }}
-                    />
-                    <span style={{ 
-                      fontSize: '0.75rem', 
-                      fontWeight: '600', 
-                      color: '#374151'
-                    }}>
-                      px
-                    </span>
-                  </div>
-                </div>
-                <div>
-                  <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
-                    카드 제목 크기
-                  </label>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <input
-                      type="number"
-                      min="10"
-                      max="28"
-                      value={aboutData.fontSize?.cardTitle || 16}
-                      onChange={(e) => aboutData && setAboutData({
-                        ...aboutData, 
-                        fontSize: { ...aboutData.fontSize, cardTitle: parseInt(e.target.value) || 16 }
-                      })}
-                      disabled={!isEditing}
-                      style={{
-                        width: '80px',
-                        padding: '0.3rem 0.5rem',
-                        border: '1px solid #e5e7eb',
-                        borderRadius: '4px',
-                        outline: 'none',
-                        fontSize: '0.75rem',
-                        textAlign: 'center',
-                        background: !isEditing ? '#f9fafb' : 'white',
-                        color: !isEditing ? '#6b7280' : '#111827'
-                      }}
-                    />
-                    <span style={{ 
-                      fontSize: '0.75rem', 
-                      fontWeight: '600', 
-                      color: '#374151'
-                    }}>
-                      px
-                    </span>
-                  </div>
-                </div>
-                <div>
-                  <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
-                    카드 설명 크기
-                  </label>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <input
-                      type="number"
-                      min="8"
-                      max="20"
-                      value={aboutData.fontSize?.cardDescription || 14}
-                      onChange={(e) => aboutData && setAboutData({
-                        ...aboutData, 
-                        fontSize: { ...aboutData.fontSize, cardDescription: parseInt(e.target.value) || 14 }
                       })}
                       disabled={!isEditing}
                       style={{
@@ -737,9 +665,42 @@ export default function AdminAbout() {
                     
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                       <div>
-                        <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
-                          제목
-                        </label>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
+                          <label style={{ fontSize: '0.875rem', fontWeight: '600', color: '#374151' }}>
+                            제목
+                          </label>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                            <span style={{ fontSize: '0.75rem', color: '#6b7280' }}>크기:</span>
+                            <input
+                              type="number"
+                              min="8"
+                              max="48"
+                              value={card.fontSize?.title || aboutData.fontSize?.cardTitle || 16}
+                              onChange={(e) => {
+                                if (!aboutData) return;
+                                const newTabs = [...aboutData.tabs];
+                                if (!newTabs[activeTab].cards[cardIndex].fontSize) {
+                                  newTabs[activeTab].cards[cardIndex].fontSize = {};
+                                }
+                                newTabs[activeTab].cards[cardIndex].fontSize.title = parseInt(e.target.value) || 16;
+                                setAboutData({...aboutData, tabs: newTabs});
+                              }}
+                              disabled={!isEditing}
+                              style={{
+                                width: '60px',
+                                padding: '0.25rem 0.5rem',
+                                border: '1px solid #e5e7eb',
+                                borderRadius: '4px',
+                                outline: 'none',
+                                fontSize: '0.75rem',
+                                textAlign: 'center',
+                                background: !isEditing ? '#f9fafb' : 'white',
+                                color: !isEditing ? '#6b7280' : '#111827'
+                              }}
+                            />
+                            <span style={{ fontSize: '0.75rem', color: '#6b7280' }}>px</span>
+                          </div>
+                        </div>
                         <input
                           type="text"
                           value={card.title}
@@ -757,7 +718,7 @@ export default function AdminAbout() {
                             border: '2px solid #e5e7eb',
                             borderRadius: '8px',
                             outline: 'none',
-                            fontSize: '0.875rem',
+                            fontSize: `${card.fontSize?.title || aboutData.fontSize?.cardTitle || 16}px`,
                             transition: 'all 0.2s ease',
                             background: !isEditing ? '#f9fafb' : 'white',
                             color: !isEditing ? '#6b7280' : '#111827'
@@ -776,9 +737,42 @@ export default function AdminAbout() {
                       </div>
                       
                       <div>
-                        <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
-                          설명 (줄바꿈으로 구분)
-                        </label>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
+                          <label style={{ fontSize: '0.875rem', fontWeight: '600', color: '#374151' }}>
+                            설명 (줄바꿈으로 구분)
+                          </label>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                            <span style={{ fontSize: '0.75rem', color: '#6b7280' }}>크기:</span>
+                            <input
+                              type="number"
+                              min="8"
+                              max="32"
+                              value={card.fontSize?.description || aboutData.fontSize?.cardDescription || 14}
+                              onChange={(e) => {
+                                if (!aboutData) return;
+                                const newTabs = [...aboutData.tabs];
+                                if (!newTabs[activeTab].cards[cardIndex].fontSize) {
+                                  newTabs[activeTab].cards[cardIndex].fontSize = {};
+                                }
+                                newTabs[activeTab].cards[cardIndex].fontSize.description = parseInt(e.target.value) || 14;
+                                setAboutData({...aboutData, tabs: newTabs});
+                              }}
+                              disabled={!isEditing}
+                              style={{
+                                width: '60px',
+                                padding: '0.25rem 0.5rem',
+                                border: '1px solid #e5e7eb',
+                                borderRadius: '4px',
+                                outline: 'none',
+                                fontSize: '0.75rem',
+                                textAlign: 'center',
+                                background: !isEditing ? '#f9fafb' : 'white',
+                                color: !isEditing ? '#6b7280' : '#111827'
+                              }}
+                            />
+                            <span style={{ fontSize: '0.75rem', color: '#6b7280' }}>px</span>
+                          </div>
+                        </div>
                         <textarea
                           value={card.description.join('\n')}
                           onChange={(e) => {
@@ -796,7 +790,7 @@ export default function AdminAbout() {
                             border: '1px solid #e5e7eb',
                             borderRadius: '4px',
                             outline: 'none',
-                            fontSize: '0.75rem',
+                            fontSize: `${card.fontSize?.description || aboutData.fontSize?.cardDescription || 14}px`,
                             transition: 'all 0.2s ease',
                             background: !isEditing ? '#f9fafb' : 'white',
                             color: !isEditing ? '#6b7280' : '#111827',
@@ -1020,13 +1014,13 @@ export default function AdminAbout() {
                       fontWeight: '600', 
                       color: '#1f2937', 
                       marginBottom: '0.5rem', 
-                      fontSize: `${aboutData.fontSize?.cardTitle || 16}px`, 
+                      fontSize: `${card.fontSize?.title || aboutData.fontSize?.cardTitle || 16}px`, 
                       margin: 0 
                     }}>
                       {card.title}
                     </h5>
                     <p style={{ 
-                      fontSize: `${aboutData.fontSize?.cardDescription || 14}px`, 
+                      fontSize: `${card.fontSize?.description || aboutData.fontSize?.cardDescription || 14}px`, 
                       color: '#6b7280', 
                       lineHeight: '1.5', 
                       margin: 0 
