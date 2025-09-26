@@ -5,7 +5,7 @@ import { useHomeData } from '../../context/HomeContext';
 import MiniPreview from '../../components/admin/MiniPreview';
 
 export default function AdminHome() {
-  const { homeData, updateTypingText, updateTypingTextStyle, updateButtonData, updateButtonStyles, updateSliderText, updateSliderTextColors, updateSliderTextSizes } = useHomeData();
+  const { homeData, updateTypingText, updateTypingTextStyle, updateTypingSpeed, updateButtonData, updateButtonStyles, updateSliderText, updateSliderTextColors, updateSliderTextSizes } = useHomeData();
   const [isEditing, setIsEditing] = useState(false);
 
   const handleSave = () => {
@@ -345,6 +345,128 @@ export default function AdminHome() {
                   </div>
                 </div>
               ))}
+            </div>
+          </div>
+
+          {/* 타이핑 속도 조절 */}
+          <div style={{
+            background: 'rgba(255, 255, 255, 0.8)',
+            backdropFilter: 'blur(10px)',
+            borderRadius: '12px',
+            boxShadow: '0 10px 15px rgba(0, 0, 0, 0.1)',
+            border: '1px solid rgba(255, 255, 255, 0.2)',
+            padding: '1.5rem',
+            transition: 'all 0.3s ease'
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
+              <div style={{
+                width: '32px',
+                height: '32px',
+                background: 'linear-gradient(135deg, #f59e0b, #d97706)',
+                borderRadius: '8px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}>
+                <svg width="20" height="20" fill="none" stroke="white" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#111827', margin: 0 }}>
+                타이핑 속도 설정
+              </h3>
+            </div>
+            
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              {/* 타이핑 속도 */}
+              <div>
+                <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                  타이핑 속도 (ms)
+                </label>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                  <input
+                    type="range"
+                    min="50"
+                    max="300"
+                    value={homeData.typingSpeed?.speed || 130}
+                    onChange={(e) => updateTypingSpeed({ speed: parseInt(e.target.value) })}
+                    disabled={!isEditing}
+                    style={{
+                      width: '200px',
+                      cursor: isEditing ? 'pointer' : 'not-allowed',
+                      opacity: !isEditing ? 0.6 : 1
+                    }}
+                  />
+                  <input
+                    type="number"
+                    min="50"
+                    max="300"
+                    value={homeData.typingSpeed?.speed || 130}
+                    onChange={(e) => updateTypingSpeed({ speed: parseInt(e.target.value) || 130 })}
+                    disabled={!isEditing}
+                    style={{
+                      width: '80px',
+                      padding: '0.25rem 0.5rem',
+                      border: '1px solid #e5e7eb',
+                      borderRadius: '4px',
+                      outline: 'none',
+                      fontSize: '0.75rem',
+                      textAlign: 'center',
+                      background: !isEditing ? '#f9fafb' : 'white',
+                      color: !isEditing ? '#6b7280' : '#111827'
+                    }}
+                  />
+                  <span style={{ fontSize: '0.75rem', color: '#6b7280' }}>ms</span>
+                </div>
+                <p style={{ fontSize: '0.75rem', color: '#6b7280', marginTop: '0.25rem' }}>
+                  값이 작을수록 빠르게 타이핑됩니다 (50ms = 매우 빠름, 300ms = 매우 느림)
+                </p>
+              </div>
+
+              {/* 줄 간 대기 시간 */}
+              <div>
+                <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                  줄 간 대기 시간 (ms)
+                </label>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                  <input
+                    type="range"
+                    min="200"
+                    max="2000"
+                    value={homeData.typingSpeed?.pauseTime || 700}
+                    onChange={(e) => updateTypingSpeed({ pauseTime: parseInt(e.target.value) })}
+                    disabled={!isEditing}
+                    style={{
+                      width: '200px',
+                      cursor: isEditing ? 'pointer' : 'not-allowed',
+                      opacity: !isEditing ? 0.6 : 1
+                    }}
+                  />
+                  <input
+                    type="number"
+                    min="200"
+                    max="2000"
+                    value={homeData.typingSpeed?.pauseTime || 700}
+                    onChange={(e) => updateTypingSpeed({ pauseTime: parseInt(e.target.value) || 700 })}
+                    disabled={!isEditing}
+                    style={{
+                      width: '80px',
+                      padding: '0.25rem 0.5rem',
+                      border: '1px solid #e5e7eb',
+                      borderRadius: '4px',
+                      outline: 'none',
+                      fontSize: '0.75rem',
+                      textAlign: 'center',
+                      background: !isEditing ? '#f9fafb' : 'white',
+                      color: !isEditing ? '#6b7280' : '#111827'
+                    }}
+                  />
+                  <span style={{ fontSize: '0.75rem', color: '#6b7280' }}>ms</span>
+                </div>
+                <p style={{ fontSize: '0.75rem', color: '#6b7280', marginTop: '0.25rem' }}>
+                  한 줄이 완성된 후 다음 줄로 넘어가기까지의 대기 시간
+                </p>
+              </div>
             </div>
           </div>
 

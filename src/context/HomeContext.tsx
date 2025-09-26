@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, ReactNode } from 'react';
+import { createContext, useContext, useState, type ReactNode } from 'react';
 
 // 홈페이지 데이터 타입 정의
 interface HomeData {
@@ -8,6 +8,10 @@ interface HomeData {
     fontWeights: number[];
     desktopSizes: number[];
     mobileSizes: number[];
+  };
+  typingSpeed: {
+    speed: number; // 타이핑 속도 (ms)
+    pauseTime: number; // 줄 간 대기 시간 (ms)
   };
   buttonData: {
     title: string;
@@ -39,6 +43,7 @@ interface HomeContextType {
   updateTypingText: (index: number, text: string) => void;
   updateTypingTextStyles: (styles: Partial<HomeData['typingTextStyles']>) => void;
   updateTypingTextStyle: (index: number, styleType: 'colors' | 'fontWeights' | 'desktopSizes' | 'mobileSizes', value: string | number) => void;
+  updateTypingSpeed: (speed: Partial<HomeData['typingSpeed']>) => void;
   updateButtonData: (index: number, buttonData: Partial<HomeData['buttonData'][0]>) => void;
   updateButtonStyles: (styles: Partial<HomeData['buttonStyles']>) => void;
   updateSliderText: (text: string) => void;
@@ -59,6 +64,10 @@ const defaultHomeData: HomeData = {
     fontWeights: [500, 500, 500, 700],
     desktopSizes: [100, 100, 100, 120],
     mobileSizes: [35, 35, 35, 48]
+  },
+  typingSpeed: {
+    speed: 130, // 기본 타이핑 속도 (ms)
+    pauseTime: 700 // 기본 줄 간 대기 시간 (ms)
   },
   buttonData: [
     {
@@ -126,6 +135,10 @@ export function HomeProvider({ children }: { children: ReactNode }) {
             ...defaultHomeData.typingTextStyles,
             ...parsedData.typingTextStyles
           },
+          typingSpeed: {
+            ...defaultHomeData.typingSpeed,
+            ...parsedData.typingSpeed
+          },
           buttonStyles: {
             ...defaultHomeData.buttonStyles,
             ...parsedData.buttonStyles
@@ -172,10 +185,30 @@ export function HomeProvider({ children }: { children: ReactNode }) {
   // 타이핑 텍스트 개별 스타일 업데이트
   const updateTypingTextStyle = (index: number, styleType: 'colors' | 'fontWeights' | 'desktopSizes' | 'mobileSizes', value: string | number) => {
     const newStyles = { ...homeData.typingTextStyles };
-    const newArray = [...newStyles[styleType]];
-    newArray[index] = value as any;
-    newStyles[styleType] = newArray;
+    if (styleType === 'colors') {
+      const newArray = [...newStyles.colors];
+      newArray[index] = value as string;
+      newStyles.colors = newArray;
+    } else if (styleType === 'fontWeights') {
+      const newArray = [...newStyles.fontWeights];
+      newArray[index] = value as number;
+      newStyles.fontWeights = newArray;
+    } else if (styleType === 'desktopSizes') {
+      const newArray = [...newStyles.desktopSizes];
+      newArray[index] = value as number;
+      newStyles.desktopSizes = newArray;
+    } else if (styleType === 'mobileSizes') {
+      const newArray = [...newStyles.mobileSizes];
+      newArray[index] = value as number;
+      newStyles.mobileSizes = newArray;
+    }
     updateHomeData({ typingTextStyles: newStyles });
+  };
+
+  // 타이핑 속도 업데이트
+  const updateTypingSpeed = (speed: Partial<HomeData['typingSpeed']>) => {
+    const newSpeed = { ...homeData.typingSpeed, ...speed };
+    updateHomeData({ typingSpeed: newSpeed });
   };
 
   // 버튼 데이터 개별 업데이트
@@ -214,6 +247,7 @@ export function HomeProvider({ children }: { children: ReactNode }) {
     updateTypingText,
     updateTypingTextStyles,
     updateTypingTextStyle,
+    updateTypingSpeed,
     updateButtonData,
     updateButtonStyles,
     updateSliderText,

@@ -38,8 +38,8 @@ export default function HomeSection() {
   const { colors, fontWeights, desktopSizes, mobileSizes } = typingTextStyles;
 
   useEffect(() => {
-    const typingSpeed = 130;
-    const pauseTime = 700;
+    const typingSpeed = homeData.typingSpeed?.speed || 130;
+    const pauseTime = homeData.typingSpeed?.pauseTime || 700;
 
     const timer = setTimeout(() => {
       if (currentCharIndex < texts[currentLineIndex].length) {
