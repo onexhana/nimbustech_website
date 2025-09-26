@@ -13,6 +13,21 @@ interface PortfolioProject {
 interface PortfolioData {
   categories: string[];
   projects: PortfolioProject[];
+  fontSize?: {
+    title?: number;
+    description?: number;
+    category?: number;
+  };
+  fontWeight?: {
+    title?: number;
+    description?: number;
+    category?: number;
+  };
+  fontColor?: {
+    title?: string;
+    description?: string;
+    category?: string;
+  };
 }
 
 // Context 타입 정의
@@ -22,11 +37,27 @@ interface PortfolioContextType {
   addProject: (project: Omit<PortfolioProject, 'id'>) => void;
   deleteProject: (id: number) => void;
   updateCategories: (categories: string[]) => void;
+  updatePortfolioData: (newData: Partial<PortfolioData>) => void;
 }
 
 // 기본 데이터
 const defaultPortfolioData: PortfolioData = {
   categories: ["공공", "금융", "일반 / 제조"],
+  fontSize: {
+    title: 18,
+    description: 14,
+    category: 16
+  },
+  fontWeight: {
+    title: 600,
+    description: 400,
+    category: 500
+  },
+  fontColor: {
+    title: "#1f2937",
+    description: "#6b7280",
+    category: "#374151"
+  },
   projects: [
     // 공공 카테고리
     { id: 1, title: "다산콜센터", description: "다산콜센터 업무자동화", category: "공공", image: "/portfolio_photo/공공_다산콜센터.jpg" },
@@ -85,6 +116,12 @@ export function PortfolioProvider({ children }: { children: ReactNode }) {
     localStorage.setItem('portfolioData', JSON.stringify(newData));
   };
 
+  // 부분 데이터 업데이트
+  const updatePortfolioDataPartial = (newData: Partial<PortfolioData>) => {
+    const updatedData = { ...portfolioData, ...newData };
+    updatePortfolioData(updatedData);
+  };
+
   // 프로젝트 업데이트
   const updateProject = (id: number, updatedProject: Partial<PortfolioProject>) => {
     const newProjects = portfolioData.projects.map(project => 
@@ -117,7 +154,8 @@ export function PortfolioProvider({ children }: { children: ReactNode }) {
     updateProject,
     addProject,
     deleteProject,
-    updateCategories
+    updateCategories,
+    updatePortfolioData: updatePortfolioDataPartial
   };
 
   return (
