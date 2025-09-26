@@ -262,9 +262,11 @@ export default function AdminAbout() {
 
       {/* 메인 콘텐츠 */}
       <main style={{ maxWidth: '1200px', margin: '0 auto', padding: '2rem 1rem' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '1.5rem', alignItems: 'start' }}>
-          {/* 메인 타이틀 편집 */}
-          <div>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+          {/* 상단 섹션들 */}
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '1.5rem', alignItems: 'start' }}>
+            {/* 메인 타이틀 편집 */}
+            <div>
             <div style={{
               background: 'rgba(255, 255, 255, 0.8)',
               backdropFilter: 'blur(10px)',
@@ -570,6 +572,7 @@ export default function AdminAbout() {
                 </div>
               </div>
             </div>
+          </div>
           </div>
 
           {/* 탭별 카드 관리 */}
