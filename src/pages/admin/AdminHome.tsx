@@ -976,6 +976,94 @@ export default function AdminHome() {
                   ))}
                 </div>
               </div>
+              {/* 홈 버튼 섹션 미리보기 */}
+              <div style={{ 
+                marginTop: '1rem', 
+                padding: '0.75rem',
+                background: 'rgba(255, 255, 255, 0.8)',
+                borderRadius: '8px',
+                border: '1px solid rgba(229, 231, 235, 0.5)'
+              }}>
+                <div style={{ 
+                  fontSize: '0.875rem', 
+                  fontWeight: 'bold', 
+                  color: '#374151', 
+                  marginBottom: '0.75rem',
+                  textAlign: 'center'
+                }}>
+                  홈 버튼 섹션
+                </div>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '0.5rem', marginBottom: '0.75rem' }}>
+                  {homeData.buttonData.map((btn, index) => (
+                    <div key={index} style={{ 
+                      padding: '0.5rem',
+                      background: 'rgba(249, 250, 251, 0.8)',
+                      borderRadius: '6px',
+                      border: '1px solid rgba(229, 231, 235, 0.3)',
+                      textAlign: 'center'
+                    }}>
+                      <div style={{ 
+                        fontSize: '0.75rem', 
+                        fontWeight: 'bold', 
+                        color: '#111827',
+                        marginBottom: '0.25rem'
+                      }}>
+                        {btn.title}
+                      </div>
+                      <div style={{ 
+                        fontSize: '0.7rem', 
+                        fontWeight: 'bold', 
+                        color: homeData.buttonStyles?.hoverColor || '#00A3E0',
+                        marginBottom: '0.25rem'
+                      }}>
+                        {btn.subtitle}
+                      </div>
+                      <div style={{ 
+                        fontSize: '0.65rem', 
+                        color: '#6b7280',
+                        lineHeight: '1.2'
+                      }}>
+                        {btn.description.length > 30 ? btn.description.substring(0, 30) + '...' : btn.description}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div style={{ 
+                  fontSize: '0.7rem',
+                  color: '#9ca3af',
+                  textAlign: 'center',
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(2, 1fr)',
+                  gap: '0.5rem'
+                }}>
+                  <div>
+                    <div style={{ fontWeight: 'bold', marginBottom: '0.25rem' }}>크기 설정 (데스크톱/모바일)</div>
+                    <div>제목: {homeData.buttonStyles?.titleSizes?.desktop || 30}px / {homeData.buttonStyles?.titleSizes?.mobile || 20}px</div>
+                    <div>부제목: {homeData.buttonStyles?.subtitleSizes?.desktop || 40}px / {homeData.buttonStyles?.subtitleSizes?.mobile || 28}px</div>
+                    <div>설명: {homeData.buttonStyles?.descriptionSizes?.desktop || 20}px / {homeData.buttonStyles?.descriptionSizes?.mobile || 14}px</div>
+                  </div>
+                  <div>
+                    <div style={{ fontWeight: 'bold', marginBottom: '0.25rem' }}>호버 색상</div>
+                    <div style={{ 
+                      display: 'flex', 
+                      alignItems: 'center', 
+                      justifyContent: 'center', 
+                      gap: '0.25rem' 
+                    }}>
+                      <div style={{
+                        width: '12px',
+                        height: '12px',
+                        background: homeData.buttonStyles?.hoverColor || '#00A3E0',
+                        borderRadius: '2px',
+                        border: '1px solid rgba(0, 0, 0, 0.1)'
+                      }}></div>
+                      <span>{homeData.buttonStyles?.hoverColor || '#00A3E0'}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* 슬라이더 텍스트 미리보기 */}
               <div style={{ 
                 marginTop: '1rem', 
                 textAlign: 'center', 
