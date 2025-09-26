@@ -308,7 +308,7 @@ export default function AdminContact() {
                           disabled={!isEditing}
                           style={{
                             width: '100%',
-                            maxWidth: '485px',
+                            maxWidth: '280px',
                             padding: '0.3rem 0.5rem',
                             border: '1px solid #e5e7eb',
                             borderRadius: '4px',
@@ -331,7 +331,7 @@ export default function AdminContact() {
                           rows={3}
                           style={{
                             width: '100%',
-                            maxWidth: '485px',
+                            maxWidth: '280px',
                             padding: '0.3rem 0.5rem',
                             border: '1px solid #e5e7eb',
                             borderRadius: '4px',
@@ -666,7 +666,7 @@ export default function AdminContact() {
                           disabled={!isEditing}
                           style={{
                             width: '100%',
-                            maxWidth: '300px',
+                            maxWidth: '280px',
                             padding: '0.3rem 0.5rem',
                             border: '1px solid #e5e7eb',
                             borderRadius: '4px',
@@ -762,7 +762,7 @@ export default function AdminContact() {
                         disabled={!isEditing}
                         style={{
                           width: '100%',
-                          maxWidth: '485px',
+                          maxWidth: '280px',
                           padding: '0.3rem 0.5rem',
                           border: '1px solid #e5e7eb',
                           borderRadius: '4px',
@@ -785,7 +785,7 @@ export default function AdminContact() {
                         disabled={!isEditing}
                         style={{
                           width: '100%',
-                          maxWidth: '485px',
+                          maxWidth: '280px',
                           padding: '0.3rem 0.5rem',
                           border: '1px solid #e5e7eb',
                           borderRadius: '4px',
@@ -822,7 +822,7 @@ export default function AdminContact() {
                         disabled={!isEditing}
                         style={{
                           width: '100%',
-                          maxWidth: '485px',
+                          maxWidth: '280px',
                           padding: '0.3rem 0.5rem',
                           border: '1px solid #e5e7eb',
                           borderRadius: '4px',
@@ -845,7 +845,7 @@ export default function AdminContact() {
                         disabled={!isEditing}
                         style={{
                           width: '100%',
-                          maxWidth: '485px',
+                          maxWidth: '280px',
                           padding: '0.3rem 0.5rem',
                           border: '1px solid #e5e7eb',
                           borderRadius: '4px',
@@ -882,7 +882,7 @@ export default function AdminContact() {
                         disabled={!isEditing}
                         style={{
                           width: '100%',
-                          maxWidth: '485px',
+                          maxWidth: '280px',
                           padding: '0.3rem 0.5rem',
                           border: '1px solid #e5e7eb',
                           borderRadius: '4px',
@@ -905,7 +905,7 @@ export default function AdminContact() {
                         disabled={!isEditing}
                         style={{
                           width: '100%',
-                          maxWidth: '485px',
+                          maxWidth: '280px',
                           padding: '0.3rem 0.5rem',
                           border: '1px solid #e5e7eb',
                           borderRadius: '4px',
@@ -992,7 +992,7 @@ export default function AdminContact() {
                           disabled={!isEditing}
                           style={{
                             width: '100%',
-                            maxWidth: '400px',
+                            maxWidth: '280px',
                             padding: '0.3rem 0.5rem',
                             border: '1px solid #e5e7eb',
                             borderRadius: '4px',
@@ -1014,7 +1014,7 @@ export default function AdminContact() {
                           disabled={!isEditing}
                           style={{
                             width: '100%',
-                            maxWidth: '400px',
+                            maxWidth: '280px',
                             padding: '0.3rem 0.5rem',
                             border: '1px solid #e5e7eb',
                             borderRadius: '4px',
