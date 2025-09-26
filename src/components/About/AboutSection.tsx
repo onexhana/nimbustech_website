@@ -275,6 +275,8 @@ export default function AboutSection() {
               activeTab={activeTab}
               onTabChange={handleTabChange}
               fontSize={aboutData.fontSize?.tabName}
+              activeColor={aboutData.tabActiveColor}
+              inactiveColor={aboutData.tabInactiveColor}
             />
 
             {/* ======================================== */}
@@ -343,13 +345,14 @@ export default function AboutSection() {
                         linkAsButton={activeTab === '솔루션'}
                         linkText={activeTab === '솔루션' ? "자세히 보기" : undefined}
                         borderRadius="35px"
-                        titleColor="#000000"
-                        descriptionColor="#6B7280"
-                        backgroundColor="#ffffff"
+                        titleColor={aboutData.cardTitleColor || "#000000"}
+                        descriptionColor={aboutData.cardDescriptionColor || "#6B7280"}
+                        backgroundColor={aboutData.cardBackgroundColor || "#ffffff"}
                         width={isMobile ? "380px" : undefined}
                         minHeight={isMobile ? "200px" : "12vw"}
                         titleFontSize={aboutData.fontSize?.cardTitle}
                         descriptionFontSize={aboutData.fontSize?.cardDescription}
+                        hoverEffect={aboutData.cardHoverEffect}
                       />
                     </div>
                   </SwiperSlide>

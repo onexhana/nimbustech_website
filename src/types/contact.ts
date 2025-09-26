@@ -84,4 +84,10 @@ export interface AboutData {
     cardDescription: number;
     tabName: number;
   };
+  tabActiveColor?: string;
+  tabInactiveColor?: string;
+  cardBackgroundColor?: string;
+  cardTitleColor?: string;
+  cardDescriptionColor?: string;
+  cardHoverEffect?: boolean;
 }

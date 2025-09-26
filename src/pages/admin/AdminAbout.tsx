@@ -397,6 +397,225 @@ export default function AdminAbout() {
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem' }}>
                 <div>
                   <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                    탭 글씨 크기
+                  </label>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <input
+                      type="number"
+                      min="10"
+                      max="24"
+                      value={aboutData.fontSize?.tabName || 16}
+                      onChange={(e) => aboutData && setAboutData({
+                        ...aboutData, 
+                        fontSize: { ...aboutData.fontSize, tabName: parseInt(e.target.value) || 16 }
+                      })}
+                      disabled={!isEditing}
+                      style={{
+                        width: '80px',
+                        padding: '0.3rem 0.5rem',
+                        border: '1px solid #e5e7eb',
+                        borderRadius: '4px',
+                        outline: 'none',
+                        fontSize: '0.75rem',
+                        textAlign: 'center',
+                        background: !isEditing ? '#f9fafb' : 'white',
+                        color: !isEditing ? '#6b7280' : '#111827'
+                      }}
+                    />
+                    <span style={{ 
+                      fontSize: '0.75rem', 
+                      fontWeight: '600', 
+                      color: '#374151'
+                    }}>
+                      px
+                    </span>
+                  </div>
+                </div>
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                    탭 활성 색상
+                  </label>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <input
+                      type="color"
+                      value={aboutData.tabActiveColor || '#00A3E0'}
+                      onChange={(e) => aboutData && setAboutData({
+                        ...aboutData, 
+                        tabActiveColor: e.target.value
+                      })}
+                      disabled={!isEditing}
+                      style={{
+                        width: '40px',
+                        height: '32px',
+                        border: '1px solid #e5e7eb',
+                        borderRadius: '4px',
+                        outline: 'none',
+                        cursor: isEditing ? 'pointer' : 'not-allowed'
+                      }}
+                    />
+                    <span style={{ 
+                      fontSize: '0.75rem', 
+                      fontWeight: '600', 
+                      color: '#374151'
+                    }}>
+                      {aboutData.tabActiveColor || '#00A3E0'}
+                    </span>
+                  </div>
+                </div>
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                    탭 비활성 색상
+                  </label>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <input
+                      type="color"
+                      value={aboutData.tabInactiveColor || '#374151'}
+                      onChange={(e) => aboutData && setAboutData({
+                        ...aboutData, 
+                        tabInactiveColor: e.target.value
+                      })}
+                      disabled={!isEditing}
+                      style={{
+                        width: '40px',
+                        height: '32px',
+                        border: '1px solid #e5e7eb',
+                        borderRadius: '4px',
+                        outline: 'none',
+                        cursor: isEditing ? 'pointer' : 'not-allowed'
+                      }}
+                    />
+                    <span style={{ 
+                      fontSize: '0.75rem', 
+                      fontWeight: '600', 
+                      color: '#374151'
+                    }}>
+                      {aboutData.tabInactiveColor || '#374151'}
+                    </span>
+                  </div>
+                </div>
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                    카드 배경색
+                  </label>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <input
+                      type="color"
+                      value={aboutData.cardBackgroundColor || '#ffffff'}
+                      onChange={(e) => aboutData && setAboutData({
+                        ...aboutData, 
+                        cardBackgroundColor: e.target.value
+                      })}
+                      disabled={!isEditing}
+                      style={{
+                        width: '40px',
+                        height: '32px',
+                        border: '1px solid #e5e7eb',
+                        borderRadius: '4px',
+                        outline: 'none',
+                        cursor: isEditing ? 'pointer' : 'not-allowed'
+                      }}
+                    />
+                    <span style={{ 
+                      fontSize: '0.75rem', 
+                      fontWeight: '600', 
+                      color: '#374151'
+                    }}>
+                      {aboutData.cardBackgroundColor || '#ffffff'}
+                    </span>
+                  </div>
+                </div>
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                    카드 제목 색상
+                  </label>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <input
+                      type="color"
+                      value={aboutData.cardTitleColor || '#000000'}
+                      onChange={(e) => aboutData && setAboutData({
+                        ...aboutData, 
+                        cardTitleColor: e.target.value
+                      })}
+                      disabled={!isEditing}
+                      style={{
+                        width: '40px',
+                        height: '32px',
+                        border: '1px solid #e5e7eb',
+                        borderRadius: '4px',
+                        outline: 'none',
+                        cursor: isEditing ? 'pointer' : 'not-allowed'
+                      }}
+                    />
+                    <span style={{ 
+                      fontSize: '0.75rem', 
+                      fontWeight: '600', 
+                      color: '#374151'
+                    }}>
+                      {aboutData.cardTitleColor || '#000000'}
+                    </span>
+                  </div>
+                </div>
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                    카드 설명 색상
+                  </label>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <input
+                      type="color"
+                      value={aboutData.cardDescriptionColor || '#6B7280'}
+                      onChange={(e) => aboutData && setAboutData({
+                        ...aboutData, 
+                        cardDescriptionColor: e.target.value
+                      })}
+                      disabled={!isEditing}
+                      style={{
+                        width: '40px',
+                        height: '32px',
+                        border: '1px solid #e5e7eb',
+                        borderRadius: '4px',
+                        outline: 'none',
+                        cursor: isEditing ? 'pointer' : 'not-allowed'
+                      }}
+                    />
+                    <span style={{ 
+                      fontSize: '0.75rem', 
+                      fontWeight: '600', 
+                      color: '#374151'
+                    }}>
+                      {aboutData.cardDescriptionColor || '#6B7280'}
+                    </span>
+                  </div>
+                </div>
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                    호버 효과
+                  </label>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <input
+                      type="checkbox"
+                      checked={aboutData.cardHoverEffect !== false}
+                      onChange={(e) => aboutData && setAboutData({
+                        ...aboutData, 
+                        cardHoverEffect: e.target.checked
+                      })}
+                      disabled={!isEditing}
+                      style={{
+                        width: '16px',
+                        height: '16px',
+                        cursor: isEditing ? 'pointer' : 'not-allowed'
+                      }}
+                    />
+                    <span style={{ 
+                      fontSize: '0.75rem', 
+                      fontWeight: '600', 
+                      color: '#374151'
+                    }}>
+                      {aboutData.cardHoverEffect !== false ? '활성화' : '비활성화'}
+                    </span>
+                  </div>
+                </div>
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
                     모바일 메인 제목 크기
                   </label>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
@@ -516,42 +735,6 @@ export default function AdminAbout() {
                       onChange={(e) => aboutData && setAboutData({
                         ...aboutData, 
                         fontSize: { ...aboutData.fontSize, cardDescription: parseInt(e.target.value) || 14 }
-                      })}
-                      disabled={!isEditing}
-                      style={{
-                        width: '80px',
-                        padding: '0.3rem 0.5rem',
-                        border: '1px solid #e5e7eb',
-                        borderRadius: '4px',
-                        outline: 'none',
-                        fontSize: '0.75rem',
-                        textAlign: 'center',
-                        background: !isEditing ? '#f9fafb' : 'white',
-                        color: !isEditing ? '#6b7280' : '#111827'
-                      }}
-                    />
-                    <span style={{ 
-                      fontSize: '0.75rem', 
-                      fontWeight: '600', 
-                      color: '#374151'
-                    }}>
-                      px
-                    </span>
-                  </div>
-                </div>
-                <div>
-                  <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
-                    탭 이름 크기
-                  </label>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <input
-                      type="number"
-                      min="10"
-                      max="24"
-                      value={aboutData.fontSize?.tabName || 16}
-                      onChange={(e) => aboutData && setAboutData({
-                        ...aboutData, 
-                        fontSize: { ...aboutData.fontSize, tabName: parseInt(e.target.value) || 16 }
                       })}
                       disabled={!isEditing}
                       style={{
@@ -974,6 +1157,38 @@ export default function AdminAbout() {
               </div>
             </div>
             
+            {/* 탭 미리보기 */}
+            <div style={{ marginBottom: '1.5rem', padding: '1rem', background: 'rgba(255, 255, 255, 0.7)', borderRadius: '8px' }}>
+              <div style={{ 
+                display: 'flex', 
+                gap: '20px', 
+                marginBottom: '20px',
+                marginLeft: '50px'
+              }}>
+                {aboutData.tabs.map((tab, index) => (
+                  <button
+                    key={tab.name}
+                    style={{
+                      backgroundColor: index === 0 ? (aboutData.tabActiveColor || '#00A3E0') : 'transparent',
+                      color: index === 0 ? '#ffffff' : (aboutData.tabInactiveColor || '#374151'),
+                      border: 'none',
+                      fontSize: `${aboutData.fontSize?.tabName || 16}px`,
+                      fontWeight: '650',
+                      padding: '8px 24px',
+                      borderRadius: '25px',
+                      cursor: 'pointer',
+                      transition: 'all 0.3s ease'
+                    }}
+                  >
+                    {tab.name}
+                  </button>
+                ))}
+              </div>
+              <div style={{ fontSize: '0.75rem', color: '#9ca3af', textAlign: 'center' }}>
+                탭 네비게이션 미리보기
+              </div>
+            </div>
+            
             <div style={{
               background: 'white',
               borderRadius: '8px',
@@ -1011,14 +1226,39 @@ export default function AdminAbout() {
               }}>
                 {aboutData.tabs[activeTab].cards.slice(0, 3).map((card, index) => (
                   <div key={index} style={{
-                    background: 'linear-gradient(135deg, #eff6ff, #dbeafe)',
+                    background: aboutData.cardBackgroundColor || '#ffffff',
                     borderRadius: '8px',
                     padding: '1rem',
-                    border: '1px solid rgba(59, 130, 246, 0.2)'
+                    border: '1px solid rgba(59, 130, 246, 0.2)',
+                    transition: 'all 0.3s ease',
+                    cursor: 'pointer',
+                    boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)'
+                  }}
+                  onMouseEnter={(e) => {
+                    if (aboutData.cardHoverEffect !== false) {
+                      e.currentTarget.style.transform = "translateY(-4px)";
+                      e.currentTarget.style.boxShadow = "0 8px 15px rgba(0, 0, 0, 0.15)";
+                      e.currentTarget.style.backgroundColor = "#00A3E0";
+                      const title = e.currentTarget.querySelector('h5');
+                      const desc = e.currentTarget.querySelector('p');
+                      if (title) title.style.color = "white";
+                      if (desc) desc.style.color = "white";
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (aboutData.cardHoverEffect !== false) {
+                      e.currentTarget.style.transform = "translateY(0)";
+                      e.currentTarget.style.boxShadow = "0 1px 3px rgba(0, 0, 0, 0.1)";
+                      e.currentTarget.style.backgroundColor = aboutData.cardBackgroundColor || '#ffffff';
+                      const title = e.currentTarget.querySelector('h5');
+                      const desc = e.currentTarget.querySelector('p');
+                      if (title) title.style.color = aboutData.cardTitleColor || '#1f2937';
+                      if (desc) desc.style.color = aboutData.cardDescriptionColor || '#6b7280';
+                    }
                   }}>
                     <h5 style={{ 
                       fontWeight: '600', 
-                      color: '#1f2937', 
+                      color: aboutData.cardTitleColor || '#1f2937', 
                       marginBottom: '0.5rem', 
                       fontSize: `${aboutData.fontSize?.cardTitle || 16}px`, 
                       margin: 0 
@@ -1027,7 +1267,7 @@ export default function AdminAbout() {
                     </h5>
                     <p style={{ 
                       fontSize: `${aboutData.fontSize?.cardDescription || 14}px`, 
-                      color: '#6b7280', 
+                      color: aboutData.cardDescriptionColor || '#6b7280', 
                       lineHeight: '1.5', 
                       margin: 0 
                     }}>

@@ -246,7 +246,13 @@ export async function getAboutData(): Promise<AboutData> {
       cardTitle: 16,
       cardDescription: 14,
       tabName: 16
-    }
+    },
+    tabActiveColor: '#00A3E0',
+    tabInactiveColor: '#374151',
+    cardBackgroundColor: '#ffffff',
+    cardTitleColor: '#000000',
+    cardDescriptionColor: '#6B7280',
+    cardHoverEffect: true
   };
 }
 

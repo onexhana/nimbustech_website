@@ -13,9 +13,11 @@ interface AboutTabProps {
   activeTab: string;
   onTabChange: (tab: string) => void;
   fontSize?: number;
+  activeColor?: string;
+  inactiveColor?: string;
 }
 
-export default function AboutTab({ tabs, activeTab, onTabChange, fontSize }: AboutTabProps) {
+export default function AboutTab({ tabs, activeTab, onTabChange, fontSize, activeColor, inactiveColor }: AboutTabProps) {
   // hoveredTab 상태는 호버 효과 확장을 위해 남겨두었습니다.
   // @ts-expect-error unused local variable
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -34,8 +36,8 @@ export default function AboutTab({ tabs, activeTab, onTabChange, fontSize }: Abo
           key={tab}
           // 버튼 스타일: activeTab과 hoveredTab에 따라 배경색과 글자색을 변경합니다.
           style={{
-            backgroundColor: activeTab === tab ? '#00A3E0' : 'transparent',
-            color: activeTab === tab ? '#ffffff' : '#374151',
+            backgroundColor: activeTab === tab ? (activeColor || '#00A3E0') : 'transparent',
+            color: activeTab === tab ? '#ffffff' : (inactiveColor || '#374151'),
             border: 'none',
             fontSize: `${fontSize || 22}px`,
             fontWeight: '650',

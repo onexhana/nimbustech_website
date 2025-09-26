@@ -31,9 +31,11 @@ interface AboutCardProps {
   titleFontSize?: number;
   /** 커스텀 설명 글꼴 사이즈 */
   descriptionFontSize?: number;
+  /** 호버 효과 활성화 여부 */
+  hoverEffect?: boolean;
 }
 
-export default function AboutCard({ title, description, detailLink, borderRadius, titleColor, descriptionColor, backgroundColor, width, minHeight, linkAsButton, linkText, titleFontSize, descriptionFontSize }: AboutCardProps) {
+export default function AboutCard({ title, description, detailLink, borderRadius, titleColor, descriptionColor, backgroundColor, width, minHeight, linkAsButton, linkText, titleFontSize, descriptionFontSize, hoverEffect }: AboutCardProps) {
   return (
     <div
       className="bg-gray-100 rounded-lg border border-gray-200 shadow-sm transition-all duration-300 cursor-pointer flex flex-col"
@@ -49,48 +51,52 @@ export default function AboutCard({ title, description, detailLink, borderRadius
         display: "flex",
       }}
       onMouseEnter={(e) => {
-        e.currentTarget.style.transform = "translateY(-8px)";
-        e.currentTarget.style.boxShadow =
-          "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)";
-        e.currentTarget.style.backgroundColor = "#00A3E0";
-        
-        // 제목 색상을 흰색으로 변경
-        const title = e.currentTarget.querySelector('h3');
-        if (title) title.style.color = "white";
-        
-        // 설명 텍스트 색상을 흰색으로 변경
-        const descriptions = e.currentTarget.querySelectorAll('.text-gray-700 div');
-        descriptions.forEach(desc => (desc as HTMLElement).style.color = "white");
-        
-        // 링크 색상을 흰색으로 변경
-        const link = e.currentTarget.querySelector('a');
-        if (link) link.style.color = "white";
-        // 버튼을 흰색 배경, 파란 텍스트로 변경
-        const buttonLink = e.currentTarget.querySelector('a');
-        if (buttonLink) {
-          (buttonLink as HTMLElement).style.backgroundColor = "#ffffff";
-          (buttonLink as HTMLElement).style.color = "#00A3E0";
+        if (hoverEffect !== false) {
+          e.currentTarget.style.transform = "translateY(-8px)";
+          e.currentTarget.style.boxShadow =
+            "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)";
+          e.currentTarget.style.backgroundColor = "#00A3E0";
+          
+          // 제목 색상을 흰색으로 변경
+          const title = e.currentTarget.querySelector('h3');
+          if (title) title.style.color = "white";
+          
+          // 설명 텍스트 색상을 흰색으로 변경
+          const descriptions = e.currentTarget.querySelectorAll('.text-gray-700 div');
+          descriptions.forEach(desc => (desc as HTMLElement).style.color = "white");
+          
+          // 링크 색상을 흰색으로 변경
+          const link = e.currentTarget.querySelector('a');
+          if (link) link.style.color = "white";
+          // 버튼을 흰색 배경, 파란 텍스트로 변경
+          const buttonLink = e.currentTarget.querySelector('a');
+          if (buttonLink) {
+            (buttonLink as HTMLElement).style.backgroundColor = "#ffffff";
+            (buttonLink as HTMLElement).style.color = "#00A3E0";
+          }
         }
       }}
       onMouseLeave={(e) => {
-        e.currentTarget.style.transform = "translateY(0)";
-        e.currentTarget.style.boxShadow =
-          "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)";
-        e.currentTarget.style.backgroundColor = backgroundColor || "#f3f4f6";
-        // 제목 색상을 원래대로 복원
-        const title = e.currentTarget.querySelector('h3');
-        if (title) title.style.color = titleColor || "#00A3E0";
-        // 설명 텍스트 색상을 원래대로 복원
-        const descriptions = e.currentTarget.querySelectorAll('.text-gray-700 div');
-        descriptions.forEach(desc => (desc as HTMLElement).style.color = descriptionColor || "#374151");
-        // 버튼 링크 색상 및 배경 복원
-        const buttonLink = e.currentTarget.querySelector('a');
-        if (buttonLink) {
-          if (linkAsButton) {
-            (buttonLink as HTMLElement).style.color = "#ffffff";
-            (buttonLink as HTMLElement).style.backgroundColor = "#00A3E0";
-          } else {
-            (buttonLink as HTMLElement).style.color = "#00A3E0";
+        if (hoverEffect !== false) {
+          e.currentTarget.style.transform = "translateY(0)";
+          e.currentTarget.style.boxShadow =
+            "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)";
+          e.currentTarget.style.backgroundColor = backgroundColor || "#f3f4f6";
+          // 제목 색상을 원래대로 복원
+          const title = e.currentTarget.querySelector('h3');
+          if (title) title.style.color = titleColor || "#00A3E0";
+          // 설명 텍스트 색상을 원래대로 복원
+          const descriptions = e.currentTarget.querySelectorAll('.text-gray-700 div');
+          descriptions.forEach(desc => (desc as HTMLElement).style.color = descriptionColor || "#374151");
+          // 버튼 링크 색상 및 배경 복원
+          const buttonLink = e.currentTarget.querySelector('a');
+          if (buttonLink) {
+            if (linkAsButton) {
+              (buttonLink as HTMLElement).style.color = "#ffffff";
+              (buttonLink as HTMLElement).style.backgroundColor = "#00A3E0";
+            } else {
+              (buttonLink as HTMLElement).style.color = "#00A3E0";
+            }
           }
         }
       }}
