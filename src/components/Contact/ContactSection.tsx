@@ -44,20 +44,6 @@ export default function ContactSection() {
           }} />
         )}
 
-        {/* 메인 타이틀 (데스크탑에서만 표시) */}
-        {!isMobile && (
-          <h2 style={{
-          fontSize: `${contactData.fontSize?.mainTitle || 45}px`,
-          fontWeight: '1100',
-          marginBottom: '80px',
-          color: '#1f2937',
-          lineHeight: '1.2',
-          letterSpacing: '-3.5px',
-          marginLeft: '50px'
-        }}>
-            Contact
-          </h2>
-        )}
 
         {/* 컨텐츠 영역 */}
         <div

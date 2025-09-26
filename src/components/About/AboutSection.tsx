@@ -268,27 +268,6 @@ export default function AboutSection() {
           </>
         ) : (
           <>
-            {/* 데스크탑 메인 타이틀 */}
-            <div style={{ textAlign: 'left', marginBottom: '40px', marginLeft: '50px' }}>
-              <h2 style={{
-                fontSize: `${aboutData.fontSize?.mainTitle || 45}px`,
-                fontWeight: '1100',
-                color: '#1f2937',
-                lineHeight: '1.2',
-                letterSpacing: '-3.5px',
-                margin: '0 0 10px 0'
-              }}>
-                {aboutData.mainTitle}
-              </h2>
-              <p style={{
-                fontSize: `${aboutData.fontSize?.subtitle || 24}px`,
-                fontWeight: '400',
-                color: '#6b7280',
-                margin: 0
-              }}>
-                {aboutData.subtitle}
-              </p>
-            </div>
 
             {/* 탭 컴포넌트 */}
             <AboutTab 

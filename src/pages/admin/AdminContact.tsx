@@ -384,7 +384,7 @@ export default function AdminContact() {
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                 <div>
                   <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
-                    메인 제목 크기
+                    모바일 메인 제목 크기
                   </label>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                     <input
@@ -419,7 +419,7 @@ export default function AdminContact() {
                 </div>
                 <div>
                   <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
-                    부제목 크기
+                    모바일 부제목 크기
                   </label>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                     <input
@@ -1085,6 +1085,23 @@ export default function AdminContact() {
             padding: '1.5rem',
             border: '1px solid rgba(229, 231, 235, 0.5)'
           }}>
+            {/* 모바일용 메인 타이틀 미리보기 */}
+            <div style={{ textAlign: 'center', marginBottom: '1.5rem', padding: '1rem', background: 'rgba(255, 255, 255, 0.7)', borderRadius: '8px' }}>
+              <h2 style={{ 
+                fontSize: `${contactData.fontSize?.mainTitle || 45}px`, 
+                fontWeight: '1100',
+                color: '#1f2937',
+                lineHeight: '1.2',
+                letterSpacing: '-3.5px',
+                margin: 0 
+              }}>
+                Contact
+              </h2>
+              <div style={{ fontSize: '0.75rem', color: '#9ca3af', marginTop: '0.5rem' }}>
+                (모바일에서만 표시)
+              </div>
+            </div>
+            
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem' }}>
               {/* 가치 섹션 미리보기 */}
               <div>
