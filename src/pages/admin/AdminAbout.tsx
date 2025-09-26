@@ -394,39 +394,40 @@ export default function AdminAbout() {
                   글꼴 사이즈 관리
                 </h3>
               </div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem' }}>
                 <div>
                   <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
                     모바일 메인 제목 크기
                   </label>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                     <input
-                      type="range"
+                      type="number"
                       min="12"
                       max="48"
                       value={aboutData.fontSize?.mainTitle || 30}
                       onChange={(e) => aboutData && setAboutData({
                         ...aboutData, 
-                        fontSize: { ...aboutData.fontSize, mainTitle: parseInt(e.target.value) }
+                        fontSize: { ...aboutData.fontSize, mainTitle: parseInt(e.target.value) || 30 }
                       })}
                       disabled={!isEditing}
                       style={{
-                        flex: 1,
-                        height: '6px',
-                        background: '#e5e7eb',
-                        borderRadius: '3px',
+                        width: '80px',
+                        padding: '0.3rem 0.5rem',
+                        border: '1px solid #e5e7eb',
+                        borderRadius: '4px',
                         outline: 'none',
-                        cursor: isEditing ? 'pointer' : 'not-allowed'
+                        fontSize: '0.75rem',
+                        textAlign: 'center',
+                        background: !isEditing ? '#f9fafb' : 'white',
+                        color: !isEditing ? '#6b7280' : '#111827'
                       }}
                     />
                     <span style={{ 
                       fontSize: '0.75rem', 
                       fontWeight: '600', 
-                      color: '#374151',
-                      minWidth: '30px',
-                      textAlign: 'center'
+                      color: '#374151'
                     }}>
-                      {aboutData.fontSize?.mainTitle || 30}px
+                      px
                     </span>
                   </div>
                 </div>
@@ -436,32 +437,33 @@ export default function AdminAbout() {
                   </label>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                     <input
-                      type="range"
+                      type="number"
                       min="10"
                       max="32"
                       value={aboutData.fontSize?.subtitle || 18}
                       onChange={(e) => aboutData && setAboutData({
                         ...aboutData, 
-                        fontSize: { ...aboutData.fontSize, subtitle: parseInt(e.target.value) }
+                        fontSize: { ...aboutData.fontSize, subtitle: parseInt(e.target.value) || 18 }
                       })}
                       disabled={!isEditing}
                       style={{
-                        flex: 1,
-                        height: '6px',
-                        background: '#e5e7eb',
-                        borderRadius: '3px',
+                        width: '80px',
+                        padding: '0.3rem 0.5rem',
+                        border: '1px solid #e5e7eb',
+                        borderRadius: '4px',
                         outline: 'none',
-                        cursor: isEditing ? 'pointer' : 'not-allowed'
+                        fontSize: '0.75rem',
+                        textAlign: 'center',
+                        background: !isEditing ? '#f9fafb' : 'white',
+                        color: !isEditing ? '#6b7280' : '#111827'
                       }}
                     />
                     <span style={{ 
                       fontSize: '0.75rem', 
                       fontWeight: '600', 
-                      color: '#374151',
-                      minWidth: '30px',
-                      textAlign: 'center'
+                      color: '#374151'
                     }}>
-                      {aboutData.fontSize?.subtitle || 18}px
+                      px
                     </span>
                   </div>
                 </div>
@@ -471,32 +473,33 @@ export default function AdminAbout() {
                   </label>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                     <input
-                      type="range"
+                      type="number"
                       min="10"
                       max="28"
                       value={aboutData.fontSize?.cardTitle || 16}
                       onChange={(e) => aboutData && setAboutData({
                         ...aboutData, 
-                        fontSize: { ...aboutData.fontSize, cardTitle: parseInt(e.target.value) }
+                        fontSize: { ...aboutData.fontSize, cardTitle: parseInt(e.target.value) || 16 }
                       })}
                       disabled={!isEditing}
                       style={{
-                        flex: 1,
-                        height: '6px',
-                        background: '#e5e7eb',
-                        borderRadius: '3px',
+                        width: '80px',
+                        padding: '0.3rem 0.5rem',
+                        border: '1px solid #e5e7eb',
+                        borderRadius: '4px',
                         outline: 'none',
-                        cursor: isEditing ? 'pointer' : 'not-allowed'
+                        fontSize: '0.75rem',
+                        textAlign: 'center',
+                        background: !isEditing ? '#f9fafb' : 'white',
+                        color: !isEditing ? '#6b7280' : '#111827'
                       }}
                     />
                     <span style={{ 
                       fontSize: '0.75rem', 
                       fontWeight: '600', 
-                      color: '#374151',
-                      minWidth: '30px',
-                      textAlign: 'center'
+                      color: '#374151'
                     }}>
-                      {aboutData.fontSize?.cardTitle || 16}px
+                      px
                     </span>
                   </div>
                 </div>
@@ -506,32 +509,33 @@ export default function AdminAbout() {
                   </label>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                     <input
-                      type="range"
+                      type="number"
                       min="8"
                       max="20"
                       value={aboutData.fontSize?.cardDescription || 14}
                       onChange={(e) => aboutData && setAboutData({
                         ...aboutData, 
-                        fontSize: { ...aboutData.fontSize, cardDescription: parseInt(e.target.value) }
+                        fontSize: { ...aboutData.fontSize, cardDescription: parseInt(e.target.value) || 14 }
                       })}
                       disabled={!isEditing}
                       style={{
-                        flex: 1,
-                        height: '6px',
-                        background: '#e5e7eb',
-                        borderRadius: '3px',
+                        width: '80px',
+                        padding: '0.3rem 0.5rem',
+                        border: '1px solid #e5e7eb',
+                        borderRadius: '4px',
                         outline: 'none',
-                        cursor: isEditing ? 'pointer' : 'not-allowed'
+                        fontSize: '0.75rem',
+                        textAlign: 'center',
+                        background: !isEditing ? '#f9fafb' : 'white',
+                        color: !isEditing ? '#6b7280' : '#111827'
                       }}
                     />
                     <span style={{ 
                       fontSize: '0.75rem', 
                       fontWeight: '600', 
-                      color: '#374151',
-                      minWidth: '30px',
-                      textAlign: 'center'
+                      color: '#374151'
                     }}>
-                      {aboutData.fontSize?.cardDescription || 14}px
+                      px
                     </span>
                   </div>
                 </div>
@@ -541,32 +545,33 @@ export default function AdminAbout() {
                   </label>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                     <input
-                      type="range"
+                      type="number"
                       min="10"
                       max="24"
                       value={aboutData.fontSize?.tabName || 16}
                       onChange={(e) => aboutData && setAboutData({
                         ...aboutData, 
-                        fontSize: { ...aboutData.fontSize, tabName: parseInt(e.target.value) }
+                        fontSize: { ...aboutData.fontSize, tabName: parseInt(e.target.value) || 16 }
                       })}
                       disabled={!isEditing}
                       style={{
-                        flex: 1,
-                        height: '6px',
-                        background: '#e5e7eb',
-                        borderRadius: '3px',
+                        width: '80px',
+                        padding: '0.3rem 0.5rem',
+                        border: '1px solid #e5e7eb',
+                        borderRadius: '4px',
                         outline: 'none',
-                        cursor: isEditing ? 'pointer' : 'not-allowed'
+                        fontSize: '0.75rem',
+                        textAlign: 'center',
+                        background: !isEditing ? '#f9fafb' : 'white',
+                        color: !isEditing ? '#6b7280' : '#111827'
                       }}
                     />
                     <span style={{ 
                       fontSize: '0.75rem', 
                       fontWeight: '600', 
-                      color: '#374151',
-                      minWidth: '30px',
-                      textAlign: 'center'
+                      color: '#374151'
                     }}>
-                      {aboutData.fontSize?.tabName || 16}px
+                      px
                     </span>
                   </div>
                 </div>
@@ -583,7 +588,10 @@ export default function AdminAbout() {
               borderRadius: '12px',
               boxShadow: '0 10px 15px rgba(0, 0, 0, 0.1)',
               border: '1px solid rgba(255, 255, 255, 0.2)',
-              padding: '1.5rem',
+              paddingTop: '56px',
+              paddingBottom: '66px',
+              paddingLeft: '24px',
+              paddingRight: '24px',
               transition: 'all 0.3s ease'
             }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>

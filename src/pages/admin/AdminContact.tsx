@@ -388,32 +388,33 @@ export default function AdminContact() {
                   </label>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                     <input
-                      type="range"
+                      type="number"
                       min="12"
                       max="48"
                       value={contactData.fontSize?.mainTitle || 30}
                       onChange={(e) => contactData && setContactData({
                         ...contactData, 
-                        fontSize: { ...contactData.fontSize, mainTitle: parseInt(e.target.value) }
+                        fontSize: { ...contactData.fontSize, mainTitle: parseInt(e.target.value) || 30 }
                       })}
                       disabled={!isEditing}
                       style={{
-                        flex: 1,
-                        height: '6px',
-                        background: '#e5e7eb',
-                        borderRadius: '3px',
+                        width: '80px',
+                        padding: '0.3rem 0.5rem',
+                        border: '1px solid #e5e7eb',
+                        borderRadius: '4px',
                         outline: 'none',
-                        cursor: isEditing ? 'pointer' : 'not-allowed'
+                        fontSize: '0.75rem',
+                        textAlign: 'center',
+                        background: !isEditing ? '#f9fafb' : 'white',
+                        color: !isEditing ? '#6b7280' : '#111827'
                       }}
                     />
                     <span style={{ 
                       fontSize: '0.75rem', 
                       fontWeight: '600', 
-                      color: '#374151',
-                      minWidth: '30px',
-                      textAlign: 'center'
+                      color: '#374151'
                     }}>
-                      {contactData.fontSize?.mainTitle || 30}px
+                      px
                     </span>
                   </div>
                 </div>
@@ -423,32 +424,33 @@ export default function AdminContact() {
                   </label>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                     <input
-                      type="range"
+                      type="number"
                       min="10"
                       max="32"
                       value={contactData.fontSize?.subtitle || 18}
                       onChange={(e) => contactData && setContactData({
                         ...contactData, 
-                        fontSize: { ...contactData.fontSize, subtitle: parseInt(e.target.value) }
+                        fontSize: { ...contactData.fontSize, subtitle: parseInt(e.target.value) || 18 }
                       })}
                       disabled={!isEditing}
                       style={{
-                        flex: 1,
-                        height: '6px',
-                        background: '#e5e7eb',
-                        borderRadius: '3px',
+                        width: '80px',
+                        padding: '0.3rem 0.5rem',
+                        border: '1px solid #e5e7eb',
+                        borderRadius: '4px',
                         outline: 'none',
-                        cursor: isEditing ? 'pointer' : 'not-allowed'
+                        fontSize: '0.75rem',
+                        textAlign: 'center',
+                        background: !isEditing ? '#f9fafb' : 'white',
+                        color: !isEditing ? '#6b7280' : '#111827'
                       }}
                     />
                     <span style={{ 
                       fontSize: '0.75rem', 
                       fontWeight: '600', 
-                      color: '#374151',
-                      minWidth: '30px',
-                      textAlign: 'center'
+                      color: '#374151'
                     }}>
-                      {contactData.fontSize?.subtitle || 18}px
+                      px
                     </span>
                   </div>
                 </div>
@@ -458,32 +460,33 @@ export default function AdminContact() {
                   </label>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                     <input
-                      type="range"
+                      type="number"
                       min="10"
                       max="28"
                       value={contactData.fontSize?.sectionTitle || 16}
                       onChange={(e) => contactData && setContactData({
                         ...contactData, 
-                        fontSize: { ...contactData.fontSize, sectionTitle: parseInt(e.target.value) }
+                        fontSize: { ...contactData.fontSize, sectionTitle: parseInt(e.target.value) || 16 }
                       })}
                       disabled={!isEditing}
                       style={{
-                        flex: 1,
-                        height: '6px',
-                        background: '#e5e7eb',
-                        borderRadius: '3px',
+                        width: '80px',
+                        padding: '0.3rem 0.5rem',
+                        border: '1px solid #e5e7eb',
+                        borderRadius: '4px',
                         outline: 'none',
-                        cursor: isEditing ? 'pointer' : 'not-allowed'
+                        fontSize: '0.75rem',
+                        textAlign: 'center',
+                        background: !isEditing ? '#f9fafb' : 'white',
+                        color: !isEditing ? '#6b7280' : '#111827'
                       }}
                     />
                     <span style={{ 
                       fontSize: '0.75rem', 
                       fontWeight: '600', 
-                      color: '#374151',
-                      minWidth: '30px',
-                      textAlign: 'center'
+                      color: '#374151'
                     }}>
-                      {contactData.fontSize?.sectionTitle || 16}px
+                      px
                     </span>
                   </div>
                 </div>
@@ -493,32 +496,33 @@ export default function AdminContact() {
                   </label>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                     <input
-                      type="range"
+                      type="number"
                       min="8"
                       max="20"
                       value={contactData.fontSize?.sectionDescription || 14}
                       onChange={(e) => contactData && setContactData({
                         ...contactData, 
-                        fontSize: { ...contactData.fontSize, sectionDescription: parseInt(e.target.value) }
+                        fontSize: { ...contactData.fontSize, sectionDescription: parseInt(e.target.value) || 14 }
                       })}
                       disabled={!isEditing}
                       style={{
-                        flex: 1,
-                        height: '6px',
-                        background: '#e5e7eb',
-                        borderRadius: '3px',
+                        width: '80px',
+                        padding: '0.3rem 0.5rem',
+                        border: '1px solid #e5e7eb',
+                        borderRadius: '4px',
                         outline: 'none',
-                        cursor: isEditing ? 'pointer' : 'not-allowed'
+                        fontSize: '0.75rem',
+                        textAlign: 'center',
+                        background: !isEditing ? '#f9fafb' : 'white',
+                        color: !isEditing ? '#6b7280' : '#111827'
                       }}
                     />
                     <span style={{ 
                       fontSize: '0.75rem', 
                       fontWeight: '600', 
-                      color: '#374151',
-                      minWidth: '30px',
-                      textAlign: 'center'
+                      color: '#374151'
                     }}>
-                      {contactData.fontSize?.sectionDescription || 14}px
+                      px
                     </span>
                   </div>
                 </div>
@@ -528,32 +532,33 @@ export default function AdminContact() {
                   </label>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                     <input
-                      type="range"
+                      type="number"
                       min="10"
                       max="24"
                       value={contactData.fontSize?.buttonText || 16}
                       onChange={(e) => contactData && setContactData({
                         ...contactData, 
-                        fontSize: { ...contactData.fontSize, buttonText: parseInt(e.target.value) }
+                        fontSize: { ...contactData.fontSize, buttonText: parseInt(e.target.value) || 16 }
                       })}
                       disabled={!isEditing}
                       style={{
-                        flex: 1,
-                        height: '6px',
-                        background: '#e5e7eb',
-                        borderRadius: '3px',
+                        width: '80px',
+                        padding: '0.3rem 0.5rem',
+                        border: '1px solid #e5e7eb',
+                        borderRadius: '4px',
                         outline: 'none',
-                        cursor: isEditing ? 'pointer' : 'not-allowed'
+                        fontSize: '0.75rem',
+                        textAlign: 'center',
+                        background: !isEditing ? '#f9fafb' : 'white',
+                        color: !isEditing ? '#6b7280' : '#111827'
                       }}
                     />
                     <span style={{ 
                       fontSize: '0.75rem', 
                       fontWeight: '600', 
-                      color: '#374151',
-                      minWidth: '30px',
-                      textAlign: 'center'
+                      color: '#374151'
                     }}>
-                      {contactData.fontSize?.buttonText || 16}px
+                      px
                     </span>
                   </div>
                 </div>
@@ -563,32 +568,33 @@ export default function AdminContact() {
                   </label>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                     <input
-                      type="range"
+                      type="number"
                       min="8"
                       max="20"
                       value={contactData.fontSize?.companyInfo || 14}
                       onChange={(e) => contactData && setContactData({
                         ...contactData, 
-                        fontSize: { ...contactData.fontSize, companyInfo: parseInt(e.target.value) }
+                        fontSize: { ...contactData.fontSize, companyInfo: parseInt(e.target.value) || 14 }
                       })}
                       disabled={!isEditing}
                       style={{
-                        flex: 1,
-                        height: '6px',
-                        background: '#e5e7eb',
-                        borderRadius: '3px',
+                        width: '80px',
+                        padding: '0.3rem 0.5rem',
+                        border: '1px solid #e5e7eb',
+                        borderRadius: '4px',
                         outline: 'none',
-                        cursor: isEditing ? 'pointer' : 'not-allowed'
+                        fontSize: '0.75rem',
+                        textAlign: 'center',
+                        background: !isEditing ? '#f9fafb' : 'white',
+                        color: !isEditing ? '#6b7280' : '#111827'
                       }}
                     />
                     <span style={{ 
                       fontSize: '0.75rem', 
                       fontWeight: '600', 
-                      color: '#374151',
-                      minWidth: '30px',
-                      textAlign: 'center'
+                      color: '#374151'
                     }}>
-                      {contactData.fontSize?.companyInfo || 14}px
+                      px
                     </span>
                   </div>
                 </div>
