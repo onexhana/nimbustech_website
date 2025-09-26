@@ -47,7 +47,7 @@ export default function ContactSection() {
         {/* 메인 타이틀 (데스크탑에서만 표시) */}
         {!isMobile && (
           <h2 style={{
-          fontSize: '45px',
+          fontSize: `${contactData.fontSize?.mainTitle || 45}px`,
           fontWeight: '1100',
           marginBottom: '80px',
           color: '#1f2937',
@@ -69,7 +69,7 @@ export default function ContactSection() {
             {contactData.sections.map((section, index) => (
               <div key={index}>
                 <h3 style={{
-                  fontSize: '42px',
+                  fontSize: `${contactData.fontSize?.sectionTitle || 42}px`,
                   fontWeight: '900',
                   color: '#00A3E0',
                   marginBottom: '2px',
@@ -79,7 +79,7 @@ export default function ContactSection() {
                   {section.title}
                 </h3>
                 <p style={{
-                  fontSize: isMobile ? '15px' : '21px',
+                  fontSize: isMobile ? `${contactData.fontSize?.sectionDescription || 15}px` : `${contactData.fontSize?.sectionDescription || 21}px`,
                   color: '#4b5563',
                   lineHeight: '1.6',
                   fontWeight: '700',
@@ -105,8 +105,11 @@ export default function ContactSection() {
             {contactData.buttons.map((button, index) => (
               <button
                 key={index}
-                className={`text-white ${isMobile ? 'bg-[#00A3E0] w-full mt-8 h-[74px] px-8 flex items-center justify-center text-[24px] relative overflow-hidden border-none text-white !font-black transition-all duration-300 hover:shadow-lg hover:-translate-y-1' : ''}`}
-                style={isMobile ? undefined : { 
+                className={`text-white ${isMobile ? 'bg-[#00A3E0] w-full mt-8 h-[74px] px-8 flex items-center justify-center relative overflow-hidden border-none text-white !font-black transition-all duration-300 hover:shadow-lg hover:-translate-y-1' : ''}`}
+                style={isMobile ? { 
+                  fontSize: `${contactData.fontSize?.buttonText || 24}px`,
+                  marginTop: '32px'
+                } : { 
                   backgroundColor: index === 0 ? '#00A3E0' : '#6b7280', 
                   width: '530px', 
                   marginTop: index === 0 ? '320px' : '40px', 
@@ -115,7 +118,7 @@ export default function ContactSection() {
                   justifyContent: 'center', 
                   height: '80px', 
                   padding: '0 32px', 
-                  fontSize: '32px', 
+                  fontSize: `${contactData.fontSize?.buttonText || 32}px`, 
                   color: '#ffffff', 
                   fontWeight: '650', 
                   borderRadius: '0px', 
@@ -137,15 +140,21 @@ export default function ContactSection() {
             {isMobile && (
               <>
                 <button
-                  className="bg-[#00A3E0] text-white w-full mt-4 h-[74px] px-8 flex items-center justify-center text-[24px] relative overflow-hidden border-none font-black transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
-                  style={{ color: '#ffffff' }}
+                  className="bg-[#00A3E0] text-white w-full mt-4 h-[74px] px-8 flex items-center justify-center relative overflow-hidden border-none font-black transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
+                  style={{ 
+                    color: '#ffffff',
+                    fontSize: `${contactData.fontSize?.buttonText || 24}px`
+                  }}
                   onClick={handleCompanyDownload}
                 >
                   <span className="relative z-10 text-white" style={{ fontWeight: '700' }}>회사소개서 다운로드</span>
                 </button>
                 <button
-                  className="bg-white w-full mt-4 h-[74px] px-8 flex items-center justify-center text-[24px] relative overflow-hidden border-none text-[#00A3E0] font-black transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
-                  style={{ backgroundColor: '#ffffff' }}
+                  className="bg-white w-full mt-4 h-[74px] px-8 flex items-center justify-center relative overflow-hidden border-none text-[#00A3E0] font-black transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
+                  style={{ 
+                    backgroundColor: '#ffffff',
+                    fontSize: `${contactData.fontSize?.buttonText || 24}px`
+                  }}
                   onClick={handlePrivacyPolicy}
                 >
                   <span className="relative z-10" style={{ fontWeight: '700' }}>개인정보 처리방침</span>

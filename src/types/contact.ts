@@ -51,6 +51,14 @@ export interface ContactData {
   buttons: ContactButton[];
   companyInfo: CompanyInfo;
   pdfFiles: PdfFile[];
+  fontSize: {
+    mainTitle: number;
+    subtitle: number;
+    sectionTitle: number;
+    sectionDescription: number;
+    buttonText: number;
+    companyInfo: number;
+  };
 }
 
 // About 페이지 관련 타입
@@ -69,4 +77,11 @@ export interface AboutData {
   mainTitle: string;
   subtitle: string;
   tabs: AboutTab[];
+  fontSize: {
+    mainTitle: number;
+    subtitle: number;
+    cardTitle: number;
+    cardDescription: number;
+    tabName: number;
+  };
 }

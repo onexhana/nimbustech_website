@@ -48,7 +48,7 @@ import { useAboutData } from '../../context/AboutContext';
 // 메인 컴포넌트 함수
 // ========================================
 export default function AboutSection() {
-  const { aboutData } = useAboutData();
+  const { aboutData, setAboutData } = useAboutData();
   
   // 상태 관리:
   // activeTab - 선택된 탭, currentSlide - 현재 슬라이드 인덱스
@@ -133,10 +133,10 @@ export default function AboutSection() {
                 lineHeight: '1.4',
                 margin: 0
               }}>
-                <span style={{ fontWeight: 700, display: 'block', fontSize: '28px' }}>
+                <span style={{ fontWeight: 700, display: 'block', fontSize: `${aboutData.fontSize?.mainTitle || 28}px` }}>
                   {aboutData.mainTitle}
                 </span>
-                <span style={{ fontWeight: 400, display: 'block', marginTop: '4px', marginBottom: '30px',fontSize: '19px' }}>
+                <span style={{ fontWeight: 400, display: 'block', marginTop: '4px', marginBottom: '30px',fontSize: `${aboutData.fontSize?.subtitle || 19}px` }}>
                 {aboutData.subtitle}
                 </span>
               </h2>
@@ -161,7 +161,7 @@ export default function AboutSection() {
                     border: activeTab === tab.name ? 'none' : '1px solid #00A3E0',
                     borderRadius: '20px',
                     padding: '8px 16px',
-                    fontSize: '14px',
+                    fontSize: `${aboutData.fontSize?.tabName || 14}px`,
                     fontWeight: '550',
                     cursor: 'pointer',
                     minWidth: '60px'
@@ -198,10 +198,10 @@ export default function AboutSection() {
                   <SwiperSlide key={i}>
                     <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', minHeight: '12vw' }}>
                       <div>
-                        <h3 style={{ fontSize: '20px', fontWeight: '600', color: '#000000', margin: '0 0 20px 0' }}>
+                        <h3 style={{ fontSize: `${aboutData.fontSize?.cardTitle || 20}px`, fontWeight: '600', color: '#000000', margin: '0 0 20px 0' }}>
                           {card.title}
                         </h3>
-                        <div style={{ fontSize: '16px', color: '#000000', fontWeight: '400', lineHeight: '1.5' }}>
+                        <div style={{ fontSize: `${aboutData.fontSize?.cardDescription || 16}px`, color: '#000000', fontWeight: '400', lineHeight: '1.5' }}>
                           {card.description.map((line: string, j: number) => (
                             <p key={j} style={{ margin: '0', marginLeft: '0' }}>{line}</p>
                           ))}
@@ -271,7 +271,7 @@ export default function AboutSection() {
             {/* 데스크탑 메인 타이틀 */}
             <div style={{ textAlign: 'left', marginBottom: '40px', marginLeft: '50px' }}>
               <h2 style={{
-                fontSize: '45px',
+                fontSize: `${aboutData.fontSize?.mainTitle || 45}px`,
                 fontWeight: '1100',
                 color: '#1f2937',
                 lineHeight: '1.2',
@@ -281,7 +281,7 @@ export default function AboutSection() {
                 {aboutData.mainTitle}
               </h2>
               <p style={{
-                fontSize: '24px',
+                fontSize: `${aboutData.fontSize?.subtitle || 24}px`,
                 fontWeight: '400',
                 color: '#6b7280',
                 margin: 0
@@ -295,6 +295,7 @@ export default function AboutSection() {
               tabs={aboutData.tabs.map(tab => tab.name)}
               activeTab={activeTab}
               onTabChange={handleTabChange}
+              fontSize={aboutData.fontSize?.tabName}
             />
 
             {/* ======================================== */}
@@ -368,6 +369,8 @@ export default function AboutSection() {
                         backgroundColor="#ffffff"
                         width={isMobile ? "380px" : undefined}
                         minHeight={isMobile ? "200px" : "12vw"}
+                        titleFontSize={aboutData.fontSize?.cardTitle}
+                        descriptionFontSize={aboutData.fontSize?.cardDescription}
                       />
                     </div>
                   </SwiperSlide>

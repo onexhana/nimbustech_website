@@ -12,9 +12,10 @@ interface AboutTabProps {
   tabs: string[];
   activeTab: string;
   onTabChange: (tab: string) => void;
+  fontSize?: number;
 }
 
-export default function AboutTab({ tabs, activeTab, onTabChange }: AboutTabProps) {
+export default function AboutTab({ tabs, activeTab, onTabChange, fontSize }: AboutTabProps) {
   // hoveredTab 상태는 호버 효과 확장을 위해 남겨두었습니다.
   // @ts-expect-error unused local variable
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -36,7 +37,7 @@ export default function AboutTab({ tabs, activeTab, onTabChange }: AboutTabProps
             backgroundColor: activeTab === tab ? '#00A3E0' : 'transparent',
             color: activeTab === tab ? '#ffffff' : '#374151',
             border: 'none',
-            fontSize: '22px',
+            fontSize: `${fontSize || 22}px`,
             fontWeight: '650',
             padding: '8px 24px',
             borderRadius: '25px',
