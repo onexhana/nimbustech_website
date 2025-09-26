@@ -6,6 +6,7 @@ export default function AdminAssets() {
   // Mock 데이터 (나중에 API로 교체)
   const [assetsData, setAssetsData] = useState({
     images: [
+      // 로고 이미지
       {
         id: 1,
         name: "logo-blue-wide.png",
@@ -24,6 +25,88 @@ export default function AdminAssets() {
       },
       {
         id: 3,
+        name: "logo.png",
+        path: "/logo/logo.png",
+        category: "로고",
+        size: "1.8MB",
+        uploadDate: "2024-01-15"
+      },
+      {
+        id: 4,
+        name: "logo_white.png",
+        path: "/logo/logo_white.png",
+        category: "로고",
+        size: "1.9MB",
+        uploadDate: "2024-01-15"
+      },
+      {
+        id: 5,
+        name: "logo-blue.png",
+        path: "/logo/logo-blue.png",
+        category: "로고",
+        size: "1.7MB",
+        uploadDate: "2024-01-15"
+      },
+      {
+        id: 6,
+        name: "cloud-blue.png",
+        path: "/logo/cloud-blue.png",
+        category: "로고",
+        size: "1.5MB",
+        uploadDate: "2024-01-15"
+      },
+      {
+        id: 7,
+        name: "cloud-white.png",
+        path: "/logo/cloud-white.png",
+        category: "로고",
+        size: "1.4MB",
+        uploadDate: "2024-01-15"
+      },
+      {
+        id: 8,
+        name: "nimbuetech-blue.png",
+        path: "/logo/nimbuetech-blue.png",
+        category: "로고",
+        size: "2.0MB",
+        uploadDate: "2024-01-15"
+      },
+      {
+        id: 9,
+        name: "nimbuetech-white.png",
+        path: "/logo/nimbuetech-white.png",
+        category: "로고",
+        size: "1.9MB",
+        uploadDate: "2024-01-15"
+      },
+      {
+        id: 10,
+        name: "fcs_logo.png",
+        path: "/logo/fcs_logo.png",
+        category: "로고",
+        size: "1.6MB",
+        uploadDate: "2024-01-15"
+      },
+      {
+        id: 11,
+        name: "2022_special.png",
+        path: "/logo/2022_special.png",
+        category: "로고",
+        size: "2.2MB",
+        uploadDate: "2024-01-15"
+      },
+      {
+        id: 12,
+        name: "vite.svg",
+        path: "/logo/vite.svg",
+        category: "로고",
+        size: "0.3MB",
+        uploadDate: "2024-01-15"
+      },
+      
+      // 팝업 이미지
+      {
+        id: 13,
         name: "Mission&Vision.jpg",
         path: "/popup_image/Mission&Vision.jpg",
         category: "팝업이미지",
@@ -31,7 +114,7 @@ export default function AdminAssets() {
         uploadDate: "2024-01-20"
       },
       {
-        id: 4,
+        id: 14,
         name: "Core Values.png",
         path: "/popup_image/Core Values.png",
         category: "팝업이미지",
@@ -39,11 +122,251 @@ export default function AdminAssets() {
         uploadDate: "2024-01-20"
       },
       {
-        id: 5,
+        id: 15,
+        name: "Employee Benefits.jpg",
+        path: "/popup_image/Employee Benefits.jpg",
+        category: "팝업이미지",
+        size: "2.0MB",
+        uploadDate: "2024-01-20"
+      },
+      {
+        id: 16,
+        name: "Way of Working.jpg",
+        path: "/popup_image/Way of Working.jpg",
+        category: "팝업이미지",
+        size: "1.9MB",
+        uploadDate: "2024-01-20"
+      },
+      
+      // 모바일 팝업 이미지
+      {
+        id: 17,
+        name: "Mission&Vision_mobile.png",
+        path: "/popup_image_mobile/Mission&Vision_mobile.png",
+        category: "팝업이미지",
+        size: "1.5MB",
+        uploadDate: "2024-01-20"
+      },
+      {
+        id: 18,
+        name: "Core Values_mobile.png",
+        path: "/popup_image_mobile/Core Values_mobile.png",
+        category: "팝업이미지",
+        size: "1.7MB",
+        uploadDate: "2024-01-20"
+      },
+      {
+        id: 19,
+        name: "Employee Benefits_mobile.png",
+        path: "/popup_image_mobile/Employee Benefits_mobile.png",
+        category: "팝업이미지",
+        size: "1.6MB",
+        uploadDate: "2024-01-20"
+      },
+      {
+        id: 20,
+        name: "Way of Working_mobile.png",
+        path: "/popup_image_mobile/Way of Working_mobile.png",
+        category: "팝업이미지",
+        size: "1.4MB",
+        uploadDate: "2024-01-20"
+      },
+      
+      // 포트폴리오 이미지 - 공공 카테고리
+      {
+        id: 21,
         name: "공공_다산콜센터.jpg",
         path: "/portfolio_photo/공공_다산콜센터.jpg",
         category: "포트폴리오",
         size: "3.1MB",
+        uploadDate: "2024-01-25"
+      },
+      {
+        id: 22,
+        name: "공공_중구청.jpg",
+        path: "/portfolio_photo/공공_중구청.jpg",
+        category: "포트폴리오",
+        size: "2.8MB",
+        uploadDate: "2024-01-25"
+      },
+      {
+        id: 23,
+        name: "공공_범정부.png",
+        path: "/portfolio_photo/공공_범정부.png",
+        category: "포트폴리오",
+        size: "2.5MB",
+        uploadDate: "2024-01-25"
+      },
+      {
+        id: 24,
+        name: "공공_정보시스템.png",
+        path: "/portfolio_photo/공공_정보시스템.png",
+        category: "포트폴리오",
+        size: "2.7MB",
+        uploadDate: "2024-01-25"
+      },
+      {
+        id: 25,
+        name: "공공_국방데이터센터.jpg",
+        path: "/portfolio_photo/공공_국방데이터센터.jpg",
+        category: "포트폴리오",
+        size: "3.0MB",
+        uploadDate: "2024-01-25"
+      },
+      {
+        id: 26,
+        name: "공공_국민연금.jpg",
+        path: "/portfolio_photo/공공_국민연금.jpg",
+        category: "포트폴리오",
+        size: "2.9MB",
+        uploadDate: "2024-01-25"
+      },
+      
+      // 포트폴리오 이미지 - 금융 카테고리
+      {
+        id: 27,
+        name: "금융_신한금융투자.jpg",
+        path: "/portfolio_photo/금융_신한금융투자.jpg",
+        category: "포트폴리오",
+        size: "2.6MB",
+        uploadDate: "2024-01-25"
+      },
+      {
+        id: 28,
+        name: "금융_메트라이프금융서비스.jpg",
+        path: "/portfolio_photo/금융_메트라이프금융서비스.jpg",
+        category: "포트폴리오",
+        size: "2.4MB",
+        uploadDate: "2024-01-25"
+      },
+      {
+        id: 29,
+        name: "금융_미래에셋.jpg",
+        path: "/portfolio_photo/금융_미래에셋.jpg",
+        category: "포트폴리오",
+        size: "2.3MB",
+        uploadDate: "2024-01-25"
+      },
+      {
+        id: 30,
+        name: "금융_하나은행.jpg",
+        path: "/portfolio_photo/금융_하나은행.jpg",
+        category: "포트폴리오",
+        size: "2.8MB",
+        uploadDate: "2024-01-25"
+      },
+      {
+        id: 31,
+        name: "금융_AIA생명.jpg",
+        path: "/portfolio_photo/금융_AIA생명.jpg",
+        category: "포트폴리오",
+        size: "2.5MB",
+        uploadDate: "2024-01-25"
+      },
+      {
+        id: 32,
+        name: "금융_한국투자증권.jpg",
+        path: "/portfolio_photo/금융_한국투자증권.jpg",
+        category: "포트폴리오",
+        size: "2.7MB",
+        uploadDate: "2024-01-25"
+      },
+      {
+        id: 33,
+        name: "금융_메트라이프.jpg",
+        path: "/portfolio_photo/금융_메트라이프.jpg",
+        category: "포트폴리오",
+        size: "2.4MB",
+        uploadDate: "2024-01-25"
+      },
+      {
+        id: 34,
+        name: "금융_DB생명보험.jpg",
+        path: "/portfolio_photo/금융_DB생명보험.jpg",
+        category: "포트폴리오",
+        size: "2.6MB",
+        uploadDate: "2024-01-25"
+      },
+      {
+        id: 35,
+        name: "금융_국민카드.png",
+        path: "/portfolio_photo/금융_국민카드.png",
+        category: "포트폴리오",
+        size: "2.2MB",
+        uploadDate: "2024-01-25"
+      },
+      {
+        id: 36,
+        name: "금융_ACE.jpg",
+        path: "/portfolio_photo/금융_ACE.jpg",
+        category: "포트폴리오",
+        size: "2.3MB",
+        uploadDate: "2024-01-25"
+      },
+      
+      // 포트폴리오 이미지 - 일반/제조 카테고리
+      {
+        id: 37,
+        name: "일반_삼성전자.jpg",
+        path: "/portfolio_photo/일반_삼성전자.jpg",
+        category: "포트폴리오",
+        size: "2.9MB",
+        uploadDate: "2024-01-25"
+      },
+      {
+        id: 38,
+        name: "일반_태평양물산.png",
+        path: "/portfolio_photo/일반_태평양물산.png",
+        category: "포트폴리오",
+        size: "2.1MB",
+        uploadDate: "2024-01-25"
+      },
+      {
+        id: 39,
+        name: "일반_LG.jpg",
+        path: "/portfolio_photo/일반_LG.jpg",
+        category: "포트폴리오",
+        size: "2.8MB",
+        uploadDate: "2024-01-25"
+      },
+      {
+        id: 40,
+        name: "일반_태양광.jpg",
+        path: "/portfolio_photo/일반_태양광.jpg",
+        category: "포트폴리오",
+        size: "2.7MB",
+        uploadDate: "2024-01-25"
+      },
+      {
+        id: 41,
+        name: "일반_CJ.jpg",
+        path: "/portfolio_photo/일반_CJ.jpg",
+        category: "포트폴리오",
+        size: "2.6MB",
+        uploadDate: "2024-01-25"
+      },
+      {
+        id: 42,
+        name: "일반_강원랜드.jpg",
+        path: "/portfolio_photo/일반_강원랜드.jpg",
+        category: "포트폴리오",
+        size: "2.5MB",
+        uploadDate: "2024-01-25"
+      },
+      {
+        id: 43,
+        name: "일반_한국신용정보원.jpg",
+        path: "/portfolio_photo/일반_한국신용정보원.jpg",
+        category: "포트폴리오",
+        size: "2.4MB",
+        uploadDate: "2024-01-25"
+      },
+      {
+        id: 44,
+        name: "일반_현대.jpg",
+        path: "/portfolio_photo/일반_현대.jpg",
+        category: "포트폴리오",
+        size: "2.8MB",
         uploadDate: "2024-01-25"
       }
     ],
@@ -352,7 +675,10 @@ export default function AdminAssets() {
               boxShadow: '0 10px 15px rgba(0, 0, 0, 0.1)',
               border: '1px solid rgba(255, 255, 255, 0.2)',
               padding: '1.5rem',
-              transition: 'all 0.3s ease'
+              transition: 'all 0.3s ease',
+              position: 'sticky',
+              top: '100px',
+              zIndex: 5
             }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
                 <div style={{
@@ -404,6 +730,20 @@ export default function AdminAssets() {
                           color: '#374151',
                           border: '1px solid #e5e7eb'
                         })
+                      }}
+                      onMouseEnter={(e) => {
+                        if (selectedCategory !== category) {
+                          e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.8)';
+                          e.currentTarget.style.transform = 'translateY(-1px)';
+                          e.currentTarget.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.1)';
+                        }
+                      }}
+                      onMouseLeave={(e) => {
+                        if (selectedCategory !== category) {
+                          e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.5)';
+                          e.currentTarget.style.transform = 'translateY(0)';
+                          e.currentTarget.style.boxShadow = 'none';
+                        }
                       }}
                     >
                       <span>{category}</span>
@@ -837,10 +1177,10 @@ export default function AdminAssets() {
                     총 용량
                   </h5>
                   <p style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#16a34a', margin: 0 }}>
-              15.6MB
+              98.2MB
             </p>
                   <p style={{ fontSize: '0.75rem', color: '#6b7280', lineHeight: '1.5', margin: 0 }}>
-              평균 파일 크기: 1.2MB
+              평균 파일 크기: 2.1MB
             </p>
           </div>
           
