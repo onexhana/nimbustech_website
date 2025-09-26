@@ -14,6 +14,8 @@ export default function AdminPortfolio() {
     category: "공공",
     image: ""
   });
+  const [uploadedImage, setUploadedImage] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string>("");
 
   const handleSave = () => {
     // 데이터는 Context에서 자동으로 localStorage에 저장됨
@@ -22,9 +24,48 @@ export default function AdminPortfolio() {
     alert('저장되었습니다!');
   };
 
+  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      // 파일 타입 검증
+      if (!file.type.startsWith('image/')) {
+        alert('이미지 파일만 업로드 가능합니다.');
+        return;
+      }
+      
+      // 파일 크기 검증 (5MB 제한)
+      if (file.size > 5 * 1024 * 1024) {
+        alert('파일 크기는 5MB 이하여야 합니다.');
+        return;
+      }
+      
+      setUploadedImage(file);
+      
+      // 미리보기 생성
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setImagePreview(e.target?.result as string);
+      };
+      reader.readAsDataURL(file);
+      
+      // 이미지 경로 자동 설정
+      const fileName = file.name;
+      const imagePath = `/portfolio_photo/${fileName}`;
+      setNewProject({...newProject, image: imagePath});
+    }
+  };
+
   const handleAddProject = () => {
+    if (uploadedImage) {
+      // 실제 프로덕션에서는 서버로 파일을 업로드해야 합니다
+      // 현재는 클라이언트에서만 처리
+      console.log('업로드된 파일:', uploadedImage);
+    }
+    
     addProject(newProject);
     setNewProject({ title: "", description: "", category: "공공", image: "" });
+    setUploadedImage(null);
+    setImagePreview("");
     setShowAddForm(false);
   };
 
@@ -34,6 +75,31 @@ export default function AdminPortfolio() {
 
   const handleUpdateProject = (id: number, field: string, value: string) => {
     updateProject(id, { [field]: value });
+  };
+
+  const handleUpdateProjectImage = (id: number, event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      // 파일 타입 검증
+      if (!file.type.startsWith('image/')) {
+        alert('이미지 파일만 업로드 가능합니다.');
+        return;
+      }
+      
+      // 파일 크기 검증 (5MB 제한)
+      if (file.size > 5 * 1024 * 1024) {
+        alert('파일 크기는 5MB 이하여야 합니다.');
+        return;
+      }
+      
+      // 이미지 경로 자동 설정
+      const fileName = file.name;
+      const imagePath = `/portfolio_photo/${fileName}`;
+      updateProject(id, { image: imagePath });
+      
+      // 실제 프로덕션에서는 서버로 파일을 업로드해야 합니다
+      console.log('업로드된 파일:', file);
+    }
   };
 
   const filteredProjects = portfolioData.projects.filter(p => p.category === selectedCategory);
@@ -391,7 +457,8 @@ export default function AdminPortfolio() {
                           fontSize: '0.875rem',
                           transition: 'all 0.2s ease',
                           background: 'white',
-                          color: '#111827'
+                          color: '#111827',
+                          boxSizing: 'border-box'
                         }}
                         onFocus={(e) => {
                           e.target.style.borderColor = '#3b82f6';
@@ -421,7 +488,8 @@ export default function AdminPortfolio() {
                           fontSize: '0.875rem',
                           transition: 'all 0.2s ease',
                           background: 'white',
-                          color: '#111827'
+                          color: '#111827',
+                          boxSizing: 'border-box'
                         }}
                         onFocus={(e) => {
                           e.target.style.borderColor = '#3b82f6';
@@ -455,7 +523,8 @@ export default function AdminPortfolio() {
                           fontSize: '0.875rem',
                           transition: 'all 0.2s ease',
                           background: 'white',
-                          color: '#111827'
+                          color: '#111827',
+                          boxSizing: 'border-box'
                         }}
                         onFocus={(e) => {
                           e.target.style.borderColor = '#3b82f6';
@@ -470,34 +539,130 @@ export default function AdminPortfolio() {
                     </div>
                     <div>
                       <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
-                        이미지 경로
+                        프로젝트 이미지
                       </label>
-                      <input
-                        type="text"
-                        value={newProject.image}
-                        onChange={(e) => setNewProject({...newProject, image: e.target.value})}
-                        style={{
-                          width: '100%',
-                          maxWidth: '650px',
-                          padding: '0.5rem 0.75rem',
-                          border: '2px solid #e5e7eb',
-                          borderRadius: '8px',
-                          outline: 'none',
-                          fontSize: '0.875rem',
-                          transition: 'all 0.2s ease',
-                          background: 'white',
-                          color: '#111827'
-                        }}
-                        onFocus={(e) => {
-                          e.target.style.borderColor = '#3b82f6';
-                          e.target.style.boxShadow = '0 0 0 4px rgba(59, 130, 246, 0.1)';
-                        }}
-                        onBlur={(e) => {
-                          e.target.style.borderColor = '#e5e7eb';
-                          e.target.style.boxShadow = 'none';
-                        }}
-                        placeholder="/portfolio_photo/이미지명.jpg"
-                      />
+                      
+                      {/* 파일 업로드 영역 */}
+                      <div style={{
+                        width: '100%',
+                        maxWidth: '650px',
+                        border: '2px dashed #d1d5db',
+                        borderRadius: '12px',
+                        padding: '1.5rem',
+                        textAlign: 'center',
+                        backgroundColor: '#f9fafb',
+                        transition: 'all 0.2s ease',
+                        cursor: 'pointer',
+                        position: 'relative'
+                      }}
+                      onDragOver={(e) => {
+                        e.preventDefault();
+                        e.currentTarget.style.borderColor = '#3b82f6';
+                        e.currentTarget.style.backgroundColor = '#eff6ff';
+                      }}
+                      onDragLeave={(e) => {
+                        e.currentTarget.style.borderColor = '#d1d5db';
+                        e.currentTarget.style.backgroundColor = '#f9fafb';
+                      }}
+                      onDrop={(e) => {
+                        e.preventDefault();
+                        e.currentTarget.style.borderColor = '#d1d5db';
+                        e.currentTarget.style.backgroundColor = '#f9fafb';
+                        
+                        const files = e.dataTransfer.files;
+                        if (files.length > 0) {
+                          const file = files[0];
+                          if (file.type.startsWith('image/')) {
+                            const event = {
+                              target: { files: [file] }
+                            } as React.ChangeEvent<HTMLInputElement>;
+                            handleImageUpload(event);
+                          } else {
+                            alert('이미지 파일만 업로드 가능합니다.');
+                          }
+                        }
+                      }}
+                      onClick={() => document.getElementById('image-upload')?.click()}
+                      >
+                        <input
+                          id="image-upload"
+                          type="file"
+                          accept="image/*"
+                          onChange={handleImageUpload}
+                          style={{ display: 'none' }}
+                        />
+                        
+                        {imagePreview ? (
+                          <div>
+                            <img
+                              src={imagePreview}
+                              alt="미리보기"
+                              style={{
+                                maxWidth: '200px',
+                                maxHeight: '150px',
+                                borderRadius: '8px',
+                                marginBottom: '1rem',
+                                objectFit: 'cover'
+                              }}
+                            />
+                            <p style={{ fontSize: '0.875rem', color: '#10b981', fontWeight: '500', margin: 0 }}>
+                              ✓ 이미지가 업로드되었습니다
+                            </p>
+                            <p style={{ fontSize: '0.75rem', color: '#6b7280', margin: '0.25rem 0 0 0' }}>
+                              {uploadedImage?.name}
+                            </p>
+                          </div>
+                        ) : (
+                          <div>
+                            <svg width="48" height="48" fill="none" stroke="#9ca3af" viewBox="0 0 24 24" style={{ margin: '0 auto 1rem auto' }}>
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                            </svg>
+                            <p style={{ fontSize: '0.875rem', fontWeight: '500', color: '#374151', marginBottom: '0.5rem' }}>
+                              이미지를 업로드하세요
+                            </p>
+                            <p style={{ fontSize: '0.75rem', color: '#6b7280', margin: 0 }}>
+                              클릭하거나 드래그하여 파일을 선택하세요
+                            </p>
+                            <p style={{ fontSize: '0.75rem', color: '#9ca3af', margin: '0.5rem 0 0 0' }}>
+                              PNG, JPG, JPEG (최대 5MB)
+                            </p>
+                          </div>
+                        )}
+                      </div>
+                      
+                      {/* 수동 경로 입력 (선택사항) */}
+                      <div style={{ marginTop: '1rem' }}>
+                        <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: '500', color: '#6b7280', marginBottom: '0.5rem' }}>
+                          또는 이미지 경로를 직접 입력하세요
+                        </label>
+                        <input
+                          type="text"
+                          value={newProject.image}
+                          onChange={(e) => setNewProject({...newProject, image: e.target.value})}
+                          style={{
+                            width: '100%',
+                            maxWidth: '650px',
+                            padding: '0.5rem 0.75rem',
+                            border: '1px solid #e5e7eb',
+                            borderRadius: '8px',
+                            outline: 'none',
+                            fontSize: '0.875rem',
+                            transition: 'all 0.2s ease',
+                            background: 'white',
+                            color: '#111827',
+                            boxSizing: 'border-box'
+                          }}
+                          onFocus={(e) => {
+                            e.target.style.borderColor = '#3b82f6';
+                            e.target.style.boxShadow = '0 0 0 2px rgba(59, 130, 246, 0.1)';
+                          }}
+                          onBlur={(e) => {
+                            e.target.style.borderColor = '#e5e7eb';
+                            e.target.style.boxShadow = 'none';
+                          }}
+                          placeholder="/portfolio_photo/이미지명.jpg"
+                        />
+                      </div>
                     </div>
                   </div>
                   <div style={{ display: 'flex', justifyContent: 'end', gap: '0.75rem', marginTop: '1.5rem' }}>
@@ -605,7 +770,8 @@ export default function AdminPortfolio() {
                             fontSize: '0.875rem',
                             transition: 'all 0.2s ease',
                             background: !isEditing ? '#f9fafb' : 'white',
-                            color: !isEditing ? '#6b7280' : '#111827'
+                            color: !isEditing ? '#6b7280' : '#111827',
+                            boxSizing: 'border-box'
                           }}
                           onFocus={(e) => {
                             if (isEditing) {
@@ -638,7 +804,8 @@ export default function AdminPortfolio() {
                             fontSize: '0.875rem',
                             transition: 'all 0.2s ease',
                             background: !isEditing ? '#f9fafb' : 'white',
-                            color: !isEditing ? '#6b7280' : '#111827'
+                            color: !isEditing ? '#6b7280' : '#111827',
+                            boxSizing: 'border-box'
                           }}
                           onFocus={(e) => {
                             if (isEditing) {
@@ -676,7 +843,8 @@ export default function AdminPortfolio() {
                             fontSize: '0.875rem',
                             transition: 'all 0.2s ease',
                             background: !isEditing ? '#f9fafb' : 'white',
-                            color: !isEditing ? '#6b7280' : '#111827'
+                            color: !isEditing ? '#6b7280' : '#111827',
+                            boxSizing: 'border-box'
                           }}
                           onFocus={(e) => {
                             if (isEditing) {
@@ -693,8 +861,72 @@ export default function AdminPortfolio() {
                       
                       <div>
                         <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
-                          이미지 경로
+                          프로젝트 이미지
                         </label>
+                        
+                        {/* 현재 이미지 미리보기 */}
+                        {project.image && (
+                          <div style={{ marginBottom: '1rem' }}>
+                            <img
+                              src={project.image}
+                              alt={project.title}
+                              style={{
+                                maxWidth: '200px',
+                                maxHeight: '150px',
+                                borderRadius: '8px',
+                                objectFit: 'cover',
+                                border: '1px solid #e5e7eb'
+                              }}
+                              onError={(e) => {
+                                e.currentTarget.style.display = 'none';
+                              }}
+                            />
+                          </div>
+                        )}
+                        
+                        {/* 파일 업로드 버튼 */}
+                        {isEditing && (
+                          <div style={{ marginBottom: '1rem' }}>
+                            <input
+                              type="file"
+                              accept="image/*"
+                              onChange={(e) => handleUpdateProjectImage(project.id, e)}
+                              style={{ display: 'none' }}
+                              id={`image-upload-${project.id}`}
+                            />
+                            <button
+                              type="button"
+                              onClick={() => document.getElementById(`image-upload-${project.id}`)?.click()}
+                              style={{
+                                padding: '0.5rem 1rem',
+                                fontSize: '0.875rem',
+                                fontWeight: '500',
+                                color: '#3b82f6',
+                                background: 'white',
+                                border: '1px solid #3b82f6',
+                                borderRadius: '8px',
+                                cursor: 'pointer',
+                                transition: 'all 0.2s ease',
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '0.5rem'
+                              }}
+                              onMouseEnter={(e) => {
+                                e.currentTarget.style.backgroundColor = '#eff6ff';
+                              }}
+                              onMouseLeave={(e) => {
+                                e.currentTarget.style.backgroundColor = 'white';
+                              }}
+                            >
+                              <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                              </svg>
+                              이미지 변경
+                            </button>
+                          </div>
+                        )}
+                        
+                        {/* 수동 경로 입력 */}
                         <input
                           type="text"
                           value={project.image}
@@ -710,7 +942,8 @@ export default function AdminPortfolio() {
                             fontSize: '0.875rem',
                             transition: 'all 0.2s ease',
                             background: !isEditing ? '#f9fafb' : 'white',
-                            color: !isEditing ? '#6b7280' : '#111827'
+                            color: !isEditing ? '#6b7280' : '#111827',
+                            boxSizing: 'border-box'
                           }}
                           onFocus={(e) => {
                             if (isEditing) {
@@ -722,7 +955,13 @@ export default function AdminPortfolio() {
                             e.target.style.borderColor = '#e5e7eb';
                             e.target.style.boxShadow = 'none';
                           }}
+                          placeholder="/portfolio_photo/이미지명.jpg"
                         />
+                        {isEditing && (
+                          <p style={{ fontSize: '0.75rem', color: '#6b7280', margin: '0.5rem 0 0 0' }}>
+                            이미지 경로를 직접 입력하거나 위의 버튼으로 파일을 업로드하세요
+                          </p>
+                        )}
                       </div>
                     </div>
                   </div>

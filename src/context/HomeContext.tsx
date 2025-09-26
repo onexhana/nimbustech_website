@@ -1,15 +1,39 @@
-import { createContext, useContext, useState, ReactNode } from 'react';
+import { createContext, useContext, useState, type ReactNode } from 'react';
 
 // 홈페이지 데이터 타입 정의
 interface HomeData {
   typingTexts: string[];
+  typingTextStyles: {
+    colors: string[];
+    fontWeights: number[];
+    desktopSizes: number[];
+    mobileSizes: number[];
+  };
+  typingSpeed: {
+    speed: number; // 타이핑 속도 (ms)
+    pauseTime: number; // 줄 간 대기 시간 (ms)
+  };
   buttonData: {
     title: string;
     subtitle: string;
     description: string;
     imagePath: string;
   }[];
+  buttonStyles: {
+    titleSizes: { desktop: number; mobile: number };
+    subtitleSizes: { desktop: number; mobile: number };
+    descriptionSizes: { desktop: number; mobile: number };
+    hoverColor: string;
+  };
   sliderText: string;
+  sliderTextColors: {
+    defaultColor: string;
+    coloredWords: { [word: string]: string };
+  };
+  sliderTextSizes: {
+    desktop: number;
+    mobile: number;
+  };
 }
 
 // Context 타입 정의
@@ -17,8 +41,14 @@ interface HomeContextType {
   homeData: HomeData;
   updateHomeData: (newData: Partial<HomeData>) => void;
   updateTypingText: (index: number, text: string) => void;
+  updateTypingTextStyles: (styles: Partial<HomeData['typingTextStyles']>) => void;
+  updateTypingTextStyle: (index: number, styleType: 'colors' | 'fontWeights' | 'desktopSizes' | 'mobileSizes', value: string | number) => void;
+  updateTypingSpeed: (speed: Partial<HomeData['typingSpeed']>) => void;
   updateButtonData: (index: number, buttonData: Partial<HomeData['buttonData'][0]>) => void;
+  updateButtonStyles: (styles: Partial<HomeData['buttonStyles']>) => void;
   updateSliderText: (text: string) => void;
+  updateSliderTextColors: (colors: Partial<HomeData['sliderTextColors']>) => void;
+  updateSliderTextSizes: (sizes: Partial<HomeData['sliderTextSizes']>) => void;
 }
 
 // 기본 데이터
@@ -29,6 +59,16 @@ const defaultHomeData: HomeData = {
     '미래를 빛나게',
     'NIMBUS TECH'
   ],
+  typingTextStyles: {
+    colors: ['#000000', '#000000', '#000000', '#00A3E0'],
+    fontWeights: [500, 500, 500, 700],
+    desktopSizes: [100, 100, 100, 120],
+    mobileSizes: [35, 35, 35, 48]
+  },
+  typingSpeed: {
+    speed: 130, // 기본 타이핑 속도 (ms)
+    pauseTime: 700 // 기본 줄 간 대기 시간 (ms)
+  },
   buttonData: [
     {
       title: "Mission&Vision",
@@ -55,7 +95,25 @@ const defaultHomeData: HomeData = {
       imagePath: "/popup_image/Employee%20Benefits.jpg"
     }
   ],
-  sliderText: "LEADING CUSTOMER SUCCESS"
+  buttonStyles: {
+    titleSizes: { desktop: 30, mobile: 20 },
+    subtitleSizes: { desktop: 40, mobile: 28 },
+    descriptionSizes: { desktop: 20, mobile: 14 },
+    hoverColor: "#00A3E0"
+  },
+  sliderText: "LEADING CUSTOMER SUCCESS",
+  sliderTextColors: {
+    defaultColor: "#c2c2c2",
+    coloredWords: {
+      "LEADING": "#b8e9ff",
+      "CUSTOMER": "#18a8f1",
+      "SUCCESS": "#b8e9ff"
+    }
+  },
+  sliderTextSizes: {
+    desktop: 110,
+    mobile: 60
+  }
 };
 
 // Context 생성
@@ -68,7 +126,33 @@ export function HomeProvider({ children }: { children: ReactNode }) {
     const savedData = localStorage.getItem('homeData');
     if (savedData) {
       try {
-        return JSON.parse(savedData);
+        const parsedData = JSON.parse(savedData);
+        // 새로운 필드가 없는 경우 기본값으로 채우기 (데이터 마이그레이션)
+        const migratedData = {
+          ...defaultHomeData,
+          ...parsedData,
+          typingTextStyles: {
+            ...defaultHomeData.typingTextStyles,
+            ...parsedData.typingTextStyles
+          },
+          typingSpeed: {
+            ...defaultHomeData.typingSpeed,
+            ...parsedData.typingSpeed
+          },
+          buttonStyles: {
+            ...defaultHomeData.buttonStyles,
+            ...parsedData.buttonStyles
+          },
+          sliderTextColors: {
+            ...defaultHomeData.sliderTextColors,
+            ...parsedData.sliderTextColors
+          },
+          sliderTextSizes: {
+            ...defaultHomeData.sliderTextSizes,
+            ...parsedData.sliderTextSizes
+          }
+        };
+        return migratedData;
       } catch (error) {
         console.error('저장된 홈 데이터를 불러오는데 실패했습니다:', error);
         return defaultHomeData;
@@ -92,6 +176,41 @@ export function HomeProvider({ children }: { children: ReactNode }) {
     updateHomeData({ typingTexts: newTypingTexts });
   };
 
+  // 타이핑 텍스트 스타일 전체 업데이트
+  const updateTypingTextStyles = (styles: Partial<HomeData['typingTextStyles']>) => {
+    const newStyles = { ...homeData.typingTextStyles, ...styles };
+    updateHomeData({ typingTextStyles: newStyles });
+  };
+
+  // 타이핑 텍스트 개별 스타일 업데이트
+  const updateTypingTextStyle = (index: number, styleType: 'colors' | 'fontWeights' | 'desktopSizes' | 'mobileSizes', value: string | number) => {
+    const newStyles = { ...homeData.typingTextStyles };
+    if (styleType === 'colors') {
+      const newArray = [...newStyles.colors];
+      newArray[index] = value as string;
+      newStyles.colors = newArray;
+    } else if (styleType === 'fontWeights') {
+      const newArray = [...newStyles.fontWeights];
+      newArray[index] = value as number;
+      newStyles.fontWeights = newArray;
+    } else if (styleType === 'desktopSizes') {
+      const newArray = [...newStyles.desktopSizes];
+      newArray[index] = value as number;
+      newStyles.desktopSizes = newArray;
+    } else if (styleType === 'mobileSizes') {
+      const newArray = [...newStyles.mobileSizes];
+      newArray[index] = value as number;
+      newStyles.mobileSizes = newArray;
+    }
+    updateHomeData({ typingTextStyles: newStyles });
+  };
+
+  // 타이핑 속도 업데이트
+  const updateTypingSpeed = (speed: Partial<HomeData['typingSpeed']>) => {
+    const newSpeed = { ...homeData.typingSpeed, ...speed };
+    updateHomeData({ typingSpeed: newSpeed });
+  };
+
   // 버튼 데이터 개별 업데이트
   const updateButtonData = (index: number, buttonData: Partial<HomeData['buttonData'][0]>) => {
     const newButtonData = [...homeData.buttonData];
@@ -99,17 +218,41 @@ export function HomeProvider({ children }: { children: ReactNode }) {
     updateHomeData({ buttonData: newButtonData });
   };
 
+  // 버튼 스타일 업데이트
+  const updateButtonStyles = (styles: Partial<HomeData['buttonStyles']>) => {
+    const newStyles = { ...homeData.buttonStyles, ...styles };
+    updateHomeData({ buttonStyles: newStyles });
+  };
+
   // 슬라이더 텍스트 업데이트
   const updateSliderText = (text: string) => {
     updateHomeData({ sliderText: text });
+  };
+
+  // 슬라이더 텍스트 색상 업데이트
+  const updateSliderTextColors = (colors: Partial<HomeData['sliderTextColors']>) => {
+    const newColors = { ...homeData.sliderTextColors, ...colors };
+    updateHomeData({ sliderTextColors: newColors });
+  };
+
+  // 슬라이더 텍스트 크기 업데이트
+  const updateSliderTextSizes = (sizes: Partial<HomeData['sliderTextSizes']>) => {
+    const newSizes = { ...homeData.sliderTextSizes, ...sizes };
+    updateHomeData({ sliderTextSizes: newSizes });
   };
 
   const value: HomeContextType = {
     homeData,
     updateHomeData,
     updateTypingText,
+    updateTypingTextStyles,
+    updateTypingTextStyle,
+    updateTypingSpeed,
     updateButtonData,
-    updateSliderText
+    updateButtonStyles,
+    updateSliderText,
+    updateSliderTextColors,
+    updateSliderTextSizes
   };
 
   return (

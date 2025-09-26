@@ -2,9 +2,10 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useHomeData } from '../../context/HomeContext';
+import MiniPreview from '../../components/admin/MiniPreview';
 
 export default function AdminHome() {
-  const { homeData, updateTypingText, updateButtonData, updateSliderText } = useHomeData();
+  const { homeData, updateTypingText, updateTypingTextStyle, updateTypingSpeed, updateButtonData, updateButtonStyles, updateSliderText, updateSliderTextColors, updateSliderTextSizes } = useHomeData();
   const [isEditing, setIsEditing] = useState(false);
 
   const handleSave = () => {
@@ -185,44 +186,287 @@ export default function AdminHome() {
                 메인 타이핑 텍스트
               </h3>
             </div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
               {homeData.typingTexts.map((text, index) => (
-                <div key={index}>
-                  <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.75rem' }}>
+                <div key={index} style={{
+                  background: 'rgba(255, 255, 255, 0.6)',
+                  backdropFilter: 'blur(10px)',
+                  border: '1px solid rgba(229, 231, 235, 0.5)',
+                  borderRadius: '12px',
+                  padding: '1rem',
+                  transition: 'all 0.3s ease'
+                }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
+                    <div style={{
+                      width: '24px',
+                      height: '24px',
+                      background: 'linear-gradient(135deg, #8b5cf6, #ec4899)',
+                      borderRadius: '6px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center'
+                    }}>
+                      <span style={{ color: 'white', fontWeight: 'bold', fontSize: '0.75rem' }}>{index + 1}</span>
+                    </div>
+                    <h4 style={{ fontSize: '1rem', fontWeight: 'bold', color: '#111827', margin: 0 }}>
                     {index + 1}번째 줄
+                    </h4>
+                  </div>
+                  
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                        텍스트 내용
                   </label>
                   <input
                     type="text"
                     value={text}
-                    onChange={(e) => {
-                      updateTypingText(index, e.target.value);
-                    }}
+                        onChange={(e) => updateTypingText(index, e.target.value)}
                     disabled={!isEditing}
                     style={{
                       width: '100%',
-                      maxWidth: '300px',
+                          maxWidth: '280px',
                       padding: '0.5rem 0.75rem',
-                      border: '2px solid #e5e7eb',
-                      borderRadius: '8px',
+                          border: '1px solid #e5e7eb',
+                          borderRadius: '6px',
                       outline: 'none',
                       fontSize: '0.875rem',
                       transition: 'all 0.2s ease',
                       background: !isEditing ? '#f9fafb' : 'white',
                       color: !isEditing ? '#6b7280' : '#111827'
                     }}
-                    onFocus={(e) => {
-                      if (isEditing) {
-                        e.target.style.borderColor = '#3b82f6';
-                        e.target.style.boxShadow = '0 0 0 4px rgba(59, 130, 246, 0.1)';
-                      }
-                    }}
-                    onBlur={(e) => {
-                      e.target.style.borderColor = '#e5e7eb';
-                      e.target.style.boxShadow = 'none';
-                    }}
-                  />
+                      />
+                    </div>
+
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
+                      <div>
+                        <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                          텍스트 색상
+                        </label>
+                        <input
+                          type="color"
+                          value={homeData.typingTextStyles?.colors?.[index] || '#000000'}
+                          onChange={(e) => updateTypingTextStyle(index, 'colors', e.target.value)}
+                          disabled={!isEditing}
+                          style={{
+                            width: '50px',
+                            height: '30px',
+                            padding: '0',
+                            border: '1px solid #e5e7eb',
+                            borderRadius: '6px',
+                            outline: 'none',
+                            cursor: isEditing ? 'pointer' : 'not-allowed',
+                            opacity: !isEditing ? 0.6 : 1
+                          }}
+                        />
+                      </div>
+
+                      <div>
+                        <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                          글씨 두께
+                        </label>
+                        <select
+                          value={homeData.typingTextStyles?.fontWeights?.[index] || 500}
+                          onChange={(e) => updateTypingTextStyle(index, 'fontWeights', parseInt(e.target.value))}
+                          disabled={!isEditing}
+                          style={{
+                            width: '100px',
+                            padding: '0.25rem 0.5rem',
+                            border: '1px solid #e5e7eb',
+                            borderRadius: '6px',
+                            outline: 'none',
+                            fontSize: '0.75rem',
+                            background: !isEditing ? '#f9fafb' : 'white',
+                            color: !isEditing ? '#6b7280' : '#111827',
+                            cursor: isEditing ? 'pointer' : 'not-allowed'
+                          }}
+                        >
+                          <option value={300}>Light (300)</option>
+                          <option value={400}>Normal (400)</option>
+                          <option value={500}>Medium (500)</option>
+                          <option value={600}>SemiBold (600)</option>
+                          <option value={700}>Bold (700)</option>
+                          <option value={800}>ExtraBold (800)</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
+                      <div>
+                        <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                          데스크톱 크기 (px)
+                        </label>
+                        <input
+                          type="number"
+                          min="50"
+                          max="200"
+                          value={homeData.typingTextStyles?.desktopSizes?.[index] || 100}
+                          onChange={(e) => updateTypingTextStyle(index, 'desktopSizes', parseInt(e.target.value) || 100)}
+                          disabled={!isEditing}
+                          style={{
+                            width: '80px',
+                            padding: '0.25rem 0.5rem',
+                            border: '1px solid #e5e7eb',
+                            borderRadius: '4px',
+                            outline: 'none',
+                            fontSize: '0.75rem',
+                            textAlign: 'center',
+                            background: !isEditing ? '#f9fafb' : 'white',
+                            color: !isEditing ? '#6b7280' : '#111827'
+                          }}
+                        />
+                      </div>
+
+                      <div>
+                        <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                          모바일 크기 (px)
+                        </label>
+                        <input
+                          type="number"
+                          min="20"
+                          max="80"
+                          value={homeData.typingTextStyles?.mobileSizes?.[index] || 35}
+                          onChange={(e) => updateTypingTextStyle(index, 'mobileSizes', parseInt(e.target.value) || 35)}
+                          disabled={!isEditing}
+                          style={{
+                            width: '80px',
+                            padding: '0.25rem 0.5rem',
+                            border: '1px solid #e5e7eb',
+                            borderRadius: '4px',
+                            outline: 'none',
+                            fontSize: '0.75rem',
+                            textAlign: 'center',
+                            background: !isEditing ? '#f9fafb' : 'white',
+                            color: !isEditing ? '#6b7280' : '#111827'
+                          }}
+                        />
+                      </div>
+                    </div>
+                  </div>
                 </div>
               ))}
+            </div>
+          </div>
+
+          {/* 타이핑 속도 조절 */}
+          <div style={{
+            background: 'rgba(255, 255, 255, 0.8)',
+            backdropFilter: 'blur(10px)',
+            borderRadius: '12px',
+            boxShadow: '0 10px 15px rgba(0, 0, 0, 0.1)',
+            border: '1px solid rgba(255, 255, 255, 0.2)',
+            padding: '1.5rem',
+            transition: 'all 0.3s ease'
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
+              <div style={{
+                width: '32px',
+                height: '32px',
+                background: 'linear-gradient(135deg, #f59e0b, #d97706)',
+                borderRadius: '8px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}>
+                <svg width="20" height="20" fill="none" stroke="white" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#111827', margin: 0 }}>
+                타이핑 속도 설정
+              </h3>
+            </div>
+            
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              {/* 타이핑 속도 */}
+              <div>
+                <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                  타이핑 속도 (ms)
+                </label>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                  <input
+                    type="range"
+                    min="50"
+                    max="300"
+                    value={homeData.typingSpeed?.speed || 130}
+                    onChange={(e) => updateTypingSpeed({ speed: parseInt(e.target.value) })}
+                    disabled={!isEditing}
+                    style={{
+                      width: '200px',
+                      cursor: isEditing ? 'pointer' : 'not-allowed',
+                      opacity: !isEditing ? 0.6 : 1
+                    }}
+                  />
+                  <input
+                    type="number"
+                    min="50"
+                    max="300"
+                    value={homeData.typingSpeed?.speed || 130}
+                    onChange={(e) => updateTypingSpeed({ speed: parseInt(e.target.value) || 130 })}
+                    disabled={!isEditing}
+                    style={{
+                      width: '80px',
+                      padding: '0.25rem 0.5rem',
+                      border: '1px solid #e5e7eb',
+                      borderRadius: '4px',
+                      outline: 'none',
+                      fontSize: '0.75rem',
+                      textAlign: 'center',
+                      background: !isEditing ? '#f9fafb' : 'white',
+                      color: !isEditing ? '#6b7280' : '#111827'
+                    }}
+                  />
+                  <span style={{ fontSize: '0.75rem', color: '#6b7280' }}>ms</span>
+                </div>
+                <p style={{ fontSize: '0.75rem', color: '#6b7280', marginTop: '0.25rem' }}>
+                  값이 작을수록 빠르게 타이핑됩니다 (50ms = 매우 빠름, 300ms = 매우 느림)
+                </p>
+              </div>
+
+              {/* 줄 간 대기 시간 */}
+              <div>
+                <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                  줄 간 대기 시간 (ms)
+                </label>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                  <input
+                    type="range"
+                    min="200"
+                    max="2000"
+                    value={homeData.typingSpeed?.pauseTime || 700}
+                    onChange={(e) => updateTypingSpeed({ pauseTime: parseInt(e.target.value) })}
+                    disabled={!isEditing}
+                    style={{
+                      width: '200px',
+                      cursor: isEditing ? 'pointer' : 'not-allowed',
+                      opacity: !isEditing ? 0.6 : 1
+                    }}
+                  />
+                  <input
+                    type="number"
+                    min="200"
+                    max="2000"
+                    value={homeData.typingSpeed?.pauseTime || 700}
+                    onChange={(e) => updateTypingSpeed({ pauseTime: parseInt(e.target.value) || 700 })}
+                    disabled={!isEditing}
+                    style={{
+                      width: '80px',
+                      padding: '0.25rem 0.5rem',
+                      border: '1px solid #e5e7eb',
+                      borderRadius: '4px',
+                      outline: 'none',
+                      fontSize: '0.75rem',
+                      textAlign: 'center',
+                      background: !isEditing ? '#f9fafb' : 'white',
+                      color: !isEditing ? '#6b7280' : '#111827'
+                    }}
+                  />
+                  <span style={{ fontSize: '0.75rem', color: '#6b7280' }}>ms</span>
+                </div>
+                <p style={{ fontSize: '0.75rem', color: '#6b7280', marginTop: '0.25rem' }}>
+                  한 줄이 완성된 후 다음 줄로 넘어가기까지의 대기 시간
+                </p>
+              </div>
             </div>
           </div>
 
@@ -360,6 +604,249 @@ export default function AdminHome() {
                   </div>
                 </div>
               ))}
+              
+              {/* 버튼 스타일 설정 */}
+              <div style={{
+                background: 'rgba(255, 255, 255, 0.8)',
+                backdropFilter: 'blur(10px)',
+                border: '1px solid rgba(229, 231, 235, 0.5)',
+                borderRadius: '12px',
+                padding: '1rem',
+                marginTop: '1rem'
+              }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
+                  <div style={{
+                    width: '24px',
+                    height: '24px',
+                    background: 'linear-gradient(135deg, #06b6d4, #0891b2)',
+                    borderRadius: '6px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                  }}>
+                    <svg width="16" height="16" fill="none" stroke="white" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM21 5a2 2 0 00-2-2h-4a2 2 0 00-2 2v12a4 4 0 004 4h4a2 2 0 002-2V5z" />
+                    </svg>
+                  </div>
+                  <h4 style={{ fontSize: '1rem', fontWeight: 'bold', color: '#111827', margin: 0 }}>
+                    버튼 스타일 설정
+                  </h4>
+                </div>
+
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                  {/* 제목 크기 설정 */}
+                  <div>
+                    <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                      제목 크기 (px)
+                    </label>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                        <span style={{ fontSize: '0.7rem', color: '#6b7280', minWidth: '50px' }}>데스크톱:</span>
+                        <input
+                          type="number"
+                          min="10"
+                          max="100"
+                          value={homeData.buttonStyles?.titleSizes?.desktop || 30}
+                          onChange={(e) => updateButtonStyles({ 
+                            titleSizes: { 
+                              ...homeData.buttonStyles?.titleSizes, 
+                              desktop: parseInt(e.target.value) || 30 
+                            } 
+                          })}
+                          disabled={!isEditing}
+                          style={{
+                            width: '70px',
+                            padding: '0.25rem 0.5rem',
+                            border: '1px solid #e5e7eb',
+                            borderRadius: '4px',
+                            outline: 'none',
+                            fontSize: '0.75rem',
+                            textAlign: 'center',
+                            background: !isEditing ? '#f9fafb' : 'white',
+                            color: !isEditing ? '#6b7280' : '#111827'
+                          }}
+                        />
+                      </div>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                        <span style={{ fontSize: '0.7rem', color: '#6b7280', minWidth: '50px' }}>모바일:</span>
+                        <input
+                          type="number"
+                          min="10"
+                          max="50"
+                          value={homeData.buttonStyles?.titleSizes?.mobile || 20}
+                          onChange={(e) => updateButtonStyles({ 
+                            titleSizes: { 
+                              ...homeData.buttonStyles?.titleSizes, 
+                              mobile: parseInt(e.target.value) || 20 
+                            } 
+                          })}
+                          disabled={!isEditing}
+                          style={{
+                            width: '70px',
+                            padding: '0.25rem 0.5rem',
+                            border: '1px solid #e5e7eb',
+                            borderRadius: '4px',
+                            outline: 'none',
+                            fontSize: '0.75rem',
+                            textAlign: 'center',
+                            background: !isEditing ? '#f9fafb' : 'white',
+                            color: !isEditing ? '#6b7280' : '#111827'
+                          }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* 부제목 크기 설정 */}
+                  <div>
+                    <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                      부제목 크기 (px)
+                    </label>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                        <span style={{ fontSize: '0.7rem', color: '#6b7280', minWidth: '50px' }}>데스크톱:</span>
+                        <input
+                          type="number"
+                          min="15"
+                          max="80"
+                          value={homeData.buttonStyles?.subtitleSizes?.desktop || 40}
+                          onChange={(e) => updateButtonStyles({ 
+                            subtitleSizes: { 
+                              ...homeData.buttonStyles?.subtitleSizes, 
+                              desktop: parseInt(e.target.value) || 40 
+                            } 
+                          })}
+                          disabled={!isEditing}
+                          style={{
+                            width: '70px',
+                            padding: '0.25rem 0.5rem',
+                            border: '1px solid #e5e7eb',
+                            borderRadius: '4px',
+                            outline: 'none',
+                            fontSize: '0.75rem',
+                            textAlign: 'center',
+                            background: !isEditing ? '#f9fafb' : 'white',
+                            color: !isEditing ? '#6b7280' : '#111827'
+                          }}
+                        />
+                      </div>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                        <span style={{ fontSize: '0.7rem', color: '#6b7280', minWidth: '50px' }}>모바일:</span>
+                        <input
+                          type="number"
+                          min="15"
+                          max="40"
+                          value={homeData.buttonStyles?.subtitleSizes?.mobile || 28}
+                          onChange={(e) => updateButtonStyles({ 
+                            subtitleSizes: { 
+                              ...homeData.buttonStyles?.subtitleSizes, 
+                              mobile: parseInt(e.target.value) || 28 
+                            } 
+                          })}
+                          disabled={!isEditing}
+                          style={{
+                            width: '70px',
+                            padding: '0.25rem 0.5rem',
+                            border: '1px solid #e5e7eb',
+                            borderRadius: '4px',
+                            outline: 'none',
+                            fontSize: '0.75rem',
+                            textAlign: 'center',
+                            background: !isEditing ? '#f9fafb' : 'white',
+                            color: !isEditing ? '#6b7280' : '#111827'
+                          }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* 설명 크기 설정 */}
+                  <div>
+                    <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                      설명 크기 (px)
+                    </label>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                        <span style={{ fontSize: '0.7rem', color: '#6b7280', minWidth: '50px' }}>데스크톱:</span>
+                        <input
+                          type="number"
+                          min="10"
+                          max="40"
+                          value={homeData.buttonStyles?.descriptionSizes?.desktop || 20}
+                          onChange={(e) => updateButtonStyles({ 
+                            descriptionSizes: { 
+                              ...homeData.buttonStyles?.descriptionSizes, 
+                              desktop: parseInt(e.target.value) || 20 
+                            } 
+                          })}
+                          disabled={!isEditing}
+                          style={{
+                            width: '70px',
+                            padding: '0.25rem 0.5rem',
+                            border: '1px solid #e5e7eb',
+                            borderRadius: '4px',
+                            outline: 'none',
+                            fontSize: '0.75rem',
+                            textAlign: 'center',
+                            background: !isEditing ? '#f9fafb' : 'white',
+                            color: !isEditing ? '#6b7280' : '#111827'
+                          }}
+                        />
+                      </div>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                        <span style={{ fontSize: '0.7rem', color: '#6b7280', minWidth: '50px' }}>모바일:</span>
+                        <input
+                          type="number"
+                          min="8"
+                          max="25"
+                          value={homeData.buttonStyles?.descriptionSizes?.mobile || 14}
+                          onChange={(e) => updateButtonStyles({ 
+                            descriptionSizes: { 
+                              ...homeData.buttonStyles?.descriptionSizes, 
+                              mobile: parseInt(e.target.value) || 14 
+                            } 
+                          })}
+                          disabled={!isEditing}
+                          style={{
+                            width: '70px',
+                            padding: '0.25rem 0.5rem',
+                            border: '1px solid #e5e7eb',
+                            borderRadius: '4px',
+                            outline: 'none',
+                            fontSize: '0.75rem',
+                            textAlign: 'center',
+                            background: !isEditing ? '#f9fafb' : 'white',
+                            color: !isEditing ? '#6b7280' : '#111827'
+                          }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* 호버 색상 설정 */}
+                  <div>
+                    <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                      호버 색상
+                    </label>
+                    <input
+                      type="color"
+                      value={homeData.buttonStyles?.hoverColor || '#00A3E0'}
+                      onChange={(e) => updateButtonStyles({ hoverColor: e.target.value })}
+                      disabled={!isEditing}
+                      style={{
+                        width: '60px',
+                        height: '35px',
+                        padding: '0',
+                        border: '1px solid #e5e7eb',
+                        borderRadius: '6px',
+                        outline: 'none',
+                        cursor: isEditing ? 'pointer' : 'not-allowed',
+                        opacity: !isEditing ? 0.6 : 1
+                      }}
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -391,6 +878,7 @@ export default function AdminHome() {
                 무한 슬라이더 텍스트
               </h3>
             </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
             <div>
               <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.75rem' }}>
                 슬라이더 텍스트
@@ -424,6 +912,126 @@ export default function AdminHome() {
                   e.target.style.boxShadow = 'none';
                 }}
               />
+              </div>
+              
+              <div>
+                <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.75rem' }}>
+                  기본 텍스트 색상
+                </label>
+                <input
+                  type="color"
+                  value={homeData.sliderTextColors?.defaultColor || '#c2c2c2'}
+                  onChange={(e) => updateSliderTextColors({ defaultColor: e.target.value })}
+                  disabled={!isEditing}
+                  style={{
+                    width: '60px',
+                    height: '40px',
+                    padding: '0',
+                    border: '2px solid #e5e7eb',
+                    borderRadius: '8px',
+                    outline: 'none',
+                    cursor: isEditing ? 'pointer' : 'not-allowed',
+                    opacity: !isEditing ? 0.6 : 1
+                  }}
+                />
+              </div>
+
+              <div>
+                <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.75rem' }}>
+                  단어별 색상 설정
+                </label>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                  {Object.entries(homeData.sliderTextColors?.coloredWords || {}).map(([word, color]) => (
+                    <div key={word} style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                      <span style={{ 
+                        fontSize: '0.875rem', 
+                        fontWeight: '500', 
+                        color: '#374151',
+                        minWidth: '80px'
+                      }}>
+                        {word}
+                      </span>
+                      <input
+                        type="color"
+                        value={color}
+                        onChange={(e) => updateSliderTextColors({ 
+                          coloredWords: { 
+                            ...homeData.sliderTextColors?.coloredWords, 
+                            [word]: e.target.value 
+                          } 
+                        })}
+                        disabled={!isEditing}
+                        style={{
+                          width: '50px',
+                          height: '30px',
+                          padding: '0',
+                          border: '1px solid #e5e7eb',
+                          borderRadius: '6px',
+                          outline: 'none',
+                          cursor: isEditing ? 'pointer' : 'not-allowed',
+                          opacity: !isEditing ? 0.6 : 1
+                        }}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.75rem' }}>
+                  텍스트 크기 설정
+                </label>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: '500', color: '#6b7280', marginBottom: '0.5rem' }}>
+                      데스크톱 크기 (px)
+                    </label>
+                    <input
+                      type="number"
+                      min="50"
+                      max="200"
+                      value={homeData.sliderTextSizes?.desktop || 110}
+                      onChange={(e) => updateSliderTextSizes({ desktop: parseInt(e.target.value) || 110 })}
+                      disabled={!isEditing}
+                      style={{
+                        width: '80px',
+                        padding: '0.25rem 0.5rem',
+                        border: '1px solid #e5e7eb',
+                        borderRadius: '4px',
+                        outline: 'none',
+                        fontSize: '0.75rem',
+                        textAlign: 'center',
+                        background: !isEditing ? '#f9fafb' : 'white',
+                        color: !isEditing ? '#6b7280' : '#111827'
+                      }}
+                    />
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: '500', color: '#6b7280', marginBottom: '0.5rem' }}>
+                      모바일 크기 (px)
+                    </label>
+                    <input
+                      type="number"
+                      min="30"
+                      max="100"
+                      value={homeData.sliderTextSizes?.mobile || 60}
+                      onChange={(e) => updateSliderTextSizes({ mobile: parseInt(e.target.value) || 60 })}
+                      disabled={!isEditing}
+                      style={{
+                        width: '80px',
+                        padding: '0.25rem 0.5rem',
+                        border: '1px solid #e5e7eb',
+                        borderRadius: '4px',
+                        outline: 'none',
+                        fontSize: '0.75rem',
+                        textAlign: 'center',
+                        background: !isEditing ? '#f9fafb' : 'white',
+                        color: !isEditing ? '#6b7280' : '#111827'
+                      }}
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -456,41 +1064,7 @@ export default function AdminHome() {
                 실시간 미리보기
               </h3>
             </div>
-            <div style={{
-              background: 'linear-gradient(135deg, #f9fafb, #f3f4f6)',
-              borderRadius: '12px',
-              padding: '1.5rem',
-              border: '1px solid rgba(229, 231, 235, 0.5)'
-            }}>
-              <div style={{ textAlign: 'right', marginBottom: '1rem' }}>
-                {homeData.typingTexts.map((text, index) => (
-                  <div key={index} style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#1f2937', marginBottom: '0.25rem' }}>
-                    {text}
-                  </div>
-                ))}
-              </div>
-              <div style={{ 
-                marginTop: '1rem', 
-                textAlign: 'center', 
-                fontSize: '0.875rem', 
-                color: '#6b7280',
-                padding: '0.75rem',
-                background: 'rgba(255, 255, 255, 0.8)',
-                borderRadius: '8px',
-                border: '1px solid rgba(229, 231, 235, 0.5)'
-              }}>
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}>
-                  <div style={{
-                    width: '8px',
-                    height: '8px',
-                    background: '#10b981',
-                    borderRadius: '50%',
-                    animation: 'pulse 2s infinite'
-                  }}></div>
-                  <span>슬라이더: {homeData.sliderText}</span>
-                </div>
-              </div>
-            </div>
+            <MiniPreview />
           </div>
         </div>
       </main>

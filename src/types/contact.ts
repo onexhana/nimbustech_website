@@ -66,6 +66,10 @@ export interface AboutCard {
   title: string;
   description: string[];
   link?: string;
+  fontSize?: {
+    title?: number;
+    description?: number;
+  };
 }
 
 export interface AboutTab {

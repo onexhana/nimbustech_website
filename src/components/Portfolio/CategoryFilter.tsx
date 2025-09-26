@@ -1,6 +1,6 @@
 // 카테고리 필터 컴포넌트 (카테고리 버튼 목록)
 
-import { portfolioCategories } from '../../data/portfolioData';
+import { usePortfolioData } from '../../context/PortfolioContext';
 
 interface CategoryFilterProps {
   selectedCategory: string;
@@ -8,11 +8,12 @@ interface CategoryFilterProps {
 }
 
 const CategoryFilter = ({ selectedCategory, onCategoryChange }: CategoryFilterProps) => {
+  const { portfolioData } = usePortfolioData();
   return (
     <div className="flex flex-col h-full">
 
       <div className="flex flex-col flex-1" style={{ rowGap: '18px', marginTop: '0px' }}> {/* 버튼 별 간격 설정 칸 */}
-        {portfolioCategories.map((cat) => {
+        {portfolioData.categories.map((cat) => {
           const isSelected = selectedCategory === cat;
           return (
                          <button
