@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { useHomeData } from "../../context/HomeContext";
 
 interface ButtonItem {
   title: string;
@@ -144,7 +145,18 @@ function renderTextWithBreaks(text: string) {
 }
 
 export default function HomeButton() {
+  const { homeData } = useHomeData();
   const [selectedIdx, setSelectedIdx] = useState<number | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   // ESC 키 닫기
   useEffect(() => {
@@ -169,7 +181,7 @@ export default function HomeButton() {
 
   const renderModal = () => {
     if (selectedIdx === null) return null;
-    const selectedButton = buttons[selectedIdx];
+    const selectedButton = homeData.buttonData[selectedIdx];
     return (
       <div
         style={{
@@ -245,45 +257,83 @@ export default function HomeButton() {
       {renderModal()}
       <div className="w-full bg-white" style={{ marginTop: "100px" }}>
         <div className="grid grid-cols-4 border-t border-gray-200">
-          {buttons.map((btn, idx) => {
+          {homeData.buttonData.map((btn, idx) => {
             const isSelected = selectedIdx === idx;
+            const hoverColor = homeData.buttonStyles?.hoverColor || "#00A3E0";
+            const titleSize = isMobile 
+              ? homeData.buttonStyles?.titleSizes?.mobile || 20
+              : homeData.buttonStyles?.titleSizes?.desktop || 30;
+            const subtitleSize = isMobile 
+              ? homeData.buttonStyles?.subtitleSizes?.mobile || 28
+              : homeData.buttonStyles?.subtitleSizes?.desktop || 40;
+            const descriptionSize = isMobile 
+              ? homeData.buttonStyles?.descriptionSizes?.mobile || 14
+              : homeData.buttonStyles?.descriptionSizes?.desktop || 20;
+            
             return (
               <div
                 key={idx}
                 onClick={() => setSelectedIdx(idx)}
                 className={`aspect-square w-full flex flex-col cursor-pointer justify-center p-8 text-center transition-colors border-b border-gray-200 group ${
-                  idx !== buttons.length - 1 ? "border-r" : ""
+                  idx !== homeData.buttonData.length - 1 ? "border-r" : ""
                 } ${isSelected ? "bg-gray-100" : "hover:bg-gray-50"}`}
               >
                 <div className="mb-2">
                   <h3
-                    className={`font-medium transition-colors ${
-                      isSelected
-                        ? "text-[#00A3E0]"
-                        : "text-black group-hover:text-[#00A3E0]"
-                    }`}
-                    style={{ fontSize: `${btn.titleFontSize || 24}px` }}
+                    className="font-medium transition-colors"
+                    style={{ 
+                      fontSize: `${titleSize}px`,
+                      color: isSelected ? hoverColor : "#000000"
+                    }}
+                    onMouseEnter={(e) => {
+                      if (!isSelected) {
+                        e.currentTarget.style.color = hoverColor;
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      if (!isSelected) {
+                        e.currentTarget.style.color = "#000000";
+                      }
+                    }}
                   >
                     {renderTextWithBreaks(btn.title)}
                   </h3>
                   <p
-                    className={`font-bold mt-1 transition-colors ${
-                      isSelected
-                        ? "text-[#00A3E0]"
-                        : "text-black group-hover:text-[#00A3E0]"
-                    }`}
-                    style={{ fontSize: `${btn.subtitleFontSize || 48}px` }}
+                    className="font-bold mt-1 transition-colors"
+                    style={{ 
+                      fontSize: `${subtitleSize}px`,
+                      color: isSelected ? hoverColor : "#000000"
+                    }}
+                    onMouseEnter={(e) => {
+                      if (!isSelected) {
+                        e.currentTarget.style.color = hoverColor;
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      if (!isSelected) {
+                        e.currentTarget.style.color = "#000000";
+                      }
+                    }}
                   >
                     {renderTextWithBreaks(btn.subtitle)}
                   </p>
                 </div>
                 <p
-                  className={`mt-2 leading-tight transition-colors ${
-                    isSelected
-                      ? "text-[#00A3E0]"
-                      : "text-gray-600 group-hover:text-[#00A3E0]"
-                  }`}
-                  style={{ fontSize: `${btn.descriptionFontSize || 20}px` }}
+                  className="mt-2 leading-tight transition-colors"
+                  style={{ 
+                    fontSize: `${descriptionSize}px`,
+                    color: isSelected ? hoverColor : "#6b7280"
+                  }}
+                  onMouseEnter={(e) => {
+                    if (!isSelected) {
+                      e.currentTarget.style.color = hoverColor;
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (!isSelected) {
+                      e.currentTarget.style.color = "#6b7280";
+                    }
+                  }}
                 >
                   {renderTextWithBreaks(btn.description)}
                 </p>
@@ -295,16 +345,16 @@ export default function HomeButton() {
         {/* 무한 텍스트 슬라이더 */}
         <div className="w-full py-16 bg-gray-100" style={{ marginTop: "20px" }}>
           <InfiniteTextSlider
-            text="LEADING CUSTOMER SUCCESS"
-            fontSize={110}
-            textColor="#c2c2c2"
+            text={homeData.sliderText || "LEADING CUSTOMER SUCCESS"}
+            fontSize={homeData.sliderTextSizes?.desktop || 110}
+            textColor={homeData.sliderTextColors?.defaultColor || "#c2c2c2"}
             duration={25}
             gap={50}
             fontWeight={300}
-            coloredWords={{
-              LEADING: "#b8e9ff",
-              CUSTOMER: "#18a8f1",
-              SUCCESS: "#b8e9ff",
+            coloredWords={homeData.sliderTextColors?.coloredWords || {
+              "LEADING": "#b8e9ff",
+              "CUSTOMER": "#18a8f1",
+              "SUCCESS": "#b8e9ff"
             }}
             fontWeights={{
               LEADING: 700,

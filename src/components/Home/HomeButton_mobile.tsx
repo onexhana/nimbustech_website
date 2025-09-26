@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { useHomeData } from "../../context/HomeContext";
 
 interface ButtonItem {
   title: string;
@@ -163,6 +164,7 @@ interface HomeButtonMobileProps {
 }
 // Add spacing props for flexible positioning
 export default function HomeButtonMobile({ topOffset = '-40vh', marginTopSpacing = '2rem', marginBottomSpacing = '2rem' }: HomeButtonMobileProps) {
+  const { homeData } = useHomeData();
   const [selectedIdx, setSelectedIdx] = useState<number | null>(null);
 
   // ESC 키로 모달 닫기
@@ -204,7 +206,7 @@ export default function HomeButtonMobile({ topOffset = '-40vh', marginTopSpacing
   const renderModal = () => {
     if (selectedIdx === null) return null;
     const idx = selectedIdx;
-    const selectedButton = buttons[idx];
+    const selectedButton = homeData.buttonData[idx];
     
     return (
       <div 
@@ -292,8 +294,13 @@ export default function HomeButtonMobile({ topOffset = '-40vh', marginTopSpacing
             maxWidth: '390px',
             height: '100%' 
           }}>
-          {buttons.map((btn, idx) => {
+          {homeData.buttonData.map((btn, idx) => {
             const isSelected = selectedIdx === idx;
+            const hoverColor = homeData.buttonStyles?.hoverColor || "#00A3E0";
+            const titleSize = homeData.buttonStyles?.titleSizes?.mobile || 20;
+            const subtitleSize = homeData.buttonStyles?.subtitleSizes?.mobile || 28;
+            const descriptionSize = homeData.buttonStyles?.descriptionSizes?.mobile || 14;
+            
             return (
               <div
                 key={idx}
@@ -308,36 +315,63 @@ export default function HomeButtonMobile({ topOffset = '-40vh', marginTopSpacing
               >
                 <div className="text-center">
                   <h3
-                    className={`font-semibold transition-colors ${
-                      isSelected
-                        ? "text-[#00A3E0]"
-                        : "text-[#4a5568] group-hover:text-[#00A3E0]"
-                    }`}
-                    style={{ fontSize: '18px', marginBottom: '8px' }}
+                    className="font-semibold transition-colors"
+                    style={{ 
+                      fontSize: `${titleSize}px`, 
+                      marginBottom: '8px',
+                      color: isSelected ? hoverColor : "#4a5568"
+                    }}
+                    onMouseEnter={(e) => {
+                      if (!isSelected) {
+                        e.currentTarget.style.color = hoverColor;
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      if (!isSelected) {
+                        e.currentTarget.style.color = "#4a5568";
+                      }
+                    }}
                   >
                     {renderTextWithBreaks(btn.title)}
                   </h3>
                   <p
-                    className={`font-bold transition-colors ${
-                      isSelected
-                        ? "text-[#00A3E0]"
-                        : "text-black group-hover:text-[#00A3E0]"
-                    }`}
-                    style={{ fontSize: '24px', marginBottom: '12px' }}
+                    className="font-bold transition-colors"
+                    style={{ 
+                      fontSize: `${subtitleSize}px`, 
+                      marginBottom: '12px',
+                      color: isSelected ? hoverColor : "#000000"
+                    }}
+                    onMouseEnter={(e) => {
+                      if (!isSelected) {
+                        e.currentTarget.style.color = hoverColor;
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      if (!isSelected) {
+                        e.currentTarget.style.color = "#000000";
+                      }
+                    }}
                   >
                     {renderTextWithBreaks(btn.subtitle)}
                   </p>
                   <p
-                    className={`transition-colors text-center ${
-                      isSelected
-                        ? "text-[#00A3E0]"
-                        : "text-gray-600 group-hover:text-[#00A3E0]"
-                    }`}
+                    className="transition-colors text-center"
                     style={{ 
-                      fontSize: '12px', 
+                      fontSize: `${descriptionSize}px`, 
                       lineHeight: '1.5',
                       whiteSpace: 'pre-line',
-                      wordBreak: 'keep-all'
+                      wordBreak: 'keep-all',
+                      color: isSelected ? hoverColor : "#6b7280"
+                    }}
+                    onMouseEnter={(e) => {
+                      if (!isSelected) {
+                        e.currentTarget.style.color = hoverColor;
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      if (!isSelected) {
+                        e.currentTarget.style.color = "#6b7280";
+                      }
                     }}
                   >
                     {renderTextWithBreaks(btn.description)}
@@ -353,13 +387,13 @@ export default function HomeButtonMobile({ topOffset = '-40vh', marginTopSpacing
         {/* 모바일용 무한 텍스트 슬라이더 */}
         <div className="w-full py-12 bg-gray-100" style={{ marginTop: '30px' }}> 
           <InfiniteTextSlider 
-            text="LEADING CUSTOMER SUCCESS"
-            fontSize={60}
-            textColor="#c2c2c2"
+            text={homeData.sliderText || "LEADING CUSTOMER SUCCESS"}
+            fontSize={homeData.sliderTextSizes?.mobile || 60}
+            textColor={homeData.sliderTextColors?.defaultColor || "#c2c2c2"}
             duration={15}
             gap={10}
             fontWeight={300}
-            coloredWords={{
+            coloredWords={homeData.sliderTextColors?.coloredWords || {
               "LEADING": "#b8e9ff",
               "CUSTOMER": "#18a8f1",
               "SUCCESS": "#b8e9ff"
