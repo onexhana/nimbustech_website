@@ -91,10 +91,10 @@ export default function ContactSection() {
             {contactData.buttons.map((button, index) => (
               <button
                 key={index}
-                className={`text-white ${isMobile ? 'bg-[#00A3E0] w-full mt-8 h-[74px] px-8 flex items-center justify-center relative overflow-hidden border-none text-white !font-black transition-all duration-300 hover:shadow-lg hover:-translate-y-1' : ''}`}
+                className={`text-white ${isMobile ? `w-full h-[74px] px-8 flex items-center justify-center relative overflow-hidden border-none !font-black transition-all duration-300 hover:shadow-lg hover:-translate-y-1 ${index === 1 ? 'bg-white text-[#00A3E0]' : 'bg-[#00A3E0] text-white'}` : ''}`}
                 style={isMobile ? { 
                   fontSize: `${contactData.fontSize?.buttonText || 24}px`,
-                  marginTop: '32px'
+                  marginTop: index === 0 ? '32px' : '0px'
                 } : { 
                   backgroundColor: index === 0 ? '#00A3E0' : '#6b7280', 
                   width: '530px', 
@@ -116,8 +116,8 @@ export default function ContactSection() {
                 onClick={() => setUserType(isMobile && userType === button.type ? null : button.type as 'inquiry' | 'hiring')}
               >
                 <span
-                  className={isMobile ? 'relative z-10 text-white !text-white' : undefined}
-                  style={isMobile ? { color: '#ffffff', fontWeight: '700' } : { position: 'relative', zIndex: 1 }}
+                  className={isMobile ? `relative z-10 ${index === 1 ? 'text-[#00A3E0]' : 'text-white'}` : undefined}
+                  style={isMobile ? { color: index === 1 ? '#00A3E0' : '#ffffff', fontWeight: '700' } : { position: 'relative', zIndex: 1 }}
                 >
                   {button.text}
                 </span>
@@ -126,20 +126,22 @@ export default function ContactSection() {
             {isMobile && (
               <>
                 <button
-                  className="bg-[#00A3E0] text-white w-full mt-4 h-[74px] px-8 flex items-center justify-center relative overflow-hidden border-none font-black transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
+                  className="bg-[#00A3E0] text-white w-full h-[74px] px-8 flex items-center justify-center relative overflow-hidden border-none font-black transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
                   style={{ 
                     color: '#ffffff',
-                    fontSize: `${contactData.fontSize?.buttonText || 24}px`
+                    fontSize: `${contactData.fontSize?.buttonText || 24}px`,
+                    marginTop: '0px'
                   }}
                   onClick={handleCompanyDownload}
                 >
                   <span className="relative z-10 text-white" style={{ fontWeight: '700' }}>회사소개서 다운로드</span>
                 </button>
                 <button
-                  className="bg-white w-full mt-4 h-[74px] px-8 flex items-center justify-center relative overflow-hidden border-none text-[#00A3E0] font-black transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
+                  className="bg-white w-full h-[74px] px-8 flex items-center justify-center relative overflow-hidden border-none text-[#00A3E0] font-black transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
                   style={{ 
                     backgroundColor: '#ffffff',
-                    fontSize: `${contactData.fontSize?.buttonText || 24}px`
+                    fontSize: `${contactData.fontSize?.buttonText || 24}px`,
+                    marginTop: '0px'
                   }}
                   onClick={handlePrivacyPolicy}
                 >
