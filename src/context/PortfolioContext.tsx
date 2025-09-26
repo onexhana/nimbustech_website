@@ -28,6 +28,11 @@ interface PortfolioData {
     description?: string;
     category?: string;
   };
+  imageSize?: {
+    web?: number;
+    mobile?: number;
+    height?: number;
+  };
 }
 
 // Context 타입 정의
@@ -57,6 +62,11 @@ const defaultPortfolioData: PortfolioData = {
     title: "#1f2937",
     description: "#6b7280",
     category: "#374151"
+  },
+  imageSize: {
+    web: 330,
+    mobile: 260,
+    height: 250
   },
   projects: [
     // 공공 카테고리

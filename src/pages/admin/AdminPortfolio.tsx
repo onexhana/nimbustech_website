@@ -577,84 +577,168 @@ export default function AdminPortfolio() {
                   </div>
                 </div>
 
-                {/* 카테고리 스타일 */}
-                <div>
-                  <h4 style={{ fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.75rem' }}>
-                    카테고리
-                  </h4>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                      <label style={{ fontSize: '0.75rem', color: '#6b7280', minWidth: '40px' }}>크기:</label>
-                      <input
-                        type="number"
-                        min="8"
-                        max="32"
-                        value={portfolioData.fontSize?.category || 16}
-                        onChange={(e) => updatePortfolioData({
-                          fontSize: { ...portfolioData.fontSize, category: parseInt(e.target.value) || 16 }
-                        })}
-                        disabled={!isEditing}
-                        style={{
-                          width: '60px',
-                          padding: '0.25rem 0.5rem',
-                          border: '1px solid #e5e7eb',
-                          borderRadius: '4px',
-                          outline: 'none',
-                          fontSize: '0.75rem',
-                          textAlign: 'center',
-                          background: !isEditing ? '#f9fafb' : 'white',
-                          color: !isEditing ? '#6b7280' : '#111827'
-                        }}
-                      />
-                      <span style={{ fontSize: '0.75rem', color: '#6b7280' }}>px</span>
-                    </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                      <label style={{ fontSize: '0.75rem', color: '#6b7280', minWidth: '40px' }}>두께:</label>
-                      <input
-                        type="number"
-                        min="100"
-                        max="900"
-                        step="100"
-                        value={portfolioData.fontWeight?.category || 500}
-                        onChange={(e) => updatePortfolioData({
-                          fontWeight: { ...portfolioData.fontWeight, category: parseInt(e.target.value) || 500 }
-                        })}
-                        disabled={!isEditing}
-                        style={{
-                          width: '60px',
-                          padding: '0.25rem 0.5rem',
-                          border: '1px solid #e5e7eb',
-                          borderRadius: '4px',
-                          outline: 'none',
-                          fontSize: '0.75rem',
-                          textAlign: 'center',
-                          background: !isEditing ? '#f9fafb' : 'white',
-                          color: !isEditing ? '#6b7280' : '#111827'
-                        }}
-                      />
-                    </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                      <label style={{ fontSize: '0.75rem', color: '#6b7280', minWidth: '40px' }}>색상:</label>
-                      <input
-                        type="color"
-                        value={portfolioData.fontColor?.category || '#374151'}
-                        onChange={(e) => updatePortfolioData({
-                          fontColor: { ...portfolioData.fontColor, category: e.target.value }
-                        })}
-                        disabled={!isEditing}
-                        style={{
-                          width: '40px',
-                          height: '30px',
-                          border: '1px solid #e5e7eb',
-                          borderRadius: '4px',
-                          outline: 'none',
-                          cursor: !isEditing ? 'not-allowed' : 'pointer',
-                          opacity: !isEditing ? 0.6 : 1
-                        }}
-                      />
-                    </div>
-                  </div>
-                </div>
+                 {/* 카테고리 스타일 */}
+                 <div>
+                   <h4 style={{ fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.75rem' }}>
+                     카테고리
+                   </h4>
+                   <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                       <label style={{ fontSize: '0.75rem', color: '#6b7280', minWidth: '40px' }}>크기:</label>
+                       <input
+                         type="number"
+                         min="8"
+                         max="32"
+                         value={portfolioData.fontSize?.category || 16}
+                         onChange={(e) => updatePortfolioData({
+                           fontSize: { ...portfolioData.fontSize, category: parseInt(e.target.value) || 16 }
+                         })}
+                         disabled={!isEditing}
+                         style={{
+                           width: '60px',
+                           padding: '0.25rem 0.5rem',
+                           border: '1px solid #e5e7eb',
+                           borderRadius: '4px',
+                           outline: 'none',
+                           fontSize: '0.75rem',
+                           textAlign: 'center',
+                           background: !isEditing ? '#f9fafb' : 'white',
+                           color: !isEditing ? '#6b7280' : '#111827'
+                         }}
+                       />
+                       <span style={{ fontSize: '0.75rem', color: '#6b7280' }}>px</span>
+                     </div>
+                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                       <label style={{ fontSize: '0.75rem', color: '#6b7280', minWidth: '40px' }}>두께:</label>
+                       <input
+                         type="number"
+                         min="100"
+                         max="900"
+                         step="100"
+                         value={portfolioData.fontWeight?.category || 500}
+                         onChange={(e) => updatePortfolioData({
+                           fontWeight: { ...portfolioData.fontWeight, category: parseInt(e.target.value) || 500 }
+                         })}
+                         disabled={!isEditing}
+                         style={{
+                           width: '60px',
+                           padding: '0.25rem 0.5rem',
+                           border: '1px solid #e5e7eb',
+                           borderRadius: '4px',
+                           outline: 'none',
+                           fontSize: '0.75rem',
+                           textAlign: 'center',
+                           background: !isEditing ? '#f9fafb' : 'white',
+                           color: !isEditing ? '#6b7280' : '#111827'
+                         }}
+                       />
+                     </div>
+                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                       <label style={{ fontSize: '0.75rem', color: '#6b7280', minWidth: '40px' }}>색상:</label>
+                       <input
+                         type="color"
+                         value={portfolioData.fontColor?.category || '#374151'}
+                         onChange={(e) => updatePortfolioData({
+                           fontColor: { ...portfolioData.fontColor, category: e.target.value }
+                         })}
+                         disabled={!isEditing}
+                         style={{
+                           width: '40px',
+                           height: '30px',
+                           border: '1px solid #e5e7eb',
+                           borderRadius: '4px',
+                           outline: 'none',
+                           cursor: !isEditing ? 'not-allowed' : 'pointer',
+                           opacity: !isEditing ? 0.6 : 1
+                         }}
+                       />
+                     </div>
+                   </div>
+                 </div>
+
+                 {/* 이미지 크기 설정 */}
+                 <div>
+                   <h4 style={{ fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.75rem' }}>
+                     이미지 크기
+                   </h4>
+                   <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                       <label style={{ fontSize: '0.75rem', color: '#6b7280', minWidth: '40px' }}>웹:</label>
+                       <input
+                         type="number"
+                         min="200"
+                         max="500"
+                         value={portfolioData.imageSize?.web || 330}
+                         onChange={(e) => updatePortfolioData({
+                           imageSize: { ...portfolioData.imageSize, web: parseInt(e.target.value) || 330 }
+                         })}
+                         disabled={!isEditing}
+                         style={{
+                           width: '60px',
+                           padding: '0.25rem 0.5rem',
+                           border: '1px solid #e5e7eb',
+                           borderRadius: '4px',
+                           outline: 'none',
+                           fontSize: '0.75rem',
+                           textAlign: 'center',
+                           background: !isEditing ? '#f9fafb' : 'white',
+                           color: !isEditing ? '#6b7280' : '#111827'
+                         }}
+                       />
+                       <span style={{ fontSize: '0.75rem', color: '#6b7280' }}>px</span>
+                     </div>
+                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                       <label style={{ fontSize: '0.75rem', color: '#6b7280', minWidth: '40px' }}>모바일:</label>
+                       <input
+                         type="number"
+                         min="150"
+                         max="350"
+                         value={portfolioData.imageSize?.mobile || 260}
+                         onChange={(e) => updatePortfolioData({
+                           imageSize: { ...portfolioData.imageSize, mobile: parseInt(e.target.value) || 260 }
+                         })}
+                         disabled={!isEditing}
+                         style={{
+                           width: '60px',
+                           padding: '0.25rem 0.5rem',
+                           border: '1px solid #e5e7eb',
+                           borderRadius: '4px',
+                           outline: 'none',
+                           fontSize: '0.75rem',
+                           textAlign: 'center',
+                           background: !isEditing ? '#f9fafb' : 'white',
+                           color: !isEditing ? '#6b7280' : '#111827'
+                         }}
+                       />
+                       <span style={{ fontSize: '0.75rem', color: '#6b7280' }}>px</span>
+                     </div>
+                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                       <label style={{ fontSize: '0.75rem', color: '#6b7280', minWidth: '40px' }}>높이:</label>
+                       <input
+                         type="number"
+                         min="150"
+                         max="300"
+                         value={portfolioData.imageSize?.height || 250}
+                         onChange={(e) => updatePortfolioData({
+                           imageSize: { ...portfolioData.imageSize, height: parseInt(e.target.value) || 250 }
+                         })}
+                         disabled={!isEditing}
+                         style={{
+                           width: '60px',
+                           padding: '0.25rem 0.5rem',
+                           border: '1px solid #e5e7eb',
+                           borderRadius: '4px',
+                           outline: 'none',
+                           fontSize: '0.75rem',
+                           textAlign: 'center',
+                           background: !isEditing ? '#f9fafb' : 'white',
+                           color: !isEditing ? '#6b7280' : '#111827'
+                         }}
+                       />
+                       <span style={{ fontSize: '0.75rem', color: '#6b7280' }}>px</span>
+                     </div>
+                   </div>
+                 </div>
               </div>
             </div>
           </div>

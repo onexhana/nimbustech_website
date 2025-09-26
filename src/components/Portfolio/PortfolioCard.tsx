@@ -16,6 +16,21 @@ const PortfolioCard = ({ title, description, image }: PortfolioCardProps) => {
 
   // 모바일과 데스크톱 레이아웃 분리
   const isMobile = window.innerWidth < 768;
+
+  // 포트폴리오 데이터에서 이미지 크기 설정 불러오기
+  const portfolioData = (() => {
+    const savedData = localStorage.getItem('portfolioData');
+    if (savedData) {
+      return JSON.parse(savedData);
+    }
+    return {
+      imageSize: {
+        web: 330,
+        mobile: 260,
+        height: 250
+      }
+    };
+  })();
   
   return (
     <div 
@@ -44,8 +59,8 @@ const PortfolioCard = ({ title, description, image }: PortfolioCardProps) => {
         <div
           className="bg-gray-100 rounded-[16px] overflow-hidden flex items-end justify-center"
           style={{
-            width: isMobile ? '260px' : '330px',
-            height: isMobile ? '240px' : '250px',
+            width: isMobile ? `${portfolioData.imageSize?.mobile || 260}px` : `${portfolioData.imageSize?.web || 330}px`,
+            height: `${portfolioData.imageSize?.height || 250}px`,
             marginTop: isMobile ? '-40px' : '-30px'
           }}
         >

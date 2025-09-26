@@ -212,8 +212,8 @@ export default function PortfolioSection() {
                           marginTop: '16px'
                         }}>
                           <div style={{
-                            width: '280px',
-                            height: '150px',
+                            width: `${portfolioData.imageSize?.mobile || 280}px`,
+                            height: `${(portfolioData.imageSize?.height || 250) * 0.6}px`,
                             borderRadius: '16px',
                             overflow: 'hidden',
                             backgroundColor: '#f3f4f6'
