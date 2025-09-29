@@ -170,10 +170,22 @@ const AboutContext = createContext<AboutContextType | undefined>(undefined);
 
 // Provider 컴포넌트
 export function AboutProvider({ children }: { children: ReactNode }) {
-  const [aboutData, setAboutData] = useState<AboutData>(defaultAboutData);
-  const [isLoading, setIsLoading] = useState(true);
+  const [aboutData, setAboutData] = useState<AboutData>(() => {
+    // localStorage에서 저장된 데이터가 있으면 불러오기
+    const savedData = localStorage.getItem('aboutData');
+    if (savedData) {
+      try {
+        return JSON.parse(savedData);
+      } catch (error) {
+        console.error('저장된 About 데이터를 불러오는데 실패했습니다:', error);
+        return defaultAboutData;
+      }
+    }
+    return defaultAboutData;
+  });
+  const [isLoading, setIsLoading] = useState(false);
 
-  // 데이터 로드 함수
+  // 데이터 로드 함수 (새로고침용)
   const loadData = async () => {
     try {
       const data = await getAboutData();
@@ -186,11 +198,6 @@ export function AboutProvider({ children }: { children: ReactNode }) {
       setIsLoading(false);
     }
   };
-
-  // 컴포넌트 마운트 시 로컬 스토리지에서 데이터 로드
-  useEffect(() => {
-    loadData();
-  }, []);
 
   // 데이터 새로고침 함수
   const refreshData = () => {
@@ -268,11 +275,11 @@ export function AboutProvider({ children }: { children: ReactNode }) {
     refreshData
   };
 
-  // 로딩 중일 때는 기본 데이터로 렌더링
+  // 로딩 중일 때는 현재 데이터로 렌더링 (동기 로딩이므로 로딩 상태가 거의 없음)
   if (isLoading) {
     return (
       <AboutContext.Provider value={{
-        aboutData: defaultAboutData,
+        aboutData: aboutData,
         updateMainTitle: () => {},
         updateSubtitle: () => {},
         updateTab: () => {},
