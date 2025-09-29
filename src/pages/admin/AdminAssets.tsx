@@ -1378,7 +1378,12 @@ export default function AdminAssets() {
                             미리보기
                           </a>
                           <button
-                            onClick={() => setShowPdfUpload(pdf)}
+                            onClick={() => {
+                              setShowPdfUpload(pdf);
+                              setShowImageUpload(null); // 이미지 업로드 모달 닫기
+                              // 페이지 상단으로 부드럽게 스크롤
+                              window.scrollTo({ top: 0, behavior: 'smooth' });
+                            }}
                             style={{
                               padding: '0.5rem 1rem',
                               fontSize: '0.875rem',
@@ -1560,6 +1565,7 @@ export default function AdminAssets() {
                           <button
                             onClick={() => {
                               setShowImageUpload(image);
+                              setShowPdfUpload(null); // PDF 업로드 모달 닫기
                               // 페이지 상단으로 부드럽게 스크롤
                               window.scrollTo({ top: 0, behavior: 'smooth' });
                             }}
