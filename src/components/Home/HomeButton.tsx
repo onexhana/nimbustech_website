@@ -106,7 +106,7 @@ const buttons: ButtonItem[] = [
     subtitle: "핵심가치",
     description: "고객과 함께 성장하는\n신뢰·책임·전문성의 가치",
     link: "/#about",
-    imagePath: "/popup_image/Core%20Values.png",
+    imagePath: "/popup_image/Core Values.png",
     titleFontSize: 30,
     subtitleFontSize: 40,
     descriptionFontSize: 20,
@@ -116,7 +116,7 @@ const buttons: ButtonItem[] = [
     subtitle: "일하는 방식",
     description: '모든 일의 궁극적인 목적은\n"고객창출" 곧 "고객성공"이다!',
     link: "/#about",
-    imagePath: "/popup_image/Way%20of%20Working.jpg",
+    imagePath: "/popup_image/Way of Working.jpg",
     titleFontSize: 30,
     subtitleFontSize: 40,
     descriptionFontSize: 20,
@@ -127,7 +127,7 @@ const buttons: ButtonItem[] = [
     description:
       "최고의 열정과 패기를 갖춘\n인재들과 함께 일하고 성장하는 기업",
     link: "/#about",
-    imagePath: "/popup_image/Employee%20Benefits.jpg",
+    imagePath: "/popup_image/Employee Benefits.jpg",
     titleFontSize: 30,
     subtitleFontSize: 40,
     descriptionFontSize: 20,
@@ -237,13 +237,20 @@ export default function HomeButton() {
           </button>
           <div style={{ width: "100%" }}>
             <img
-              src={selectedButton.imagePath}
+              src={homeData.buttonData[selectedIdx].imagePath}
               alt={selectedButton.subtitle}
               style={{
                 width: "100%",
                 height: "auto",
                 objectFit: "contain",
                 maxHeight: "85vh",
+              }}
+              onError={(e) => {
+                console.error('이미지 로딩 실패:', homeData.buttonData[selectedIdx].imagePath);
+                e.currentTarget.style.display = 'none';
+              }}
+              onLoad={() => {
+                console.log('이미지 로딩 성공:', homeData.buttonData[selectedIdx].imagePath);
               }}
             />
           </div>

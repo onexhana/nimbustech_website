@@ -370,7 +370,35 @@ export default function AdminAssets() {
         category: "포트폴리오",
         size: "2.8MB",
         uploadDate: "2024-01-25"
-      }
+      },
+      
+      // 고객사 로고 (16개)
+      ...Array.from({ length: 16 }, (_, i) => {
+        const num = String(i + 1).padStart(2, "0");
+        return {
+          id: 100 + i,
+          name: `고객사${num}.png`,
+          path: `/고객사 & 파트너사_고화질/고객사${num}.png`,
+          category: "고객사",
+          size: "0.5MB",
+          uploadDate: "2024-01-20",
+          description: `고객사 ${num}번 로고`
+        };
+      }),
+      
+      // 파트너사 로고 (21개)
+      ...Array.from({ length: 21 }, (_, i) => {
+        const num = String(i + 1).padStart(2, "0");
+        return {
+          id: 116 + i,
+          name: `파트너사${num}.png`,
+          path: `/고객사 & 파트너사_고화질/파트너사${num}.png`,
+          category: "파트너사",
+          size: "0.5MB",
+          uploadDate: "2024-01-20",
+          description: `파트너사 ${num}번 로고`
+        };
+      })
     ],
     pdfs: [
       {
@@ -402,7 +430,7 @@ export default function AdminAssets() {
     type: "image"
   });
 
-  const categories = ["전체", "로고", "홈버튼", "포트폴리오", "PDF"];
+  const categories = ["전체", "로고", "홈버튼", "포트폴리오", "고객사", "파트너사", "PDF"];
 
   const filteredImages = selectedCategory === "전체" 
     ? assetsData.images 
@@ -457,21 +485,66 @@ export default function AdminAssets() {
     // 홈버튼 이미지인 경우 HomeContext도 함께 업데이트
     const updatedImage = updatedImages.find(img => img.id === id);
     if (updatedImage && updatedImage.category === "홈버튼") {
-      // 홈버튼 이미지 ID와 HomeContext 버튼 인덱스 매핑
-      const buttonIndexMap: { [key: number]: number } = {
-        13: 0, // Mission&Vision
-        14: 1, // Core Values  
-        15: 2, // Way of Working
-        16: 3, // Employee Benefits
+      // 웹용 이미지만 HomeContext 업데이트 (모바일은 HomeButton_mobile.tsx에서 별도 관리)
+      const webButtonIndexMap: { [key: number]: number } = {
+        13: 0, // Mission&Vision (웹용)
+        14: 1, // Core Values (웹용)
+        15: 2, // Way of Working (웹용)
+        16: 3, // Employee Benefits (웹용)
+        // 모바일 이미지(17-20)는 HomeContext 업데이트하지 않음
+      };
+
+      const buttonIndex = webButtonIndexMap[id];
+      if (buttonIndex !== undefined) {
+        updateButtonData(buttonIndex, { imagePath: updatedImage.path });
+      }
+      
+      // 모바일 이미지인 경우 localStorage에 저장
+      const mobileButtonIndexMap: { [key: number]: number } = {
         17: 0, // Mission&Vision_mobile
         18: 1, // Core Values_mobile
         19: 2, // Way of Working_mobile
         20: 3  // Employee Benefits_mobile
       };
-
-      const buttonIndex = buttonIndexMap[id];
-      if (buttonIndex !== undefined) {
-        updateButtonData(buttonIndex, { imagePath: updatedImage.path });
+      
+      const mobileButtonIndex = mobileButtonIndexMap[id];
+      if (mobileButtonIndex !== undefined) {
+        // 모바일 이미지 경로를 localStorage에 저장
+        const mobileImagePaths = JSON.parse(localStorage.getItem('mobileImagePaths') || '["/popup_image_mobile/Mission&Vision_mobile.png","/popup_image_mobile/Core Values_mobile.png","/popup_image_mobile/Way of Working_mobile.png","/popup_image_mobile/Employee Benefits_mobile.png"]');
+        mobileImagePaths[mobileButtonIndex] = updatedImage.path;
+        localStorage.setItem('mobileImagePaths', JSON.stringify(mobileImagePaths));
+      }
+      
+      // 고객사 로고인 경우 localStorage에 저장
+      if (updatedImage.category === "고객사") {
+        const customerLogoIndex = id - 100; // ID 100부터 시작하므로
+        if (customerLogoIndex >= 0 && customerLogoIndex < 16) {
+          const customerLogos = JSON.parse(localStorage.getItem('customerLogos') || '[]');
+          if (customerLogos.length === 0) {
+            // 기본값으로 16개 로고 경로 생성
+            customerLogos.push(...Array.from({ length: 16 }, (_, i) => 
+              `/고객사 & 파트너사_고화질/고객사${String(i + 1).padStart(2, "0")}.png`
+            ));
+          }
+          customerLogos[customerLogoIndex] = updatedImage.path;
+          localStorage.setItem('customerLogos', JSON.stringify(customerLogos));
+        }
+      }
+      
+      // 파트너사 로고인 경우 localStorage에 저장
+      if (updatedImage.category === "파트너사") {
+        const partnerLogoIndex = id - 116; // ID 116부터 시작하므로
+        if (partnerLogoIndex >= 0 && partnerLogoIndex < 21) {
+          const partnerLogos = JSON.parse(localStorage.getItem('partnerLogos') || '[]');
+          if (partnerLogos.length === 0) {
+            // 기본값으로 21개 로고 경로 생성
+            partnerLogos.push(...Array.from({ length: 21 }, (_, i) => 
+              `/고객사 & 파트너사_고화질/파트너사${String(i + 1).padStart(2, "0")}.png`
+            ));
+          }
+          partnerLogos[partnerLogoIndex] = updatedImage.path;
+          localStorage.setItem('partnerLogos', JSON.stringify(partnerLogos));
+        }
       }
     }
 
@@ -720,6 +793,8 @@ export default function AdminAssets() {
                   <option value="로고">로고</option>
                   <option value="홈버튼">홈버튼</option>
                   <option value="포트폴리오">포트폴리오</option>
+                  <option value="고객사">고객사</option>
+                  <option value="파트너사">파트너사</option>
                   <option value="PDF">PDF</option>
                 </select>
               </div>
