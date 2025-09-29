@@ -102,10 +102,14 @@ export async function saveContactData(data: ContactData): Promise<void> {
 
 // About 페이지 데이터 관리 API
 export async function getAboutData(): Promise<AboutData> {
-  // 서버에서 데이터를 가져옵니다 (현재는 기본값 반환)
-  // TODO: 실제 서버 API 호출로 변경
+  // 실제 환경에서는 서버에서 데이터를 가져옵니다
+  // 현재는 로컬 스토리지에서 가져오거나 기본값을 반환합니다
+  const storedData = localStorage.getItem('aboutData');
+  if (storedData) {
+    return JSON.parse(storedData);
+  }
   
-  // 기본값 반환 (모든 사용자가 동일한 데이터 사용)
+  // 기본값 반환
   return {
     mainTitle: "고객 성공 리딩",
     subtitle: "신뢰성 높은 DT 서비스를 제공합니다.",
@@ -252,10 +256,7 @@ export async function getAboutData(): Promise<AboutData> {
 }
 
 export async function saveAboutData(data: AboutData): Promise<void> {
-  // 서버에 데이터를 저장합니다 (현재는 임시로 로그만 출력)
-  // TODO: 실제 서버 API 호출로 변경
-  console.log('About 데이터 저장 요청:', data);
-  
-  // 임시로 localStorage에 저장 (개발 중에만 사용)
-  // localStorage.setItem('aboutData', JSON.stringify(data));
+  // 실제 환경에서는 서버에 데이터를 저장합니다
+  // 현재는 로컬 스토리지에 저장합니다
+  localStorage.setItem('aboutData', JSON.stringify(data));
 }

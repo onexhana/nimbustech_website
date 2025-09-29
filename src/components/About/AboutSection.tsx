@@ -31,14 +31,6 @@ import AboutTab from './AboutTab';
 import AboutCard from './AboutCard'; // 효과 버전 (호버 애니메이션 활성화)
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
-import { getAboutData } from '../../api/contact';
-import type { AboutData } from '../../types/contact';
-//import AboutCard from './AboutCardNoEffect'; // 무효화 버전 (호버 효과 없음)
-
-const noEffect = AboutCard.name === 'AboutCardNoEffect';
-
-// ========================================
-// Context에서 데이터 가져오기
 import { useAboutData } from '../../context/AboutContext';
 
 // 탭 및 카드 데이터 (각 섹션별 6개씩 확장됨)
@@ -48,7 +40,7 @@ import { useAboutData } from '../../context/AboutContext';
 // 메인 컴포넌트 함수
 // ========================================
 export default function AboutSection() {
-  const { aboutData, setAboutData } = useAboutData();
+  const { aboutData, refreshData } = useAboutData();
   
   // 상태 관리:
   // activeTab - 선택된 탭, currentSlide - 현재 슬라이드 인덱스
@@ -66,21 +58,22 @@ export default function AboutSection() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  // 첫 번째 탭을 기본값으로 설정
   useEffect(() => {
-    const loadAboutData = async () => {
-      try {
-        const data = await getAboutData();
-        setAboutData(data);
-        // 첫 번째 탭을 기본값으로 설정
-        if (data.tabs.length > 0) {
-          setActiveTab(data.tabs[0].name);
-        }
-      } catch (error) {
-        console.error('About 데이터 로드 실패:', error);
-      }
+    if (aboutData.tabs.length > 0) {
+      setActiveTab(aboutData.tabs[0].name);
+    }
+  }, [aboutData]);
+
+  // 페이지 포커스 시 데이터 새로고침 (admin에서 수정 후 돌아올 때 반영)
+  useEffect(() => {
+    const handleFocus = () => {
+      refreshData();
     };
-    loadAboutData();
-  }, []);
+    
+    window.addEventListener('focus', handleFocus);
+    return () => window.removeEventListener('focus', handleFocus);
+  }, [refreshData]);
   
   const cards = aboutData.tabs.find(tab => tab.name === activeTab)?.cards || [];
   const isMultiPage = true; // 모든 탭을 무한루프로 변경
@@ -333,9 +326,9 @@ export default function AboutSection() {
                   <SwiperSlide key={`${card.title}-${index}`}>
                     <div
                       style={{
-                        opacity: noEffect ? 1 : 0,
-                        transform: noEffect ? 'translateY(0)' : 'translateY(30px) scale(0.9)',
-                        ...(noEffect ? {} : { animation: `cardAppear 0.6s ease-out ${(index % 3) * 0.15}s forwards` })
+                        opacity: 0,
+                        transform: 'translateY(30px) scale(0.9)',
+                        animation: `cardAppear 0.6s ease-out ${(index % 3) * 0.15}s forwards`
                       }}
                     >
                       <AboutCard

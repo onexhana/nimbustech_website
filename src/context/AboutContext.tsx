@@ -1,4 +1,5 @@
-import { createContext, useContext, useState, ReactNode } from 'react';
+import { createContext, useContext, useState, ReactNode, useEffect } from 'react';
+import { getAboutData } from '../api/contact';
 
 // About 카드 타입 정의
 interface AboutCard {
@@ -29,6 +30,7 @@ interface AboutContextType {
   updateCard: (tabIndex: number, cardIndex: number, updatedCard: Partial<AboutCard>) => void;
   addCard: (tabIndex: number, card: AboutCard) => void;
   deleteCard: (tabIndex: number, cardIndex: number) => void;
+  refreshData: () => void;
 }
 
 // 기본 데이터
@@ -169,12 +171,37 @@ const AboutContext = createContext<AboutContextType | undefined>(undefined);
 // Provider 컴포넌트
 export function AboutProvider({ children }: { children: ReactNode }) {
   const [aboutData, setAboutData] = useState<AboutData>(defaultAboutData);
+  const [isLoading, setIsLoading] = useState(true);
 
-  // 데이터 업데이트 (서버 기반으로 변경 예정)
+  // 데이터 로드 함수
+  const loadData = async () => {
+    try {
+      const data = await getAboutData();
+      setAboutData(data);
+    } catch (error) {
+      console.error('About 데이터 로드 실패:', error);
+      // 실패 시 기본 데이터 사용
+      setAboutData(defaultAboutData);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // 컴포넌트 마운트 시 로컬 스토리지에서 데이터 로드
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  // 데이터 새로고침 함수
+  const refreshData = () => {
+    setIsLoading(true);
+    loadData();
+  };
+
+  // 데이터 업데이트 (로컬 스토리지에 저장)
   const updateAboutData = (newData: AboutData) => {
     setAboutData(newData);
-    // TODO: 서버에 데이터 저장하도록 변경
-    // localStorage.setItem('aboutData', JSON.stringify(newData));
+    localStorage.setItem('aboutData', JSON.stringify(newData));
   };
 
   // 메인 타이틀 업데이트
@@ -237,8 +264,27 @@ export function AboutProvider({ children }: { children: ReactNode }) {
     updateTab,
     updateCard,
     addCard,
-    deleteCard
+    deleteCard,
+    refreshData
   };
+
+  // 로딩 중일 때는 기본 데이터로 렌더링
+  if (isLoading) {
+    return (
+      <AboutContext.Provider value={{
+        aboutData: defaultAboutData,
+        updateMainTitle: () => {},
+        updateSubtitle: () => {},
+        updateTab: () => {},
+        updateCard: () => {},
+        addCard: () => {},
+        deleteCard: () => {},
+        refreshData: () => {}
+      }}>
+        {children}
+      </AboutContext.Provider>
+    );
+  }
 
   return (
     <AboutContext.Provider value={value}>
