@@ -1,8 +1,10 @@
 // src/pages/admin/AdminAssets.tsx
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useHomeData } from '../../context/HomeContext';
 
 export default function AdminAssets() {
+  const { homeData, updateButtonData } = useHomeData();
   // Mock 데이터 (나중에 API로 교체)
   const [assetsData, setAssetsData] = useState({
     images: [
@@ -443,12 +445,36 @@ export default function AdminAssets() {
   };
 
   const updateImage = (id: number, updatedData: any) => {
+    const updatedImages = assetsData.images.map(img => 
+      img.id === id ? { ...img, ...updatedData } : img
+    );
+    
     setAssetsData({
       ...assetsData,
-      images: assetsData.images.map(img => 
-        img.id === id ? { ...img, ...updatedData } : img
-      )
+      images: updatedImages
     });
+
+    // 홈버튼 이미지인 경우 HomeContext도 함께 업데이트
+    const updatedImage = updatedImages.find(img => img.id === id);
+    if (updatedImage && updatedImage.category === "홈버튼") {
+      // 홈버튼 이미지 ID와 HomeContext 버튼 인덱스 매핑
+      const buttonIndexMap: { [key: number]: number } = {
+        13: 0, // Mission&Vision
+        14: 1, // Core Values  
+        15: 2, // Way of Working
+        16: 3, // Employee Benefits
+        17: 0, // Mission&Vision_mobile
+        18: 1, // Core Values_mobile
+        19: 2, // Way of Working_mobile
+        20: 3  // Employee Benefits_mobile
+      };
+
+      const buttonIndex = buttonIndexMap[id];
+      if (buttonIndex !== undefined) {
+        updateButtonData(buttonIndex, { imagePath: updatedImage.path });
+      }
+    }
+
     alert('이미지 정보가 업데이트되었습니다!');
   };
 
