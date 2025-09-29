@@ -365,7 +365,7 @@ export default function AdminAbout() {
             </div>
           </div>
 
-          {/* 글꼴 사이즈 관리 */}
+          {/* 메인 타이틀 관리 (모바일 전용) */}
           <div>
             <div style={{
               background: 'rgba(255, 255, 255, 0.8)',
@@ -380,119 +380,345 @@ export default function AdminAbout() {
                 <div style={{
                   width: '32px',
                   height: '32px',
-                  background: 'linear-gradient(135deg, #f59e0b, #f97316)',
+                  background: 'linear-gradient(135deg, #3b82f6, #1d4ed8)',
                   borderRadius: '8px',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center'
                 }}>
                   <svg width="20" height="20" fill="none" stroke="white" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 4V2a1 1 0 011-1h8a1 1 0 011 1v2h3a1 1 0 110 2h-1v12a2 2 0 01-2 2H7a2 2 0 01-2-2V6H4a1 1 0 110-2h3zM9 6v10h6V6H9z" />
                   </svg>
                 </div>
                 <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#111827', margin: 0 }}>
-                  글꼴 사이즈 관리
+                  메인 타이틀 관리 (모바일 전용)
                 </h3>
               </div>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem' }}>
+              
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                {/* 메인 제목 */}
                 <div>
-                  <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
-                    탭 글씨 크기
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
+                    <label style={{ fontSize: '0.875rem', fontWeight: '600', color: '#374151' }}>
+                      메인 제목
+                    </label>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                      <span style={{ fontSize: '0.75rem', color: '#6b7280' }}>크기:</span>
+                      <input
+                        type="number"
+                        min="12"
+                        max="48"
+                        value={aboutData.fontSize?.mainTitle || 30}
+                        onChange={(e) => aboutData && setAboutData({
+                          ...aboutData, 
+                          fontSize: { ...aboutData.fontSize, mainTitle: parseInt(e.target.value) || 30 }
+                        })}
+                        disabled={!isEditing}
+                        style={{
+                          width: '60px',
+                          padding: '0.25rem 0.5rem',
+                          border: '1px solid #e5e7eb',
+                          borderRadius: '4px',
+                          outline: 'none',
+                          fontSize: '0.75rem',
+                          textAlign: 'center',
+                          background: !isEditing ? '#f9fafb' : 'white',
+                          color: !isEditing ? '#6b7280' : '#111827'
+                        }}
+                      />
+                      <span style={{ fontSize: '0.75rem', color: '#6b7280' }}>px</span>
+                    </div>
+                  </div>
+                  <input
+                    type="text"
+                    value={aboutData.mainTitle}
+                    onChange={(e) => aboutData && setAboutData({
+                      ...aboutData, 
+                      mainTitle: e.target.value
+                    })}
+                    disabled={!isEditing}
+                    style={{
+                      width: '100%',
+                      padding: '0.75rem',
+                      border: '1px solid #e5e7eb',
+                      borderRadius: '8px',
+                      outline: 'none',
+                      fontSize: `${aboutData.fontSize?.mainTitle || 30}px`,
+                      transition: 'all 0.2s ease',
+                      background: !isEditing ? '#f9fafb' : 'white',
+                      color: !isEditing ? '#6b7280' : '#111827'
+                    }}
+                  />
+                </div>
+
+                {/* 부제목 */}
+                <div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
+                    <label style={{ fontSize: '0.875rem', fontWeight: '600', color: '#374151' }}>
+                      부제목
+                    </label>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                      <span style={{ fontSize: '0.75rem', color: '#6b7280' }}>크기:</span>
+                      <input
+                        type="number"
+                        min="8"
+                        max="32"
+                        value={aboutData.fontSize?.subtitle || 18}
+                        onChange={(e) => aboutData && setAboutData({
+                          ...aboutData, 
+                          fontSize: { ...aboutData.fontSize, subtitle: parseInt(e.target.value) || 18 }
+                        })}
+                        disabled={!isEditing}
+                        style={{
+                          width: '60px',
+                          padding: '0.25rem 0.5rem',
+                          border: '1px solid #e5e7eb',
+                          borderRadius: '4px',
+                          outline: 'none',
+                          fontSize: '0.75rem',
+                          textAlign: 'center',
+                          background: !isEditing ? '#f9fafb' : 'white',
+                          color: !isEditing ? '#6b7280' : '#111827'
+                        }}
+                      />
+                      <span style={{ fontSize: '0.75rem', color: '#6b7280' }}>px</span>
+                    </div>
+                  </div>
+                  <input
+                    type="text"
+                    value={aboutData.subtitle}
+                    onChange={(e) => aboutData && setAboutData({
+                      ...aboutData, 
+                      subtitle: e.target.value
+                    })}
+                    disabled={!isEditing}
+                    style={{
+                      width: '100%',
+                      padding: '0.75rem',
+                      border: '1px solid #e5e7eb',
+                      borderRadius: '8px',
+                      outline: 'none',
+                      fontSize: `${aboutData.fontSize?.subtitle || 18}px`,
+                      transition: 'all 0.2s ease',
+                      background: !isEditing ? '#f9fafb' : 'white',
+                      color: !isEditing ? '#6b7280' : '#111827'
+                    }}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* 탭 네비게이션 관리 */}
+          <div>
+            <div style={{
+              background: 'rgba(255, 255, 255, 0.8)',
+              backdropFilter: 'blur(10px)',
+              borderRadius: '12px',
+              boxShadow: '0 10px 15px rgba(0, 0, 0, 0.1)',
+              border: '1px solid rgba(255, 255, 255, 0.2)',
+              padding: '1.5rem',
+              transition: 'all 0.3s ease'
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
+                <div style={{
+                  width: '32px',
+                  height: '32px',
+                  background: 'linear-gradient(135deg, #8b5cf6, #7c3aed)',
+                  borderRadius: '8px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}>
+                  <svg width="20" height="20" fill="none" stroke="white" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
+                  </svg>
+                </div>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#111827', margin: 0 }}>
+                  탭 네비게이션 관리
+                </h3>
+              </div>
+              
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                {/* 탭 이름 편집 */}
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.75rem' }}>
+                    탭 이름 편집
                   </label>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <input
-                      type="number"
-                      min="10"
-                      max="24"
-                      value={aboutData.fontSize?.tabName || 16}
-                      onChange={(e) => aboutData && setAboutData({
-                        ...aboutData, 
-                        fontSize: { ...aboutData.fontSize, tabName: parseInt(e.target.value) || 16 }
-                      })}
-                      disabled={!isEditing}
-                      style={{
-                        width: '80px',
-                        padding: '0.3rem 0.5rem',
-                        border: '1px solid #e5e7eb',
-                        borderRadius: '4px',
-                        outline: 'none',
-                        fontSize: '0.75rem',
-                        textAlign: 'center',
-                        background: !isEditing ? '#f9fafb' : 'white',
-                        color: !isEditing ? '#6b7280' : '#111827'
-                      }}
-                    />
-                    <span style={{ 
-                      fontSize: '0.75rem', 
-                      fontWeight: '600', 
-                      color: '#374151'
-                    }}>
-                      px
-                    </span>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1rem' }}>
+                    {aboutData.tabs.map((tab, index) => (
+                      <div key={index}>
+                        <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: '500', color: '#6b7280', marginBottom: '0.25rem' }}>
+                          {index + 1}번째 탭
+                        </label>
+                        <input
+                          type="text"
+                          value={tab.name}
+                          onChange={(e) => {
+                            if (!aboutData) return;
+                            const newTabs = [...aboutData.tabs];
+                            newTabs[index].name = e.target.value;
+                            setAboutData({...aboutData, tabs: newTabs});
+                          }}
+                          disabled={!isEditing}
+                          style={{
+                            width: '100%',
+                            padding: '0.5rem',
+                            border: '1px solid #e5e7eb',
+                            borderRadius: '6px',
+                            outline: 'none',
+                            fontSize: '0.875rem',
+                            transition: 'all 0.2s ease',
+                            background: !isEditing ? '#f9fafb' : 'white',
+                            color: !isEditing ? '#6b7280' : '#111827'
+                          }}
+                        />
+                      </div>
+                    ))}
                   </div>
                 </div>
+
+                {/* 탭 스타일 설정 */}
                 <div>
-                  <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
-                    탭 활성 색상
+                  <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.75rem' }}>
+                    탭 스타일 설정
                   </label>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <input
-                      type="color"
-                      value={aboutData.tabActiveColor || '#00A3E0'}
-                      onChange={(e) => aboutData && setAboutData({
-                        ...aboutData, 
-                        tabActiveColor: e.target.value
-                      })}
-                      disabled={!isEditing}
-                      style={{
-                        width: '40px',
-                        height: '32px',
-                        border: '1px solid #e5e7eb',
-                        borderRadius: '4px',
-                        outline: 'none',
-                        cursor: isEditing ? 'pointer' : 'not-allowed'
-                      }}
-                    />
-                    <span style={{ 
-                      fontSize: '0.75rem', 
-                      fontWeight: '600', 
-                      color: '#374151'
-                    }}>
-                      {aboutData.tabActiveColor || '#00A3E0'}
-                    </span>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem' }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: '500', color: '#6b7280', marginBottom: '0.5rem' }}>
+                        탭 글씨 크기
+                      </label>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                        <input
+                          type="number"
+                          min="10"
+                          max="24"
+                          value={aboutData.fontSize?.tabName || 16}
+                          onChange={(e) => aboutData && setAboutData({
+                            ...aboutData, 
+                            fontSize: { ...aboutData.fontSize, tabName: parseInt(e.target.value) || 16 }
+                          })}
+                          disabled={!isEditing}
+                          style={{
+                            width: '80px',
+                            padding: '0.3rem 0.5rem',
+                            border: '1px solid #e5e7eb',
+                            borderRadius: '4px',
+                            outline: 'none',
+                            fontSize: '0.75rem',
+                            textAlign: 'center',
+                            background: !isEditing ? '#f9fafb' : 'white',
+                            color: !isEditing ? '#6b7280' : '#111827'
+                          }}
+                        />
+                        <span style={{ 
+                          fontSize: '0.75rem', 
+                          fontWeight: '600', 
+                          color: '#374151'
+                        }}>
+                          px
+                        </span>
+                      </div>
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: '500', color: '#6b7280', marginBottom: '0.5rem' }}>
+                        활성 탭 색상
+                      </label>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                        <input
+                          type="color"
+                          value={aboutData.tabActiveColor || '#00A3E0'}
+                          onChange={(e) => aboutData && setAboutData({
+                            ...aboutData, 
+                            tabActiveColor: e.target.value
+                          })}
+                          disabled={!isEditing}
+                          style={{
+                            width: '40px',
+                            height: '32px',
+                            border: '1px solid #e5e7eb',
+                            borderRadius: '4px',
+                            outline: 'none',
+                            cursor: isEditing ? 'pointer' : 'not-allowed'
+                          }}
+                        />
+                        <span style={{ 
+                          fontSize: '0.75rem', 
+                          fontWeight: '600', 
+                          color: '#374151'
+                        }}>
+                          {aboutData.tabActiveColor || '#00A3E0'}
+                        </span>
+                      </div>
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: '500', color: '#6b7280', marginBottom: '0.5rem' }}>
+                        비활성 탭 색상
+                      </label>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                        <input
+                          type="color"
+                          value={aboutData.tabInactiveColor || '#374151'}
+                          onChange={(e) => aboutData && setAboutData({
+                            ...aboutData, 
+                            tabInactiveColor: e.target.value
+                          })}
+                          disabled={!isEditing}
+                          style={{
+                            width: '40px',
+                            height: '32px',
+                            border: '1px solid #e5e7eb',
+                            borderRadius: '4px',
+                            outline: 'none',
+                            cursor: isEditing ? 'pointer' : 'not-allowed'
+                          }}
+                        />
+                        <span style={{ 
+                          fontSize: '0.75rem', 
+                          fontWeight: '600', 
+                          color: '#374151'
+                        }}>
+                          {aboutData.tabInactiveColor || '#374151'}
+                        </span>
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <div>
-                  <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
-                    탭 비활성 색상
-                  </label>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <input
-                      type="color"
-                      value={aboutData.tabInactiveColor || '#374151'}
-                      onChange={(e) => aboutData && setAboutData({
-                        ...aboutData, 
-                        tabInactiveColor: e.target.value
-                      })}
-                      disabled={!isEditing}
-                      style={{
-                        width: '40px',
-                        height: '32px',
-                        border: '1px solid #e5e7eb',
-                        borderRadius: '4px',
-                        outline: 'none',
-                        cursor: isEditing ? 'pointer' : 'not-allowed'
-                      }}
-                    />
-                    <span style={{ 
-                      fontSize: '0.75rem', 
-                      fontWeight: '600', 
-                      color: '#374151'
-                    }}>
-                      {aboutData.tabInactiveColor || '#374151'}
-                    </span>
-                  </div>
+              </div>
+            </div>
+          </div>
+
+          {/* 카드 스타일 관리 */}
+          <div>
+            <div style={{
+              background: 'rgba(255, 255, 255, 0.8)',
+              backdropFilter: 'blur(10px)',
+              borderRadius: '12px',
+              boxShadow: '0 10px 15px rgba(0, 0, 0, 0.1)',
+              border: '1px solid rgba(255, 255, 255, 0.2)',
+              padding: '1.5rem',
+              transition: 'all 0.3s ease'
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
+                <div style={{
+                  width: '32px',
+                  height: '32px',
+                  background: 'linear-gradient(135deg, #10b981, #059669)',
+                  borderRadius: '8px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}>
+                  <svg width="20" height="20" fill="none" stroke="white" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                  </svg>
                 </div>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#111827', margin: 0 }}>
+                  카드 스타일 관리
+                </h3>
+              </div>
+              
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1rem' }}>
                 <div>
                   <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
                     카드 배경색
@@ -611,150 +837,6 @@ export default function AdminAbout() {
                       color: '#374151'
                     }}>
                       {aboutData.cardHoverEffect !== false ? '활성화' : '비활성화'}
-                    </span>
-                  </div>
-                </div>
-                <div>
-                  <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
-                    모바일 메인 제목 크기
-                  </label>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <input
-                      type="number"
-                      min="12"
-                      max="48"
-                      value={aboutData.fontSize?.mainTitle || 30}
-                      onChange={(e) => aboutData && setAboutData({
-                        ...aboutData, 
-                        fontSize: { ...aboutData.fontSize, mainTitle: parseInt(e.target.value) || 30 }
-                      })}
-                      disabled={!isEditing}
-                      style={{
-                        width: '80px',
-                        padding: '0.3rem 0.5rem',
-                        border: '1px solid #e5e7eb',
-                        borderRadius: '4px',
-                        outline: 'none',
-                        fontSize: '0.75rem',
-                        textAlign: 'center',
-                        background: !isEditing ? '#f9fafb' : 'white',
-                        color: !isEditing ? '#6b7280' : '#111827'
-                      }}
-                    />
-                    <span style={{ 
-                      fontSize: '0.75rem', 
-                      fontWeight: '600', 
-                      color: '#374151'
-                    }}>
-                      px
-                    </span>
-                  </div>
-                </div>
-                <div>
-                  <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
-                    모바일 부제목 크기
-                  </label>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <input
-                      type="number"
-                      min="10"
-                      max="32"
-                      value={aboutData.fontSize?.subtitle || 18}
-                      onChange={(e) => aboutData && setAboutData({
-                        ...aboutData, 
-                        fontSize: { ...aboutData.fontSize, subtitle: parseInt(e.target.value) || 18 }
-                      })}
-                      disabled={!isEditing}
-                      style={{
-                        width: '80px',
-                        padding: '0.3rem 0.5rem',
-                        border: '1px solid #e5e7eb',
-                        borderRadius: '4px',
-                        outline: 'none',
-                        fontSize: '0.75rem',
-                        textAlign: 'center',
-                        background: !isEditing ? '#f9fafb' : 'white',
-                        color: !isEditing ? '#6b7280' : '#111827'
-                      }}
-                    />
-                    <span style={{ 
-                      fontSize: '0.75rem', 
-                      fontWeight: '600', 
-                      color: '#374151'
-                    }}>
-                      px
-                    </span>
-                  </div>
-                </div>
-                <div>
-                  <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
-                    카드 제목 크기
-                  </label>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <input
-                      type="number"
-                      min="10"
-                      max="28"
-                      value={aboutData.fontSize?.cardTitle || 16}
-                      onChange={(e) => aboutData && setAboutData({
-                        ...aboutData, 
-                        fontSize: { ...aboutData.fontSize, cardTitle: parseInt(e.target.value) || 16 }
-                      })}
-                      disabled={!isEditing}
-                      style={{
-                        width: '80px',
-                        padding: '0.3rem 0.5rem',
-                        border: '1px solid #e5e7eb',
-                        borderRadius: '4px',
-                        outline: 'none',
-                        fontSize: '0.75rem',
-                        textAlign: 'center',
-                        background: !isEditing ? '#f9fafb' : 'white',
-                        color: !isEditing ? '#6b7280' : '#111827'
-                      }}
-                    />
-                    <span style={{ 
-                      fontSize: '0.75rem', 
-                      fontWeight: '600', 
-                      color: '#374151'
-                    }}>
-                      px
-                    </span>
-                  </div>
-                </div>
-                <div>
-                  <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
-                    카드 설명 크기
-                  </label>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <input
-                      type="number"
-                      min="8"
-                      max="20"
-                      value={aboutData.fontSize?.cardDescription || 14}
-                      onChange={(e) => aboutData && setAboutData({
-                        ...aboutData, 
-                        fontSize: { ...aboutData.fontSize, cardDescription: parseInt(e.target.value) || 14 }
-                      })}
-                      disabled={!isEditing}
-                      style={{
-                        width: '80px',
-                        padding: '0.3rem 0.5rem',
-                        border: '1px solid #e5e7eb',
-                        borderRadius: '4px',
-                        outline: 'none',
-                        fontSize: '0.75rem',
-                        textAlign: 'center',
-                        background: !isEditing ? '#f9fafb' : 'white',
-                        color: !isEditing ? '#6b7280' : '#111827'
-                      }}
-                    />
-                    <span style={{ 
-                      fontSize: '0.75rem', 
-                      fontWeight: '600', 
-                      color: '#374151'
-                    }}>
-                      px
                     </span>
                   </div>
                 </div>
