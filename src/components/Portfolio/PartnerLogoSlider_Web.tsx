@@ -76,12 +76,28 @@ function PartnerLogoSliderWeb({
   
   const [customerLogos, setCustomerLogos] = useState<Logo[]>(getCustomerLogos());
   const [partnerLogos, setPartnerLogos] = useState<Logo[]>(getPartnerLogos());
+  const [settings, setSettings] = useState({
+    speed: 50,
+    textColor: "#374151",
+    textSize: 40
+  });
 
   // localStorage 변경 감지
   useEffect(() => {
     const handleStorageChange = () => {
       setCustomerLogos(getCustomerLogos());
       setPartnerLogos(getPartnerLogos());
+      
+      // 로고슬라이드 설정 로드
+      const savedSettings = localStorage.getItem('logoSliderSettings');
+      if (savedSettings) {
+        try {
+          const parsedSettings = JSON.parse(savedSettings);
+          setSettings(parsedSettings.web);
+        } catch (error) {
+          console.error('로고슬라이드 설정 로드 실패:', error);
+        }
+      }
     };
     
     window.addEventListener('storage', handleStorageChange);
@@ -89,13 +105,24 @@ function PartnerLogoSliderWeb({
     setCustomerLogos(getCustomerLogos());
     setPartnerLogos(getPartnerLogos());
     
+    // 로고슬라이드 설정 로드
+    const savedSettings = localStorage.getItem('logoSliderSettings');
+    if (savedSettings) {
+      try {
+        const parsedSettings = JSON.parse(savedSettings);
+        setSettings(parsedSettings.web);
+      } catch (error) {
+        console.error('로고슬라이드 설정 로드 실패:', error);
+      }
+    }
+    
     return () => window.removeEventListener('storage', handleStorageChange);
   }, []);
 
   const safeFactor = (v: number) => (v > 0 ? v : 1);
   
-  const topDuration = durationTop / safeFactor(speedTop ?? speed);
-  const bottomDuration = durationBottom / safeFactor(speedBottom ?? speed);
+  const topDuration = settings.speed / safeFactor(speedTop ?? speed);
+  const bottomDuration = settings.speed / safeFactor(speedBottom ?? speed);
 
   const rows = [
     { logos: customerLogos, duration: topDuration },
@@ -105,9 +132,10 @@ function PartnerLogoSliderWeb({
   return (
     <section aria-label="협력사 로고 슬라이더 (웹)" className="w-full">
       <p 
-        className="text-center text-gray-700 mb-10"
+        className="text-center mb-10"
         style={{
-          fontSize: "clamp(28px, 3vw, 40px)",
+          fontSize: `${settings.textSize}px`,
+          color: settings.textColor,
           fontWeight: 600,
           marginTop: "120px",
           marginBottom: "80px",
