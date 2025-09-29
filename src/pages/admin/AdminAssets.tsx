@@ -109,7 +109,7 @@ export default function AdminAssets() {
         id: 13,
         name: "Mission&Vision.jpg",
         path: "/popup_image/Mission&Vision.jpg",
-        category: "팝업이미지",
+        category: "홈버튼",
         size: "1.8MB",
         uploadDate: "2024-01-20"
       },
@@ -117,7 +117,7 @@ export default function AdminAssets() {
         id: 14,
         name: "Core Values.png",
         path: "/popup_image/Core Values.png",
-        category: "팝업이미지",
+        category: "홈버튼",
         size: "2.2MB",
         uploadDate: "2024-01-20"
       },
@@ -125,7 +125,7 @@ export default function AdminAssets() {
         id: 15,
         name: "Employee Benefits.jpg",
         path: "/popup_image/Employee Benefits.jpg",
-        category: "팝업이미지",
+        category: "홈버튼",
         size: "2.0MB",
         uploadDate: "2024-01-20"
       },
@@ -133,7 +133,7 @@ export default function AdminAssets() {
         id: 16,
         name: "Way of Working.jpg",
         path: "/popup_image/Way of Working.jpg",
-        category: "팝업이미지",
+        category: "홈버튼",
         size: "1.9MB",
         uploadDate: "2024-01-20"
       },
@@ -143,7 +143,7 @@ export default function AdminAssets() {
         id: 17,
         name: "Mission&Vision_mobile.png",
         path: "/popup_image_mobile/Mission&Vision_mobile.png",
-        category: "팝업이미지",
+        category: "홈버튼",
         size: "1.5MB",
         uploadDate: "2024-01-20"
       },
@@ -151,7 +151,7 @@ export default function AdminAssets() {
         id: 18,
         name: "Core Values_mobile.png",
         path: "/popup_image_mobile/Core Values_mobile.png",
-        category: "팝업이미지",
+        category: "홈버튼",
         size: "1.7MB",
         uploadDate: "2024-01-20"
       },
@@ -159,7 +159,7 @@ export default function AdminAssets() {
         id: 19,
         name: "Employee Benefits_mobile.png",
         path: "/popup_image_mobile/Employee Benefits_mobile.png",
-        category: "팝업이미지",
+        category: "홈버튼",
         size: "1.6MB",
         uploadDate: "2024-01-20"
       },
@@ -167,83 +167,9 @@ export default function AdminAssets() {
         id: 20,
         name: "Way of Working_mobile.png",
         path: "/popup_image_mobile/Way of Working_mobile.png",
-        category: "팝업이미지",
+        category: "홈버튼",
         size: "1.4MB",
         uploadDate: "2024-01-20"
-      },
-      
-      // 홈버튼 이미지
-      {
-        id: 45,
-        name: "Web 홈버튼 1",
-        path: "/popup_image/Mission&Vision.jpg",
-        category: "홈버튼",
-        size: "1.8MB",
-        uploadDate: "2024-01-20",
-        description: "미션&비전 웹 홈버튼 이미지"
-      },
-      {
-        id: 46,
-        name: "Web 홈버튼 2",
-        path: "/popup_image/Core Values.png",
-        category: "홈버튼",
-        size: "2.2MB",
-        uploadDate: "2024-01-20",
-        description: "핵심가치 웹 홈버튼 이미지"
-      },
-      {
-        id: 47,
-        name: "Web 홈버튼 3",
-        path: "/popup_image/Employee Benefits.jpg",
-        category: "홈버튼",
-        size: "2.0MB",
-        uploadDate: "2024-01-20",
-        description: "복지 혜택 웹 홈버튼 이미지"
-      },
-      {
-        id: 48,
-        name: "Web 홈버튼 4",
-        path: "/popup_image/Way of Working.jpg",
-        category: "홈버튼",
-        size: "1.9MB",
-        uploadDate: "2024-01-20",
-        description: "일하는 방식 웹 홈버튼 이미지"
-      },
-      {
-        id: 49,
-        name: "Mobile 홈버튼 1",
-        path: "/popup_image_mobile/Mission&Vision_mobile.png",
-        category: "홈버튼",
-        size: "1.5MB",
-        uploadDate: "2024-01-20",
-        description: "미션&비전 모바일 홈버튼 이미지"
-      },
-      {
-        id: 50,
-        name: "Mobile 홈버튼 2",
-        path: "/popup_image_mobile/Core Values_mobile.png",
-        category: "홈버튼",
-        size: "1.7MB",
-        uploadDate: "2024-01-20",
-        description: "핵심가치 모바일 홈버튼 이미지"
-      },
-      {
-        id: 51,
-        name: "Mobile 홈버튼 3",
-        path: "/popup_image_mobile/Employee Benefits_mobile.png",
-        category: "홈버튼",
-        size: "1.6MB",
-        uploadDate: "2024-01-20",
-        description: "복지 혜택 모바일 홈버튼 이미지"
-      },
-      {
-        id: 52,
-        name: "Mobile 홈버튼 4",
-        path: "/popup_image_mobile/Way of Working_mobile.png",
-        category: "홈버튼",
-        size: "1.4MB",
-        uploadDate: "2024-01-20",
-        description: "일하는 방식 모바일 홈버튼 이미지"
       },
       
       // 포트폴리오 이미지 - 공공 카테고리
@@ -474,7 +400,7 @@ export default function AdminAssets() {
     type: "image"
   });
 
-  const categories = ["전체", "로고", "팝업이미지", "포트폴리오", "홈버튼", "PDF"];
+  const categories = ["전체", "로고", "홈버튼", "포트폴리오", "PDF"];
 
   const filteredImages = selectedCategory === "전체" 
     ? assetsData.images 
@@ -766,9 +692,8 @@ export default function AdminAssets() {
                   }}
                 >
                   <option value="로고">로고</option>
-                  <option value="팝업이미지">팝업이미지</option>
-                  <option value="포트폴리오">포트폴리오</option>
                   <option value="홈버튼">홈버튼</option>
+                  <option value="포트폴리오">포트폴리오</option>
                   <option value="PDF">PDF</option>
                 </select>
               </div>
