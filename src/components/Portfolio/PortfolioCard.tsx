@@ -16,6 +16,56 @@ const PortfolioCard = ({ title, description, image }: PortfolioCardProps) => {
 
   // 모바일과 데스크톱 레이아웃 분리
   const isMobile = window.innerWidth < 768;
+
+  // 포트폴리오 데이터에서 스타일과 이미지 크기 설정 불러오기
+  const portfolioData = (() => {
+    const savedData = localStorage.getItem('portfolioData');
+    if (savedData) {
+      return JSON.parse(savedData);
+    }
+    return {
+      fontSize: {
+        title: {
+          web: 28,
+          mobile: 22
+        },
+        description: {
+          web: 22,
+          mobile: 16
+        }
+      },
+      fontWeight: {
+        title: {
+          web: 700,
+          mobile: 700
+        },
+        description: {
+          web: 900,
+          mobile: 600
+        }
+      },
+      fontColor: {
+        title: {
+          web: '#00A3E0',
+          mobile: '#00A3E0'
+        },
+        description: {
+          web: '#000000',
+          mobile: '#000000'
+        }
+      },
+      imageSize: {
+        web: {
+          width: 330,
+          height: 250
+        },
+        mobile: {
+          width: 260,
+          height: 150
+        }
+      }
+    };
+  })();
   
   return (
     <div 
@@ -31,21 +81,37 @@ const PortfolioCard = ({ title, description, image }: PortfolioCardProps) => {
       <div className="flex flex-col items-center h-full">
         {/* 제목과 설명 */}
         <div className="text-center" style={{ marginBottom: getMarginBottom() }}>
-          <h3 className="text-[#00A3E0] text-[28px] font-bold" style={{ marginBottom: isMobile ? '0px' : '2px' }}>{title}</h3>
+          <h3 
+            className="text-center"
+            style={{ 
+              marginBottom: isMobile ? '0px' : '2px',
+              fontSize: `${isMobile ? (portfolioData.fontSize?.title?.mobile || 22) : (portfolioData.fontSize?.title?.web || 28)}px`,
+              fontWeight: isMobile ? (portfolioData.fontWeight?.title?.mobile || 700) : (portfolioData.fontWeight?.title?.web || 700),
+              color: isMobile ? (portfolioData.fontColor?.title?.mobile || '#00A3E0') : (portfolioData.fontColor?.title?.web || '#00A3E0')
+            }}
+          >
+            {title}
+          </h3>
           <p
-          className="text-black text-[22px] text-center font-black"
-          style={{ marginTop: isMobile ? '0px' : '2px', whiteSpace: 'pre-line' }}
-        >
-          {description}
-        </p>
+            className="text-center"
+            style={{ 
+              marginTop: isMobile ? '0px' : '2px',
+              whiteSpace: 'pre-line',
+              fontSize: `${isMobile ? (portfolioData.fontSize?.description?.mobile || 16) : (portfolioData.fontSize?.description?.web || 22)}px`,
+              fontWeight: isMobile ? (portfolioData.fontWeight?.description?.mobile || 600) : (portfolioData.fontWeight?.description?.web || 900),
+              color: isMobile ? (portfolioData.fontColor?.description?.mobile || '#000000') : (portfolioData.fontColor?.description?.web || '#000000')
+            }}
+          >
+            {description}
+          </p>
         </div>
         
         {/* 이미지 영역 */}
         <div
           className="bg-gray-100 rounded-[16px] overflow-hidden flex items-end justify-center"
           style={{
-            width: isMobile ? '260px' : '330px',
-            height: isMobile ? '240px' : '250px',
+            width: isMobile ? `${portfolioData.imageSize?.mobile?.width || 260}px` : `${portfolioData.imageSize?.web?.width || 330}px`,
+            height: isMobile ? `${portfolioData.imageSize?.mobile?.height || 150}px` : `${portfolioData.imageSize?.web?.height || 250}px`,
             marginTop: isMobile ? '-40px' : '-30px'
           }}
         >

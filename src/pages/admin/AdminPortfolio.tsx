@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { usePortfolioData } from '../../context/PortfolioContext';
 
 export default function AdminPortfolio() {
-  const { portfolioData, updateProject, addProject, deleteProject, updateCategories } = usePortfolioData();
+  const { portfolioData, updateProject, addProject, deleteProject, updateCategories, updatePortfolioData } = usePortfolioData();
   const [isEditing, setIsEditing] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("공공");
   const [logoSliderCategory, setLogoSliderCategory] = useState("고객사");
@@ -181,7 +181,8 @@ export default function AdminPortfolio() {
   return (
     <div style={{
       minHeight: '100vh',
-      background: 'linear-gradient(135deg, #f8fafc 0%, #e0f2fe 50%, #e0e7ff 100%)'
+      background: 'linear-gradient(135deg, #f8fafc 0%, #e0f2fe 50%, #e0e7ff 100%)',
+      fontFamily: "'Pretendard Variable', 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif"
     }}>
       {/* 헤더 */}
       <header style={{
@@ -234,10 +235,23 @@ export default function AdminPortfolio() {
                   </svg>
                 </div>
                 <div>
-                  <h1 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#111827', margin: 0 }}>
+                  <h1 style={{ 
+                    fontSize: '1.5rem', 
+                    fontWeight: '700', 
+                    color: '#1f2937', 
+                    margin: 0,
+                    letterSpacing: '-0.5px',
+                    lineHeight: '1.2'
+                  }}>
                     포트폴리오 페이지 관리
                   </h1>
-                  <p style={{ fontSize: '0.875rem', color: '#6b7280', margin: 0 }}>콘텐츠를 편집하고 관리하세요</p>
+                  <p style={{ 
+                    fontSize: '0.875rem', 
+                    color: '#6b7280', 
+                    margin: 0,
+                    fontWeight: '400',
+                    lineHeight: '1.5'
+                  }}>콘텐츠를 편집하고 관리하세요</p>
                 </div>
               </div>
             </div>
@@ -322,7 +336,8 @@ export default function AdminPortfolio() {
       <main style={{ maxWidth: '1200px', margin: '0 auto', padding: '2rem 1rem' }}>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '1.5rem', alignItems: 'start' }}>
           {/* 카테고리 관리 */}
-          <div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+            <div>
             <div style={{
               background: 'rgba(255, 255, 255, 0.8)',
               backdropFilter: 'blur(10px)',
@@ -346,7 +361,14 @@ export default function AdminPortfolio() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
                   </svg>
                 </div>
-                <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#111827', margin: 0 }}>
+                <h3 style={{ 
+                  fontSize: '1.25rem', 
+                  fontWeight: '700', 
+                  color: '#1f2937', 
+                  margin: 0,
+                  letterSpacing: '-0.3px',
+                  lineHeight: '1.3'
+                }}>
                   카테고리 관리
                 </h3>
               </div>
@@ -360,8 +382,8 @@ export default function AdminPortfolio() {
                     }}
                     style={{
                       padding: '0.75rem 1rem',
-                      fontSize: '0.875rem',
-                      fontWeight: '600',
+                      fontSize: `${portfolioData.fontSize?.category?.web || 25}px`,
+                      fontWeight: portfolioData.fontWeight?.category?.web || 500,
                       borderRadius: '8px',
                       border: 'none',
                       cursor: 'pointer',
@@ -375,12 +397,18 @@ export default function AdminPortfolio() {
                         boxShadow: '0 4px 12px rgba(37, 99, 235, 0.3)'
                       } : {
                         background: 'rgba(255, 255, 255, 0.5)',
-                        color: '#374151',
+                        color: portfolioData.fontColor?.category?.web || '#00A3E0',
                         border: '1px solid #e5e7eb'
                       })
                     }}
                   >
-                    <span>{category}</span>
+                    <span style={{ 
+                      fontSize: `${portfolioData.fontSize?.category?.web || 25}px`,
+                      fontWeight: portfolioData.fontWeight?.category?.web || 500,
+                      color: selectedCategory === category ? 'white' : (portfolioData.fontColor?.category?.web || '#00A3E0')
+                    }}>
+                      {category}
+                    </span>
                     <span style={{
                       padding: '0.25rem 0.5rem',
                       fontSize: '0.75rem',
@@ -401,7 +429,14 @@ export default function AdminPortfolio() {
               
               {isEditing && (
                 <div style={{ marginTop: '1rem', paddingTop: '1rem', borderTop: '1px solid #e5e7eb' }}>
-                  <h4 style={{ fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.75rem' }}>
+                  <h4 style={{ 
+                    fontSize: '0.875rem', 
+                    fontWeight: '600', 
+                    color: '#374151', 
+                    marginBottom: '0.75rem',
+                    letterSpacing: '-0.1px',
+                    lineHeight: '1.4'
+                  }}>
                     새 카테고리 추가
                   </h4>
                   <div style={{ display: 'flex', gap: '0.5rem' }}>
@@ -954,7 +989,14 @@ export default function AdminPortfolio() {
                         }}>
                           <span style={{ color: 'white', fontWeight: 'bold', fontSize: '0.875rem' }}>{projectIndex + 1}</span>
                         </div>
-                        <h4 style={{ fontSize: '1.125rem', fontWeight: 'bold', color: '#111827', margin: 0 }}>
+                        <h4 style={{ 
+                          fontSize: '1.125rem', 
+                          fontWeight: '700', 
+                          color: '#1f2937', 
+                          margin: 0,
+                          letterSpacing: '-0.2px',
+                          lineHeight: '1.3'
+                        }}>
                           프로젝트 {projectIndex + 1}
                         </h4>
                       </div>
@@ -980,7 +1022,15 @@ export default function AdminPortfolio() {
                     
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
                       <div>
-                        <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                        <label style={{ 
+                          display: 'block', 
+                          fontSize: '0.875rem', 
+                          fontWeight: '600', 
+                          color: '#374151', 
+                          marginBottom: '0.5rem',
+                          letterSpacing: '-0.1px',
+                          lineHeight: '1.4'
+                        }}>
                           프로젝트명
                         </label>
                         <input
@@ -1003,7 +1053,15 @@ export default function AdminPortfolio() {
                         />
                       </div>
                       <div>
-                        <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                        <label style={{ 
+                          display: 'block', 
+                          fontSize: '0.875rem', 
+                          fontWeight: '600', 
+                          color: '#374151', 
+                          marginBottom: '0.5rem',
+                          letterSpacing: '-0.1px',
+                          lineHeight: '1.4'
+                        }}>
                           카테고리
                         </label>
                         <select
