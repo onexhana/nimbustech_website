@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>데이터 일관성 확인</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .container { max-width: 800px; margin: 0 auto; }
+        .section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        .button { background: #00A3E0; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin: 5px; }
+        .button:hover { background: #0088b3; }
+        .data-display { background: #f5f5f5; padding: 10px; margin: 10px 0; border-radius: 3px; }
+        .error { color: red; }
+        .success { color: green; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>님버스테크 웹사이트 데이터 일관성 확인</h1>
+        
+        <div class="section">
+            <h2>현재 저장된 데이터</h2>
+            <button class="button" onclick="checkAboutData()">About 데이터 확인</button>
+            <button class="button" onclick="checkContactData()">Contact 데이터 확인</button>
+            <div id="dataDisplay" class="data-display"></div>
+        </div>
+        
+        <div class="section">
+            <h2>데이터 초기화</h2>
+            <p>모든 사용자가 동일한 화면을 보려면 데이터를 초기화해야 합니다.</p>
+            <button class="button" onclick="resetAboutData()" style="background: #dc3545;">About 데이터 초기화</button>
+            <button class="button" onclick="resetContactData()" style="background: #dc3545;">Contact 데이터 초기화</button>
+            <button class="button" onclick="resetAllData()" style="background: #dc3545;">모든 데이터 초기화</button>
+        </div>
+        
+        <div class="section">
+            <h2>기본 데이터 확인</h2>
+            <button class="button" onclick="showDefaultData()">기본 데이터 표시</button>
+            <div id="defaultDataDisplay" class="data-display"></div>
+        </div>
+    </div>
+
+    <script>
+        // 기본 About 데이터 (이전 버전 복원)
+        const defaultAboutData = {
+            mainTitle: "고객 성공 리딩",
+            subtitle: "신뢰성 높은 DT 서비스를 제공합니다.",
+            tabs: [
+                {
+                    name: "ITO",
+                    cards: [
+                        { title: "풍부한 인재 자원", description: ["5,500명 이상의 IT 전문가", "데이터베이스 보유"] },
+                        { title: "검증된 신뢰성", description: ["주요 파트너사와 8년 이상의", "지속적 협력 관계"] },
+                        { title: "체계적 인재 매칭", description: ["CRM 기반 전담 매니저 배치로", "최적화된 인재 선별"] }
+                    ]
+                },
+                {
+                    name: "클라우드",
+                    cards: [
+                        { title: "전략적 파트너십", description: ["클라우드 MSP 전문기업 및 종합 IT", "인프라 솔루션 기업과의 협력 체계"] },
+                        { title: "공공 클라우드 운영 실적", description: ["국가정보자원관리원 G-클라우드", "구축 및 운영 5년 이상 지속"] },
+                        { title: "민간 클라우드 인프라 관리", description: ["메트라이프생명, 한국투자증권,", "DB손해보험 인프라 운영 중"] }
+                    ]
+                },
+                {
+                    name: "RPA",
+                    cards: [
+                        { title: "삼성SDS Brity RPA 파트너", description: ["국내 대표 RPA 솔루션 Brity의", "공인 공급업체"] },
+                        { title: "다양한 RPA 개발 경험", description: ["금융, 공공, 제조업 등", "다양한 분야 RPA 구축"] },
+                        { title: "전문 RPA 운영 서비스", description: ["RPA 운영 및 모니터링", "지속적 최적화 서비스"] }
+                    ]
+                },
+                {
+                    name: "솔루션",
+                    cards: [
+                        { title: "FCS 소프트웨어", description: ["금융권 전문 솔루션", "FCS 시스템 개발 및 운영"], link: "https://example.com/fcs" },
+                        { title: "데이터 관리 솔루션", description: ["빅데이터 분석 및", "데이터 웨어하우스 구축"], link: "https://example.com/data" },
+                        { title: "보안 솔루션", description: ["종합 보안 관리 시스템", "정보보호 컨설팅"], link: "https://example.com/security" },
+                        { title: "모바일 솔루션", description: ["모바일 앱 개발", "크로스 플랫폼 솔루션"], link: "https://example.com/mobile" },
+                        { title: "웹 솔루션", description: ["웹 애플리케이션 개발", "반응형 웹 디자인"], link: "https://example.com/web" },
+                        { title: "API 솔루션", description: ["RESTful API 개발", "마이크로서비스 아키텍처"], link: "https://example.com/api" },
+                        { title: "통합 솔루션", description: ["시스템 통합 및 연동", "엔터프라이즈 솔루션"], link: "https://example.com/integration" }
+                    ]
+                }
+            ],
+            fontSize: {
+                mainTitle: 30,
+                subtitle: 18,
+                cardTitle: 16,
+                cardDescription: 14,
+                tabName: 16
+            }
+        };
+
+        function checkAboutData() {
+            const data = localStorage.getItem('aboutData');
+            const display = document.getElementById('dataDisplay');
+            
+            if (data) {
+                try {
+                    const parsedData = JSON.parse(data);
+                    display.innerHTML = '<h3 class="success">About 데이터 발견</h3><pre>' + JSON.stringify(parsedData, null, 2) + '</pre>';
+                } catch (error) {
+                    display.innerHTML = '<h3 class="error">About 데이터 파싱 오류</h3><p>' + error.message + '</p>';
+                }
+            } else {
+                display.innerHTML = '<h3>About 데이터 없음</h3><p>기본 데이터를 사용하고 있습니다.</p>';
+            }
+        }
+
+        function checkContactData() {
+            const data = localStorage.getItem('contactData');
+            const display = document.getElementById('dataDisplay');
+            
+            if (data) {
+                try {
+                    const parsedData = JSON.parse(data);
+                    display.innerHTML = '<h3 class="success">Contact 데이터 발견</h3><pre>' + JSON.stringify(parsedData, null, 2) + '</pre>';
+                } catch (error) {
+                    display.innerHTML = '<h3 class="error">Contact 데이터 파싱 오류</h3><p>' + error.message + '</p>';
+                }
+            } else {
+                display.innerHTML = '<h3>Contact 데이터 없음</h3><p>기본 데이터를 사용하고 있습니다.</p>';
+            }
+        }
+
+        function resetAboutData() {
+            if (confirm('About 데이터를 초기화하시겠습니까?')) {
+                localStorage.removeItem('aboutData');
+                alert('About 데이터가 초기화되었습니다. 페이지를 새로고침하세요.');
+            }
+        }
+
+        function resetContactData() {
+            if (confirm('Contact 데이터를 초기화하시겠습니까?')) {
+                localStorage.removeItem('contactData');
+                alert('Contact 데이터가 초기화되었습니다. 페이지를 새로고침하세요.');
+            }
+        }
+
+        function resetAllData() {
+            if (confirm('모든 데이터를 초기화하시겠습니까?')) {
+                localStorage.removeItem('aboutData');
+                localStorage.removeItem('contactData');
+                alert('모든 데이터가 초기화되었습니다. 페이지를 새로고침하세요.');
+            }
+        }
+
+        function showDefaultData() {
+            const display = document.getElementById('defaultDataDisplay');
+            display.innerHTML = '<h3>기본 About 데이터</h3><pre>' + JSON.stringify(defaultAboutData, null, 2) + '</pre>';
+        }
+    </script>
+</body>
+</html>

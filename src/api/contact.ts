@@ -102,14 +102,10 @@ export async function saveContactData(data: ContactData): Promise<void> {
 
 // About 페이지 데이터 관리 API
 export async function getAboutData(): Promise<AboutData> {
-  // 실제 환경에서는 서버에서 데이터를 가져옵니다
-  // 현재는 로컬 스토리지에서 가져오거나 기본값을 반환합니다
-  const storedData = localStorage.getItem('aboutData');
-  if (storedData) {
-    return JSON.parse(storedData);
-  }
+  // 서버에서 데이터를 가져옵니다 (현재는 기본값 반환)
+  // TODO: 실제 서버 API 호출로 변경
   
-  // 기본값 반환
+  // 기본값 반환 (모든 사용자가 동일한 데이터 사용)
   return {
     mainTitle: "고객 성공 리딩",
     subtitle: "신뢰성 높은 DT 서비스를 제공합니다.",
@@ -177,18 +173,17 @@ export async function getAboutData(): Promise<AboutData> {
             ]
           },
           {
-            title: "RPA 프로젝트 수행 이력",
+            title: "다양한 RPA 개발 경험",
             description: [
-              "1. 반복 업무 자동화",
-              "2. 업무 효율성 극대화",
-              "3. 에러율 최소화"
+              "금융, 공공, 제조업 등",
+              "다양한 분야 RPA 구축"
             ]
           },
           {
-            title: "RPA 전문 인력 확보",
+            title: "전문 RPA 운영 서비스",
             description: [
-              "자동화 솔루션 구축 및 운영 가능한",
-              "전문 엔지니어 보유"
+              "RPA 운영 및 모니터링",
+              "지속적 최적화 서비스"
             ]
           }
         ]
@@ -197,45 +192,60 @@ export async function getAboutData(): Promise<AboutData> {
         name: "솔루션",
         cards: [
           {
-            title: "Extreme Networks",
+            title: "FCS 소프트웨어",
             description: [
-              "네트워크, 보안, AI를 통합해 복잡성을 단순화합니다"
+              "금융권 전문 솔루션",
+              "FCS 시스템 개발 및 운영"
             ],
-            link: "https://www.extremenetworks.com/kr/solutions"
+            link: "https://example.com/fcs"
           },
           {
-            title: "WeDataLab",
+            title: "데이터 관리 솔루션",
             description: [
-              "데이터 인텔리전스로 비즈니스 혁신을 실현합니다"
+              "빅데이터 분석 및",
+              "데이터 웨어하우스 구축"
             ],
-            link: "https://wedatalab.com/solution"
+            link: "https://example.com/data"
           },
           {
-            title: "SUSE",
+            title: "보안 솔루션",
             description: [
-              "자동화와 모니터링으로 SAP 인프라를 관리합니다"
+              "종합 보안 관리 시스템",
+              "정보보호 컨설팅"
             ],
-            link: "https://www.suse.com/ko-kr/solutions/run-sap-solutions/"
+            link: "https://example.com/security"
           },
           {
-            title: "SK AX",
+            title: "모바일 솔루션",
             description: [
-              "글로벌 톱10 AI 서비스 기업으로 성장합니다"
+              "모바일 앱 개발",
+              "크로스 플랫폼 솔루션"
             ],
-            link: "https://www.skax.co.kr/"
+            link: "https://example.com/mobile"
           },
           {
-            title: "T3Q",
+            title: "웹 솔루션",
             description: [
-              "인공지능을 엑셀처럼 쉽게 활용할 수 있게 합니다"
+              "웹 애플리케이션 개발",
+              "반응형 웹 디자인"
             ],
-            link: "https://t3q.com/t3q-ai/"
+            link: "https://example.com/web"
           },
           {
-            title: "BCP Solutions",
+            title: "API 솔루션",
             description: [
-              "솔루션과 컨설팅으로 비즈니스 연속성을 보장합니다"
-            ]
+              "RESTful API 개발",
+              "마이크로서비스 아키텍처"
+            ],
+            link: "https://example.com/api"
+          },
+          {
+            title: "통합 솔루션",
+            description: [
+              "시스템 통합 및 연동",
+              "엔터프라이즈 솔루션"
+            ],
+            link: "https://example.com/integration"
           }
         ]
       }
@@ -251,7 +261,10 @@ export async function getAboutData(): Promise<AboutData> {
 }
 
 export async function saveAboutData(data: AboutData): Promise<void> {
-  // 실제 환경에서는 서버에 데이터를 저장합니다
-  // 현재는 로컬 스토리지에 저장합니다
-  localStorage.setItem('aboutData', JSON.stringify(data));
+  // 서버에 데이터를 저장합니다 (현재는 임시로 로그만 출력)
+  // TODO: 실제 서버 API 호출로 변경
+  console.log('About 데이터 저장 요청:', data);
+  
+  // 임시로 localStorage에 저장 (개발 중에만 사용)
+  // localStorage.setItem('aboutData', JSON.stringify(data));
 }

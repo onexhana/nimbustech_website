@@ -122,49 +122,56 @@ const defaultAboutData: AboutData = {
           description: [
             "금융권 전문 솔루션",
             "FCS 시스템 개발 및 운영"
-          ]
+          ],
+          link: "https://example.com/fcs"
         },
         {
           title: "데이터 관리 솔루션",
           description: [
             "빅데이터 분석 및",
             "데이터 웨어하우스 구축"
-          ]
+          ],
+          link: "https://example.com/data"
         },
         {
           title: "보안 솔루션",
           description: [
             "종합 보안 관리 시스템",
             "정보보호 컨설팅"
-          ]
+          ],
+          link: "https://example.com/security"
         },
         {
           title: "모바일 솔루션",
           description: [
             "모바일 앱 개발",
             "크로스 플랫폼 솔루션"
-          ]
+          ],
+          link: "https://example.com/mobile"
         },
         {
           title: "웹 솔루션",
           description: [
             "웹 애플리케이션 개발",
             "반응형 웹 디자인"
-          ]
+          ],
+          link: "https://example.com/web"
         },
         {
           title: "API 솔루션",
           description: [
             "RESTful API 개발",
             "마이크로서비스 아키텍처"
-          ]
+          ],
+          link: "https://example.com/api"
         },
         {
           title: "통합 솔루션",
           description: [
             "시스템 통합 및 연동",
             "엔터프라이즈 솔루션"
-          ]
+          ],
+          link: "https://example.com/integration"
         }
       ]
     }
@@ -176,24 +183,13 @@ const AboutContext = createContext<AboutContextType | undefined>(undefined);
 
 // Provider 컴포넌트
 export function AboutProvider({ children }: { children: ReactNode }) {
-  const [aboutData, setAboutData] = useState<AboutData>(() => {
-    // localStorage에서 저장된 데이터가 있으면 불러오기
-    const savedData = localStorage.getItem('aboutData');
-    if (savedData) {
-      try {
-        return JSON.parse(savedData);
-      } catch (error) {
-        console.error('저장된 About 데이터를 불러오는데 실패했습니다:', error);
-        return defaultAboutData;
-      }
-    }
-    return defaultAboutData;
-  });
+  const [aboutData, setAboutData] = useState<AboutData>(defaultAboutData);
 
-  // 데이터 업데이트 및 localStorage 저장
+  // 데이터 업데이트 (서버 기반으로 변경 예정)
   const updateAboutData = (newData: AboutData) => {
     setAboutData(newData);
-    localStorage.setItem('aboutData', JSON.stringify(newData));
+    // TODO: 서버에 데이터 저장하도록 변경
+    // localStorage.setItem('aboutData', JSON.stringify(newData));
   };
 
   // 메인 타이틀 업데이트
