@@ -118,60 +118,45 @@ const defaultAboutData: AboutData = {
       name: "솔루션",
       cards: [
         {
-          title: "FCS 소프트웨어",
+          title: "Extreme Networks",
           description: [
-            "금융권 전문 솔루션",
-            "FCS 시스템 개발 및 운영"
+            "네트워크, 보안, AI를 통합해 복잡성을 단순화합니다"
           ],
-          link: "https://example.com/fcs"
+          link: "https://www.extremenetworks.com/kr/solutions"
         },
         {
-          title: "데이터 관리 솔루션",
+          title: "WeDataLab",
           description: [
-            "빅데이터 분석 및",
-            "데이터 웨어하우스 구축"
+            "데이터 인텔리전스로 비즈니스 혁신을 실현합니다"
           ],
-          link: "https://example.com/data"
+          link: "https://wedatalab.com/solution"
         },
         {
-          title: "보안 솔루션",
+          title: "SUSE",
           description: [
-            "종합 보안 관리 시스템",
-            "정보보호 컨설팅"
+            "자동화와 모니터링으로 SAP 인프라를 관리합니다"
           ],
-          link: "https://example.com/security"
+          link: "https://www.suse.com/ko-kr/solutions/run-sap-solutions/"
         },
         {
-          title: "모바일 솔루션",
+          title: "SK AX",
           description: [
-            "모바일 앱 개발",
-            "크로스 플랫폼 솔루션"
+            "글로벌 톱10 AI 서비스 기업으로 성장합니다"
           ],
-          link: "https://example.com/mobile"
+          link: "https://www.skax.co.kr/"
         },
         {
-          title: "웹 솔루션",
+          title: "T3Q",
           description: [
-            "웹 애플리케이션 개발",
-            "반응형 웹 디자인"
+            "인공지능을 엑셀처럼 쉽게 활용할 수 있게 합니다"
           ],
-          link: "https://example.com/web"
+          link: "https://t3q.com/t3q-ai/"
         },
         {
-          title: "API 솔루션",
+          title: "BCP Solutions",
           description: [
-            "RESTful API 개발",
-            "마이크로서비스 아키텍처"
-          ],
-          link: "https://example.com/api"
-        },
-        {
-          title: "통합 솔루션",
-          description: [
-            "시스템 통합 및 연동",
-            "엔터프라이즈 솔루션"
-          ],
-          link: "https://example.com/integration"
+            "솔루션과 컨설팅으로 비즈니스 연속성을 보장합니다"
+          ]
         }
       ]
     }
