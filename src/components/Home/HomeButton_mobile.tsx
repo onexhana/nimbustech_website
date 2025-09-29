@@ -120,7 +120,7 @@ const buttons: ButtonItem[] = [
     subtitle: "핵심가치",
     description: "고객과 함께 성장하는\n신뢰·책임·전문성의 가치",
     link: "/#about",
-    imagePath: "/popup_image_mobile/Core%20Values_mobile.png",
+    imagePath: "/popup_image_mobile/Core Values_mobile.png",
     titleFontSize: 20,
     subtitleFontSize: 28,
     descriptionFontSize: 14,
@@ -130,7 +130,7 @@ const buttons: ButtonItem[] = [
     subtitle: "일하는 방식",
     description: '모든 일의 궁극적인 목적은\n"고객창출" 곧 "고객성공"이다!',
     link: "/#about",
-    imagePath: "/popup_image_mobile/Way%20of%20Working_mobile.png",
+    imagePath: "/popup_image_mobile/Way of Working_mobile.png",
     titleFontSize: 20,
     subtitleFontSize: 28,
     descriptionFontSize: 14,
@@ -140,7 +140,7 @@ const buttons: ButtonItem[] = [
     subtitle: "복지 혜택",
     description: "최고의 열정과 패기를\n갖춘 인재들과 함께\n일하고 성장하는 기업",
     link: "/#about",
-    imagePath: "/popup_image_mobile/Employee%20Benefits_mobile.png",
+    imagePath: "/popup_image_mobile/Employee Benefits_mobile.png",
     titleFontSize: 20,
     subtitleFontSize: 28,
     descriptionFontSize: 14,
@@ -166,6 +166,38 @@ interface HomeButtonMobileProps {
 export default function HomeButtonMobile({ topOffset = '-40vh', marginTopSpacing = '2rem', marginBottomSpacing = '2rem' }: HomeButtonMobileProps) {
   const { homeData } = useHomeData();
   const [selectedIdx, setSelectedIdx] = useState<number | null>(null);
+  
+  // localStorage에서 모바일 이미지 경로 읽기
+  const getMobileImagePaths = () => {
+    const defaultPaths = [
+      "/popup_image_mobile/Mission&Vision_mobile.png",
+      "/popup_image_mobile/Core Values_mobile.png",
+      "/popup_image_mobile/Way of Working_mobile.png",
+      "/popup_image_mobile/Employee Benefits_mobile.png"
+    ];
+    
+    try {
+      const savedPaths = localStorage.getItem('mobileImagePaths');
+      return savedPaths ? JSON.parse(savedPaths) : defaultPaths;
+    } catch {
+      return defaultPaths;
+    }
+  };
+  
+  const [mobileImagePaths, setMobileImagePaths] = useState(getMobileImagePaths());
+
+  // localStorage 변경 감지
+  useEffect(() => {
+    const handleStorageChange = () => {
+      setMobileImagePaths(getMobileImagePaths());
+    };
+    
+    window.addEventListener('storage', handleStorageChange);
+    // 컴포넌트 마운트 시에도 다시 읽기
+    setMobileImagePaths(getMobileImagePaths());
+    
+    return () => window.removeEventListener('storage', handleStorageChange);
+  }, []);
 
   // ESC 키로 모달 닫기
   useEffect(() => {
@@ -256,7 +288,7 @@ export default function HomeButtonMobile({ topOffset = '-40vh', marginTopSpacing
           onClick={handleCloseModal}>
             
             <img
-              src={selectedButton.imagePath}
+              src={mobileImagePaths[selectedIdx]}
               alt={selectedButton.subtitle}
               style={{ 
                 width: '100%', 
@@ -315,63 +347,33 @@ export default function HomeButtonMobile({ topOffset = '-40vh', marginTopSpacing
               >
                 <div className="text-center">
                   <h3
-                    className="font-semibold transition-colors"
+                    className="font-semibold transition-colors group-hover:text-blue-600"
                     style={{ 
                       fontSize: `${titleSize}px`, 
                       marginBottom: '8px',
                       color: isSelected ? hoverColor : "#4a5568"
                     }}
-                    onMouseEnter={(e) => {
-                      if (!isSelected) {
-                        e.currentTarget.style.color = hoverColor;
-                      }
-                    }}
-                    onMouseLeave={(e) => {
-                      if (!isSelected) {
-                        e.currentTarget.style.color = "#4a5568";
-                      }
-                    }}
                   >
                     {renderTextWithBreaks(btn.title)}
                   </h3>
                   <p
-                    className="font-bold transition-colors"
+                    className="font-bold transition-colors group-hover:text-blue-600"
                     style={{ 
                       fontSize: `${subtitleSize}px`, 
                       marginBottom: '12px',
                       color: isSelected ? hoverColor : "#000000"
                     }}
-                    onMouseEnter={(e) => {
-                      if (!isSelected) {
-                        e.currentTarget.style.color = hoverColor;
-                      }
-                    }}
-                    onMouseLeave={(e) => {
-                      if (!isSelected) {
-                        e.currentTarget.style.color = "#000000";
-                      }
-                    }}
                   >
                     {renderTextWithBreaks(btn.subtitle)}
                   </p>
                   <p
-                    className="transition-colors text-center"
+                    className="transition-colors text-center group-hover:text-blue-600"
                     style={{ 
                       fontSize: `${descriptionSize}px`, 
                       lineHeight: '1.5',
                       whiteSpace: 'pre-line',
                       wordBreak: 'keep-all',
                       color: isSelected ? hoverColor : "#6b7280"
-                    }}
-                    onMouseEnter={(e) => {
-                      if (!isSelected) {
-                        e.currentTarget.style.color = hoverColor;
-                      }
-                    }}
-                    onMouseLeave={(e) => {
-                      if (!isSelected) {
-                        e.currentTarget.style.color = "#6b7280";
-                      }
                     }}
                   >
                     {renderTextWithBreaks(btn.description)}
@@ -410,7 +412,7 @@ export default function HomeButtonMobile({ topOffset = '-40vh', marginTopSpacing
         <style>{`
           .group:hover h3,
           .group:hover p {
-            color: #00A3E0 !important;
+            color: ${homeData.buttonStyles?.hoverColor || "#00A3E0"} !important;
           }
           
           /* X 버튼 색상 통일 */

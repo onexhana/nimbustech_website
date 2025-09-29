@@ -80,19 +80,19 @@ const defaultHomeData: HomeData = {
       title: "Core Values",
       subtitle: "핵심가치",
       description: "고객과 함께 성장하는\n신뢰·책임·전문성의 가치",
-      imagePath: "/popup_image/Core%20Values.png"
+      imagePath: "/popup_image/Core Values.png"
     },
     {
       title: "Way of Working",
       subtitle: "일하는 방식",
       description: '모든 일의 궁극적인 목적은\n"고객창출" 곧 "고객성공"이다!',
-      imagePath: "/popup_image/Way%20of%20Working.jpg"
+      imagePath: "/popup_image/Way of Working.jpg"
     },
     {
       title: "Employee Benefits",
       subtitle: "복지 혜택",
       description: "최고의 열정과 패기를 갖춘\n인재들과 함께 일하고 성장하는 기업",
-      imagePath: "/popup_image/Employee%20Benefits.jpg"
+      imagePath: "/popup_image/Employee Benefits.jpg"
     }
   ],
   buttonStyles: {
@@ -122,42 +122,42 @@ const HomeContext = createContext<HomeContextType | undefined>(undefined);
 // Provider 컴포넌트
 export function HomeProvider({ children }: { children: ReactNode }) {
   const [homeData, setHomeData] = useState<HomeData>(() => {
-    // localStorage에서 저장된 데이터가 있으면 불러오기
-    const savedData = localStorage.getItem('homeData');
-    if (savedData) {
-      try {
-        const parsedData = JSON.parse(savedData);
-        // 새로운 필드가 없는 경우 기본값으로 채우기 (데이터 마이그레이션)
-        const migratedData = {
-          ...defaultHomeData,
-          ...parsedData,
-          typingTextStyles: {
-            ...defaultHomeData.typingTextStyles,
-            ...parsedData.typingTextStyles
-          },
-          typingSpeed: {
-            ...defaultHomeData.typingSpeed,
-            ...parsedData.typingSpeed
-          },
-          buttonStyles: {
-            ...defaultHomeData.buttonStyles,
-            ...parsedData.buttonStyles
-          },
-          sliderTextColors: {
-            ...defaultHomeData.sliderTextColors,
-            ...parsedData.sliderTextColors
-          },
-          sliderTextSizes: {
-            ...defaultHomeData.sliderTextSizes,
-            ...parsedData.sliderTextSizes
-          }
-        };
-        return migratedData;
-      } catch (error) {
-        console.error('저장된 홈 데이터를 불러오는데 실패했습니다:', error);
-        return defaultHomeData;
-      }
-    }
+    // localStorage 초기화 (임시로 기본값만 사용)
+    // const savedData = localStorage.getItem('homeData');
+    // if (savedData) {
+    //   try {
+    //     const parsedData = JSON.parse(savedData);
+    //     // 새로운 필드가 없는 경우 기본값으로 채우기 (데이터 마이그레이션)
+    //     const migratedData = {
+    //       ...defaultHomeData,
+    //       ...parsedData,
+    //       typingTextStyles: {
+    //         ...defaultHomeData.typingTextStyles,
+    //         ...parsedData.typingTextStyles
+    //       },
+    //       typingSpeed: {
+    //         ...defaultHomeData.typingSpeed,
+    //         ...parsedData.typingSpeed
+    //       },
+    //       buttonStyles: {
+    //         ...defaultHomeData.buttonStyles,
+    //         ...parsedData.buttonStyles
+    //       },
+    //       sliderTextColors: {
+    //         ...defaultHomeData.sliderTextColors,
+    //         ...parsedData.sliderTextColors
+    //       },
+    //       sliderTextSizes: {
+    //         ...defaultHomeData.sliderTextSizes,
+    //         ...parsedData.sliderTextSizes
+    //       }
+    //     };
+    //     return migratedData;
+    //   } catch (error) {
+    //     console.error('저장된 홈 데이터를 불러오는데 실패했습니다:', error);
+    //     return defaultHomeData;
+    //   }
+    // }
     return defaultHomeData;
   });
 

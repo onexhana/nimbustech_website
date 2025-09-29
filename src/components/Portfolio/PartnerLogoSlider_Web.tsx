@@ -1,5 +1,5 @@
 // src/components/Portfolio/PartnerLogoSlider_Web.tsx
-import { memo } from "react";
+import { memo, useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
 type Logo = { src: string; alt: string };
@@ -18,17 +18,141 @@ type PartnerLogoSliderWebProps = {
 
 const COPIES_PER_HALF = 4;
 
-// 고객사 로고 16개 자동 생성 (고화질)
-const ROW1: Logo[] = Array.from({ length: 16 }, (_, i) => {
-  const num = String(i + 1).padStart(2, "0");
-  return { src: `/고객사 & 파트너사_고화질/고객사${num}.png`, alt: `고객사${num}` };
-});
+// 고객사 로고 16개 - localStorage에서 읽어오거나 기본값 사용
+const getCustomerLogos = (): Logo[] => {
+  try {
+    const savedLogos = localStorage.getItem('customerLogos');
+    if (savedLogos) {
+      const paths = JSON.parse(savedLogos);
+      return paths.map((path: string, i: number) => ({
+        src: path,
+        alt: `고객사${String(i + 1).padStart(2, "0")}`
+      }));
+    }
+  } catch (error) {
+    console.error('고객사 로고 데이터 로딩 실패:', error);
+  }
+  
+  // 기본값 반환
+  return Array.from({ length: 16 }, (_, i) => {
+    const num = String(i + 1).padStart(2, "0");
+    return { src: `/고객사 & 파트너사_고화질/고객사${num}.png`, alt: `고객사${num}` };
+  });
+};
 
-// 파트너사 로고 21개 자동 생성 (고화질 - 모든 파일 PNG)
-const ROW2: Logo[] = Array.from({ length: 21 }, (_, i) => {
-  const num = String(i + 1).padStart(2, "0");  
-  return { src: `/고객사 & 파트너사_고화질/파트너사${num}.png`, alt: `파트너사${num}` };
-});
+// 파트너사 로고 21개 - localStorage에서 읽어오거나 기본값 사용
+const getPartnerLogos = (): Logo[] => {
+  try {
+    const savedLogos = localStorage.getItem('partnerLogos');
+    if (savedLogos) {
+      const paths = JSON.parse(savedLogos);
+      return paths.map((path: string, i: number) => ({
+        src: path,
+        alt: `파트너사${String(i + 1).padStart(2, "0")}`
+      }));
+    }
+  } catch (error) {
+    console.error('파트너사 로고 데이터 로딩 실패:', error);
+  }
+  
+  // 기본값 반환
+  return Array.from({ length: 21 }, (_, i) => {
+    const num = String(i + 1).padStart(2, "0");  
+    return { src: `/고객사 & 파트너사_고화질/파트너사${num}.png`, alt: `파트너사${num}` };
+  });
+};
+
+function PartnerLogoSliderWeb({
+  logoHeight = 50,
+  gap = 80,
+  durationTop = 50,
+  durationBottom = 50,
+  rowSpacing = 55,
+  bottomSpacing = 30,
+  speed = 1,
+  speedTop,
+  speedBottom,
+}: PartnerLogoSliderWebProps) {
+  
+  const [customerLogos, setCustomerLogos] = useState<Logo[]>(getCustomerLogos());
+  const [partnerLogos, setPartnerLogos] = useState<Logo[]>(getPartnerLogos());
+  const [settings, setSettings] = useState({
+    speed: 50,
+    textColor: "#374151",
+    textSize: 40
+  });
+
+  // localStorage 변경 감지
+  useEffect(() => {
+    const handleStorageChange = () => {
+      setCustomerLogos(getCustomerLogos());
+      setPartnerLogos(getPartnerLogos());
+      
+      // 로고슬라이드 설정 로드
+      const savedSettings = localStorage.getItem('logoSliderSettings');
+      if (savedSettings) {
+        try {
+          const parsedSettings = JSON.parse(savedSettings);
+          setSettings(parsedSettings.web);
+        } catch (error) {
+          console.error('로고슬라이드 설정 로드 실패:', error);
+        }
+      }
+    };
+    
+    window.addEventListener('storage', handleStorageChange);
+    // 컴포넌트 마운트 시에도 다시 읽기
+    setCustomerLogos(getCustomerLogos());
+    setPartnerLogos(getPartnerLogos());
+    
+    // 로고슬라이드 설정 로드
+    const savedSettings = localStorage.getItem('logoSliderSettings');
+    if (savedSettings) {
+      try {
+        const parsedSettings = JSON.parse(savedSettings);
+        setSettings(parsedSettings.web);
+      } catch (error) {
+        console.error('로고슬라이드 설정 로드 실패:', error);
+      }
+    }
+    
+    return () => window.removeEventListener('storage', handleStorageChange);
+  }, []);
+
+  const safeFactor = (v: number) => (v > 0 ? v : 1);
+  
+  const topDuration = settings.speed / safeFactor(speedTop ?? speed);
+  const bottomDuration = settings.speed / safeFactor(speedBottom ?? speed);
+
+  const rows = [
+    { logos: customerLogos, duration: topDuration },
+    { logos: partnerLogos, duration: bottomDuration, reverse: true },
+  ];
+
+  return (
+    <section aria-label="협력사 로고 슬라이더 (웹)" className="w-full">
+      <p 
+        className="text-center mb-10"
+        style={{
+          fontSize: `${settings.textSize}px`,
+          color: settings.textColor,
+          fontWeight: 600,
+          marginTop: "120px",
+          marginBottom: "80px",
+          lineHeight: "1.4",
+        }}
+      >
+        님버스테크와 함께 하고 있습니다
+      </p>
+      {rows.map((row, i) => (
+        <div key={i} style={{ marginTop: i === 0 ? 0 : rowSpacing }}>
+          <WebTrack {...row} logoHeight={logoHeight} gap={gap} />
+        </div>
+      ))}
+      {bottomSpacing > 0 && <div style={{ height: bottomSpacing }} />}
+    </section>
+  );
+}
 
 function WebTrack({
   logos,
@@ -92,50 +216,5 @@ function WebTrack({
   );
 }
 
-function PartnerLogoSliderWeb({
-  logoHeight = 50,
-  gap = 80,
-  durationTop = 50,
-  durationBottom = 50,
-  rowSpacing = 55,
-  bottomSpacing = 30,
-  speed = 1,
-  speedTop,
-  speedBottom,
-}: PartnerLogoSliderWebProps) {
-
-  const safeFactor = (v: number) => (v > 0 ? v : 1);
-  
-  const topDuration = durationTop / safeFactor(speedTop ?? speed);
-  const bottomDuration = durationBottom / safeFactor(speedBottom ?? speed);
-
-  const rows = [
-    { logos: ROW1, duration: topDuration },
-    { logos: ROW2, duration: bottomDuration, reverse: true },
-  ];
-
-  return (
-    <section aria-label="협력사 로고 슬라이더 (웹)" className="w-full">
-      <p 
-        className="text-center text-gray-700 mb-10"
-        style={{
-          fontSize: "clamp(28px, 3vw, 40px)",
-          fontWeight: 600,
-          marginTop: "120px",
-          marginBottom: "80px",
-          lineHeight: "1.4",
-        }}
-      >
-        님버스테크와 함께 하고 있습니다
-      </p>
-      {rows.map((row, i) => (
-        <div key={i} style={{ marginTop: i === 0 ? 0 : rowSpacing }}>
-          <WebTrack {...row} logoHeight={logoHeight} gap={gap} />
-        </div>
-      ))}
-      {bottomSpacing > 0 && <div style={{ height: bottomSpacing }} />}
-    </section>
-  );
-}
 
 export default memo(PartnerLogoSliderWeb);

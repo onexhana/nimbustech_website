@@ -1,5 +1,5 @@
 // src/pages/admin/AdminPortfolio.tsx
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { usePortfolioData } from '../../context/PortfolioContext';
 
@@ -7,6 +7,20 @@ export default function AdminPortfolio() {
   const { portfolioData, updateProject, addProject, deleteProject, updateCategories } = usePortfolioData();
   const [isEditing, setIsEditing] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("공공");
+  const [logoSliderCategory, setLogoSliderCategory] = useState("고객사");
+  const [activeSection, setActiveSection] = useState<"portfolio" | "logoSlider">("portfolio");
+  const [logoSliderSettings, setLogoSliderSettings] = useState({
+    web: {
+      speed: 50,
+      textColor: "#374151",
+      textSize: 40
+    },
+    mobile: {
+      speed: 300,
+      textColor: "#374151", 
+      textSize: 23
+    }
+  });
   const [showAddForm, setShowAddForm] = useState(false);
   const [newProject, setNewProject] = useState({
     title: "",
@@ -16,6 +30,66 @@ export default function AdminPortfolio() {
   });
   const [uploadedImage, setUploadedImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string>("");
+  const [showLogoUpload, setShowLogoUpload] = useState<{type: 'customer' | 'partner', index: number} | null>(null);
+  const [uploadedLogo, setUploadedLogo] = useState<string | null>(null);
+
+  // 로고 슬라이드 설정 로드
+  useEffect(() => {
+    const savedSettings = localStorage.getItem('logoSliderSettings');
+    if (savedSettings) {
+      try {
+        setLogoSliderSettings(JSON.parse(savedSettings));
+      } catch (error) {
+        console.error('로고 슬라이드 설정 로드 실패:', error);
+      }
+    }
+  }, []);
+
+  // 로고 슬라이드 설정 저장
+  const saveLogoSliderSettings = (settings: typeof logoSliderSettings) => {
+    setLogoSliderSettings(settings);
+    localStorage.setItem('logoSliderSettings', JSON.stringify(settings));
+    alert('로고 슬라이드 설정이 저장되었습니다!');
+  };
+
+  // 로고 업로드 핸들러
+  const handleLogoUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setUploadedLogo(e.target?.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  // 로고 변경 저장
+  const handleLogoChange = (type: 'customer' | 'partner', index: number) => {
+    if (uploadedLogo && showLogoUpload) {
+      const storageKey = type === 'customer' ? 'customerLogos' : 'partnerLogos';
+      const count = type === 'customer' ? 16 : 21;
+      
+      // localStorage에서 기존 로고 배열 가져오기
+      const existingLogos = JSON.parse(localStorage.getItem(storageKey) || '[]');
+      
+      // 기본값으로 초기화 (빈 배열일 경우)
+      if (existingLogos.length === 0) {
+        for (let i = 0; i < count; i++) {
+          const num = String(i + 1).padStart(2, "0");
+          existingLogos.push(`/고객사 & 파트너사_고화질/${type === 'customer' ? '고객사' : '파트너사'}${num}.png`);
+        }
+      }
+      
+      // 해당 인덱스의 로고 경로 업데이트
+      existingLogos[index] = uploadedLogo;
+      localStorage.setItem(storageKey, JSON.stringify(existingLogos));
+      
+      alert(`${type === 'customer' ? '고객사' : '파트너사'} 로고가 업데이트되었습니다.`);
+      setShowLogoUpload(null);
+      setUploadedLogo(null);
+    }
+  };
 
   const handleSave = () => {
     // 데이터는 Context에서 자동으로 localStorage에 저장됨
@@ -27,13 +101,13 @@ export default function AdminPortfolio() {
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      // 파일 타입 검증
+      // 파일 유형 검사
       if (!file.type.startsWith('image/')) {
         alert('이미지 파일만 업로드 가능합니다.');
         return;
       }
       
-      // 파일 크기 검증 (5MB 제한)
+      // 파일 크기 검사 (5MB 제한)
       if (file.size > 5 * 1024 * 1024) {
         alert('파일 크기는 5MB 이하여야 합니다.');
         return;
@@ -57,7 +131,7 @@ export default function AdminPortfolio() {
 
   const handleAddProject = () => {
     if (uploadedImage) {
-      // 실제 프로덕션에서는 서버로 파일을 업로드해야 합니다
+      // 실제 프로덕션에서는 서버에 파일을 업로드해야 합니다.
       // 현재는 클라이언트에서만 처리
       console.log('업로드된 파일:', uploadedImage);
     }
@@ -80,13 +154,13 @@ export default function AdminPortfolio() {
   const handleUpdateProjectImage = (id: number, event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      // 파일 타입 검증
+      // 파일 유형 검사
       if (!file.type.startsWith('image/')) {
         alert('이미지 파일만 업로드 가능합니다.');
         return;
       }
       
-      // 파일 크기 검증 (5MB 제한)
+      // 파일 크기 검사 (5MB 제한)
       if (file.size > 5 * 1024 * 1024) {
         alert('파일 크기는 5MB 이하여야 합니다.');
         return;
@@ -97,7 +171,7 @@ export default function AdminPortfolio() {
       const imagePath = `/portfolio_photo/${fileName}`;
       updateProject(id, { image: imagePath });
       
-      // 실제 프로덕션에서는 서버로 파일을 업로드해야 합니다
+      // 실제 프로덕션에서는 서버에 파일을 업로드해야 합니다.
       console.log('업로드된 파일:', file);
     }
   };
@@ -280,7 +354,10 @@ export default function AdminPortfolio() {
                 {portfolioData.categories.map((category, index) => (
                   <button
                     key={index}
-                    onClick={() => setSelectedCategory(category)}
+                    onClick={() => {
+                      setSelectedCategory(category);
+                      setActiveSection("portfolio");
+                    }}
                     style={{
                       padding: '0.75rem 1rem',
                       fontSize: '0.875rem',
@@ -292,7 +369,7 @@ export default function AdminPortfolio() {
                       alignItems: 'center',
                       gap: '0.5rem',
                       transition: 'all 0.2s ease',
-                      ...(selectedCategory === category ? {
+                      ...(activeSection === "portfolio" && selectedCategory === category ? {
                         background: 'linear-gradient(135deg, #2563eb, #6366f1)',
                         color: 'white',
                         boxShadow: '0 4px 12px rgba(37, 99, 235, 0.3)'
@@ -308,7 +385,7 @@ export default function AdminPortfolio() {
                       padding: '0.25rem 0.5rem',
                       fontSize: '0.75rem',
                       borderRadius: '9999px',
-                      ...(selectedCategory === category ? {
+                      ...(activeSection === "portfolio" && selectedCategory === category ? {
                         background: 'rgba(255, 255, 255, 0.2)',
                         color: 'white'
                       } : {
@@ -366,6 +443,95 @@ export default function AdminPortfolio() {
                 </div>
               )}
             </div>
+
+            {/* 로고 슬라이드 관리 */}
+            <div style={{
+              background: 'rgba(255, 255, 255, 0.8)',
+              backdropFilter: 'blur(10px)',
+              borderRadius: '12px',
+              boxShadow: '0 10px 15px rgba(0, 0, 0, 0.1)',
+              border: '1px solid rgba(255, 255, 255, 0.2)',
+              padding: '1.5rem',
+              marginTop: '1.5rem',
+              transition: 'all 0.3s ease'
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
+                <div style={{
+                  width: '32px',
+                  height: '32px',
+                  background: 'linear-gradient(135deg, #f59e0b, #f97316)',
+                  borderRadius: '8px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}>
+                  <svg width="20" height="20" fill="none" stroke="white" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                </div>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#111827', margin: 0 }}>
+                  로고 슬라이드 관리
+                </h3>
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                {['고객사', '파트너사', '속도조절', '메인문구'].map((category, index) => (
+                  <button
+                    key={index}
+                    onClick={() => {
+                      setLogoSliderCategory(category);
+                      setActiveSection("logoSlider");
+                    }}
+                    style={{
+                      padding: '0.75rem 1rem',
+                      fontSize: '0.875rem',
+                      fontWeight: '600',
+                      borderRadius: '8px',
+                      border: 'none',
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.5rem',
+                      transition: 'all 0.2s ease',
+                      ...(activeSection === "logoSlider" && logoSliderCategory === category ? {
+                        background: 'linear-gradient(135deg, #f59e0b, #f97316)',
+                        color: 'white',
+                        boxShadow: '0 4px 12px rgba(245, 158, 11, 0.3)'
+                      } : {
+                        background: 'rgba(255, 255, 255, 0.6)',
+                        color: '#374151',
+                        border: '1px solid rgba(229, 231, 235, 0.5)'
+                      })
+                    }}
+                    onMouseEnter={(e) => {
+                      if (activeSection !== "logoSlider" || logoSliderCategory !== category) {
+                        e.currentTarget.style.background = 'rgba(245, 158, 11, 0.1)';
+                        e.currentTarget.style.borderColor = 'rgba(245, 158, 11, 0.3)';
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      if (activeSection !== "logoSlider" || logoSliderCategory !== category) {
+                        e.currentTarget.style.background = 'rgba(255, 255, 255, 0.6)';
+                        e.currentTarget.style.borderColor = 'rgba(229, 231, 235, 0.5)';
+                      }
+                    }}
+                  >
+                    <span style={{
+                      fontSize: '0.75rem',
+                      fontWeight: 'bold',
+                      background: activeSection === "logoSlider" && logoSliderCategory === category ? 'rgba(255, 255, 255, 0.2)' : 'rgba(245, 158, 11, 0.1)',
+                      color: activeSection === "logoSlider" && logoSliderCategory === category ? 'white' : '#f59e0b',
+                      padding: '0.25rem 0.5rem',
+                      borderRadius: '4px',
+                      minWidth: '20px',
+                      textAlign: 'center'
+                    }}>
+                      {index + 1}
+                    </span>
+                    {category}
+                  </button>
+                ))}
+              </div>
+            </div>
           </div>
 
           {/* 프로젝트 목록 */}
@@ -395,10 +561,10 @@ export default function AdminPortfolio() {
                     </svg>
                   </div>
                   <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#111827', margin: 0 }}>
-                    {selectedCategory} 프로젝트 관리
+                    {activeSection === "portfolio" ? `${selectedCategory} 프로젝트 관리` : `${logoSliderCategory} 관리`}
                   </h3>
                 </div>
-                {isEditing && (
+                {isEditing && activeSection === "portfolio" && (
                   <button
                     onClick={() => setShowAddForm(true)}
                     style={{
@@ -424,287 +590,349 @@ export default function AdminPortfolio() {
                 )}
               </div>
 
-              {/* 새 프로젝트 추가 폼 */}
-              {showAddForm && (
-                <div style={{
-                  background: 'rgba(255, 255, 255, 0.6)',
-                  backdropFilter: 'blur(10px)',
-                  border: '1px solid rgba(229, 231, 235, 0.5)',
-                  borderRadius: '12px',
-                  padding: '1rem',
-                  marginBottom: '1rem',
-                  transition: 'all 0.3s ease'
-                }}>
-                  <h4 style={{ fontSize: '1rem', fontWeight: 'bold', color: '#111827', marginBottom: '1rem' }}>
-                    새 프로젝트 추가
-                  </h4>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                    <div>
-                      <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
-                        프로젝트명
-                      </label>
-                      <input
-                        type="text"
-                        value={newProject.title}
-                        onChange={(e) => setNewProject({...newProject, title: e.target.value})}
-                        style={{
-                          width: '100%',
-                          maxWidth: '650px',
-                          padding: '0.5rem 0.75rem',
-                          border: '2px solid #e5e7eb',
-                          borderRadius: '8px',
-                          outline: 'none',
-                          fontSize: '0.875rem',
-                          transition: 'all 0.2s ease',
-                          background: 'white',
-                          color: '#111827',
-                          boxSizing: 'border-box'
-                        }}
-                        onFocus={(e) => {
-                          e.target.style.borderColor = '#3b82f6';
-                          e.target.style.boxShadow = '0 0 0 4px rgba(59, 130, 246, 0.1)';
-                        }}
-                        onBlur={(e) => {
-                          e.target.style.borderColor = '#e5e7eb';
-                          e.target.style.boxShadow = 'none';
-                        }}
-                        placeholder="프로젝트명을 입력하세요"
-                      />
-                    </div>
-                    <div>
-                      <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
-                        카테고리
-                      </label>
-                      <select
-                        value={newProject.category}
-                        onChange={(e) => setNewProject({...newProject, category: e.target.value})}
-                        style={{
-                          width: '100%',
-                          maxWidth: '650px',
-                          padding: '0.5rem 0.75rem',
-                          border: '2px solid #e5e7eb',
-                          borderRadius: '8px',
-                          outline: 'none',
-                          fontSize: '0.875rem',
-                          transition: 'all 0.2s ease',
-                          background: 'white',
-                          color: '#111827',
-                          boxSizing: 'border-box'
-                        }}
-                        onFocus={(e) => {
-                          e.target.style.borderColor = '#3b82f6';
-                          e.target.style.boxShadow = '0 0 0 4px rgba(59, 130, 246, 0.1)';
-                        }}
-                        onBlur={(e) => {
-                          e.target.style.borderColor = '#e5e7eb';
-                          e.target.style.boxShadow = 'none';
-                        }}
-                      >
-                        {portfolioData.categories.map(category => (
-                          <option key={category} value={category}>{category}</option>
-                        ))}
-                      </select>
-                    </div>
-                    <div>
-                      <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
-                        설명
-                      </label>
-                      <input
-                        type="text"
-                        value={newProject.description}
-                        onChange={(e) => setNewProject({...newProject, description: e.target.value})}
-                        style={{
-                          width: '100%',
-                          maxWidth: '650px',
-                          padding: '0.5rem 0.75rem',
-                          border: '2px solid #e5e7eb',
-                          borderRadius: '8px',
-                          outline: 'none',
-                          fontSize: '0.875rem',
-                          transition: 'all 0.2s ease',
-                          background: 'white',
-                          color: '#111827',
-                          boxSizing: 'border-box'
-                        }}
-                        onFocus={(e) => {
-                          e.target.style.borderColor = '#3b82f6';
-                          e.target.style.boxShadow = '0 0 0 4px rgba(59, 130, 246, 0.1)';
-                        }}
-                        onBlur={(e) => {
-                          e.target.style.borderColor = '#e5e7eb';
-                          e.target.style.boxShadow = 'none';
-                        }}
-                        placeholder="프로젝트 설명을 입력하세요"
-                      />
-                    </div>
-                    <div>
-                      <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
-                        프로젝트 이미지
-                      </label>
-                      
-                      {/* 파일 업로드 영역 */}
-                      <div style={{
-                        width: '100%',
-                        maxWidth: '650px',
-                        border: '2px dashed #d1d5db',
-                        borderRadius: '12px',
-                        padding: '1.5rem',
-                        textAlign: 'center',
-                        backgroundColor: '#f9fafb',
-                        transition: 'all 0.2s ease',
-                        cursor: 'pointer',
-                        position: 'relative'
-                      }}
-                      onDragOver={(e) => {
-                        e.preventDefault();
-                        e.currentTarget.style.borderColor = '#3b82f6';
-                        e.currentTarget.style.backgroundColor = '#eff6ff';
-                      }}
-                      onDragLeave={(e) => {
-                        e.currentTarget.style.borderColor = '#d1d5db';
-                        e.currentTarget.style.backgroundColor = '#f9fafb';
-                      }}
-                      onDrop={(e) => {
-                        e.preventDefault();
-                        e.currentTarget.style.borderColor = '#d1d5db';
-                        e.currentTarget.style.backgroundColor = '#f9fafb';
-                        
-                        const files = e.dataTransfer.files;
-                        if (files.length > 0) {
-                          const file = files[0];
-                          if (file.type.startsWith('image/')) {
-                            const event = {
-                              target: { files: [file] }
-                            } as React.ChangeEvent<HTMLInputElement>;
-                            handleImageUpload(event);
-                          } else {
-                            alert('이미지 파일만 업로드 가능합니다.');
-                          }
-                        }
-                      }}
-                      onClick={() => document.getElementById('image-upload')?.click()}
-                      >
-                        <input
-                          id="image-upload"
-                          type="file"
-                          accept="image/*"
-                          onChange={handleImageUpload}
-                          style={{ display: 'none' }}
-                        />
-                        
-                        {imagePreview ? (
-                          <div>
+              {/* 로고 슬라이드 관리 콘텐츠 */}
+              {activeSection === "logoSlider" && (
+              <div style={{
+                background: 'rgba(255, 255, 255, 0.6)',
+                backdropFilter: 'blur(10px)',
+                border: '1px solid rgba(229, 231, 235, 0.5)',
+                borderRadius: '12px',
+                padding: '1.5rem',
+                marginBottom: '1rem',
+                transition: 'all 0.3s ease'
+              }}>
+                {logoSliderCategory === '고객사' && (
+                  <div>
+                    <h4 style={{ fontSize: '1rem', fontWeight: 'bold', color: '#111827', marginBottom: '1.5rem' }}>
+                      고객사 로고 관리
+                    </h4>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '1rem' }}>
+                      {Array.from({ length: 16 }, (_, i) => {
+                        const logoNum = String(i + 1).padStart(2, "0");
+                        return (
+                          <div key={i} style={{
+                            background: 'rgba(255, 255, 255, 0.8)',
+                            border: '1px solid #e5e7eb',
+                            borderRadius: '8px',
+                            padding: '1rem',
+                            textAlign: 'center'
+                          }}>
                             <img
-                              src={imagePreview}
-                              alt="미리보기"
+                              src={`/고객사 & 파트너사_고화질/고객사${logoNum}.png`}
+                              alt={`고객사${logoNum}`}
                               style={{
-                                maxWidth: '200px',
-                                maxHeight: '150px',
-                                borderRadius: '8px',
-                                marginBottom: '1rem',
-                                objectFit: 'cover'
+                                width: '100%',
+                                height: '60px',
+                                objectFit: 'contain',
+                                marginBottom: '0.5rem'
                               }}
                             />
-                            <p style={{ fontSize: '0.875rem', color: '#10b981', fontWeight: '500', margin: 0 }}>
-                              ✓ 이미지가 업로드되었습니다
+                            <p style={{ fontSize: '0.875rem', fontWeight: '500', margin: '0 0 0.5rem 0' }}>
+                              고객사 {logoNum}
                             </p>
-                            <p style={{ fontSize: '0.75rem', color: '#6b7280', margin: '0.25rem 0 0 0' }}>
-                              {uploadedImage?.name}
-                            </p>
+                            <button 
+                              onClick={() => setShowLogoUpload({type: 'customer', index: i})}
+                              style={{
+                                padding: '0.5rem 1rem',
+                                fontSize: '0.75rem',
+                                background: 'linear-gradient(135deg, #3b82f6, #1d4ed8)',
+                                color: 'white',
+                                border: 'none',
+                                borderRadius: '6px',
+                                cursor: 'pointer'
+                              }}>
+                              이미지 변경
+                            </button>
                           </div>
-                        ) : (
-                          <div>
-                            <svg width="48" height="48" fill="none" stroke="#9ca3af" viewBox="0 0 24 24" style={{ margin: '0 auto 1rem auto' }}>
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
-                            </svg>
-                            <p style={{ fontSize: '0.875rem', fontWeight: '500', color: '#374151', marginBottom: '0.5rem' }}>
-                              이미지를 업로드하세요
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+
+                {logoSliderCategory === '파트너사' && (
+                  <div>
+                    <h4 style={{ fontSize: '1rem', fontWeight: 'bold', color: '#111827', marginBottom: '1.5rem' }}>
+                      파트너사 로고 관리
+                    </h4>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '1rem' }}>
+                      {Array.from({ length: 21 }, (_, i) => {
+                        const logoNum = String(i + 1).padStart(2, "0");
+                        return (
+                          <div key={i} style={{
+                            background: 'rgba(255, 255, 255, 0.8)',
+                            border: '1px solid #e5e7eb',
+                            borderRadius: '8px',
+                            padding: '1rem',
+                            textAlign: 'center'
+                          }}>
+                            <img
+                              src={`/고객사 & 파트너사_고화질/파트너사${logoNum}.png`}
+                              alt={`파트너사${logoNum}`}
+                              style={{
+                                width: '100%',
+                                height: '60px',
+                                objectFit: 'contain',
+                                marginBottom: '0.5rem'
+                              }}
+                            />
+                            <p style={{ fontSize: '0.875rem', fontWeight: '500', margin: '0 0 0.5rem 0' }}>
+                              파트너사 {logoNum}
                             </p>
-                            <p style={{ fontSize: '0.75rem', color: '#6b7280', margin: 0 }}>
-                              클릭하거나 드래그하여 파일을 선택하세요
-                            </p>
-                            <p style={{ fontSize: '0.75rem', color: '#9ca3af', margin: '0.5rem 0 0 0' }}>
-                              PNG, JPG, JPEG (최대 5MB)
-                            </p>
+                            <button 
+                              onClick={() => setShowLogoUpload({type: 'partner', index: i})}
+                              style={{
+                                padding: '0.5rem 1rem',
+                                fontSize: '0.75rem',
+                                background: 'linear-gradient(135deg, #3b82f6, #1d4ed8)',
+                                color: 'white',
+                                border: 'none',
+                                borderRadius: '6px',
+                                cursor: 'pointer'
+                              }}>
+                              이미지 변경
+                            </button>
                           </div>
-                        )}
-                      </div>
-                      
-                      {/* 수동 경로 입력 (선택사항) */}
-                      <div style={{ marginTop: '1rem' }}>
-                        <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: '500', color: '#6b7280', marginBottom: '0.5rem' }}>
-                          또는 이미지 경로를 직접 입력하세요
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+
+                {logoSliderCategory === '속도조절' && (
+                  <div>
+                    <h4 style={{ fontSize: '1rem', fontWeight: 'bold', color: '#111827', marginBottom: '1.5rem' }}>
+                      슬라이드 속도 조절
+                    </h4>
+                    
+                    {/* 웹 속도 설정 */}
+                    <div style={{ marginBottom: '2rem' }}>
+                      <h5 style={{ fontSize: '0.9rem', fontWeight: 'bold', color: '#374151', marginBottom: '1rem', borderBottom: '2px solid #e5e7eb', paddingBottom: '0.5rem' }}>
+                        웹 속도 설정
+                      </h5>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                        <label style={{ fontSize: '0.875rem', fontWeight: '600', color: '#374151', minWidth: '100px' }}>
+                          속도 (낮을수록 빠름)
                         </label>
                         <input
-                          type="text"
-                          value={newProject.image}
-                          onChange={(e) => setNewProject({...newProject, image: e.target.value})}
+                          type="number"
+                          value={logoSliderSettings.web.speed}
+                          onChange={(e) => {
+                            const newSettings = { ...logoSliderSettings };
+                            newSettings.web.speed = parseInt(e.target.value) || 50;
+                            setLogoSliderSettings(newSettings);
+                          }}
                           style={{
-                            width: '100%',
-                            maxWidth: '650px',
                             padding: '0.5rem 0.75rem',
-                            border: '1px solid #e5e7eb',
+                            border: '2px solid #e5e7eb',
                             borderRadius: '8px',
                             outline: 'none',
                             fontSize: '0.875rem',
-                            transition: 'all 0.2s ease',
                             background: 'white',
                             color: '#111827',
-                            boxSizing: 'border-box'
+                            width: '120px'
                           }}
-                          onFocus={(e) => {
-                            e.target.style.borderColor = '#3b82f6';
-                            e.target.style.boxShadow = '0 0 0 2px rgba(59, 130, 246, 0.1)';
-                          }}
-                          onBlur={(e) => {
-                            e.target.style.borderColor = '#e5e7eb';
-                            e.target.style.boxShadow = 'none';
-                          }}
-                          placeholder="/portfolio_photo/이미지명.jpg"
                         />
                       </div>
                     </div>
+
+                    {/* 모바일 속도 설정 */}
+                    <div style={{ marginBottom: '2rem' }}>
+                      <h5 style={{ fontSize: '0.9rem', fontWeight: 'bold', color: '#374151', marginBottom: '1rem', borderBottom: '2px solid #e5e7eb', paddingBottom: '0.5rem' }}>
+                        모바일 속도 설정
+                      </h5>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                        <label style={{ fontSize: '0.875rem', fontWeight: '600', color: '#374151', minWidth: '100px' }}>
+                          속도 (낮을수록 빠름)
+                        </label>
+                        <input
+                          type="number"
+                          value={logoSliderSettings.mobile.speed}
+                          onChange={(e) => {
+                            const newSettings = { ...logoSliderSettings };
+                            newSettings.mobile.speed = parseInt(e.target.value) || 300;
+                            setLogoSliderSettings(newSettings);
+                          }}
+                          style={{
+                            padding: '0.5rem 0.75rem',
+                            border: '2px solid #e5e7eb',
+                            borderRadius: '8px',
+                            outline: 'none',
+                            fontSize: '0.875rem',
+                            background: 'white',
+                            color: '#111827',
+                            width: '120px'
+                          }}
+                        />
+                      </div>
+                    </div>
+
+                    {/* 저장 버튼 */}
+                    <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.75rem' }}>
+                      <button
+                        onClick={() => saveLogoSliderSettings(logoSliderSettings)}
+                        style={{
+                          padding: '0.75rem 1.5rem',
+                          fontSize: '0.875rem',
+                          fontWeight: '500',
+                          color: 'white',
+                          background: 'linear-gradient(135deg, #3b82f6, #1d4ed8)',
+                          border: 'none',
+                          borderRadius: '12px',
+                          cursor: 'pointer',
+                          transition: 'all 0.2s ease'
+                        }}
+                      >
+                        속도 설정 저장
+                      </button>
+                    </div>
                   </div>
-                  <div style={{ display: 'flex', justifyContent: 'end', gap: '0.75rem', marginTop: '1.5rem' }}>
-                    <button
-                      onClick={() => setShowAddForm(false)}
-                      style={{
-                        padding: '0.75rem 1.5rem',
-                        fontSize: '0.875rem',
-                        fontWeight: '500',
-                        color: '#374151',
-                        background: 'rgba(255, 255, 255, 0.8)',
-                        border: '1px solid #d1d5db',
-                        borderRadius: '12px',
-                        cursor: 'pointer',
-                        transition: 'all 0.2s ease'
-                      }}
-                    >
-                      취소
-                    </button>
-                    <button
-                      onClick={handleAddProject}
-                      style={{
-                        padding: '0.75rem 1.5rem',
-                        fontSize: '0.875rem',
-                        fontWeight: '500',
-                        color: 'white',
-                        background: 'linear-gradient(135deg, #2563eb, #6366f1)',
-                        border: 'none',
-                        borderRadius: '12px',
-                        cursor: 'pointer',
-                        transition: 'all 0.2s ease'
-                      }}
-                    >
-                      추가
-                    </button>
+                )}
+
+                {logoSliderCategory === '메인문구' && (
+                  <div>
+                    <h4 style={{ fontSize: '1rem', fontWeight: 'bold', color: '#111827', marginBottom: '1.5rem' }}>
+                      메인 문구 설정
+                    </h4>
+                    
+                    {/* 웹 텍스트 설정 */}
+                    <div style={{ marginBottom: '2rem' }}>
+                      <h5 style={{ fontSize: '0.9rem', fontWeight: 'bold', color: '#374151', marginBottom: '1rem', borderBottom: '2px solid #e5e7eb', paddingBottom: '0.5rem' }}>
+                        웹 텍스트 설정
+                      </h5>
+                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                        <div>
+                          <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                            텍스트 색상
+                          </label>
+                          <input
+                            type="color"
+                            value={logoSliderSettings.web.textColor}
+                            onChange={(e) => {
+                              const newSettings = { ...logoSliderSettings };
+                              newSettings.web.textColor = e.target.value;
+                              setLogoSliderSettings(newSettings);
+                            }}
+                            style={{
+                              width: '100%',
+                              height: '40px',
+                              border: '2px solid #e5e7eb',
+                              borderRadius: '8px',
+                              cursor: 'pointer'
+                            }}
+                          />
+                        </div>
+                        <div>
+                          <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                            텍스트 크기 (px)
+                          </label>
+                          <input
+                            type="number"
+                            value={logoSliderSettings.web.textSize}
+                            onChange={(e) => {
+                              const newSettings = { ...logoSliderSettings };
+                              newSettings.web.textSize = parseInt(e.target.value) || 40;
+                              setLogoSliderSettings(newSettings);
+                            }}
+                            style={{
+                              width: '100%',
+                              padding: '0.5rem 0.75rem',
+                              border: '2px solid #e5e7eb',
+                              borderRadius: '8px',
+                              outline: 'none',
+                              fontSize: '0.875rem',
+                              background: 'white',
+                              color: '#111827',
+                              boxSizing: 'border-box'
+                            }}
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* 모바일 텍스트 설정 */}
+                    <div style={{ marginBottom: '2rem' }}>
+                      <h5 style={{ fontSize: '0.9rem', fontWeight: 'bold', color: '#374151', marginBottom: '1rem', borderBottom: '2px solid #e5e7eb', paddingBottom: '0.5rem' }}>
+                        모바일 텍스트 설정
+                      </h5>
+                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                        <div>
+                          <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                            텍스트 색상
+                          </label>
+                          <input
+                            type="color"
+                            value={logoSliderSettings.mobile.textColor}
+                            onChange={(e) => {
+                              const newSettings = { ...logoSliderSettings };
+                              newSettings.mobile.textColor = e.target.value;
+                              setLogoSliderSettings(newSettings);
+                            }}
+                            style={{
+                              width: '100%',
+                              height: '40px',
+                              border: '2px solid #e5e7eb',
+                              borderRadius: '8px',
+                              cursor: 'pointer'
+                            }}
+                          />
+                        </div>
+                        <div>
+                          <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                            텍스트 크기 (px)
+                          </label>
+                          <input
+                            type="number"
+                            value={logoSliderSettings.mobile.textSize}
+                            onChange={(e) => {
+                              const newSettings = { ...logoSliderSettings };
+                              newSettings.mobile.textSize = parseInt(e.target.value) || 23;
+                              setLogoSliderSettings(newSettings);
+                            }}
+                            style={{
+                              width: '100%',
+                              padding: '0.5rem 0.75rem',
+                              border: '2px solid #e5e7eb',
+                              borderRadius: '8px',
+                              outline: 'none',
+                              fontSize: '0.875rem',
+                              background: 'white',
+                              color: '#111827',
+                              boxSizing: 'border-box'
+                            }}
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* 저장 버튼 */}
+                    <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.75rem' }}>
+                      <button
+                        onClick={() => saveLogoSliderSettings(logoSliderSettings)}
+                        style={{
+                          padding: '0.75rem 1.5rem',
+                          fontSize: '0.875rem',
+                          fontWeight: '500',
+                          color: 'white',
+                          background: 'linear-gradient(135deg, #3b82f6, #1d4ed8)',
+                          border: 'none',
+                          borderRadius: '12px',
+                          cursor: 'pointer',
+                          transition: 'all 0.2s ease'
+                        }}
+                      >
+                        텍스트 설정 저장
+                      </button>
+                    </div>
                   </div>
-                </div>
+                )}
+              </div>
               )}
 
               {/* 프로젝트 목록 */}
+              {activeSection === "portfolio" && (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                {filteredProjects.map((project, projectIndex) => (
+                {portfolioData.projects.filter(project => project.category === selectedCategory).map((project, projectIndex) => (
                   <div key={project.id} style={{
                     background: 'rgba(255, 255, 255, 0.6)',
                     backdropFilter: 'blur(10px)',
@@ -735,22 +963,22 @@ export default function AdminPortfolio() {
                           onClick={() => handleRemoveProject(project.id)}
                           style={{
                             padding: '0.5rem',
-                            color: '#ef4444',
-                            background: 'transparent',
-                            border: 'none',
-                            borderRadius: '8px',
+                            fontSize: '0.75rem',
+                            fontWeight: '500',
+                            color: '#dc2626',
+                            background: 'rgba(239, 68, 68, 0.1)',
+                            border: '1px solid rgba(239, 68, 68, 0.2)',
+                            borderRadius: '6px',
                             cursor: 'pointer',
                             transition: 'all 0.2s ease'
                           }}
                         >
-                          <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                          </svg>
+                          삭제
                         </button>
                       )}
                     </div>
                     
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
                       <div>
                         <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
                           프로젝트명
@@ -762,9 +990,8 @@ export default function AdminPortfolio() {
                           disabled={!isEditing}
                           style={{
                             width: '100%',
-                            maxWidth: '650px',
                             padding: '0.5rem 0.75rem',
-                            border: '2px solid #e5e7eb',
+                            border: '1px solid #e5e7eb',
                             borderRadius: '8px',
                             outline: 'none',
                             fontSize: '0.875rem',
@@ -773,19 +1000,8 @@ export default function AdminPortfolio() {
                             color: !isEditing ? '#6b7280' : '#111827',
                             boxSizing: 'border-box'
                           }}
-                          onFocus={(e) => {
-                            if (isEditing) {
-                              e.target.style.borderColor = '#3b82f6';
-                              e.target.style.boxShadow = '0 0 0 4px rgba(59, 130, 246, 0.1)';
-                            }
-                          }}
-                          onBlur={(e) => {
-                            e.target.style.borderColor = '#e5e7eb';
-                            e.target.style.boxShadow = 'none';
-                          }}
                         />
                       </div>
-                      
                       <div>
                         <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
                           카테고리
@@ -796,9 +1012,8 @@ export default function AdminPortfolio() {
                           disabled={!isEditing}
                           style={{
                             width: '100%',
-                            maxWidth: '650px',
                             padding: '0.5rem 0.75rem',
-                            border: '2px solid #e5e7eb',
+                            border: '1px solid #e5e7eb',
                             borderRadius: '8px',
                             outline: 'none',
                             fontSize: '0.875rem',
@@ -806,16 +1021,6 @@ export default function AdminPortfolio() {
                             background: !isEditing ? '#f9fafb' : 'white',
                             color: !isEditing ? '#6b7280' : '#111827',
                             boxSizing: 'border-box'
-                          }}
-                          onFocus={(e) => {
-                            if (isEditing) {
-                              e.target.style.borderColor = '#3b82f6';
-                              e.target.style.boxShadow = '0 0 0 4px rgba(59, 130, 246, 0.1)';
-                            }
-                          }}
-                          onBlur={(e) => {
-                            e.target.style.borderColor = '#e5e7eb';
-                            e.target.style.boxShadow = 'none';
                           }}
                         >
                           {portfolioData.categories.map(category => (
@@ -823,263 +1028,222 @@ export default function AdminPortfolio() {
                           ))}
                         </select>
                       </div>
-                      
-                      <div>
-                        <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
-                          설명
-                        </label>
-                        <input
-                          type="text"
-                          value={project.description}
-                          onChange={(e) => handleUpdateProject(project.id, 'description', e.target.value)}
-                          disabled={!isEditing}
-                          style={{
-                            width: '100%',
-                            maxWidth: '650px',
-                            padding: '0.5rem 0.75rem',
-                            border: '2px solid #e5e7eb',
-                            borderRadius: '8px',
-                            outline: 'none',
-                            fontSize: '0.875rem',
-                            transition: 'all 0.2s ease',
-                            background: !isEditing ? '#f9fafb' : 'white',
-                            color: !isEditing ? '#6b7280' : '#111827',
-                            boxSizing: 'border-box'
-                          }}
-                          onFocus={(e) => {
-                            if (isEditing) {
-                              e.target.style.borderColor = '#3b82f6';
-                              e.target.style.boxShadow = '0 0 0 4px rgba(59, 130, 246, 0.1)';
-                            }
-                          }}
-                          onBlur={(e) => {
-                            e.target.style.borderColor = '#e5e7eb';
-                            e.target.style.boxShadow = 'none';
-                          }}
-                        />
-                      </div>
-                      
-                      <div>
-                        <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
-                          프로젝트 이미지
-                        </label>
-                        
-                        {/* 현재 이미지 미리보기 */}
-                        {project.image && (
-                          <div style={{ marginBottom: '1rem' }}>
-                            <img
-                              src={project.image}
-                              alt={project.title}
-                              style={{
-                                maxWidth: '200px',
-                                maxHeight: '150px',
-                                borderRadius: '8px',
-                                objectFit: 'cover',
-                                border: '1px solid #e5e7eb'
-                              }}
-                              onError={(e) => {
-                                e.currentTarget.style.display = 'none';
-                              }}
-                            />
-                          </div>
-                        )}
-                        
-                        {/* 파일 업로드 버튼 */}
-                        {isEditing && (
-                          <div style={{ marginBottom: '1rem' }}>
-                            <input
-                              type="file"
-                              accept="image/*"
-                              onChange={(e) => handleUpdateProjectImage(project.id, e)}
-                              style={{ display: 'none' }}
-                              id={`image-upload-${project.id}`}
-                            />
-                            <button
-                              type="button"
-                              onClick={() => document.getElementById(`image-upload-${project.id}`)?.click()}
-                              style={{
-                                padding: '0.5rem 1rem',
-                                fontSize: '0.875rem',
-                                fontWeight: '500',
-                                color: '#3b82f6',
-                                background: 'white',
-                                border: '1px solid #3b82f6',
-                                borderRadius: '8px',
-                                cursor: 'pointer',
-                                transition: 'all 0.2s ease',
-                                display: 'flex',
-                                alignItems: 'center',
-                                gap: '0.5rem'
-                              }}
-                              onMouseEnter={(e) => {
-                                e.currentTarget.style.backgroundColor = '#eff6ff';
-                              }}
-                              onMouseLeave={(e) => {
-                                e.currentTarget.style.backgroundColor = 'white';
-                              }}
-                            >
-                              <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
-                              </svg>
-                              이미지 변경
-                            </button>
-                          </div>
-                        )}
-                        
-                        {/* 수동 경로 입력 */}
-                        <input
-                          type="text"
-                          value={project.image}
-                          onChange={(e) => handleUpdateProject(project.id, 'image', e.target.value)}
-                          disabled={!isEditing}
-                          style={{
-                            width: '100%',
-                            maxWidth: '650px',
-                            padding: '0.5rem 0.75rem',
-                            border: '2px solid #e5e7eb',
-                            borderRadius: '8px',
-                            outline: 'none',
-                            fontSize: '0.875rem',
-                            transition: 'all 0.2s ease',
-                            background: !isEditing ? '#f9fafb' : 'white',
-                            color: !isEditing ? '#6b7280' : '#111827',
-                            boxSizing: 'border-box'
-                          }}
-                          onFocus={(e) => {
-                            if (isEditing) {
-                              e.target.style.borderColor = '#3b82f6';
-                              e.target.style.boxShadow = '0 0 0 4px rgba(59, 130, 246, 0.1)';
-                            }
-                          }}
-                          onBlur={(e) => {
-                            e.target.style.borderColor = '#e5e7eb';
-                            e.target.style.boxShadow = 'none';
-                          }}
-                          placeholder="/portfolio_photo/이미지명.jpg"
-                        />
-                        {isEditing && (
-                          <p style={{ fontSize: '0.75rem', color: '#6b7280', margin: '0.5rem 0 0 0' }}>
-                            이미지 경로를 직접 입력하거나 위의 버튼으로 파일을 업로드하세요
-                          </p>
-                        )}
-                      </div>
+                    </div>
+                    
+                    <div style={{ marginTop: '1rem' }}>
+                      <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                        설명
+                      </label>
+                      <textarea
+                        value={project.description}
+                        onChange={(e) => handleUpdateProject(project.id, 'description', e.target.value)}
+                        disabled={!isEditing}
+                        rows={3}
+                        style={{
+                          width: '100%',
+                          padding: '0.5rem 0.75rem',
+                          border: '1px solid #e5e7eb',
+                          borderRadius: '8px',
+                          outline: 'none',
+                          fontSize: '0.875rem',
+                          background: !isEditing ? '#f9fafb' : 'white',
+                          color: !isEditing ? '#6b7280' : '#111827',
+                          boxSizing: 'border-box',
+                          resize: 'vertical'
+                        }}
+                      />
+                    </div>
+                    
+                    <div style={{ marginTop: '1rem' }}>
+                      <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                        이미지 경로
+                      </label>
+                      <input
+                        type="text"
+                        value={project.image}
+                        onChange={(e) => handleUpdateProject(project.id, 'image', e.target.value)}
+                        disabled={!isEditing}
+                        style={{
+                          width: '100%',
+                          padding: '0.5rem 0.75rem',
+                          border: '1px solid #e5e7eb',
+                          borderRadius: '8px',
+                          outline: 'none',
+                          fontSize: '0.875rem',
+                          background: !isEditing ? '#f9fafb' : 'white',
+                          color: !isEditing ? '#6b7280' : '#111827',
+                          boxSizing: 'border-box'
+                        }}
+                      />
+                      {project.image && (
+                        <div style={{ marginTop: '0.75rem' }}>
+                          <img
+                            src={project.image}
+                            alt={project.title}
+                            style={{
+                              width: '100%',
+                              maxWidth: '300px',
+                              height: '200px',
+                              objectFit: 'cover',
+                              borderRadius: '8px',
+                              border: '1px solid #e5e7eb'
+                            }}
+                            onError={(e) => {
+                              e.currentTarget.style.display = 'none';
+                            }}
+                          />
+                        </div>
+                      )}
                     </div>
                   </div>
                 ))}
               </div>
-            </div>
-          </div>
-        </div>
+            )}
 
-        {/* 미리보기 */}
-        <div style={{
-          marginTop: '2rem',
-          background: 'rgba(255, 255, 255, 0.8)',
-          backdropFilter: 'blur(10px)',
-          borderRadius: '12px',
-          boxShadow: '0 10px 15px rgba(0, 0, 0, 0.1)',
-          border: '1px solid rgba(255, 255, 255, 0.2)',
-          padding: '1.5rem',
-          transition: 'all 0.3s ease'
-        }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.5rem' }}>
-            <div style={{
-              width: '32px',
-              height: '32px',
-              background: 'linear-gradient(135deg, #8b5cf6, #7c3aed)',
-              borderRadius: '8px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center'
-            }}>
-              <svg width="20" height="20" fill="none" stroke="white" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-              </svg>
-            </div>
-            <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#111827', margin: 0 }}>
-              실시간 미리보기
-            </h3>
-          </div>
-          
-          <div style={{
-            background: 'linear-gradient(135deg, #f9fafb, #f3f4f6)',
-            borderRadius: '12px',
-            padding: '1.5rem',
-            border: '1px solid rgba(229, 231, 235, 0.5)'
-          }}>
-            <div style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
-              <h2 style={{ fontSize: '1.875rem', fontWeight: 'bold', color: '#1f2937', marginBottom: '0.75rem', margin: 0 }}>
-                포트폴리오
-              </h2>
-              <p style={{ fontSize: '1.125rem', color: '#6b7280', margin: 0 }}>
-                {selectedCategory} 프로젝트 ({filteredProjects.length}개)
-              </p>
-            </div>
-            
-            <div style={{
-              background: 'white',
-              borderRadius: '8px',
-              padding: '1rem',
-              boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
-              border: '1px solid rgba(229, 231, 235, 0.5)'
-            }}>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
-                <h4 style={{ fontSize: '1.125rem', fontWeight: '600', color: '#1f2937', margin: 0 }}>
-                  {selectedCategory} 섹션
+            {/* 새 프로젝트 추가 폼 */}
+            {showAddForm && (
+              <div style={{
+                background: 'rgba(255, 255, 255, 0.6)',
+                backdropFilter: 'blur(10px)',
+                border: '1px solid rgba(229, 231, 235, 0.5)',
+                borderRadius: '12px',
+                padding: '1.5rem',
+                marginTop: '1rem',
+                transition: 'all 0.3s ease'
+              }}>
+                <h4 style={{ fontSize: '1rem', fontWeight: 'bold', color: '#111827', marginBottom: '1rem' }}>
+                  새 프로젝트 추가
                 </h4>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  <div style={{
-                    width: '8px',
-                    height: '8px',
-                    background: '#10b981',
-                    borderRadius: '50%',
-                    animation: 'pulse 2s infinite'
-                  }}></div>
-                  <span style={{ fontSize: '0.875rem', color: '#6b7280' }}>
-                    {filteredProjects.length}개 프로젝트
-                  </span>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                      프로젝트명
+                    </label>
+                    <input
+                      type="text"
+                      value={newProject.title}
+                      onChange={(e) => setNewProject({...newProject, title: e.target.value})}
+                      style={{
+                        width: '100%',
+                        padding: '0.5rem 0.75rem',
+                        border: '2px solid #e5e7eb',
+                        borderRadius: '8px',
+                        outline: 'none',
+                        fontSize: '0.875rem',
+                        background: 'white',
+                        color: '#111827',
+                        boxSizing: 'border-box'
+                      }}
+                      placeholder="프로젝트명을 입력하세요"
+                    />
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                      설명
+                    </label>
+                    <input
+                      type="text"
+                      value={newProject.description}
+                      onChange={(e) => setNewProject({...newProject, description: e.target.value})}
+                      style={{
+                        width: '100%',
+                        padding: '0.5rem 0.75rem',
+                        border: '2px solid #e5e7eb',
+                        borderRadius: '8px',
+                        outline: 'none',
+                        fontSize: '0.875rem',
+                        background: 'white',
+                        color: '#111827',
+                        boxSizing: 'border-box'
+                      }}
+                      placeholder="프로젝트 설명을 입력하세요"
+                    />
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                      카테고리
+                    </label>
+                    <select
+                      value={newProject.category}
+                      onChange={(e) => setNewProject({...newProject, category: e.target.value})}
+                      style={{
+                        width: '100%',
+                        padding: '0.5rem 0.75rem',
+                        border: '2px solid #e5e7eb',
+                        borderRadius: '8px',
+                        outline: 'none',
+                        fontSize: '0.875rem',
+                        background: 'white',
+                        color: '#111827',
+                        boxSizing: 'border-box'
+                      }}
+                    >
+                      {portfolioData.categories.map(category => (
+                        <option key={category} value={category}>{category}</option>
+                      ))}
+                    </select>
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                      이미지 경로
+                    </label>
+                    <input
+                      type="text"
+                      value={newProject.image}
+                      onChange={(e) => setNewProject({...newProject, image: e.target.value})}
+                      style={{
+                        width: '100%',
+                        padding: '0.5rem 0.75rem',
+                        border: '2px solid #e5e7eb',
+                        borderRadius: '8px',
+                        outline: 'none',
+                        fontSize: '0.875rem',
+                        background: 'white',
+                        color: '#111827',
+                        boxSizing: 'border-box'
+                      }}
+                      placeholder="/portfolio_photo/이미지명.jpg"
+                    />
+                  </div>
+                  <div style={{ display: 'flex', gap: '0.75rem' }}>
+                    <button
+                      onClick={handleAddProject}
+                      style={{
+                        flex: 1,
+                        padding: '0.75rem 1.5rem',
+                        fontSize: '0.875rem',
+                        fontWeight: '500',
+                        color: 'white',
+                        background: 'linear-gradient(135deg, #10b981, #14b8a6)',
+                        border: 'none',
+                        borderRadius: '8px',
+                        cursor: 'pointer'
+                      }}
+                    >
+                      추가
+                    </button>
+                    <button
+                      onClick={() => setShowAddForm(false)}
+                      style={{
+                        flex: 1,
+                        padding: '0.75rem 1.5rem',
+                        fontSize: '0.875rem',
+                        fontWeight: '500',
+                        color: '#374151',
+                        background: '#f3f4f6',
+                        border: '1px solid #d1d5db',
+                        borderRadius: '8px',
+                        cursor: 'pointer'
+                      }}
+                    >
+                      취소
+                    </button>
+                  </div>
                 </div>
               </div>
-              
-              <div style={{ 
-                display: 'grid', 
-                gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', 
-                gap: '0.75rem' 
-              }}>
-                {filteredProjects.slice(0, 3).map((project, index) => (
-                  <div key={index} style={{
-                    background: 'linear-gradient(135deg, #eff6ff, #dbeafe)',
-                    borderRadius: '8px',
-                    padding: '1rem',
-                    border: '1px solid rgba(59, 130, 246, 0.2)'
-                  }}>
-                    <h5 style={{ fontWeight: '600', color: '#1f2937', marginBottom: '0.5rem', fontSize: '0.875rem', margin: 0 }}>
-                      {project.title}
-                    </h5>
-                    <p style={{ fontSize: '0.75rem', color: '#6b7280', lineHeight: '1.5', margin: 0 }}>
-                      {project.description}
-                    </p>
-                  </div>
-                ))}
-                {filteredProjects.length > 3 && (
-                  <div style={{
-                    background: 'linear-gradient(135deg, #f9fafb, #f3f4f6)',
-                    borderRadius: '8px',
-                    padding: '1rem',
-                    border: '1px solid #e5e7eb',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center'
-                  }}>
-                    <span style={{ fontSize: '0.875rem', color: '#6b7280' }}>
-                      +{filteredProjects.length - 3}개 더
-                    </span>
-                  </div>
-                )}
-              </div>
-            </div>
+            )}
           </div>
+        </div>
         </div>
       </main>
     </div>
