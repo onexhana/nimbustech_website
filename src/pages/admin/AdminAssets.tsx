@@ -172,6 +172,80 @@ export default function AdminAssets() {
         uploadDate: "2024-01-20"
       },
       
+      // 홈버튼 이미지
+      {
+        id: 45,
+        name: "Web 홈버튼 1",
+        path: "/popup_image/Mission&Vision.jpg",
+        category: "홈버튼",
+        size: "1.8MB",
+        uploadDate: "2024-01-20",
+        description: "미션&비전 웹 홈버튼 이미지"
+      },
+      {
+        id: 46,
+        name: "Web 홈버튼 2",
+        path: "/popup_image/Core Values.png",
+        category: "홈버튼",
+        size: "2.2MB",
+        uploadDate: "2024-01-20",
+        description: "핵심가치 웹 홈버튼 이미지"
+      },
+      {
+        id: 47,
+        name: "Web 홈버튼 3",
+        path: "/popup_image/Employee Benefits.jpg",
+        category: "홈버튼",
+        size: "2.0MB",
+        uploadDate: "2024-01-20",
+        description: "복지 혜택 웹 홈버튼 이미지"
+      },
+      {
+        id: 48,
+        name: "Web 홈버튼 4",
+        path: "/popup_image/Way of Working.jpg",
+        category: "홈버튼",
+        size: "1.9MB",
+        uploadDate: "2024-01-20",
+        description: "일하는 방식 웹 홈버튼 이미지"
+      },
+      {
+        id: 49,
+        name: "Mobile 홈버튼 1",
+        path: "/popup_image_mobile/Mission&Vision_mobile.png",
+        category: "홈버튼",
+        size: "1.5MB",
+        uploadDate: "2024-01-20",
+        description: "미션&비전 모바일 홈버튼 이미지"
+      },
+      {
+        id: 50,
+        name: "Mobile 홈버튼 2",
+        path: "/popup_image_mobile/Core Values_mobile.png",
+        category: "홈버튼",
+        size: "1.7MB",
+        uploadDate: "2024-01-20",
+        description: "핵심가치 모바일 홈버튼 이미지"
+      },
+      {
+        id: 51,
+        name: "Mobile 홈버튼 3",
+        path: "/popup_image_mobile/Employee Benefits_mobile.png",
+        category: "홈버튼",
+        size: "1.6MB",
+        uploadDate: "2024-01-20",
+        description: "복지 혜택 모바일 홈버튼 이미지"
+      },
+      {
+        id: 52,
+        name: "Mobile 홈버튼 4",
+        path: "/popup_image_mobile/Way of Working_mobile.png",
+        category: "홈버튼",
+        size: "1.4MB",
+        uploadDate: "2024-01-20",
+        description: "일하는 방식 모바일 홈버튼 이미지"
+      },
+      
       // 포트폴리오 이미지 - 공공 카테고리
       {
         id: 21,
@@ -390,13 +464,17 @@ export default function AdminAssets() {
 
   const [selectedCategory, setSelectedCategory] = useState("전체");
   const [showUploadForm, setShowUploadForm] = useState(false);
+  const [showImageUpload, setShowImageUpload] = useState(null);
+  const [showPdfUpload, setShowPdfUpload] = useState(null);
+  const [uploadedImage, setUploadedImage] = useState(null);
+  const [uploadedPdf, setUploadedPdf] = useState(null);
   const [newFile, setNewFile] = useState({
     name: "",
     category: "로고",
     type: "image"
   });
 
-  const categories = ["전체", "로고", "팝업이미지", "포트폴리오", "PDF"];
+  const categories = ["전체", "로고", "팝업이미지", "포트폴리오", "홈버튼", "PDF"];
 
   const filteredImages = selectedCategory === "전체" 
     ? assetsData.images 
@@ -435,6 +513,72 @@ export default function AdminAssets() {
         ...assetsData,
         pdfs: assetsData.pdfs.filter(pdf => pdf.id !== id)
       });
+    }
+  };
+
+  const updateImage = (id: number, updatedData: any) => {
+    setAssetsData({
+      ...assetsData,
+      images: assetsData.images.map(img => 
+        img.id === id ? { ...img, ...updatedData } : img
+      )
+    });
+    alert('이미지 정보가 업데이트되었습니다!');
+  };
+
+  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setUploadedImage(e.target?.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleImageChange = (imageId: number) => {
+    if (uploadedImage) {
+      const updatedData = {
+        path: uploadedImage,
+        size: "업로드됨"
+      };
+      updateImage(imageId, updatedData);
+      setShowImageUpload(null);
+      setUploadedImage(null);
+    }
+  };
+
+  const handlePdfUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setUploadedPdf(e.target?.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const updatePdf = (id: number, updatedData: any) => {
+    setAssetsData({
+      ...assetsData,
+      pdfs: assetsData.pdfs.map(pdf => 
+        pdf.id === id ? { ...pdf, ...updatedData } : pdf
+      )
+    });
+    alert('PDF 파일이 업데이트되었습니다!');
+  };
+
+  const handlePdfChange = (pdfId: number) => {
+    if (uploadedPdf) {
+      const updatedData = {
+        path: uploadedPdf,
+        size: "업로드됨"
+      };
+      updatePdf(pdfId, updatedData);
+      setShowPdfUpload(null);
+      setUploadedPdf(null);
     }
   };
 
@@ -624,6 +768,7 @@ export default function AdminAssets() {
                   <option value="로고">로고</option>
                   <option value="팝업이미지">팝업이미지</option>
                   <option value="포트폴리오">포트폴리오</option>
+                  <option value="홈버튼">홈버튼</option>
                   <option value="PDF">PDF</option>
                 </select>
               </div>
@@ -660,6 +805,366 @@ export default function AdminAssets() {
                 }}
               >
                 업로드
+              </button>
+            </div>
+          </div>
+        )}
+
+
+        {/* 이미지 업로드 모달 */}
+        {showImageUpload && (
+          <div style={{
+            background: 'rgba(255, 255, 255, 0.8)',
+            backdropFilter: 'blur(10px)',
+            borderRadius: '12px',
+            boxShadow: '0 10px 15px rgba(0, 0, 0, 0.1)',
+            border: '1px solid rgba(255, 255, 255, 0.2)',
+            padding: '1.5rem',
+            marginBottom: '2rem',
+            transition: 'all 0.3s ease'
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
+              <div style={{
+                width: '32px',
+                height: '32px',
+                background: 'linear-gradient(135deg, #10b981, #14b8a6)',
+                borderRadius: '8px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}>
+                <svg width="20" height="20" fill="none" stroke="white" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                </svg>
+              </div>
+              <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#111827', margin: 0 }}>
+                이미지 업로드
+              </h3>
+            </div>
+            
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              {/* 현재 이미지 미리보기 */}
+              <div>
+                <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                  현재 이미지
+                </label>
+                <div style={{
+                  width: '200px',
+                  height: '150px',
+                  border: '2px solid #e5e7eb',
+                  borderRadius: '8px',
+                  overflow: 'hidden',
+                  background: '#f9fafb',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}>
+                  <img 
+                    src={showImageUpload.path} 
+                    alt="현재 이미지" 
+                    style={{ 
+                      maxWidth: '100%', 
+                      maxHeight: '100%', 
+                      objectFit: 'contain' 
+                    }}
+                  />
+                </div>
+              </div>
+
+              {/* 새 이미지 업로드 */}
+              <div>
+                <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                  새 이미지 업로드
+                </label>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageUpload}
+                  style={{
+                    width: '100%',
+                    maxWidth: '650px',
+                    padding: '0.5rem 0.75rem',
+                    border: '2px solid #e5e7eb',
+                    borderRadius: '8px',
+                    fontSize: '0.875rem',
+                    background: 'white',
+                    color: '#111827'
+                  }}
+                />
+              </div>
+
+              {/* 업로드된 이미지 미리보기 */}
+              {uploadedImage && (
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                    업로드된 이미지 미리보기
+                  </label>
+                  <div style={{
+                    width: '200px',
+                    height: '150px',
+                    border: '2px solid #10b981',
+                    borderRadius: '8px',
+                    overflow: 'hidden',
+                    background: '#f0fdf4',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                  }}>
+                    <img 
+                      src={uploadedImage} 
+                      alt="업로드된 이미지" 
+                      style={{ 
+                        maxWidth: '100%', 
+                        maxHeight: '100%', 
+                        objectFit: 'contain' 
+                      }}
+                    />
+                  </div>
+                </div>
+              )}
+
+              {/* 이미지 경로 직접 입력 */}
+              <div>
+                <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                  또는 이미지 경로 직접 입력
+                </label>
+                <input
+                  type="text"
+                  value={showImageUpload.path}
+                  onChange={(e) => setShowImageUpload({...showImageUpload, path: e.target.value})}
+                  style={{
+                    width: '100%',
+                    maxWidth: '650px',
+                    padding: '0.5rem 0.75rem',
+                    border: '2px solid #e5e7eb',
+                    borderRadius: '8px',
+                    outline: 'none',
+                    fontSize: '0.875rem',
+                    transition: 'all 0.2s ease',
+                    background: 'white',
+                    color: '#111827'
+                  }}
+                  onFocus={(e) => {
+                    e.target.style.borderColor = '#3b82f6';
+                    e.target.style.boxShadow = '0 0 0 4px rgba(59, 130, 246, 0.1)';
+                  }}
+                  onBlur={(e) => {
+                    e.target.style.borderColor = '#e5e7eb';
+                    e.target.style.boxShadow = 'none';
+                  }}
+                  placeholder="이미지 경로를 입력하세요"
+                />
+                <p style={{ fontSize: '0.75rem', color: '#6b7280', marginTop: '0.5rem', margin: 0 }}>
+                  이미지 경로를 직접 입력하거나 위의 파일 선택으로 이미지를 업로드하세요
+                </p>
+              </div>
+            </div>
+            
+            <div style={{ display: 'flex', justifyContent: 'end', gap: '0.75rem', marginTop: '1.5rem' }}>
+              <button
+                onClick={() => {
+                  setShowImageUpload(null);
+                  setUploadedImage(null);
+                }}
+                style={{
+                  padding: '0.75rem 1.5rem',
+                  fontSize: '0.875rem',
+                  fontWeight: '500',
+                  color: '#374151',
+                  background: 'rgba(255, 255, 255, 0.8)',
+                  border: '1px solid #d1d5db',
+                  borderRadius: '12px',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease'
+                }}
+              >
+                취소
+              </button>
+              <button
+                onClick={() => handleImageChange(showImageUpload.id)}
+                style={{
+                  padding: '0.75rem 1.5rem',
+                  fontSize: '0.875rem',
+                  fontWeight: '500',
+                  color: 'white',
+                  background: 'linear-gradient(135deg, #10b981, #14b8a6)',
+                  border: 'none',
+                  borderRadius: '12px',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease'
+                }}
+              >
+                이미지 변경
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* PDF 업로드 모달 */}
+        {showPdfUpload && (
+          <div style={{
+            background: 'rgba(255, 255, 255, 0.8)',
+            backdropFilter: 'blur(10px)',
+            borderRadius: '12px',
+            boxShadow: '0 10px 15px rgba(0, 0, 0, 0.1)',
+            border: '1px solid rgba(255, 255, 255, 0.2)',
+            padding: '1.5rem',
+            marginBottom: '2rem',
+            transition: 'all 0.3s ease'
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
+              <div style={{
+                width: '32px',
+                height: '32px',
+                background: 'linear-gradient(135deg, #ef4444, #dc2626)',
+                borderRadius: '8px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}>
+                <svg width="20" height="20" fill="none" stroke="white" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                </svg>
+              </div>
+              <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#111827', margin: 0 }}>
+                PDF 파일 업로드
+              </h3>
+            </div>
+            
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              {/* 현재 PDF 정보 */}
+              <div>
+                <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                  현재 PDF 파일
+                </label>
+                <div style={{
+                  padding: '1rem',
+                  border: '2px solid #e5e7eb',
+                  borderRadius: '8px',
+                  background: '#f9fafb'
+                }}>
+                  <p style={{ margin: 0, fontSize: '0.875rem', color: '#6b7280' }}>
+                    <strong>파일명:</strong> {showPdfUpload.name}
+                  </p>
+                  <p style={{ margin: '0.5rem 0 0 0', fontSize: '0.875rem', color: '#6b7280' }}>
+                    <strong>크기:</strong> {showPdfUpload.size}
+                  </p>
+                </div>
+              </div>
+
+              {/* 새 PDF 업로드 */}
+              <div>
+                <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                  새 PDF 파일 업로드
+                </label>
+                <input
+                  type="file"
+                  accept=".pdf"
+                  onChange={handlePdfUpload}
+                  style={{
+                    width: '100%',
+                    maxWidth: '650px',
+                    padding: '0.5rem 0.75rem',
+                    border: '2px solid #e5e7eb',
+                    borderRadius: '8px',
+                    fontSize: '0.875rem',
+                    background: 'white',
+                    color: '#111827'
+                  }}
+                />
+              </div>
+
+              {/* 업로드된 PDF 정보 */}
+              {uploadedPdf && (
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                    업로드된 PDF 파일
+                  </label>
+                  <div style={{
+                    padding: '1rem',
+                    border: '2px solid #ef4444',
+                    borderRadius: '8px',
+                    background: '#fef2f2'
+                  }}>
+                    <p style={{ margin: 0, fontSize: '0.875rem', color: '#dc2626' }}>
+                      ✅ 새 PDF 파일이 업로드되었습니다
+                    </p>
+                  </div>
+                </div>
+              )}
+
+              {/* PDF 경로 직접 입력 */}
+              <div>
+                <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                  또는 PDF 경로 직접 입력
+                </label>
+                <input
+                  type="text"
+                  value={showPdfUpload.path}
+                  onChange={(e) => setShowPdfUpload({...showPdfUpload, path: e.target.value})}
+                  style={{
+                    width: '100%',
+                    maxWidth: '650px',
+                    padding: '0.5rem 0.75rem',
+                    border: '2px solid #e5e7eb',
+                    borderRadius: '8px',
+                    outline: 'none',
+                    fontSize: '0.875rem',
+                    transition: 'all 0.2s ease',
+                    background: 'white',
+                    color: '#111827'
+                  }}
+                  onFocus={(e) => {
+                    e.target.style.borderColor = '#3b82f6';
+                    e.target.style.boxShadow = '0 0 0 4px rgba(59, 130, 246, 0.1)';
+                  }}
+                  onBlur={(e) => {
+                    e.target.style.borderColor = '#e5e7eb';
+                    e.target.style.boxShadow = 'none';
+                  }}
+                  placeholder="PDF 파일 경로를 입력하세요"
+                />
+                <p style={{ fontSize: '0.75rem', color: '#6b7280', marginTop: '0.5rem', margin: 0 }}>
+                  PDF 파일 경로를 직접 입력하거나 위의 파일 선택으로 PDF를 업로드하세요
+                </p>
+              </div>
+            </div>
+            
+            <div style={{ display: 'flex', justifyContent: 'end', gap: '0.75rem', marginTop: '1.5rem' }}>
+              <button
+                onClick={() => {
+                  setShowPdfUpload(null);
+                  setUploadedPdf(null);
+                }}
+                style={{
+                  padding: '0.75rem 1.5rem',
+                  fontSize: '0.875rem',
+                  fontWeight: '500',
+                  color: '#374151',
+                  background: 'rgba(255, 255, 255, 0.8)',
+                  border: '1px solid #d1d5db',
+                  borderRadius: '12px',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease'
+                }}
+              >
+                취소
+              </button>
+              <button
+                onClick={() => handlePdfChange(showPdfUpload.id)}
+                style={{
+                  padding: '0.75rem 1.5rem',
+                  fontSize: '0.875rem',
+                  fontWeight: '500',
+                  color: 'white',
+                  background: 'linear-gradient(135deg, #ef4444, #dc2626)',
+                  border: 'none',
+                  borderRadius: '12px',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease'
+                }}
+              >
+                PDF 변경
               </button>
             </div>
           </div>
@@ -824,7 +1329,7 @@ export default function AdminAssets() {
                             <span style={{ color: 'white', fontWeight: 'bold', fontSize: '0.875rem' }}>{index + 1}</span>
                           </div>
                           <h4 style={{ fontSize: '1.125rem', fontWeight: 'bold', color: '#111827', margin: 0 }}>
-                            PDF {index + 1}
+                            {pdf.name}
                           </h4>
                         </div>
                         <button
@@ -921,6 +1426,22 @@ export default function AdminAssets() {
                           >
                             미리보기
                           </a>
+                          <button
+                            onClick={() => setShowPdfUpload(pdf)}
+                            style={{
+                              padding: '0.5rem 1rem',
+                              fontSize: '0.875rem',
+                              fontWeight: '500',
+                              color: 'white',
+                              background: 'linear-gradient(135deg, #ef4444, #dc2626)',
+                              border: 'none',
+                              borderRadius: '8px',
+                              cursor: 'pointer',
+                              transition: 'all 0.2s ease'
+                            }}
+                          >
+                            PDF 변경
+                          </button>
                         </div>
                       </div>
                     </div>
@@ -949,7 +1470,7 @@ export default function AdminAssets() {
                             <span style={{ color: 'white', fontWeight: 'bold', fontSize: '0.875rem' }}>{index + 1}</span>
                           </div>
                           <h4 style={{ fontSize: '1.125rem', fontWeight: 'bold', color: '#111827', margin: 0 }}>
-                            이미지 {index + 1}
+                            {image.name}
                           </h4>
                         </div>
                         <button
@@ -1026,22 +1547,43 @@ export default function AdminAssets() {
                           </div>
                         </div>
                         
-                        <div>
-                          <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
-                            업로드 날짜
-                          </label>
-                          <div style={{
-                            width: '100%',
-                            padding: '0.5rem 0.75rem',
-                            border: '2px solid #e5e7eb',
-                            borderRadius: '8px',
-                            fontSize: '0.875rem',
-                            background: '#f9fafb',
-                            color: '#6b7280',
-                            boxSizing: 'border-box'
-                          }}>
-                            {image.uploadDate}
+                        <div style={{ display: 'flex', gap: '1rem' }}>
+                          <div style={{ flex: 1 }}>
+                            <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                              업로드 날짜
+                            </label>
+                            <div style={{
+                              width: '100%',
+                              padding: '0.5rem 0.75rem',
+                              border: '2px solid #e5e7eb',
+                              borderRadius: '8px',
+                              fontSize: '0.875rem',
+                              background: '#f9fafb',
+                              color: '#6b7280',
+                              boxSizing: 'border-box'
+                            }}>
+                              {image.uploadDate}
+                            </div>
                           </div>
+                          {image.description && (
+                            <div style={{ flex: 1 }}>
+                              <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                                설명
+                              </label>
+                              <div style={{
+                                width: '100%',
+                                padding: '0.5rem 0.75rem',
+                                border: '2px solid #e5e7eb',
+                                borderRadius: '8px',
+                                fontSize: '0.875rem',
+                                background: '#f9fafb',
+                                color: '#6b7280',
+                                boxSizing: 'border-box'
+                              }}>
+                                {image.description}
+                              </div>
+                            </div>
+                          )}
                         </div>
                         
                         <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.5rem' }}>
@@ -1064,6 +1606,22 @@ export default function AdminAssets() {
                           >
                             미리보기
                           </a>
+                          <button
+                            onClick={() => setShowImageUpload(image)}
+                            style={{
+                              padding: '0.5rem 1rem',
+                              fontSize: '0.875rem',
+                              fontWeight: '500',
+                              color: 'white',
+                              background: 'linear-gradient(135deg, #10b981, #14b8a6)',
+                              border: 'none',
+                              borderRadius: '8px',
+                              cursor: 'pointer',
+                              transition: 'all 0.2s ease'
+                            }}
+                          >
+                            이미지 변경
+                          </button>
                         </div>
                       </div>
                     </div>
