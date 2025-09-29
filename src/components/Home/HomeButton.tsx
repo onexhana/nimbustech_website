@@ -280,59 +280,29 @@ export default function HomeButton() {
               >
                 <div className="mb-2">
                   <h3
-                    className="font-medium transition-colors"
+                    className="font-medium transition-colors group-hover:text-blue-600"
                     style={{ 
                       fontSize: `${titleSize}px`,
                       color: isSelected ? hoverColor : "#000000"
-                    }}
-                    onMouseEnter={(e) => {
-                      if (!isSelected) {
-                        e.currentTarget.style.color = hoverColor;
-                      }
-                    }}
-                    onMouseLeave={(e) => {
-                      if (!isSelected) {
-                        e.currentTarget.style.color = "#000000";
-                      }
                     }}
                   >
                     {renderTextWithBreaks(btn.title)}
                   </h3>
                   <p
-                    className="font-bold mt-1 transition-colors"
+                    className="font-bold mt-1 transition-colors group-hover:text-blue-600"
                     style={{ 
                       fontSize: `${subtitleSize}px`,
                       color: isSelected ? hoverColor : "#000000"
-                    }}
-                    onMouseEnter={(e) => {
-                      if (!isSelected) {
-                        e.currentTarget.style.color = hoverColor;
-                      }
-                    }}
-                    onMouseLeave={(e) => {
-                      if (!isSelected) {
-                        e.currentTarget.style.color = "#000000";
-                      }
                     }}
                   >
                     {renderTextWithBreaks(btn.subtitle)}
                   </p>
                 </div>
                 <p
-                  className="mt-2 leading-tight transition-colors"
+                  className="mt-2 leading-tight transition-colors group-hover:text-blue-600"
                   style={{ 
                     fontSize: `${descriptionSize}px`,
                     color: isSelected ? hoverColor : "#6b7280"
-                  }}
-                  onMouseEnter={(e) => {
-                    if (!isSelected) {
-                      e.currentTarget.style.color = hoverColor;
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    if (!isSelected) {
-                      e.currentTarget.style.color = "#6b7280";
-                    }
                   }}
                 >
                   {renderTextWithBreaks(btn.description)}
@@ -363,6 +333,14 @@ export default function HomeButton() {
             }}
           />
         </div>
+
+        {/* 호버 효과를 위한 CSS */}
+        <style>{`
+          .group:hover h3,
+          .group:hover p {
+            color: ${homeData.buttonStyles?.hoverColor || "#00A3E0"} !important;
+          }
+        `}</style>
       </div>
     </>
   );

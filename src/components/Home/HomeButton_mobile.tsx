@@ -315,63 +315,33 @@ export default function HomeButtonMobile({ topOffset = '-40vh', marginTopSpacing
               >
                 <div className="text-center">
                   <h3
-                    className="font-semibold transition-colors"
+                    className="font-semibold transition-colors group-hover:text-blue-600"
                     style={{ 
                       fontSize: `${titleSize}px`, 
                       marginBottom: '8px',
                       color: isSelected ? hoverColor : "#4a5568"
                     }}
-                    onMouseEnter={(e) => {
-                      if (!isSelected) {
-                        e.currentTarget.style.color = hoverColor;
-                      }
-                    }}
-                    onMouseLeave={(e) => {
-                      if (!isSelected) {
-                        e.currentTarget.style.color = "#4a5568";
-                      }
-                    }}
                   >
                     {renderTextWithBreaks(btn.title)}
                   </h3>
                   <p
-                    className="font-bold transition-colors"
+                    className="font-bold transition-colors group-hover:text-blue-600"
                     style={{ 
                       fontSize: `${subtitleSize}px`, 
                       marginBottom: '12px',
                       color: isSelected ? hoverColor : "#000000"
                     }}
-                    onMouseEnter={(e) => {
-                      if (!isSelected) {
-                        e.currentTarget.style.color = hoverColor;
-                      }
-                    }}
-                    onMouseLeave={(e) => {
-                      if (!isSelected) {
-                        e.currentTarget.style.color = "#000000";
-                      }
-                    }}
                   >
                     {renderTextWithBreaks(btn.subtitle)}
                   </p>
                   <p
-                    className="transition-colors text-center"
+                    className="transition-colors text-center group-hover:text-blue-600"
                     style={{ 
                       fontSize: `${descriptionSize}px`, 
                       lineHeight: '1.5',
                       whiteSpace: 'pre-line',
                       wordBreak: 'keep-all',
                       color: isSelected ? hoverColor : "#6b7280"
-                    }}
-                    onMouseEnter={(e) => {
-                      if (!isSelected) {
-                        e.currentTarget.style.color = hoverColor;
-                      }
-                    }}
-                    onMouseLeave={(e) => {
-                      if (!isSelected) {
-                        e.currentTarget.style.color = "#6b7280";
-                      }
                     }}
                   >
                     {renderTextWithBreaks(btn.description)}
@@ -410,7 +380,7 @@ export default function HomeButtonMobile({ topOffset = '-40vh', marginTopSpacing
         <style>{`
           .group:hover h3,
           .group:hover p {
-            color: #00A3E0 !important;
+            color: ${homeData.buttonStyles?.hoverColor || "#00A3E0"} !important;
           }
           
           /* X 버튼 색상 통일 */
