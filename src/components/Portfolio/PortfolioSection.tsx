@@ -131,8 +131,8 @@ export default function PortfolioSection() {
                     border: '1px solid #00A3E0',
                     borderRadius: '20px',
                     padding: '8px 20px',
-                    fontSize: '14px',
-                    fontWeight: '600',
+                    fontSize: `${portfolioData.fontSize?.category?.mobile || 14}px`,
+                    fontWeight: portfolioData.fontWeight?.category?.mobile || 600,
                     cursor: 'pointer'
                   }}
                   onClick={() => handleCategoryChange(category)}
@@ -178,18 +178,19 @@ export default function PortfolioSection() {
                     }}>
                       <div>
                         <h3 style={{
-                          fontSize: '22px',
-                          fontWeight: '700',
-                          color: '#00A3E0',
-                          marginBottom: '8px',
+                          fontSize: `${portfolioData.fontSize?.title?.mobile || 22}px`,
+                          fontWeight: portfolioData.fontWeight?.title?.mobile || 700,
+                          color: portfolioData.fontColor?.title?.mobile || '#00A3E0',
+                          marginTop: '5px',
+                          marginBottom: '-10px',
                           textAlign: 'center'
                         }}>
                           {project.title}
                         </h3>
                         <div style={{
-                          fontSize: '16px',
-                          color: '#000000',
-                          fontWeight: '600',
+                          fontSize: `${portfolioData.fontSize?.description?.mobile || 16}px`,
+                          color: portfolioData.fontColor?.description?.mobile || '#000000',
+                          fontWeight: portfolioData.fontWeight?.description?.mobile || 600,
                           lineHeight: '1.5',
                           textAlign: 'center',
                           marginBottom: '16px',
@@ -212,8 +213,8 @@ export default function PortfolioSection() {
                           marginTop: '16px'
                         }}>
                           <div style={{
-                            width: `${portfolioData.imageSize?.mobile || 280}px`,
-                            height: `${(portfolioData.imageSize?.height || 250) * 0.6}px`,
+                            width: `${portfolioData.imageSize?.mobile?.width || 280}px`,
+                            height: `${portfolioData.imageSize?.mobile?.height || 150}px`,
                             borderRadius: '16px',
                             overflow: 'hidden',
                             backgroundColor: '#f3f4f6'

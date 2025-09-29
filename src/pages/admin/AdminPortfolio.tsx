@@ -107,7 +107,8 @@ export default function AdminPortfolio() {
   return (
     <div style={{
       minHeight: '100vh',
-      background: 'linear-gradient(135deg, #f8fafc 0%, #e0f2fe 50%, #e0e7ff 100%)'
+      background: 'linear-gradient(135deg, #f8fafc 0%, #e0f2fe 50%, #e0e7ff 100%)',
+      fontFamily: "'Pretendard Variable', 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif"
     }}>
       {/* 헤더 */}
       <header style={{
@@ -160,10 +161,23 @@ export default function AdminPortfolio() {
                   </svg>
                 </div>
                 <div>
-                  <h1 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#111827', margin: 0 }}>
+                  <h1 style={{ 
+                    fontSize: '1.5rem', 
+                    fontWeight: '700', 
+                    color: '#1f2937', 
+                    margin: 0,
+                    letterSpacing: '-0.5px',
+                    lineHeight: '1.2'
+                  }}>
                     포트폴리오 페이지 관리
                   </h1>
-                  <p style={{ fontSize: '0.875rem', color: '#6b7280', margin: 0 }}>콘텐츠를 편집하고 관리하세요</p>
+                  <p style={{ 
+                    fontSize: '0.875rem', 
+                    color: '#6b7280', 
+                    margin: 0,
+                    fontWeight: '400',
+                    lineHeight: '1.5'
+                  }}>콘텐츠를 편집하고 관리하세요</p>
                 </div>
               </div>
             </div>
@@ -273,7 +287,14 @@ export default function AdminPortfolio() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
                   </svg>
                 </div>
-                <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#111827', margin: 0 }}>
+                <h3 style={{ 
+                  fontSize: '1.25rem', 
+                  fontWeight: '700', 
+                  color: '#1f2937', 
+                  margin: 0,
+                  letterSpacing: '-0.3px',
+                  lineHeight: '1.3'
+                }}>
                   카테고리 관리
                 </h3>
               </div>
@@ -298,8 +319,8 @@ export default function AdminPortfolio() {
                     }}
                     style={{
                       padding: '0.75rem 1rem',
-                      fontSize: `${portfolioData.fontSize?.category || 16}px`,
-                      fontWeight: portfolioData.fontWeight?.category || 600,
+                      fontSize: `${portfolioData.fontSize?.category?.web || 25}px`,
+                      fontWeight: portfolioData.fontWeight?.category?.web || 500,
                       borderRadius: '8px',
                       border: 'none',
                       cursor: 'pointer',
@@ -313,15 +334,15 @@ export default function AdminPortfolio() {
                         boxShadow: '0 4px 12px rgba(37, 99, 235, 0.3)'
                       } : {
                         background: 'rgba(255, 255, 255, 0.5)',
-                        color: portfolioData.fontColor?.category || '#374151',
+                        color: portfolioData.fontColor?.category?.web || '#00A3E0',
                         border: '1px solid #e5e7eb'
                       })
                     }}
                   >
                     <span style={{ 
-                      fontSize: `${portfolioData.fontSize?.category || 16}px`,
-                      fontWeight: portfolioData.fontWeight?.category || 600,
-                      color: selectedCategory === category ? 'white' : (portfolioData.fontColor?.category || '#374151')
+                      fontSize: `${portfolioData.fontSize?.category?.web || 25}px`,
+                      fontWeight: portfolioData.fontWeight?.category?.web || 500,
+                      color: selectedCategory === category ? 'white' : (portfolioData.fontColor?.category?.web || '#00A3E0')
                     }}>
                       {category}
                     </span>
@@ -345,7 +366,14 @@ export default function AdminPortfolio() {
               
               {isEditing && (
                 <div style={{ marginTop: '1rem', paddingTop: '1rem', borderTop: '1px solid #e5e7eb' }}>
-                  <h4 style={{ fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.75rem' }}>
+                  <h4 style={{ 
+                    fontSize: '0.875rem', 
+                    fontWeight: '600', 
+                    color: '#374151', 
+                    marginBottom: '0.75rem',
+                    letterSpacing: '-0.1px',
+                    lineHeight: '1.4'
+                  }}>
                     새 카테고리 추가
                   </h4>
                   <div style={{ display: 'flex', gap: '0.5rem' }}>
@@ -413,7 +441,14 @@ export default function AdminPortfolio() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                   </svg>
                 </div>
-                <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#111827', margin: 0 }}>
+                <h3 style={{ 
+                  fontSize: '1.25rem', 
+                  fontWeight: '700', 
+                  color: '#1f2937', 
+                  margin: 0,
+                  letterSpacing: '-0.3px',
+                  lineHeight: '1.3'
+                }}>
                   글씨 스타일 설정
                 </h3>
               </div>
@@ -421,323 +456,868 @@ export default function AdminPortfolio() {
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                 {/* 프로젝트 제목 스타일 */}
                 <div>
-                  <h4 style={{ fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.75rem' }}>
+                  <h4 style={{ 
+                    fontSize: '0.875rem', 
+                    fontWeight: '600', 
+                    color: '#374151', 
+                    marginBottom: '0.75rem',
+                    letterSpacing: '-0.1px',
+                    lineHeight: '1.4'
+                  }}>
                     프로젝트 제목
                   </h4>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                      <label style={{ fontSize: '0.75rem', color: '#6b7280', minWidth: '40px' }}>크기:</label>
-                      <input
-                        type="number"
-                        min="8"
-                        max="48"
-                        value={portfolioData.fontSize?.title || 18}
-                        onChange={(e) => updatePortfolioData({
-                          fontSize: { ...portfolioData.fontSize, title: parseInt(e.target.value) || 18 }
-                        })}
-                        disabled={!isEditing}
-                        style={{
-                          width: '60px',
-                          padding: '0.25rem 0.5rem',
-                          border: '1px solid #e5e7eb',
-                          borderRadius: '4px',
-                          outline: 'none',
-                          fontSize: '0.75rem',
-                          textAlign: 'center',
-                          background: !isEditing ? '#f9fafb' : 'white',
-                          color: !isEditing ? '#6b7280' : '#111827'
-                        }}
-                      />
-                      <span style={{ fontSize: '0.75rem', color: '#6b7280' }}>px</span>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                    {/* 웹 (데스크톱) */}
+                    <div>
+                      <h5 style={{ 
+                        fontSize: '0.75rem', 
+                        fontWeight: '600', 
+                        color: '#374151', 
+                        marginBottom: '0.5rem',
+                        letterSpacing: '-0.1px',
+                        lineHeight: '1.4'
+                      }}>
+                        웹 (데스크톱)
+                      </h5>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                          <label style={{ fontSize: '0.75rem', color: '#6b7280', minWidth: '40px' }}>크기:</label>
+                          <input
+                            type="number"
+                            min="8"
+                            max="48"
+                            value={portfolioData.fontSize?.title?.web || 28}
+                            onChange={(e) => updatePortfolioData({
+                              fontSize: { 
+                                ...portfolioData.fontSize, 
+                                title: { 
+                                  ...portfolioData.fontSize?.title, 
+                                  web: parseInt(e.target.value) || 28 
+                                } 
+                              }
+                            })}
+                            disabled={!isEditing}
+                            style={{
+                              width: '80px',
+                              padding: '0.25rem 0.5rem',
+                              border: '1px solid #e5e7eb',
+                              borderRadius: '4px',
+                              outline: 'none',
+                              fontSize: '0.75rem',
+                              textAlign: 'center',
+                              background: !isEditing ? '#f9fafb' : 'white',
+                              color: !isEditing ? '#6b7280' : '#111827'
+                            }}
+                          />
+                          <span style={{ fontSize: '0.75rem', color: '#6b7280' }}>px</span>
+                        </div>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                          <label style={{ fontSize: '0.75rem', color: '#6b7280', minWidth: '40px' }}>두께:</label>
+                          <select
+                            value={portfolioData.fontWeight?.title?.web || 700}
+                            onChange={(e) => updatePortfolioData({
+                              fontWeight: { 
+                                ...portfolioData.fontWeight, 
+                                title: { 
+                                  ...portfolioData.fontWeight?.title, 
+                                  web: parseInt(e.target.value) || 700 
+                                } 
+                              }
+                            })}
+                            disabled={!isEditing}
+                            style={{
+                              width: '100px',
+                              padding: '0.25rem 0.5rem',
+                              border: '1px solid #e5e7eb',
+                              borderRadius: '6px',
+                              outline: 'none',
+                              fontSize: '0.75rem',
+                              background: !isEditing ? '#f9fafb' : 'white',
+                              color: !isEditing ? '#6b7280' : '#111827',
+                              cursor: isEditing ? 'pointer' : 'not-allowed'
+                            }}
+                          >
+                            <option value={300}>Light (300)</option>
+                            <option value={400}>Normal (400)</option>
+                            <option value={500}>Medium (500)</option>
+                            <option value={600}>SemiBold (600)</option>
+                            <option value={700}>Bold (700)</option>
+                            <option value={800}>ExtraBold (800)</option>
+                          </select>
+                        </div>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                          <label style={{ fontSize: '0.75rem', color: '#6b7280', minWidth: '40px' }}>색상:</label>
+                          <input
+                            type="color"
+                            value={portfolioData.fontColor?.title?.web || '#00A3E0'}
+                            onChange={(e) => updatePortfolioData({
+                              fontColor: { 
+                                ...portfolioData.fontColor, 
+                                title: { 
+                                  ...portfolioData.fontColor?.title, 
+                                  web: e.target.value 
+                                } 
+                              }
+                            })}
+                            disabled={!isEditing}
+                            style={{
+                              width: '50px',
+                              height: '30px',
+                              padding: '0',
+                              border: '1px solid #e5e7eb',
+                              borderRadius: '6px',
+                              outline: 'none',
+                              cursor: !isEditing ? 'not-allowed' : 'pointer',
+                              opacity: !isEditing ? 0.6 : 1
+                            }}
+                          />
+                        </div>
+                      </div>
                     </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                      <label style={{ fontSize: '0.75rem', color: '#6b7280', minWidth: '40px' }}>두께:</label>
-                      <input
-                        type="number"
-                        min="100"
-                        max="900"
-                        step="100"
-                        value={portfolioData.fontWeight?.title || 600}
-                        onChange={(e) => updatePortfolioData({
-                          fontWeight: { ...portfolioData.fontWeight, title: parseInt(e.target.value) || 600 }
-                        })}
-                        disabled={!isEditing}
-                        style={{
-                          width: '60px',
-                          padding: '0.25rem 0.5rem',
-                          border: '1px solid #e5e7eb',
-                          borderRadius: '4px',
-                          outline: 'none',
-                          fontSize: '0.75rem',
-                          textAlign: 'center',
-                          background: !isEditing ? '#f9fafb' : 'white',
-                          color: !isEditing ? '#6b7280' : '#111827'
-                        }}
-                      />
-                    </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                      <label style={{ fontSize: '0.75rem', color: '#6b7280', minWidth: '40px' }}>색상:</label>
-                      <input
-                        type="color"
-                        value={portfolioData.fontColor?.title || '#1f2937'}
-                        onChange={(e) => updatePortfolioData({
-                          fontColor: { ...portfolioData.fontColor, title: e.target.value }
-                        })}
-                        disabled={!isEditing}
-                        style={{
-                          width: '40px',
-                          height: '30px',
-                          border: '1px solid #e5e7eb',
-                          borderRadius: '4px',
-                          outline: 'none',
-                          cursor: !isEditing ? 'not-allowed' : 'pointer',
-                          opacity: !isEditing ? 0.6 : 1
-                        }}
-                      />
+
+                    {/* 모바일 */}
+                    <div>
+                      <h5 style={{ 
+                        fontSize: '0.75rem', 
+                        fontWeight: '600', 
+                        color: '#374151', 
+                        marginBottom: '0.5rem',
+                        letterSpacing: '-0.1px',
+                        lineHeight: '1.4'
+                      }}>
+                        모바일
+                      </h5>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                          <label style={{ fontSize: '0.75rem', color: '#6b7280', minWidth: '40px' }}>크기:</label>
+                          <input
+                            type="number"
+                            min="8"
+                            max="48"
+                            value={portfolioData.fontSize?.title?.mobile || 22}
+                            onChange={(e) => updatePortfolioData({
+                              fontSize: { 
+                                ...portfolioData.fontSize, 
+                                title: { 
+                                  ...portfolioData.fontSize?.title, 
+                                  mobile: parseInt(e.target.value) || 22 
+                                } 
+                              }
+                            })}
+                            disabled={!isEditing}
+                            style={{
+                              width: '80px',
+                              padding: '0.25rem 0.5rem',
+                              border: '1px solid #e5e7eb',
+                              borderRadius: '4px',
+                              outline: 'none',
+                              fontSize: '0.75rem',
+                              textAlign: 'center',
+                              background: !isEditing ? '#f9fafb' : 'white',
+                              color: !isEditing ? '#6b7280' : '#111827'
+                            }}
+                          />
+                          <span style={{ fontSize: '0.75rem', color: '#6b7280' }}>px</span>
+                        </div>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                          <label style={{ fontSize: '0.75rem', color: '#6b7280', minWidth: '40px' }}>두께:</label>
+                          <select
+                            value={portfolioData.fontWeight?.title?.mobile || 700}
+                            onChange={(e) => updatePortfolioData({
+                              fontWeight: { 
+                                ...portfolioData.fontWeight, 
+                                title: { 
+                                  ...portfolioData.fontWeight?.title, 
+                                  mobile: parseInt(e.target.value) || 700 
+                                } 
+                              }
+                            })}
+                            disabled={!isEditing}
+                            style={{
+                              width: '100px',
+                              padding: '0.25rem 0.5rem',
+                              border: '1px solid #e5e7eb',
+                              borderRadius: '6px',
+                              outline: 'none',
+                              fontSize: '0.75rem',
+                              background: !isEditing ? '#f9fafb' : 'white',
+                              color: !isEditing ? '#6b7280' : '#111827',
+                              cursor: isEditing ? 'pointer' : 'not-allowed'
+                            }}
+                          >
+                            <option value={300}>Light (300)</option>
+                            <option value={400}>Normal (400)</option>
+                            <option value={500}>Medium (500)</option>
+                            <option value={600}>SemiBold (600)</option>
+                            <option value={700}>Bold (700)</option>
+                            <option value={800}>ExtraBold (800)</option>
+                          </select>
+                        </div>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                          <label style={{ fontSize: '0.75rem', color: '#6b7280', minWidth: '40px' }}>색상:</label>
+                          <input
+                            type="color"
+                            value={portfolioData.fontColor?.title?.mobile || '#00A3E0'}
+                            onChange={(e) => updatePortfolioData({
+                              fontColor: { 
+                                ...portfolioData.fontColor, 
+                                title: { 
+                                  ...portfolioData.fontColor?.title, 
+                                  mobile: e.target.value 
+                                } 
+                              }
+                            })}
+                            disabled={!isEditing}
+                            style={{
+                              width: '50px',
+                              height: '30px',
+                              padding: '0',
+                              border: '1px solid #e5e7eb',
+                              borderRadius: '6px',
+                              outline: 'none',
+                              cursor: !isEditing ? 'not-allowed' : 'pointer',
+                              opacity: !isEditing ? 0.6 : 1
+                            }}
+                          />
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
 
                 {/* 프로젝트 설명 스타일 */}
                 <div>
-                  <h4 style={{ fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.75rem' }}>
+                  <h4 style={{ 
+                    fontSize: '0.875rem', 
+                    fontWeight: '600', 
+                    color: '#374151', 
+                    marginBottom: '0.75rem',
+                    letterSpacing: '-0.1px',
+                    lineHeight: '1.4'
+                  }}>
                     프로젝트 설명
                   </h4>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                      <label style={{ fontSize: '0.75rem', color: '#6b7280', minWidth: '40px' }}>크기:</label>
-                      <input
-                        type="number"
-                        min="8"
-                        max="32"
-                        value={portfolioData.fontSize?.description || 14}
-                        onChange={(e) => updatePortfolioData({
-                          fontSize: { ...portfolioData.fontSize, description: parseInt(e.target.value) || 14 }
-                        })}
-                        disabled={!isEditing}
-                        style={{
-                          width: '60px',
-                          padding: '0.25rem 0.5rem',
-                          border: '1px solid #e5e7eb',
-                          borderRadius: '4px',
-                          outline: 'none',
-                          fontSize: '0.75rem',
-                          textAlign: 'center',
-                          background: !isEditing ? '#f9fafb' : 'white',
-                          color: !isEditing ? '#6b7280' : '#111827'
-                        }}
-                      />
-                      <span style={{ fontSize: '0.75rem', color: '#6b7280' }}>px</span>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                    {/* 웹 (데스크톱) */}
+                    <div>
+                      <h5 style={{ 
+                        fontSize: '0.75rem', 
+                        fontWeight: '600', 
+                        color: '#374151', 
+                        marginBottom: '0.5rem',
+                        letterSpacing: '-0.1px',
+                        lineHeight: '1.4'
+                      }}>
+                        웹 (데스크톱)
+                      </h5>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                          <label style={{ fontSize: '0.75rem', color: '#6b7280', minWidth: '40px' }}>크기:</label>
+                          <input
+                            type="number"
+                            min="8"
+                            max="32"
+                            value={portfolioData.fontSize?.description?.web || 22}
+                            onChange={(e) => updatePortfolioData({
+                              fontSize: { 
+                                ...portfolioData.fontSize, 
+                                description: { 
+                                  ...portfolioData.fontSize?.description, 
+                                  web: parseInt(e.target.value) || 22 
+                                } 
+                              }
+                            })}
+                            disabled={!isEditing}
+                            style={{
+                              width: '80px',
+                              padding: '0.25rem 0.5rem',
+                              border: '1px solid #e5e7eb',
+                              borderRadius: '4px',
+                              outline: 'none',
+                              fontSize: '0.75rem',
+                              textAlign: 'center',
+                              background: !isEditing ? '#f9fafb' : 'white',
+                              color: !isEditing ? '#6b7280' : '#111827'
+                            }}
+                          />
+                          <span style={{ fontSize: '0.75rem', color: '#6b7280' }}>px</span>
+                        </div>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                          <label style={{ fontSize: '0.75rem', color: '#6b7280', minWidth: '40px' }}>두께:</label>
+                          <select
+                            value={portfolioData.fontWeight?.description?.web || 900}
+                            onChange={(e) => updatePortfolioData({
+                              fontWeight: { 
+                                ...portfolioData.fontWeight, 
+                                description: { 
+                                  ...portfolioData.fontWeight?.description, 
+                                  web: parseInt(e.target.value) || 900 
+                                } 
+                              }
+                            })}
+                            disabled={!isEditing}
+                            style={{
+                              width: '100px',
+                              padding: '0.25rem 0.5rem',
+                              border: '1px solid #e5e7eb',
+                              borderRadius: '6px',
+                              outline: 'none',
+                              fontSize: '0.75rem',
+                              background: !isEditing ? '#f9fafb' : 'white',
+                              color: !isEditing ? '#6b7280' : '#111827',
+                              cursor: isEditing ? 'pointer' : 'not-allowed'
+                            }}
+                          >
+                            <option value={300}>Light (300)</option>
+                            <option value={400}>Normal (400)</option>
+                            <option value={500}>Medium (500)</option>
+                            <option value={600}>SemiBold (600)</option>
+                            <option value={700}>Bold (700)</option>
+                            <option value={800}>ExtraBold (800)</option>
+                            <option value={900}>Black (900)</option>
+                          </select>
+                        </div>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                          <label style={{ fontSize: '0.75rem', color: '#6b7280', minWidth: '40px' }}>색상:</label>
+                          <input
+                            type="color"
+                            value={portfolioData.fontColor?.description?.web || '#000000'}
+                            onChange={(e) => updatePortfolioData({
+                              fontColor: { 
+                                ...portfolioData.fontColor, 
+                                description: { 
+                                  ...portfolioData.fontColor?.description, 
+                                  web: e.target.value 
+                                } 
+                              }
+                            })}
+                            disabled={!isEditing}
+                            style={{
+                              width: '50px',
+                              height: '30px',
+                              padding: '0',
+                              border: '1px solid #e5e7eb',
+                              borderRadius: '6px',
+                              outline: 'none',
+                              cursor: !isEditing ? 'not-allowed' : 'pointer',
+                              opacity: !isEditing ? 0.6 : 1
+                            }}
+                          />
+                        </div>
+                      </div>
                     </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                      <label style={{ fontSize: '0.75rem', color: '#6b7280', minWidth: '40px' }}>두께:</label>
-                      <input
-                        type="number"
-                        min="100"
-                        max="900"
-                        step="100"
-                        value={portfolioData.fontWeight?.description || 400}
-                        onChange={(e) => updatePortfolioData({
-                          fontWeight: { ...portfolioData.fontWeight, description: parseInt(e.target.value) || 400 }
-                        })}
-                        disabled={!isEditing}
-                        style={{
-                          width: '60px',
-                          padding: '0.25rem 0.5rem',
-                          border: '1px solid #e5e7eb',
-                          borderRadius: '4px',
-                          outline: 'none',
-                          fontSize: '0.75rem',
-                          textAlign: 'center',
-                          background: !isEditing ? '#f9fafb' : 'white',
-                          color: !isEditing ? '#6b7280' : '#111827'
-                        }}
-                      />
-                    </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                      <label style={{ fontSize: '0.75rem', color: '#6b7280', minWidth: '40px' }}>색상:</label>
-                      <input
-                        type="color"
-                        value={portfolioData.fontColor?.description || '#6b7280'}
-                        onChange={(e) => updatePortfolioData({
-                          fontColor: { ...portfolioData.fontColor, description: e.target.value }
-                        })}
-                        disabled={!isEditing}
-                        style={{
-                          width: '40px',
-                          height: '30px',
-                          border: '1px solid #e5e7eb',
-                          borderRadius: '4px',
-                          outline: 'none',
-                          cursor: !isEditing ? 'not-allowed' : 'pointer',
-                          opacity: !isEditing ? 0.6 : 1
-                        }}
-                      />
+
+                    {/* 모바일 */}
+                    <div>
+                      <h5 style={{ 
+                        fontSize: '0.75rem', 
+                        fontWeight: '600', 
+                        color: '#374151', 
+                        marginBottom: '0.5rem',
+                        letterSpacing: '-0.1px',
+                        lineHeight: '1.4'
+                      }}>
+                        모바일
+                      </h5>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                          <label style={{ fontSize: '0.75rem', color: '#6b7280', minWidth: '40px' }}>크기:</label>
+                          <input
+                            type="number"
+                            min="8"
+                            max="32"
+                            value={portfolioData.fontSize?.description?.mobile || 16}
+                            onChange={(e) => updatePortfolioData({
+                              fontSize: { 
+                                ...portfolioData.fontSize, 
+                                description: { 
+                                  ...portfolioData.fontSize?.description, 
+                                  mobile: parseInt(e.target.value) || 16 
+                                } 
+                              }
+                            })}
+                            disabled={!isEditing}
+                            style={{
+                              width: '80px',
+                              padding: '0.25rem 0.5rem',
+                              border: '1px solid #e5e7eb',
+                              borderRadius: '4px',
+                              outline: 'none',
+                              fontSize: '0.75rem',
+                              textAlign: 'center',
+                              background: !isEditing ? '#f9fafb' : 'white',
+                              color: !isEditing ? '#6b7280' : '#111827'
+                            }}
+                          />
+                          <span style={{ fontSize: '0.75rem', color: '#6b7280' }}>px</span>
+                        </div>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                          <label style={{ fontSize: '0.75rem', color: '#6b7280', minWidth: '40px' }}>두께:</label>
+                          <select
+                            value={portfolioData.fontWeight?.description?.mobile || 600}
+                            onChange={(e) => updatePortfolioData({
+                              fontWeight: { 
+                                ...portfolioData.fontWeight, 
+                                description: { 
+                                  ...portfolioData.fontWeight?.description, 
+                                  mobile: parseInt(e.target.value) || 600 
+                                } 
+                              }
+                            })}
+                            disabled={!isEditing}
+                            style={{
+                              width: '100px',
+                              padding: '0.25rem 0.5rem',
+                              border: '1px solid #e5e7eb',
+                              borderRadius: '6px',
+                              outline: 'none',
+                              fontSize: '0.75rem',
+                              background: !isEditing ? '#f9fafb' : 'white',
+                              color: !isEditing ? '#6b7280' : '#111827',
+                              cursor: isEditing ? 'pointer' : 'not-allowed'
+                            }}
+                          >
+                            <option value={300}>Light (300)</option>
+                            <option value={400}>Normal (400)</option>
+                            <option value={500}>Medium (500)</option>
+                            <option value={600}>SemiBold (600)</option>
+                            <option value={700}>Bold (700)</option>
+                            <option value={800}>ExtraBold (800)</option>
+                            <option value={900}>Black (900)</option>
+                          </select>
+                        </div>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                          <label style={{ fontSize: '0.75rem', color: '#6b7280', minWidth: '40px' }}>색상:</label>
+                          <input
+                            type="color"
+                            value={portfolioData.fontColor?.description?.mobile || '#000000'}
+                            onChange={(e) => updatePortfolioData({
+                              fontColor: { 
+                                ...portfolioData.fontColor, 
+                                description: { 
+                                  ...portfolioData.fontColor?.description, 
+                                  mobile: e.target.value 
+                                } 
+                              }
+                            })}
+                            disabled={!isEditing}
+                            style={{
+                              width: '50px',
+                              height: '30px',
+                              padding: '0',
+                              border: '1px solid #e5e7eb',
+                              borderRadius: '6px',
+                              outline: 'none',
+                              cursor: !isEditing ? 'not-allowed' : 'pointer',
+                              opacity: !isEditing ? 0.6 : 1
+                            }}
+                          />
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
 
                  {/* 카테고리 스타일 */}
                  <div>
-                   <h4 style={{ fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.75rem' }}>
+                   <h4 style={{ 
+                     fontSize: '0.875rem', 
+                     fontWeight: '600', 
+                     color: '#374151', 
+                     marginBottom: '0.75rem',
+                     letterSpacing: '-0.1px',
+                     lineHeight: '1.4'
+                   }}>
                      카테고리
                    </h4>
-                   <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                       <label style={{ fontSize: '0.75rem', color: '#6b7280', minWidth: '40px' }}>크기:</label>
-                       <input
-                         type="number"
-                         min="8"
-                         max="32"
-                         value={portfolioData.fontSize?.category || 16}
-                         onChange={(e) => updatePortfolioData({
-                           fontSize: { ...portfolioData.fontSize, category: parseInt(e.target.value) || 16 }
-                         })}
-                         disabled={!isEditing}
-                         style={{
-                           width: '60px',
-                           padding: '0.25rem 0.5rem',
-                           border: '1px solid #e5e7eb',
-                           borderRadius: '4px',
-                           outline: 'none',
-                           fontSize: '0.75rem',
-                           textAlign: 'center',
-                           background: !isEditing ? '#f9fafb' : 'white',
-                           color: !isEditing ? '#6b7280' : '#111827'
-                         }}
-                       />
-                       <span style={{ fontSize: '0.75rem', color: '#6b7280' }}>px</span>
+                   <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                     {/* 웹 (데스크톱) */}
+                     <div>
+                       <h5 style={{ 
+                         fontSize: '0.75rem', 
+                         fontWeight: '600', 
+                         color: '#374151', 
+                         marginBottom: '0.5rem',
+                         letterSpacing: '-0.1px',
+                         lineHeight: '1.4'
+                       }}>
+                         웹 (데스크톱)
+                       </h5>
+                       <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                           <label style={{ fontSize: '0.75rem', color: '#6b7280', minWidth: '40px' }}>크기:</label>
+                           <input
+                             type="number"
+                             min="8"
+                             max="32"
+                             value={portfolioData.fontSize?.category?.web || 25}
+                             onChange={(e) => updatePortfolioData({
+                               fontSize: { 
+                                 ...portfolioData.fontSize, 
+                                 category: { 
+                                   ...portfolioData.fontSize?.category, 
+                                   web: parseInt(e.target.value) || 25 
+                                 } 
+                               }
+                             })}
+                             disabled={!isEditing}
+                             style={{
+                               width: '80px',
+                               padding: '0.25rem 0.5rem',
+                               border: '1px solid #e5e7eb',
+                               borderRadius: '4px',
+                               outline: 'none',
+                               fontSize: '0.75rem',
+                               textAlign: 'center',
+                               background: !isEditing ? '#f9fafb' : 'white',
+                               color: !isEditing ? '#6b7280' : '#111827'
+                             }}
+                           />
+                           <span style={{ fontSize: '0.75rem', color: '#6b7280' }}>px</span>
+                         </div>
+                         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                           <label style={{ fontSize: '0.75rem', color: '#6b7280', minWidth: '40px' }}>두께:</label>
+                           <select
+                             value={portfolioData.fontWeight?.category?.web || 500}
+                             onChange={(e) => updatePortfolioData({
+                               fontWeight: { 
+                                 ...portfolioData.fontWeight, 
+                                 category: { 
+                                   ...portfolioData.fontWeight?.category, 
+                                   web: parseInt(e.target.value) || 500 
+                                 } 
+                               }
+                             })}
+                             disabled={!isEditing}
+                             style={{
+                               width: '100px',
+                               padding: '0.25rem 0.5rem',
+                               border: '1px solid #e5e7eb',
+                               borderRadius: '6px',
+                               outline: 'none',
+                               fontSize: '0.75rem',
+                               background: !isEditing ? '#f9fafb' : 'white',
+                               color: !isEditing ? '#6b7280' : '#111827',
+                               cursor: isEditing ? 'pointer' : 'not-allowed'
+                             }}
+                           >
+                             <option value={300}>Light (300)</option>
+                             <option value={400}>Normal (400)</option>
+                             <option value={500}>Medium (500)</option>
+                             <option value={600}>SemiBold (600)</option>
+                             <option value={700}>Bold (700)</option>
+                             <option value={800}>ExtraBold (800)</option>
+                           </select>
+                         </div>
+                         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                           <label style={{ fontSize: '0.75rem', color: '#6b7280', minWidth: '40px' }}>색상:</label>
+                           <input
+                             type="color"
+                             value={portfolioData.fontColor?.category?.web || '#00A3E0'}
+                             onChange={(e) => updatePortfolioData({
+                               fontColor: { 
+                                 ...portfolioData.fontColor, 
+                                 category: { 
+                                   ...portfolioData.fontColor?.category, 
+                                   web: e.target.value 
+                                 } 
+                               }
+                             })}
+                             disabled={!isEditing}
+                             style={{
+                               width: '50px',
+                               height: '30px',
+                               padding: '0',
+                               border: '1px solid #e5e7eb',
+                               borderRadius: '6px',
+                               outline: 'none',
+                               cursor: !isEditing ? 'not-allowed' : 'pointer',
+                               opacity: !isEditing ? 0.6 : 1
+                             }}
+                           />
+                         </div>
+                       </div>
                      </div>
-                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                       <label style={{ fontSize: '0.75rem', color: '#6b7280', minWidth: '40px' }}>두께:</label>
-                       <input
-                         type="number"
-                         min="100"
-                         max="900"
-                         step="100"
-                         value={portfolioData.fontWeight?.category || 500}
-                         onChange={(e) => updatePortfolioData({
-                           fontWeight: { ...portfolioData.fontWeight, category: parseInt(e.target.value) || 500 }
-                         })}
-                         disabled={!isEditing}
-                         style={{
-                           width: '60px',
-                           padding: '0.25rem 0.5rem',
-                           border: '1px solid #e5e7eb',
-                           borderRadius: '4px',
-                           outline: 'none',
-                           fontSize: '0.75rem',
-                           textAlign: 'center',
-                           background: !isEditing ? '#f9fafb' : 'white',
-                           color: !isEditing ? '#6b7280' : '#111827'
-                         }}
-                       />
-                     </div>
-                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                       <label style={{ fontSize: '0.75rem', color: '#6b7280', minWidth: '40px' }}>색상:</label>
-                       <input
-                         type="color"
-                         value={portfolioData.fontColor?.category || '#374151'}
-                         onChange={(e) => updatePortfolioData({
-                           fontColor: { ...portfolioData.fontColor, category: e.target.value }
-                         })}
-                         disabled={!isEditing}
-                         style={{
-                           width: '40px',
-                           height: '30px',
-                           border: '1px solid #e5e7eb',
-                           borderRadius: '4px',
-                           outline: 'none',
-                           cursor: !isEditing ? 'not-allowed' : 'pointer',
-                           opacity: !isEditing ? 0.6 : 1
-                         }}
-                       />
+
+                     {/* 모바일 */}
+                     <div>
+                       <h5 style={{ 
+                         fontSize: '0.75rem', 
+                         fontWeight: '600', 
+                         color: '#374151', 
+                         marginBottom: '0.5rem',
+                         letterSpacing: '-0.1px',
+                         lineHeight: '1.4'
+                       }}>
+                         모바일
+                       </h5>
+                       <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                           <label style={{ fontSize: '0.75rem', color: '#6b7280', minWidth: '40px' }}>크기:</label>
+                           <input
+                             type="number"
+                             min="8"
+                             max="32"
+                             value={portfolioData.fontSize?.category?.mobile || 14}
+                             onChange={(e) => updatePortfolioData({
+                               fontSize: { 
+                                 ...portfolioData.fontSize, 
+                                 category: { 
+                                   ...portfolioData.fontSize?.category, 
+                                   mobile: parseInt(e.target.value) || 14 
+                                 } 
+                               }
+                             })}
+                             disabled={!isEditing}
+                             style={{
+                               width: '80px',
+                               padding: '0.25rem 0.5rem',
+                               border: '1px solid #e5e7eb',
+                               borderRadius: '4px',
+                               outline: 'none',
+                               fontSize: '0.75rem',
+                               textAlign: 'center',
+                               background: !isEditing ? '#f9fafb' : 'white',
+                               color: !isEditing ? '#6b7280' : '#111827'
+                             }}
+                           />
+                           <span style={{ fontSize: '0.75rem', color: '#6b7280' }}>px</span>
+                         </div>
+                         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                           <label style={{ fontSize: '0.75rem', color: '#6b7280', minWidth: '40px' }}>두께:</label>
+                           <select
+                             value={portfolioData.fontWeight?.category?.mobile || 600}
+                             onChange={(e) => updatePortfolioData({
+                               fontWeight: { 
+                                 ...portfolioData.fontWeight, 
+                                 category: { 
+                                   ...portfolioData.fontWeight?.category, 
+                                   mobile: parseInt(e.target.value) || 600 
+                                 } 
+                               }
+                             })}
+                             disabled={!isEditing}
+                             style={{
+                               width: '100px',
+                               padding: '0.25rem 0.5rem',
+                               border: '1px solid #e5e7eb',
+                               borderRadius: '6px',
+                               outline: 'none',
+                               fontSize: '0.75rem',
+                               background: !isEditing ? '#f9fafb' : 'white',
+                               color: !isEditing ? '#6b7280' : '#111827',
+                               cursor: isEditing ? 'pointer' : 'not-allowed'
+                             }}
+                           >
+                             <option value={300}>Light (300)</option>
+                             <option value={400}>Normal (400)</option>
+                             <option value={500}>Medium (500)</option>
+                             <option value={600}>SemiBold (600)</option>
+                             <option value={700}>Bold (700)</option>
+                             <option value={800}>ExtraBold (800)</option>
+                           </select>
+                         </div>
+                         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                           <label style={{ fontSize: '0.75rem', color: '#6b7280', minWidth: '40px' }}>색상:</label>
+                           <input
+                             type="color"
+                             value={portfolioData.fontColor?.category?.mobile || '#00A3E0'}
+                             onChange={(e) => updatePortfolioData({
+                               fontColor: { 
+                                 ...portfolioData.fontColor, 
+                                 category: { 
+                                   ...portfolioData.fontColor?.category, 
+                                   mobile: e.target.value 
+                                 } 
+                               }
+                             })}
+                             disabled={!isEditing}
+                             style={{
+                               width: '50px',
+                               height: '30px',
+                               padding: '0',
+                               border: '1px solid #e5e7eb',
+                               borderRadius: '6px',
+                               outline: 'none',
+                               cursor: !isEditing ? 'not-allowed' : 'pointer',
+                               opacity: !isEditing ? 0.6 : 1
+                             }}
+                           />
+                         </div>
+                       </div>
                      </div>
                    </div>
                  </div>
 
                  {/* 이미지 크기 설정 */}
                  <div>
-                   <h4 style={{ fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.75rem' }}>
+                   <h4 style={{ 
+                     fontSize: '0.875rem', 
+                     fontWeight: '600', 
+                     color: '#374151', 
+                     marginBottom: '0.75rem',
+                     letterSpacing: '-0.1px',
+                     lineHeight: '1.4'
+                   }}>
                      이미지 크기
                    </h4>
-                   <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                       <label style={{ fontSize: '0.75rem', color: '#6b7280', minWidth: '40px' }}>웹:</label>
-                       <input
-                         type="number"
-                         min="200"
-                         max="500"
-                         value={portfolioData.imageSize?.web || 330}
-                         onChange={(e) => updatePortfolioData({
-                           imageSize: { ...portfolioData.imageSize, web: parseInt(e.target.value) || 330 }
-                         })}
-                         disabled={!isEditing}
-                         style={{
-                           width: '60px',
-                           padding: '0.25rem 0.5rem',
-                           border: '1px solid #e5e7eb',
-                           borderRadius: '4px',
-                           outline: 'none',
-                           fontSize: '0.75rem',
-                           textAlign: 'center',
-                           background: !isEditing ? '#f9fafb' : 'white',
-                           color: !isEditing ? '#6b7280' : '#111827'
-                         }}
-                       />
-                       <span style={{ fontSize: '0.75rem', color: '#6b7280' }}>px</span>
-                     </div>
-                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                       <label style={{ fontSize: '0.75rem', color: '#6b7280', minWidth: '40px' }}>모바일:</label>
-                       <input
-                         type="number"
-                         min="150"
-                         max="350"
-                         value={portfolioData.imageSize?.mobile || 260}
-                         onChange={(e) => updatePortfolioData({
-                           imageSize: { ...portfolioData.imageSize, mobile: parseInt(e.target.value) || 260 }
-                         })}
-                         disabled={!isEditing}
-                         style={{
-                           width: '60px',
-                           padding: '0.25rem 0.5rem',
-                           border: '1px solid #e5e7eb',
-                           borderRadius: '4px',
-                           outline: 'none',
-                           fontSize: '0.75rem',
-                           textAlign: 'center',
-                           background: !isEditing ? '#f9fafb' : 'white',
-                           color: !isEditing ? '#6b7280' : '#111827'
-                         }}
-                       />
-                       <span style={{ fontSize: '0.75rem', color: '#6b7280' }}>px</span>
-                     </div>
-                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                       <label style={{ fontSize: '0.75rem', color: '#6b7280', minWidth: '40px' }}>높이:</label>
-                       <input
-                         type="number"
-                         min="150"
-                         max="300"
-                         value={portfolioData.imageSize?.height || 250}
-                         onChange={(e) => updatePortfolioData({
-                           imageSize: { ...portfolioData.imageSize, height: parseInt(e.target.value) || 250 }
-                         })}
-                         disabled={!isEditing}
-                         style={{
-                           width: '60px',
-                           padding: '0.25rem 0.5rem',
-                           border: '1px solid #e5e7eb',
-                           borderRadius: '4px',
-                           outline: 'none',
-                           fontSize: '0.75rem',
-                           textAlign: 'center',
-                           background: !isEditing ? '#f9fafb' : 'white',
-                           color: !isEditing ? '#6b7280' : '#111827'
-                         }}
-                       />
-                       <span style={{ fontSize: '0.75rem', color: '#6b7280' }}>px</span>
-                     </div>
-                   </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                    {/* 웹 이미지 크기 */}
+                    <div>
+                      <h5 style={{ 
+                        fontSize: '0.75rem', 
+                        fontWeight: '600', 
+                        color: '#374151', 
+                        marginBottom: '0.5rem',
+                        letterSpacing: '-0.1px',
+                        lineHeight: '1.4'
+                      }}>
+                        웹 (데스크톱)
+                      </h5>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                          <label style={{ fontSize: '0.75rem', color: '#6b7280', minWidth: '40px' }}>가로:</label>
+                          <input
+                            type="number"
+                            min="200"
+                            max="500"
+                            value={portfolioData.imageSize?.web?.width || 330}
+                            onChange={(e) => updatePortfolioData({
+                              imageSize: { 
+                                ...portfolioData.imageSize, 
+                                web: { 
+                                  ...portfolioData.imageSize?.web, 
+                                  width: parseInt(e.target.value) || 330 
+                                } 
+                              }
+                            })}
+                            disabled={!isEditing}
+                            style={{
+                              width: '80px',
+                              padding: '0.25rem 0.5rem',
+                              border: '1px solid #e5e7eb',
+                              borderRadius: '4px',
+                              outline: 'none',
+                              fontSize: '0.75rem',
+                              textAlign: 'center',
+                              background: !isEditing ? '#f9fafb' : 'white',
+                              color: !isEditing ? '#6b7280' : '#111827'
+                            }}
+                          />
+                          <span style={{ fontSize: '0.75rem', color: '#6b7280' }}>px</span>
+                        </div>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                          <label style={{ fontSize: '0.75rem', color: '#6b7280', minWidth: '40px' }}>세로:</label>
+                          <input
+                            type="number"
+                            min="150"
+                            max="400"
+                            value={portfolioData.imageSize?.web?.height || 250}
+                            onChange={(e) => updatePortfolioData({
+                              imageSize: { 
+                                ...portfolioData.imageSize, 
+                                web: { 
+                                  ...portfolioData.imageSize?.web, 
+                                  height: parseInt(e.target.value) || 250 
+                                } 
+                              }
+                            })}
+                            disabled={!isEditing}
+                            style={{
+                              width: '80px',
+                              padding: '0.25rem 0.5rem',
+                              border: '1px solid #e5e7eb',
+                              borderRadius: '4px',
+                              outline: 'none',
+                              fontSize: '0.75rem',
+                              textAlign: 'center',
+                              background: !isEditing ? '#f9fafb' : 'white',
+                              color: !isEditing ? '#6b7280' : '#111827'
+                            }}
+                          />
+                          <span style={{ fontSize: '0.75rem', color: '#6b7280' }}>px</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* 모바일 이미지 크기 */}
+                    <div>
+                      <h5 style={{ 
+                        fontSize: '0.75rem', 
+                        fontWeight: '600', 
+                        color: '#374151', 
+                        marginBottom: '0.5rem',
+                        letterSpacing: '-0.1px',
+                        lineHeight: '1.4'
+                      }}>
+                        모바일
+                      </h5>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                          <label style={{ fontSize: '0.75rem', color: '#6b7280', minWidth: '40px' }}>가로:</label>
+                          <input
+                            type="number"
+                            min="150"
+                            max="350"
+                            value={portfolioData.imageSize?.mobile?.width || 260}
+                            onChange={(e) => updatePortfolioData({
+                              imageSize: { 
+                                ...portfolioData.imageSize, 
+                                mobile: { 
+                                  ...portfolioData.imageSize?.mobile, 
+                                  width: parseInt(e.target.value) || 260 
+                                } 
+                              }
+                            })}
+                            disabled={!isEditing}
+                            style={{
+                              width: '80px',
+                              padding: '0.25rem 0.5rem',
+                              border: '1px solid #e5e7eb',
+                              borderRadius: '4px',
+                              outline: 'none',
+                              fontSize: '0.75rem',
+                              textAlign: 'center',
+                              background: !isEditing ? '#f9fafb' : 'white',
+                              color: !isEditing ? '#6b7280' : '#111827'
+                            }}
+                          />
+                          <span style={{ fontSize: '0.75rem', color: '#6b7280' }}>px</span>
+                        </div>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                          <label style={{ fontSize: '0.75rem', color: '#6b7280', minWidth: '40px' }}>세로:</label>
+                          <input
+                            type="number"
+                            min="100"
+                            max="300"
+                            value={portfolioData.imageSize?.mobile?.height || 150}
+                            onChange={(e) => updatePortfolioData({
+                              imageSize: { 
+                                ...portfolioData.imageSize, 
+                                mobile: { 
+                                  ...portfolioData.imageSize?.mobile, 
+                                  height: parseInt(e.target.value) || 150 
+                                } 
+                              }
+                            })}
+                            disabled={!isEditing}
+                            style={{
+                              width: '80px',
+                              padding: '0.25rem 0.5rem',
+                              border: '1px solid #e5e7eb',
+                              borderRadius: '4px',
+                              outline: 'none',
+                              fontSize: '0.75rem',
+                              textAlign: 'center',
+                              background: !isEditing ? '#f9fafb' : 'white',
+                              color: !isEditing ? '#6b7280' : '#111827'
+                            }}
+                          />
+                          <span style={{ fontSize: '0.75rem', color: '#6b7280' }}>px</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                  </div>
               </div>
             </div>
@@ -769,7 +1349,14 @@ export default function AdminPortfolio() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
                     </svg>
                   </div>
-                  <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#111827', margin: 0 }}>
+                  <h3 style={{ 
+                    fontSize: '1.25rem', 
+                    fontWeight: '700', 
+                    color: '#1f2937', 
+                    margin: 0,
+                    letterSpacing: '-0.3px',
+                    lineHeight: '1.3'
+                  }}>
                     {selectedCategory} 프로젝트 관리
                   </h3>
                 </div>
@@ -810,12 +1397,27 @@ export default function AdminPortfolio() {
                   marginBottom: '1rem',
                   transition: 'all 0.3s ease'
                 }}>
-                  <h4 style={{ fontSize: '1rem', fontWeight: 'bold', color: '#111827', marginBottom: '1rem' }}>
+                  <h4 style={{ 
+                    fontSize: '1rem', 
+                    fontWeight: '700', 
+                    color: '#1f2937', 
+                    marginBottom: '1rem',
+                    letterSpacing: '-0.2px',
+                    lineHeight: '1.3'
+                  }}>
                     새 프로젝트 추가
                   </h4>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                     <div>
-                      <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                      <label style={{ 
+                        display: 'block', 
+                        fontSize: '0.875rem', 
+                        fontWeight: '600', 
+                        color: '#374151', 
+                        marginBottom: '0.5rem',
+                        letterSpacing: '-0.1px',
+                        lineHeight: '1.4'
+                      }}>
                         프로젝트명
                       </label>
                       <input
@@ -847,7 +1449,15 @@ export default function AdminPortfolio() {
                       />
                     </div>
                     <div>
-                      <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                      <label style={{ 
+                        display: 'block', 
+                        fontSize: '0.875rem', 
+                        fontWeight: '600', 
+                        color: '#374151', 
+                        marginBottom: '0.5rem',
+                        letterSpacing: '-0.1px',
+                        lineHeight: '1.4'
+                      }}>
                         카테고리
                       </label>
                       <select
@@ -881,7 +1491,15 @@ export default function AdminPortfolio() {
                       </select>
                     </div>
                     <div>
-                      <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                      <label style={{ 
+                        display: 'block', 
+                        fontSize: '0.875rem', 
+                        fontWeight: '600', 
+                        color: '#374151', 
+                        marginBottom: '0.5rem',
+                        letterSpacing: '-0.1px',
+                        lineHeight: '1.4'
+                      }}>
                         설명
                       </label>
                       <input
@@ -913,7 +1531,15 @@ export default function AdminPortfolio() {
                       />
                     </div>
                     <div>
-                      <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                      <label style={{ 
+                        display: 'block', 
+                        fontSize: '0.875rem', 
+                        fontWeight: '600', 
+                        color: '#374151', 
+                        marginBottom: '0.5rem',
+                        letterSpacing: '-0.1px',
+                        lineHeight: '1.4'
+                      }}>
                         프로젝트 이미지
                       </label>
                       
@@ -1101,7 +1727,14 @@ export default function AdminPortfolio() {
                         }}>
                           <span style={{ color: 'white', fontWeight: 'bold', fontSize: '0.875rem' }}>{projectIndex + 1}</span>
                         </div>
-                        <h4 style={{ fontSize: '1.125rem', fontWeight: 'bold', color: '#111827', margin: 0 }}>
+                        <h4 style={{ 
+                          fontSize: '1.125rem', 
+                          fontWeight: '700', 
+                          color: '#1f2937', 
+                          margin: 0,
+                          letterSpacing: '-0.2px',
+                          lineHeight: '1.3'
+                        }}>
                           프로젝트 {projectIndex + 1}
                         </h4>
                       </div>
@@ -1127,7 +1760,15 @@ export default function AdminPortfolio() {
                     
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                       <div>
-                        <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                        <label style={{ 
+                          display: 'block', 
+                          fontSize: '0.875rem', 
+                          fontWeight: '600', 
+                          color: '#374151', 
+                          marginBottom: '0.5rem',
+                          letterSpacing: '-0.1px',
+                          lineHeight: '1.4'
+                        }}>
                           프로젝트명
                         </label>
                         <input
@@ -1162,7 +1803,15 @@ export default function AdminPortfolio() {
                       </div>
                       
                       <div>
-                        <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                        <label style={{ 
+                          display: 'block', 
+                          fontSize: '0.875rem', 
+                          fontWeight: '600', 
+                          color: '#374151', 
+                          marginBottom: '0.5rem',
+                          letterSpacing: '-0.1px',
+                          lineHeight: '1.4'
+                        }}>
                           카테고리
                         </label>
                         <select
@@ -1200,7 +1849,15 @@ export default function AdminPortfolio() {
                       </div>
                       
                       <div>
-                        <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                        <label style={{ 
+                          display: 'block', 
+                          fontSize: '0.875rem', 
+                          fontWeight: '600', 
+                          color: '#374151', 
+                          marginBottom: '0.5rem',
+                          letterSpacing: '-0.1px',
+                          lineHeight: '1.4'
+                        }}>
                           설명
                         </label>
                         <input
@@ -1234,8 +1891,17 @@ export default function AdminPortfolio() {
                         />
                       </div>
                       
+
                       <div>
-                        <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                        <label style={{ 
+                          display: 'block', 
+                          fontSize: '0.875rem', 
+                          fontWeight: '600', 
+                          color: '#374151', 
+                          marginBottom: '0.5rem',
+                          letterSpacing: '-0.1px',
+                          lineHeight: '1.4'
+                        }}>
                           프로젝트 이미지
                         </label>
                         
@@ -1372,7 +2038,14 @@ export default function AdminPortfolio() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
               </svg>
             </div>
-            <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#111827', margin: 0 }}>
+            <h3 style={{ 
+              fontSize: '1.25rem', 
+              fontWeight: '700', 
+              color: '#1f2937', 
+              margin: 0,
+              letterSpacing: '-0.3px',
+              lineHeight: '1.3'
+            }}>
               실시간 미리보기
             </h3>
           </div>
@@ -1384,10 +2057,24 @@ export default function AdminPortfolio() {
             border: '1px solid rgba(229, 231, 235, 0.5)'
           }}>
             <div style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
-              <h2 style={{ fontSize: '1.875rem', fontWeight: 'bold', color: '#1f2937', marginBottom: '0.75rem', margin: 0 }}>
+              <h2 style={{ 
+                fontSize: '1.875rem', 
+                fontWeight: '700', 
+                color: '#1f2937', 
+                marginBottom: '0.75rem', 
+                margin: 0,
+                letterSpacing: '-1px',
+                lineHeight: '1.2'
+              }}>
                 포트폴리오
               </h2>
-              <p style={{ fontSize: '1.125rem', color: '#6b7280', margin: 0 }}>
+              <p style={{ 
+                fontSize: '1.125rem', 
+                color: '#6b7280', 
+                margin: 0,
+                fontWeight: '400',
+                lineHeight: '1.5'
+              }}>
                 {selectedCategory} 프로젝트 ({filteredProjects.length}개)
               </p>
             </div>
@@ -1400,7 +2087,14 @@ export default function AdminPortfolio() {
               border: '1px solid rgba(229, 231, 235, 0.5)'
             }}>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
-                <h4 style={{ fontSize: '1.125rem', fontWeight: '600', color: '#1f2937', margin: 0 }}>
+                <h4 style={{ 
+                  fontSize: '1.125rem', 
+                  fontWeight: '600', 
+                  color: '#1f2937', 
+                  margin: 0,
+                  letterSpacing: '-0.2px',
+                  lineHeight: '1.3'
+                }}>
                   {selectedCategory} 섹션
                 </h4>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
@@ -1430,20 +2124,22 @@ export default function AdminPortfolio() {
                     border: '1px solid rgba(59, 130, 246, 0.2)'
                   }}>
                     <h5 style={{ 
-                      fontWeight: portfolioData.fontWeight?.title || 600, 
-                      color: portfolioData.fontColor?.title || '#1f2937', 
+                      fontWeight: portfolioData.fontWeight?.title?.web || 700, 
+                      color: portfolioData.fontColor?.title?.web || '#00A3E0', 
                       marginBottom: '0.5rem', 
-                      fontSize: `${(portfolioData.fontSize?.title || 18) * 0.5}px`, 
-                      margin: 0 
+                      fontSize: `${(portfolioData.fontSize?.title?.web || 28) * 0.5}px`, 
+                      margin: 0,
+                      letterSpacing: '-0.2px',
+                      lineHeight: '1.3'
                     }}>
                       {project.title}
                     </h5>
                     <p style={{ 
-                      fontSize: `${(portfolioData.fontSize?.description || 14) * 0.5}px`, 
-                      color: portfolioData.fontColor?.description || '#6b7280', 
+                      fontSize: `${(portfolioData.fontSize?.description?.web || 22) * 0.5}px`, 
+                      color: portfolioData.fontColor?.description?.web || '#000000', 
                       lineHeight: '1.5', 
                       margin: 0,
-                      fontWeight: portfolioData.fontWeight?.description || 400
+                      fontWeight: portfolioData.fontWeight?.description?.web || 900
                     }}>
                       {project.description}
                     </p>

@@ -14,24 +14,56 @@ interface PortfolioData {
   categories: string[];
   projects: PortfolioProject[];
   fontSize?: {
-    title?: number;
-    description?: number;
-    category?: number;
+    title?: {
+      web?: number;
+      mobile?: number;
+    };
+    description?: {
+      web?: number;
+      mobile?: number;
+    };
+    category?: {
+      web?: number;
+      mobile?: number;
+    };
   };
   fontWeight?: {
-    title?: number;
-    description?: number;
-    category?: number;
+    title?: {
+      web?: number;
+      mobile?: number;
+    };
+    description?: {
+      web?: number;
+      mobile?: number;
+    };
+    category?: {
+      web?: number;
+      mobile?: number;
+    };
   };
   fontColor?: {
-    title?: string;
-    description?: string;
-    category?: string;
+    title?: {
+      web?: string;
+      mobile?: string;
+    };
+    description?: {
+      web?: string;
+      mobile?: string;
+    };
+    category?: {
+      web?: string;
+      mobile?: string;
+    };
   };
   imageSize?: {
-    web?: number;
-    mobile?: number;
-    height?: number;
+    web?: {
+      width?: number;
+      height?: number;
+    };
+    mobile?: {
+      width?: number;
+      height?: number;
+    };
   };
 }
 
@@ -49,24 +81,56 @@ interface PortfolioContextType {
 const defaultPortfolioData: PortfolioData = {
   categories: ["공공", "금융", "일반 / 제조"],
   fontSize: {
-    title: 18,
-    description: 14,
-    category: 16
+    title: {
+      web: 28,
+      mobile: 22
+    },
+    description: {
+      web: 22,
+      mobile: 16
+    },
+    category: {
+      web: 25,
+      mobile: 14
+    }
   },
   fontWeight: {
-    title: 600,
-    description: 400,
-    category: 500
+    title: {
+      web: 700,
+      mobile: 700
+    },
+    description: {
+      web: 900,
+      mobile: 600
+    },
+    category: {
+      web: 500,
+      mobile: 600
+    }
   },
   fontColor: {
-    title: "#1f2937",
-    description: "#6b7280",
-    category: "#374151"
+    title: {
+      web: "#00A3E0",
+      mobile: "#00A3E0"
+    },
+    description: {
+      web: "#000000",
+      mobile: "#000000"
+    },
+    category: {
+      web: "#00A3E0",
+      mobile: "#00A3E0"
+    }
   },
   imageSize: {
-    web: 330,
-    mobile: 260,
-    height: 250
+    web: {
+      width: 330,
+      height: 250
+    },
+    mobile: {
+      width: 260,
+      height: 150
+    }
   },
   projects: [
     // 공공 카테고리
