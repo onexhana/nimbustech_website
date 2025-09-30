@@ -13,6 +13,58 @@ interface PortfolioProject {
 interface PortfolioData {
   categories: string[];
   projects: PortfolioProject[];
+  fontSize?: {
+    title?: {
+      web?: number;
+      mobile?: number;
+    };
+    description?: {
+      web?: number;
+      mobile?: number;
+    };
+    category?: {
+      web?: number;
+      mobile?: number;
+    };
+  };
+  fontWeight?: {
+    title?: {
+      web?: number;
+      mobile?: number;
+    };
+    description?: {
+      web?: number;
+      mobile?: number;
+    };
+    category?: {
+      web?: number;
+      mobile?: number;
+    };
+  };
+  fontColor?: {
+    title?: {
+      web?: string;
+      mobile?: string;
+    };
+    description?: {
+      web?: string;
+      mobile?: string;
+    };
+    category?: {
+      web?: string;
+      mobile?: string;
+    };
+  };
+  imageSize?: {
+    web?: {
+      width?: number;
+      height?: number;
+    };
+    mobile?: {
+      width?: number;
+      height?: number;
+    };
+  };
 }
 
 // Context 타입 정의
@@ -22,11 +74,64 @@ interface PortfolioContextType {
   addProject: (project: Omit<PortfolioProject, 'id'>) => void;
   deleteProject: (id: number) => void;
   updateCategories: (categories: string[]) => void;
+  updatePortfolioData: (newData: Partial<PortfolioData>) => void;
 }
 
 // 기본 데이터
 const defaultPortfolioData: PortfolioData = {
   categories: ["공공", "금융", "일반 / 제조"],
+  fontSize: {
+    title: {
+      web: 28,
+      mobile: 22
+    },
+    description: {
+      web: 22,
+      mobile: 16
+    },
+    category: {
+      web: 25,
+      mobile: 14
+    }
+  },
+  fontWeight: {
+    title: {
+      web: 700,
+      mobile: 700
+    },
+    description: {
+      web: 900,
+      mobile: 600
+    },
+    category: {
+      web: 500,
+      mobile: 600
+    }
+  },
+  fontColor: {
+    title: {
+      web: "#00A3E0",
+      mobile: "#00A3E0"
+    },
+    description: {
+      web: "#000000",
+      mobile: "#000000"
+    },
+    category: {
+      web: "#00A3E0",
+      mobile: "#00A3E0"
+    }
+  },
+  imageSize: {
+    web: {
+      width: 330,
+      height: 250
+    },
+    mobile: {
+      width: 260,
+      height: 150
+    }
+  },
   projects: [
     // 공공 카테고리
     { id: 1, title: "다산콜센터", description: "다산콜센터 업무자동화", category: "공공", image: "/portfolio_photo/공공_다산콜센터.jpg" },
@@ -85,6 +190,12 @@ export function PortfolioProvider({ children }: { children: ReactNode }) {
     localStorage.setItem('portfolioData', JSON.stringify(newData));
   };
 
+  // 부분 데이터 업데이트
+  const updatePortfolioDataPartial = (newData: Partial<PortfolioData>) => {
+    const updatedData = { ...portfolioData, ...newData };
+    updatePortfolioData(updatedData);
+  };
+
   // 프로젝트 업데이트
   const updateProject = (id: number, updatedProject: Partial<PortfolioProject>) => {
     const newProjects = portfolioData.projects.map(project => 
@@ -117,7 +228,8 @@ export function PortfolioProvider({ children }: { children: ReactNode }) {
     updateProject,
     addProject,
     deleteProject,
-    updateCategories
+    updateCategories,
+    updatePortfolioData: updatePortfolioDataPartial
   };
 
   return (

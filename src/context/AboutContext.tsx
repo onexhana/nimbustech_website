@@ -6,6 +6,10 @@ interface AboutCard {
   title: string;
   description: string[];
   link?: string;
+  fontSize?: {
+    title?: number;
+    description?: number;
+  };
 }
 
 // About 탭 타입 정의
@@ -26,44 +30,44 @@ interface AboutData {
   subtitle: string;
   tabs: AboutTab[];
   fontSize?: {
-    mainTitle: number;
-    subtitle: number;
-    cardTitle: number;
-    cardDescription: number;
-    tabName: number;
-    desktop?: {
-      mainTitle?: number;
-      subtitle?: number;
-      tabName?: number;
-    };
-    mobile?: {
-      mainTitle?: number;
-      subtitle?: number;
-      tabName?: number;
-    };
+    mainTitle?: number;
+    subtitle?: number;
+    tabName?: number;
+    cardTitle?: number;
+    cardDescription?: number;
+    // 모바일 전용
+    mobileMainTitle?: number;
+    mobileSubtitle?: number;
+    mobileTabName?: number;
+    mobileCardTitle?: number;
+    mobileCardDescription?: number;
+    // 데스크탑 전용
+    desktopTabName?: number;
+    desktopCardTitle?: number;
+    desktopCardDescription?: number;
   };
-  desktop?: {
+  colors?: {
     mainTitle?: string;
     subtitle?: string;
-    tabActiveColor?: string;
-    tabInactiveColor?: string;
-    cardBackgroundColor?: string;
-    cardTitleColor?: string;
-    cardDescriptionColor?: string;
-    cardHoverEffect?: boolean;
+    cardTitle?: string;
+    cardDescription?: string;
+    // 모바일 전용
+    mobileMainTitle?: string;
+    mobileSubtitle?: string;
+    mobileCardTitle?: string;
+    mobileCardDescription?: string;
+    // 데스크탑 전용
+    desktopCardTitle?: string;
+    desktopCardDescription?: string;
   };
-  mobile?: {
-    mainTitle?: string;
-    subtitle?: string;
-    tabActiveColor?: string;
-    tabInactiveColor?: string;
-    cardBackgroundColor?: string;
-    cardTitleColor?: string;
-    cardDescriptionColor?: string;
-    cardHoverEffect?: boolean;
-  };
+  // 탭 색상 설정
   tabActiveColor?: string;
   tabInactiveColor?: string;
+  mobileTabActiveColor?: string;
+  mobileTabInactiveColor?: string;
+  desktopTabActiveColor?: string;
+  desktopTabInactiveColor?: string;
+  // 카드 스타일 설정
   cardBackgroundColor?: string;
   cardTitleColor?: string;
   cardDescriptionColor?: string;

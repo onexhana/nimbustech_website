@@ -1,5 +1,5 @@
 // src/components/Portfolio/PartnerLogoSlider_Mobile.tsx
-import { memo } from "react";
+import { memo, useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
 type Logo = { src: string; alt: string };
@@ -109,9 +109,46 @@ function PartnerLogoSliderMobile({
   const mobileLogoHeight = 20;
   console.log('PartnerLogoSliderMobile 렌더링됨 - 원래 logoHeight:', logoHeight, '실제 사용:', mobileLogoHeight);
 
-  // 모바일에서는 고정된 느린 속도 사용 (부모 props 무시)
-  const topDuration = 300; // 모바일 전용 매우 느린 속도
-  const bottomDuration = 300; // 모바일 전용 매우 느린 속도
+  const [settings, setSettings] = useState({
+    speed: 300,
+    textColor: "#374151",
+    textSize: 23
+  });
+
+  // localStorage 변경 감지
+  useEffect(() => {
+    const handleStorageChange = () => {
+      // 로고슬라이드 설정 로드
+      const savedSettings = localStorage.getItem('logoSliderSettings');
+      if (savedSettings) {
+        try {
+          const parsedSettings = JSON.parse(savedSettings);
+          setSettings(parsedSettings.mobile);
+        } catch (error) {
+          console.error('로고슬라이드 설정 로드 실패:', error);
+        }
+      }
+    };
+    
+    window.addEventListener('storage', handleStorageChange);
+    
+    // 로고슬라이드 설정 로드
+    const savedSettings = localStorage.getItem('logoSliderSettings');
+    if (savedSettings) {
+      try {
+        const parsedSettings = JSON.parse(savedSettings);
+        setSettings(parsedSettings.mobile);
+      } catch (error) {
+        console.error('로고슬라이드 설정 로드 실패:', error);
+      }
+    }
+    
+    return () => window.removeEventListener('storage', handleStorageChange);
+  }, []);
+
+  // 모바일에서는 설정에서 속도 가져오기
+  const topDuration = settings.speed;
+  const bottomDuration = settings.speed;
 
   const rows = [
     { logos: ROW1, duration: topDuration, reverse: false },
@@ -121,9 +158,10 @@ function PartnerLogoSliderMobile({
   return (
     <section aria-label="협력사 로고 슬라이더 (모바일)" className="w-full overflow-hidden">
       <p 
-        className="text-center font-bold text-gray-700 mb-8"
+        className="text-center font-bold mb-8"
         style={{
-          fontSize: "23px",
+          fontSize: `${settings.textSize}px`,
+          color: settings.textColor,
           fontWeight: 600,
           marginTop: "50px",
           marginBottom: "50px",
