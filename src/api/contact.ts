@@ -86,10 +86,14 @@ export async function getContactData(): Promise<ContactData> {
     fontSize: {
       mainTitle: 30,
       subtitle: 18,
-      sectionTitle: 16,
-      sectionDescription: 14,
-      buttonText: 16,
-      companyInfo: 14
+      sectionTitle: 42,
+      sectionDescription: 15,
+      buttonText: 24,
+      companyInfo: 14,
+      // 데스크탑 전용
+      desktopSectionTitle: 42,
+      desktopSectionDescription: 21,
+      desktopButtonText: 32
     }
   };
 }
