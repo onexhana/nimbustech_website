@@ -916,6 +916,450 @@ export default function AdminContact() {
           </div>
           )}
 
+          {/* 색상 관리 - 데스크탑 버전 */}
+          {activeVersion === 'desktop' && (
+          <div>
+            <div style={{
+              background: 'rgba(255, 255, 255, 0.8)',
+              backdropFilter: 'blur(10px)',
+              borderRadius: '12px',
+              boxShadow: '0 10px 15px rgba(0, 0, 0, 0.1)',
+              border: '1px solid rgba(255, 255, 255, 0.2)',
+              padding: '1.5rem',
+              transition: 'all 0.3s ease'
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
+                <div style={{
+                  width: '32px',
+                  height: '32px',
+                  background: 'linear-gradient(135deg, #ec4899, #be185d)',
+                  borderRadius: '8px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}>
+                  <svg width="20" height="20" fill="none" stroke="white" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM21 5a2 2 0 00-2-2h-4a2 2 0 00-2 2v12a4 4 0 004 4h4a2 2 0 002-2V5z" />
+                  </svg>
+                </div>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#111827', margin: 0 }}>
+                  색상 관리 (데스크탑)
+                </h3>
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                    데스크탑 메인 제목 색상
+                  </label>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <input
+                      type="color"
+                      value={contactData.colors?.desktopMainTitle || contactData.colors?.mainTitle || '#1f2937'}
+                      onChange={(e) => contactData && setContactData({
+                        ...contactData, 
+                        colors: { ...contactData.colors, desktopMainTitle: e.target.value }
+                      })}
+                      disabled={!isEditing}
+                      style={{
+                        width: '40px',
+                        height: '32px',
+                        border: '1px solid #e5e7eb',
+                        borderRadius: '4px',
+                        outline: 'none',
+                        cursor: isEditing ? 'pointer' : 'not-allowed'
+                      }}
+                    />
+                    <span style={{ 
+                      fontSize: '0.75rem', 
+                      fontWeight: '600', 
+                      color: '#374151'
+                    }}>
+                      {contactData.colors?.desktopMainTitle || contactData.colors?.mainTitle || '#1f2937'}
+                    </span>
+                  </div>
+                </div>
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                    데스크탑 부제목 색상
+                  </label>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <input
+                      type="color"
+                      value={contactData.colors?.desktopSubtitle || contactData.colors?.subtitle || '#6b7280'}
+                      onChange={(e) => contactData && setContactData({
+                        ...contactData, 
+                        colors: { ...contactData.colors, desktopSubtitle: e.target.value }
+                      })}
+                      disabled={!isEditing}
+                      style={{
+                        width: '40px',
+                        height: '32px',
+                        border: '1px solid #e5e7eb',
+                        borderRadius: '4px',
+                        outline: 'none',
+                        cursor: isEditing ? 'pointer' : 'not-allowed'
+                      }}
+                    />
+                    <span style={{ 
+                      fontSize: '0.75rem', 
+                      fontWeight: '600', 
+                      color: '#374151'
+                    }}>
+                      {contactData.colors?.desktopSubtitle || contactData.colors?.subtitle || '#6b7280'}
+                    </span>
+                  </div>
+                </div>
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                    데스크탑 섹션 제목 색상
+                  </label>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <input
+                      type="color"
+                      value={contactData.colors?.desktopSectionTitle || contactData.colors?.sectionTitle || '#3b82f6'}
+                      onChange={(e) => contactData && setContactData({
+                        ...contactData, 
+                        colors: { ...contactData.colors, desktopSectionTitle: e.target.value }
+                      })}
+                      disabled={!isEditing}
+                      style={{
+                        width: '40px',
+                        height: '32px',
+                        border: '1px solid #e5e7eb',
+                        borderRadius: '4px',
+                        outline: 'none',
+                        cursor: isEditing ? 'pointer' : 'not-allowed'
+                      }}
+                    />
+                    <span style={{ 
+                      fontSize: '0.75rem', 
+                      fontWeight: '600', 
+                      color: '#374151'
+                    }}>
+                      {contactData.colors?.desktopSectionTitle || contactData.colors?.sectionTitle || '#3b82f6'}
+                    </span>
+                  </div>
+                </div>
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                    데스크탑 섹션 설명 색상
+                  </label>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <input
+                      type="color"
+                      value={contactData.colors?.desktopSectionDescription || contactData.colors?.sectionDescription || '#6b7280'}
+                      onChange={(e) => contactData && setContactData({
+                        ...contactData, 
+                        colors: { ...contactData.colors, desktopSectionDescription: e.target.value }
+                      })}
+                      disabled={!isEditing}
+                      style={{
+                        width: '40px',
+                        height: '32px',
+                        border: '1px solid #e5e7eb',
+                        borderRadius: '4px',
+                        outline: 'none',
+                        cursor: isEditing ? 'pointer' : 'not-allowed'
+                      }}
+                    />
+                    <span style={{ 
+                      fontSize: '0.75rem', 
+                      fontWeight: '600', 
+                      color: '#374151'
+                    }}>
+                      {contactData.colors?.desktopSectionDescription || contactData.colors?.sectionDescription || '#6b7280'}
+                    </span>
+                  </div>
+                </div>
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                    데스크탑 버튼 텍스트 색상
+                  </label>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <input
+                      type="color"
+                      value={contactData.colors?.desktopButtonText || contactData.colors?.buttonText || '#ffffff'}
+                      onChange={(e) => contactData && setContactData({
+                        ...contactData, 
+                        colors: { ...contactData.colors, desktopButtonText: e.target.value }
+                      })}
+                      disabled={!isEditing}
+                      style={{
+                        width: '40px',
+                        height: '32px',
+                        border: '1px solid #e5e7eb',
+                        borderRadius: '4px',
+                        outline: 'none',
+                        cursor: isEditing ? 'pointer' : 'not-allowed'
+                      }}
+                    />
+                    <span style={{ 
+                      fontSize: '0.75rem', 
+                      fontWeight: '600', 
+                      color: '#374151'
+                    }}>
+                      {contactData.colors?.desktopButtonText || contactData.colors?.buttonText || '#ffffff'}
+                    </span>
+                  </div>
+                </div>
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                    데스크탑 회사 정보 색상
+                  </label>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <input
+                      type="color"
+                      value={contactData.colors?.desktopCompanyInfo || contactData.colors?.companyInfo || '#6b7280'}
+                      onChange={(e) => contactData && setContactData({
+                        ...contactData, 
+                        colors: { ...contactData.colors, desktopCompanyInfo: e.target.value }
+                      })}
+                      disabled={!isEditing}
+                      style={{
+                        width: '40px',
+                        height: '32px',
+                        border: '1px solid #e5e7eb',
+                        borderRadius: '4px',
+                        outline: 'none',
+                        cursor: isEditing ? 'pointer' : 'not-allowed'
+                      }}
+                    />
+                    <span style={{ 
+                      fontSize: '0.75rem', 
+                      fontWeight: '600', 
+                      color: '#374151'
+                    }}>
+                      {contactData.colors?.desktopCompanyInfo || contactData.colors?.companyInfo || '#6b7280'}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          )}
+
+          {/* 색상 관리 - 모바일 버전 */}
+          {activeVersion === 'mobile' && (
+          <div>
+            <div style={{
+              background: 'rgba(255, 255, 255, 0.8)',
+              backdropFilter: 'blur(10px)',
+              borderRadius: '12px',
+              boxShadow: '0 10px 15px rgba(0, 0, 0, 0.1)',
+              border: '1px solid rgba(255, 255, 255, 0.2)',
+              padding: '1.5rem',
+              transition: 'all 0.3s ease'
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
+                <div style={{
+                  width: '32px',
+                  height: '32px',
+                  background: 'linear-gradient(135deg, #ec4899, #be185d)',
+                  borderRadius: '8px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}>
+                  <svg width="20" height="20" fill="none" stroke="white" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM21 5a2 2 0 00-2-2h-4a2 2 0 00-2 2v12a4 4 0 004 4h4a2 2 0 002-2V5z" />
+                  </svg>
+                </div>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#111827', margin: 0 }}>
+                  색상 관리 (모바일)
+                </h3>
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                    모바일 메인 제목 색상
+                  </label>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <input
+                      type="color"
+                      value={contactData.colors?.mainTitle || '#1f2937'}
+                      onChange={(e) => contactData && setContactData({
+                        ...contactData, 
+                        colors: { ...contactData.colors, mainTitle: e.target.value }
+                      })}
+                      disabled={!isEditing}
+                      style={{
+                        width: '40px',
+                        height: '32px',
+                        border: '1px solid #e5e7eb',
+                        borderRadius: '4px',
+                        outline: 'none',
+                        cursor: isEditing ? 'pointer' : 'not-allowed'
+                      }}
+                    />
+                    <span style={{ 
+                      fontSize: '0.75rem', 
+                      fontWeight: '600', 
+                      color: '#374151'
+                    }}>
+                      {contactData.colors?.mainTitle || '#1f2937'}
+                    </span>
+                  </div>
+                </div>
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                    모바일 부제목 색상
+                  </label>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <input
+                      type="color"
+                      value={contactData.colors?.subtitle || '#6b7280'}
+                      onChange={(e) => contactData && setContactData({
+                        ...contactData, 
+                        colors: { ...contactData.colors, subtitle: e.target.value }
+                      })}
+                      disabled={!isEditing}
+                      style={{
+                        width: '40px',
+                        height: '32px',
+                        border: '1px solid #e5e7eb',
+                        borderRadius: '4px',
+                        outline: 'none',
+                        cursor: isEditing ? 'pointer' : 'not-allowed'
+                      }}
+                    />
+                    <span style={{ 
+                      fontSize: '0.75rem', 
+                      fontWeight: '600', 
+                      color: '#374151'
+                    }}>
+                      {contactData.colors?.subtitle || '#6b7280'}
+                    </span>
+                  </div>
+                </div>
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                    모바일 섹션 제목 색상
+                  </label>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <input
+                      type="color"
+                      value={contactData.colors?.sectionTitle || '#3b82f6'}
+                      onChange={(e) => contactData && setContactData({
+                        ...contactData, 
+                        colors: { ...contactData.colors, sectionTitle: e.target.value }
+                      })}
+                      disabled={!isEditing}
+                      style={{
+                        width: '40px',
+                        height: '32px',
+                        border: '1px solid #e5e7eb',
+                        borderRadius: '4px',
+                        outline: 'none',
+                        cursor: isEditing ? 'pointer' : 'not-allowed'
+                      }}
+                    />
+                    <span style={{ 
+                      fontSize: '0.75rem', 
+                      fontWeight: '600', 
+                      color: '#374151'
+                    }}>
+                      {contactData.colors?.sectionTitle || '#3b82f6'}
+                    </span>
+                  </div>
+                </div>
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                    모바일 섹션 설명 색상
+                  </label>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <input
+                      type="color"
+                      value={contactData.colors?.sectionDescription || '#6b7280'}
+                      onChange={(e) => contactData && setContactData({
+                        ...contactData, 
+                        colors: { ...contactData.colors, sectionDescription: e.target.value }
+                      })}
+                      disabled={!isEditing}
+                      style={{
+                        width: '40px',
+                        height: '32px',
+                        border: '1px solid #e5e7eb',
+                        borderRadius: '4px',
+                        outline: 'none',
+                        cursor: isEditing ? 'pointer' : 'not-allowed'
+                      }}
+                    />
+                    <span style={{ 
+                      fontSize: '0.75rem', 
+                      fontWeight: '600', 
+                      color: '#374151'
+                    }}>
+                      {contactData.colors?.sectionDescription || '#6b7280'}
+                    </span>
+                  </div>
+                </div>
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                    모바일 버튼 텍스트 색상
+                  </label>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <input
+                      type="color"
+                      value={contactData.colors?.buttonText || '#ffffff'}
+                      onChange={(e) => contactData && setContactData({
+                        ...contactData, 
+                        colors: { ...contactData.colors, buttonText: e.target.value }
+                      })}
+                      disabled={!isEditing}
+                      style={{
+                        width: '40px',
+                        height: '32px',
+                        border: '1px solid #e5e7eb',
+                        borderRadius: '4px',
+                        outline: 'none',
+                        cursor: isEditing ? 'pointer' : 'not-allowed'
+                      }}
+                    />
+                    <span style={{ 
+                      fontSize: '0.75rem', 
+                      fontWeight: '600', 
+                      color: '#374151'
+                    }}>
+                      {contactData.colors?.buttonText || '#ffffff'}
+                    </span>
+                  </div>
+                </div>
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                    모바일 회사 정보 색상
+                  </label>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <input
+                      type="color"
+                      value={contactData.colors?.companyInfo || '#6b7280'}
+                      onChange={(e) => contactData && setContactData({
+                        ...contactData, 
+                        colors: { ...contactData.colors, companyInfo: e.target.value }
+                      })}
+                      disabled={!isEditing}
+                      style={{
+                        width: '40px',
+                        height: '32px',
+                        border: '1px solid #e5e7eb',
+                        borderRadius: '4px',
+                        outline: 'none',
+                        cursor: isEditing ? 'pointer' : 'not-allowed'
+                      }}
+                    />
+                    <span style={{ 
+                      fontSize: '0.75rem', 
+                      fontWeight: '600', 
+                      color: '#374151'
+                    }}>
+                      {contactData.colors?.companyInfo || '#6b7280'}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          )}
+
           {/* 버튼 관리 */}
           <div>
             <div style={{
@@ -1412,7 +1856,9 @@ export default function AdminContact() {
                   `${contactData.fontSize?.desktopMainTitle || contactData.fontSize?.mainTitle || 45}px` :
                   `${contactData.fontSize?.mainTitle || 30}px`, 
                 fontWeight: '1100',
-                color: '#1f2937',
+                color: activeVersion === 'desktop' ? 
+                  (contactData.colors?.desktopMainTitle || contactData.colors?.mainTitle || '#1f2937') :
+                  (contactData.colors?.mainTitle || '#1f2937'),
                 lineHeight: '1.2',
                 letterSpacing: activeVersion === 'desktop' ? '-3.5px' : '-2px',
                 margin: 0 
@@ -1435,7 +1881,9 @@ export default function AdminContact() {
                         `${contactData.fontSize?.desktopSectionTitle || contactData.fontSize?.sectionTitle || 18}px` :
                         `${contactData.fontSize?.sectionTitle || 16}px`, 
                       fontWeight: 'bold', 
-                      color: '#3b82f6', 
+                      color: activeVersion === 'desktop' ? 
+                        (contactData.colors?.desktopSectionTitle || contactData.colors?.sectionTitle || '#3b82f6') :
+                        (contactData.colors?.sectionTitle || '#3b82f6'), 
                       margin: '0 0 0.5rem 0' 
                     }}>
                       {section.title}
@@ -1444,7 +1892,9 @@ export default function AdminContact() {
                       fontSize: activeVersion === 'desktop' ? 
                         `${contactData.fontSize?.desktopSectionDescription || contactData.fontSize?.sectionDescription || 16}px` :
                         `${contactData.fontSize?.sectionDescription || 14}px`, 
-                      color: '#6b7280', 
+                      color: activeVersion === 'desktop' ? 
+                        (contactData.colors?.desktopSectionDescription || contactData.colors?.sectionDescription || '#6b7280') :
+                        (contactData.colors?.sectionDescription || '#6b7280'), 
                       margin: 0, 
                       whiteSpace: 'pre-line' 
                     }}>
@@ -1461,7 +1911,9 @@ export default function AdminContact() {
                   fontSize: activeVersion === 'desktop' ? 
                     `${contactData.fontSize?.desktopCompanyInfo || contactData.fontSize?.companyInfo || 16}px` :
                     `${contactData.fontSize?.companyInfo || 14}px`, 
-                  color: '#6b7280', 
+                  color: activeVersion === 'desktop' ? 
+                    (contactData.colors?.desktopCompanyInfo || contactData.colors?.companyInfo || '#6b7280') :
+                    (contactData.colors?.companyInfo || '#6b7280'), 
                   display: 'flex', 
                   flexDirection: 'column', 
                   gap: '0.5rem' 

@@ -65,6 +65,20 @@ export interface ContactData {
     desktopButtonText?: number;
     desktopCompanyInfo?: number;
   };
+  colors?: {
+    mainTitle?: string;
+    subtitle?: string;
+    sectionTitle?: string;
+    sectionDescription?: string;
+    buttonText?: string;
+    companyInfo?: string;
+    desktopMainTitle?: string;
+    desktopSubtitle?: string;
+    desktopSectionTitle?: string;
+    desktopSectionDescription?: string;
+    desktopButtonText?: string;
+    desktopCompanyInfo?: string;
+  };
 }
 
 // About 페이지 관련 타입
