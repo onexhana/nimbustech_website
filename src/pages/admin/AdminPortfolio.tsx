@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { usePortfolioData } from '../../context/PortfolioContext';
+import FilterStyleEditorComponent from '../../components/admin/FilterStyleEditor';
 
 export default function AdminPortfolio() {
   const { portfolioData, updateProject, addProject, deleteProject, updateCategories } = usePortfolioData();
@@ -39,24 +40,16 @@ export default function AdminPortfolio() {
       mobile: { width: number; height: number };
     }
   }>({});
-  const [filterStyleSettings, setFilterStyleSettings] = useState({
-    active: {
-      backgroundColor: "#ffffff",
-      textColor: "#2563eb",
-      borderColor: "#2563eb",
-      borderWidth: 1,
-      fontSize: 16,
-      fontWeight: 600
-    },
-    inactive: {
-      backgroundColor: "#2563eb",
-      textColor: "#ffffff",
-      borderColor: "#2563eb",
-      borderWidth: 0,
-      fontSize: 16,
-      fontWeight: 600
+  const [filterStyleSettings, setFilterStyleSettings] = useState<{
+    [categoryName: string]: {
+      backgroundColor: string;
+      textColor: string;
+      borderColor: string;
+      borderWidth: number;
+      fontSize: number;
+      fontWeight: number;
     }
-  });
+  }>({});
   const [showAddForm, setShowAddForm] = useState(false);
   const [newProject, setNewProject] = useState({
     title: "",
@@ -69,6 +62,19 @@ export default function AdminPortfolio() {
   const [showLogoUpload, setShowLogoUpload] = useState<{type: 'customer' | 'partner', index: number} | null>(null);
   const [uploadedLogo, setUploadedLogo] = useState<string | null>(null);
   const [selectedProjectForFontStyle, setSelectedProjectForFontStyle] = useState<number | null>(null);
+  const [selectedCategoryForFilterStyle, setSelectedCategoryForFilterStyle] = useState<string | null>(null);
+  const [tempFilterStyle, setTempFilterStyle] = useState({
+    backgroundColor: "#00A3E0",
+    textColor: "#ffffff",
+    borderColor: "#00A3E0",
+    borderWidth: 1,
+    fontSize: 25,
+    fontWeight: 500,
+    borderRadius: 999, // 둥근 모서리
+    padding: "12px 24px", // 패딩
+    hoverBackgroundColor: "#008CC0", // 호버 시 배경색
+    hoverTextColor: "#ffffff" // 호버 시 글자색
+  });
 
   // 로고 슬라이드 설정 로드
   useEffect(() => {
@@ -178,11 +184,33 @@ export default function AdminPortfolio() {
     alert('글씨 스타일 설정이 저장되었습니다!');
   };
 
-  // 필터 스타일 설정 저장
-  const saveFilterStyleSettings = (settings: typeof filterStyleSettings) => {
-    setFilterStyleSettings(settings);
-    localStorage.setItem('filterStyleSettings', JSON.stringify(settings));
-    alert('필터 스타일 설정이 저장되었습니다!');
+  // 개별 필터 스타일 설정 저장
+  const saveFilterStyleSettings = (categoryName: string, settings: any) => {
+    const newSettings = { ...filterStyleSettings };
+    newSettings[categoryName] = settings;
+    setFilterStyleSettings(newSettings);
+    localStorage.setItem('filterStyleSettings', JSON.stringify(newSettings));
+    alert(`${categoryName} 필터 스타일이 저장되었습니다!`);
+  };
+
+  // 개별 필터 스타일 가져오기
+  const getFilterStyle = (categoryName: string) => {
+    if (!filterStyleSettings[categoryName]) {
+      // 기본값 설정 (현재 사이트 색상 반영)
+      return {
+        backgroundColor: "#00A3E0",
+        textColor: "#ffffff",
+        borderColor: "#00A3E0",
+        borderWidth: 1,
+        fontSize: 25,
+        fontWeight: 500,
+        borderRadius: 999,
+        padding: "12px 24px",
+        hoverBackgroundColor: "#008CC0",
+        hoverTextColor: "#ffffff"
+      };
+    }
+    return filterStyleSettings[categoryName];
   };
 
   // 로고 업로드 핸들러
@@ -1640,353 +1668,75 @@ export default function AdminPortfolio() {
                   marginBottom: '1rem',
                   transition: 'all 0.3s ease'
                 }}>
-                  {/* 활성 상태 필터 설정 */}
-                  <div style={{ marginBottom: '2rem' }}>
-                    <h4 style={{ fontSize: '1rem', fontWeight: 'bold', color: '#111827', marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                      <div style={{
-                        width: '24px',
-                        height: '24px',
-                        background: 'linear-gradient(135deg, #10b981, #14b8a6)',
-                        borderRadius: '6px',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center'
-                      }}>
-                        <span style={{ color: 'white', fontWeight: 'bold', fontSize: '0.75rem' }}>✓</span>
-                      </div>
-                      활성 상태 필터
-                    </h4>
-                    
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1rem' }}>
-                      <div>
-                        <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
-                          배경색
-                        </label>
-                        <input
-                          type="color"
-                          value={filterStyleSettings.active.backgroundColor}
-                          onChange={(e) => {
-                            const newSettings = { ...filterStyleSettings };
-                            newSettings.active.backgroundColor = e.target.value;
-                            setFilterStyleSettings(newSettings);
-                          }}
-                          style={{
-                            width: '100%',
-                            height: '40px',
-                            border: '2px solid #e5e7eb',
-                            borderRadius: '8px',
-                            cursor: 'pointer'
-                          }}
-                        />
-                      </div>
-                      <div>
-                        <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
-                          글자색
-                        </label>
-                        <input
-                          type="color"
-                          value={filterStyleSettings.active.textColor}
-                          onChange={(e) => {
-                            const newSettings = { ...filterStyleSettings };
-                            newSettings.active.textColor = e.target.value;
-                            setFilterStyleSettings(newSettings);
-                          }}
-                          style={{
-                            width: '100%',
-                            height: '40px',
-                            border: '2px solid #e5e7eb',
-                            borderRadius: '8px',
-                            cursor: 'pointer'
-                          }}
-                        />
+                  {!selectedCategoryForFilterStyle ? (
+                    // 필터 선택 화면
+                    <div>
+                      <h4 style={{ fontSize: '1rem', fontWeight: 'bold', color: '#111827', marginBottom: '1.5rem' }}>
+                        편집할 필터를 선택하세요
+                      </h4>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                        {portfolioData.categories.map((category) => (
+                          <button
+                            key={category}
+                            onClick={() => setSelectedCategoryForFilterStyle(category)}
+                            style={{
+                              padding: '1rem',
+                              fontSize: '1rem',
+                              fontWeight: '600',
+                              color: '#374151',
+                              backgroundColor: '#f9fafb',
+                              border: '2px solid #e5e7eb',
+                              borderRadius: '8px',
+                              cursor: 'pointer',
+                              transition: 'all 0.2s ease',
+                              textAlign: 'left'
+                            }}
+                            onMouseEnter={(e) => {
+                              e.currentTarget.style.backgroundColor = '#00A3E0';
+                              e.currentTarget.style.color = 'white';
+                              e.currentTarget.style.borderColor = '#00A3E0';
+                            }}
+                            onMouseLeave={(e) => {
+                              e.currentTarget.style.backgroundColor = '#f9fafb';
+                              e.currentTarget.style.color = '#374151';
+                              e.currentTarget.style.borderColor = '#e5e7eb';
+                            }}
+                          >
+                            {category} 필터 편집
+                          </button>
+                        ))}
                       </div>
                     </div>
-
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '1rem' }}>
-                      <div>
-                        <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
-                          테두리색
-                        </label>
-                        <input
-                          type="color"
-                          value={filterStyleSettings.active.borderColor}
-                          onChange={(e) => {
-                            const newSettings = { ...filterStyleSettings };
-                            newSettings.active.borderColor = e.target.value;
-                            setFilterStyleSettings(newSettings);
-                          }}
+                  ) : (
+                    // 선택된 필터 스타일 편집 화면
+                    <div>
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.5rem' }}>
+                        <h4 style={{ fontSize: '1rem', fontWeight: 'bold', color: '#111827' }}>
+                          {selectedCategoryForFilterStyle} 필터 스타일 편집
+                        </h4>
+                        <button
+                          onClick={() => setSelectedCategoryForFilterStyle(null)}
                           style={{
-                            width: '100%',
-                            height: '40px',
-                            border: '2px solid #e5e7eb',
-                            borderRadius: '8px',
+                            padding: '0.5rem 1rem',
+                            fontSize: '0.875rem',
+                            fontWeight: '500',
+                            color: '#6b7280',
+                            backgroundColor: '#f3f4f6',
+                            border: '1px solid #d1d5db',
+                            borderRadius: '6px',
                             cursor: 'pointer'
                           }}
-                        />
-                      </div>
-                      <div>
-                        <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
-                          테두리 굵기 (px)
-                        </label>
-                        <input
-                          type="number"
-                          value={filterStyleSettings.active.borderWidth}
-                          onChange={(e) => {
-                            const newSettings = { ...filterStyleSettings };
-                            newSettings.active.borderWidth = parseInt(e.target.value) || 0;
-                            setFilterStyleSettings(newSettings);
-                          }}
-                          style={{
-                            width: '100%',
-                            padding: '0.5rem 0.75rem',
-                            border: '2px solid #e5e7eb',
-                            borderRadius: '8px',
-                            outline: 'none',
-                            fontSize: '0.875rem',
-                            background: 'white',
-                            color: '#111827',
-                            boxSizing: 'border-box'
-                          }}
-                        />
-                      </div>
-                      <div>
-                        <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
-                          글자 크기 (px)
-                        </label>
-                        <input
-                          type="number"
-                          value={filterStyleSettings.active.fontSize}
-                          onChange={(e) => {
-                            const newSettings = { ...filterStyleSettings };
-                            newSettings.active.fontSize = parseInt(e.target.value) || 16;
-                            setFilterStyleSettings(newSettings);
-                          }}
-                          style={{
-                            width: '100%',
-                            padding: '0.5rem 0.75rem',
-                            border: '2px solid #e5e7eb',
-                            borderRadius: '8px',
-                            outline: 'none',
-                            fontSize: '0.875rem',
-                            background: 'white',
-                            color: '#111827',
-                            boxSizing: 'border-box'
-                          }}
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* 비활성 상태 필터 설정 */}
-                  <div style={{ marginBottom: '2rem' }}>
-                    <h4 style={{ fontSize: '1rem', fontWeight: 'bold', color: '#111827', marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                      <div style={{
-                        width: '24px',
-                        height: '24px',
-                        background: 'linear-gradient(135deg, #6b7280, #9ca3af)',
-                        borderRadius: '6px',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center'
-                      }}>
-                        <span style={{ color: 'white', fontWeight: 'bold', fontSize: '0.75rem' }}>○</span>
-                      </div>
-                      비활성 상태 필터
-                    </h4>
-                    
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1rem' }}>
-                      <div>
-                        <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
-                          배경색
-                        </label>
-                        <input
-                          type="color"
-                          value={filterStyleSettings.inactive.backgroundColor}
-                          onChange={(e) => {
-                            const newSettings = { ...filterStyleSettings };
-                            newSettings.inactive.backgroundColor = e.target.value;
-                            setFilterStyleSettings(newSettings);
-                          }}
-                          style={{
-                            width: '100%',
-                            height: '40px',
-                            border: '2px solid #e5e7eb',
-                            borderRadius: '8px',
-                            cursor: 'pointer'
-                          }}
-                        />
-                      </div>
-                      <div>
-                        <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
-                          글자색
-                        </label>
-                        <input
-                          type="color"
-                          value={filterStyleSettings.inactive.textColor}
-                          onChange={(e) => {
-                            const newSettings = { ...filterStyleSettings };
-                            newSettings.inactive.textColor = e.target.value;
-                            setFilterStyleSettings(newSettings);
-                          }}
-                          style={{
-                            width: '100%',
-                            height: '40px',
-                            border: '2px solid #e5e7eb',
-                            borderRadius: '8px',
-                            cursor: 'pointer'
-                          }}
-                        />
-                      </div>
-                    </div>
-
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '1rem' }}>
-                      <div>
-                        <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
-                          테두리색
-                        </label>
-                        <input
-                          type="color"
-                          value={filterStyleSettings.inactive.borderColor}
-                          onChange={(e) => {
-                            const newSettings = { ...filterStyleSettings };
-                            newSettings.inactive.borderColor = e.target.value;
-                            setFilterStyleSettings(newSettings);
-                          }}
-                          style={{
-                            width: '100%',
-                            height: '40px',
-                            border: '2px solid #e5e7eb',
-                            borderRadius: '8px',
-                            cursor: 'pointer'
-                          }}
-                        />
-                      </div>
-                      <div>
-                        <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
-                          테두리 굵기 (px)
-                        </label>
-                        <input
-                          type="number"
-                          value={filterStyleSettings.inactive.borderWidth}
-                          onChange={(e) => {
-                            const newSettings = { ...filterStyleSettings };
-                            newSettings.inactive.borderWidth = parseInt(e.target.value) || 0;
-                            setFilterStyleSettings(newSettings);
-                          }}
-                          style={{
-                            width: '100%',
-                            padding: '0.5rem 0.75rem',
-                            border: '2px solid #e5e7eb',
-                            borderRadius: '8px',
-                            outline: 'none',
-                            fontSize: '0.875rem',
-                            background: 'white',
-                            color: '#111827',
-                            boxSizing: 'border-box'
-                          }}
-                        />
-                      </div>
-                      <div>
-                        <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
-                          글자 크기 (px)
-                        </label>
-                        <input
-                          type="number"
-                          value={filterStyleSettings.inactive.fontSize}
-                          onChange={(e) => {
-                            const newSettings = { ...filterStyleSettings };
-                            newSettings.inactive.fontSize = parseInt(e.target.value) || 16;
-                            setFilterStyleSettings(newSettings);
-                          }}
-                          style={{
-                            width: '100%',
-                            padding: '0.5rem 0.75rem',
-                            border: '2px solid #e5e7eb',
-                            borderRadius: '8px',
-                            outline: 'none',
-                            fontSize: '0.875rem',
-                            background: 'white',
-                            color: '#111827',
-                            boxSizing: 'border-box'
-                          }}
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* 필터 미리보기 */}
-                  <div style={{ marginBottom: '2rem' }}>
-                    <h4 style={{ fontSize: '1rem', fontWeight: 'bold', color: '#111827', marginBottom: '1rem' }}>
-                      필터 미리보기
-                    </h4>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', padding: '1rem', background: 'rgba(255, 255, 255, 0.8)', borderRadius: '8px', border: '1px solid #e5e7eb' }}>
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                        <span style={{ fontSize: '0.875rem', fontWeight: '600', color: '#374151' }}>활성 상태:</span>
-                        <button style={{
-                          padding: '0.75rem 1rem',
-                          fontSize: `${filterStyleSettings.active.fontSize}px`,
-                          fontWeight: filterStyleSettings.active.fontWeight,
-                          color: filterStyleSettings.active.textColor,
-                          backgroundColor: filterStyleSettings.active.backgroundColor,
-                          border: `${filterStyleSettings.active.borderWidth}px solid ${filterStyleSettings.active.borderColor}`,
-                          borderRadius: '8px',
-                          cursor: 'pointer',
-                          width: 'fit-content'
-                        }}>
-                          공공
+                        >
+                          ← 필터 선택으로
                         </button>
                       </div>
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                        <span style={{ fontSize: '0.875rem', fontWeight: '600', color: '#374151' }}>비활성 상태:</span>
-                        <div style={{ display: 'flex', gap: '0.5rem' }}>
-                          <button style={{
-                            padding: '0.75rem 1rem',
-                            fontSize: `${filterStyleSettings.inactive.fontSize}px`,
-                            fontWeight: filterStyleSettings.inactive.fontWeight,
-                            color: filterStyleSettings.inactive.textColor,
-                            backgroundColor: filterStyleSettings.inactive.backgroundColor,
-                            border: `${filterStyleSettings.inactive.borderWidth}px solid ${filterStyleSettings.inactive.borderColor}`,
-                            borderRadius: '8px',
-                            cursor: 'pointer'
-                          }}>
-                            금융
-                          </button>
-                          <button style={{
-                            padding: '0.75rem 1rem',
-                            fontSize: `${filterStyleSettings.inactive.fontSize}px`,
-                            fontWeight: filterStyleSettings.inactive.fontWeight,
-                            color: filterStyleSettings.inactive.textColor,
-                            backgroundColor: filterStyleSettings.inactive.backgroundColor,
-                            border: `${filterStyleSettings.inactive.borderWidth}px solid ${filterStyleSettings.inactive.borderColor}`,
-                            borderRadius: '8px',
-                            cursor: 'pointer'
-                          }}>
-                            일반 / 제조
-                          </button>
-                        </div>
-                      </div>
+                      
+                      <FilterStyleEditorComponent 
+                        selectedCategory={selectedCategoryForFilterStyle}
+                        onSave={saveFilterStyleSettings}
+                      />
                     </div>
-                  </div>
-
-                  {/* 저장 버튼 */}
-                  <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.75rem' }}>
-                    <button
-                      onClick={() => saveFilterStyleSettings(filterStyleSettings)}
-                      style={{
-                        padding: '0.75rem 1.5rem',
-                        fontSize: '0.875rem',
-                        fontWeight: '500',
-                        color: 'white',
-                        background: 'linear-gradient(135deg, #f59e0b, #f97316)',
-                        border: 'none',
-                        borderRadius: '12px',
-                        cursor: 'pointer',
-                        transition: 'all 0.2s ease'
-                      }}
-                    >
-                      필터 스타일 저장
-                    </button>
-                  </div>
+                  )}
                 </div>
               )}
 
