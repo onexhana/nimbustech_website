@@ -58,6 +58,12 @@ export interface ContactData {
     sectionDescription: number;
     buttonText: number;
     companyInfo: number;
+    desktopMainTitle?: number;
+    desktopSubtitle?: number;
+    desktopSectionTitle?: number;
+    desktopSectionDescription?: number;
+    desktopButtonText?: number;
+    desktopCompanyInfo?: number;
   };
 }
 
