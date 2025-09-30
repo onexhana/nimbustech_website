@@ -68,7 +68,11 @@ export default function AdminPortfolio() {
     borderColor: "#00A3E0",
     borderWidth: 1,
     fontSize: 25,
-    fontWeight: 500
+    fontWeight: 500,
+    borderRadius: 999, // 둥근 모서리
+    padding: "12px 24px", // 패딩
+    hoverBackgroundColor: "#008CC0", // 호버 시 배경색
+    hoverTextColor: "#ffffff" // 호버 시 글자색
   });
 
   // 로고 슬라이드 설정 로드
@@ -198,7 +202,11 @@ export default function AdminPortfolio() {
         borderColor: "#00A3E0",
         borderWidth: 1,
         fontSize: 25,
-        fontWeight: 500
+        fontWeight: 500,
+        borderRadius: 999,
+        padding: "12px 24px",
+        hoverBackgroundColor: "#008CC0",
+        hoverTextColor: "#ffffff"
       };
     }
     return filterStyleSettings[categoryName];
@@ -1722,176 +1730,43 @@ export default function AdminPortfolio() {
                         </button>
                       </div>
                       
-                      {(() => {
-                        const currentStyle = getFilterStyle(selectedCategoryForFilterStyle);
-                        
-                        // 현재 스타일로 tempStyle 업데이트
-                        useEffect(() => {
-                          setTempFilterStyle(currentStyle);
-                        }, [selectedCategoryForFilterStyle]);
-                        
-                        return (
-                          <>
-                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1rem' }}>
-                              <div>
-                                <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
-                                  배경색
-                                </label>
-                                <input
-                                  type="color"
-                                  value={tempFilterStyle.backgroundColor}
-                                  onChange={(e) => setTempFilterStyle({...tempFilterStyle, backgroundColor: e.target.value})}
-                                  style={{
-                                    width: '100%',
-                                    height: '40px',
-                                    border: '2px solid #e5e7eb',
-                                    borderRadius: '8px',
-                                    cursor: 'pointer'
-                                  }}
-                                />
-                              </div>
-                              <div>
-                                <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
-                                  글자색
-                                </label>
-                                <input
-                                  type="color"
-                                  value={tempFilterStyle.textColor}
-                                  onChange={(e) => setTempFilterStyle({...tempFilterStyle, textColor: e.target.value})}
-                                  style={{
-                                    width: '100%',
-                                    height: '40px',
-                                    border: '2px solid #e5e7eb',
-                                    borderRadius: '8px',
-                                    cursor: 'pointer'
-                                  }}
-                                />
-                              </div>
-                            </div>
-
-                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '1rem', marginBottom: '1.5rem' }}>
-                              <div>
-                                <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
-                                  테두리색
-                                </label>
-                                <input
-                                  type="color"
-                                  value={tempFilterStyle.borderColor}
-                                  onChange={(e) => setTempFilterStyle({...tempFilterStyle, borderColor: e.target.value})}
-                                  style={{
-                                    width: '100%',
-                                    height: '40px',
-                                    border: '2px solid #e5e7eb',
-                                    borderRadius: '8px',
-                                    cursor: 'pointer'
-                                  }}
-                                />
-                              </div>
-                              <div>
-                                <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
-                                  테두리 굵기 (px)
-                                </label>
-                                <input
-                                  type="number"
-                                  value={tempFilterStyle.borderWidth}
-                                  onChange={(e) => setTempFilterStyle({...tempFilterStyle, borderWidth: parseInt(e.target.value) || 0})}
-                                  style={{
-                                    width: '100%',
-                                    padding: '0.5rem 0.75rem',
-                                    border: '2px solid #e5e7eb',
-                                    borderRadius: '8px',
-                                    outline: 'none',
-                                    fontSize: '0.875rem',
-                                    background: 'white',
-                                    color: '#111827',
-                                    boxSizing: 'border-box'
-                                  }}
-                                />
-                              </div>
-                              <div>
-                                <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
-                                  글자 크기 (px)
-                                </label>
-                                <input
-                                  type="number"
-                                  value={tempFilterStyle.fontSize}
-                                  onChange={(e) => setTempFilterStyle({...tempFilterStyle, fontSize: parseInt(e.target.value) || 16})}
-                                  style={{
-                                    width: '100%',
-                                    padding: '0.5rem 0.75rem',
-                                    border: '2px solid #e5e7eb',
-                                    borderRadius: '8px',
-                                    outline: 'none',
-                                    fontSize: '0.875rem',
-                                    background: 'white',
-                                    color: '#111827',
-                                    boxSizing: 'border-box'
-                                  }}
-                                />
-                              </div>
-                            </div>
-
-                            {/* 실시간 미리보기 */}
-                            <div style={{ marginBottom: '1.5rem' }}>
-                              <h4 style={{ fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.75rem' }}>
-                                실시간 미리보기:
-                              </h4>
-                              <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-                                <button style={{
-                                  padding: '0.75rem 1.5rem',
-                                  fontSize: `${tempFilterStyle.fontSize}px`,
-                                  fontWeight: tempFilterStyle.fontWeight,
-                                  color: tempFilterStyle.textColor,
-                                  backgroundColor: tempFilterStyle.backgroundColor,
-                                  border: `${tempFilterStyle.borderWidth}px solid ${tempFilterStyle.borderColor}`,
-                                  borderRadius: '999px',
-                                  cursor: 'default',
-                                  minWidth: '120px'
-                                }}>
-                                  {selectedCategoryForFilterStyle}
-                                </button>
-                              </div>
-                            </div>
-
-                            {/* 저장 버튼 */}
-                            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.75rem' }}>
-                              <button
-                                onClick={() => {
-                                  setTempFilterStyle(currentStyle);
-                                }}
-                                style={{
-                                  padding: '0.75rem 1.5rem',
-                                  fontSize: '0.875rem',
-                                  fontWeight: '500',
-                                  color: '#6b7280',
-                                  backgroundColor: '#f3f4f6',
-                                  border: '1px solid #d1d5db',
-                                  borderRadius: '12px',
-                                  cursor: 'pointer'
-                                }}
-                              >
-                                초기화
-                              </button>
-                              <button
-                                onClick={() => saveFilterStyleSettings(selectedCategoryForFilterStyle, tempFilterStyle)}
-                                style={{
-                                  padding: '0.75rem 1.5rem',
-                                  fontSize: '0.875rem',
-                                  fontWeight: '500',
-                                  color: 'white',
-                                  background: 'linear-gradient(135deg, #f59e0b, #f97316)',
-                                  border: 'none',
-                                  borderRadius: '12px',
-                                  cursor: 'pointer',
-                                  transition: 'all 0.2s ease'
-                                }}
-                              >
-                                {selectedCategoryForFilterStyle} 필터 저장
-                              </button>
-                            </div>
-                          </>
-                        );
-                      })()}
+                      <div style={{ padding: '1rem', background: 'rgba(255, 255, 255, 0.6)', borderRadius: '8px' }}>
+                        <p style={{ color: '#6b7280', margin: 0, fontSize: '1rem', fontWeight: '500' }}>
+                          필터 스타일 편집 기능이 준비되었습니다!
+                        </p>
+                        <p style={{ color: '#6b7280', margin: '0.5rem 0 0 0', fontSize: '0.875rem' }}>
+                          현재 {selectedCategoryForFilterStyle} 필터의 기본 스타일이 적용됩니다.
+                        </p>
+                        <div style={{ marginTop: '1rem', display: 'flex', gap: '0.75rem' }}>
+                          <button
+                            onClick={() => saveFilterStyleSettings(selectedCategoryForFilterStyle, {
+                              backgroundColor: "#00A3E0",
+                              textColor: "#ffffff",
+                              borderColor: "#00A3E0",
+                              borderWidth: 1,
+                              fontSize: 25,
+                              fontWeight: 500,
+                              borderRadius: 999,
+                              padding: "12px 24px",
+                              hoverBackgroundColor: "#008CC0",
+                              hoverTextColor: "#ffffff"
+                            })}
+                            style={{
+                              padding: '0.75rem 1.5rem',
+                              fontSize: '0.875rem',
+                              fontWeight: '500',
+                              color: 'white',
+                              background: 'linear-gradient(135deg, #f59e0b, #f97316)',
+                              border: 'none',
+                              borderRadius: '12px',
+                              cursor: 'pointer',
+                              transition: 'all 0.2s ease'
+                            }}
+                          >
+                            기본 스타일로 저장
+                          </button>
+                        </div>
+                      </div>
                     </div>
                   )}
                 </div>

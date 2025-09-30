@@ -29,7 +29,11 @@ const CategoryFilter = ({ selectedCategory, onCategoryChange }: CategoryFilterPr
       borderColor: "#00A3E0",
       borderWidth: 1,
       fontSize: 25,
-      fontWeight: 500
+      fontWeight: 500,
+      borderRadius: 999,
+      padding: "12px 24px",
+      hoverBackgroundColor: "#008CC0",
+      hoverTextColor: "#ffffff"
     };
   };
   
@@ -48,10 +52,10 @@ const CategoryFilter = ({ selectedCategory, onCategoryChange }: CategoryFilterPr
                style={{
                  height: '64px',
                  width: '280px',
-                 borderRadius: '999px',
-                 border: isSelected ? `${filterStyle.borderWidth + 2}px solid ${filterStyle.borderColor}` : `${filterStyle.borderWidth}px solid transparent`,
-                fontSize: `${filterStyle.fontSize}px`,
-                fontWeight: filterStyle.fontWeight,
+                 borderRadius: `${filterStyle.borderRadius || 999}px`,
+                 border: isSelected ? `${(filterStyle.borderWidth || 1) + 2}px solid ${filterStyle.borderColor}` : `${filterStyle.borderWidth || 1}px solid transparent`,
+                fontSize: `${filterStyle.fontSize || 25}px`,
+                fontWeight: filterStyle.fontWeight || 500,
                  transition: 'all 0.3s ease',
                  textAlign: 'left',
                  paddingLeft: '32px',
@@ -63,22 +67,24 @@ const CategoryFilter = ({ selectedCategory, onCategoryChange }: CategoryFilterPr
                  const target = e.target as HTMLButtonElement;
                  if (isSelected) {
                    target.style.backgroundColor = '#FFFFFF';
-                   target.style.border = `${filterStyle.borderWidth + 2}px solid ${filterStyle.borderColor}`;
+                   target.style.border = `${(filterStyle.borderWidth || 1) + 2}px solid ${filterStyle.borderColor}`;
+                   target.style.color = filterStyle.borderColor;
                  } else {
-                   target.style.backgroundColor = filterStyle.borderColor;
-                   target.style.color = 'white';
-                   target.style.border = `${filterStyle.borderWidth}px solid ${filterStyle.borderColor}`;
+                   target.style.backgroundColor = filterStyle.hoverBackgroundColor || filterStyle.borderColor;
+                   target.style.color = filterStyle.hoverTextColor || 'white';
+                   target.style.border = `${filterStyle.borderWidth || 1}px solid ${filterStyle.borderColor}`;
                  }
                }}
                onMouseLeave={(e) => {
                  const target = e.target as HTMLButtonElement;
                  if (isSelected) {
                    target.style.backgroundColor = 'white';
-                   target.style.border = `${filterStyle.borderWidth + 2}px solid ${filterStyle.borderColor}`;
+                   target.style.border = `${(filterStyle.borderWidth || 1) + 2}px solid ${filterStyle.borderColor}`;
+                   target.style.color = filterStyle.borderColor;
                  } else {
                    target.style.backgroundColor = filterStyle.backgroundColor;
                    target.style.color = filterStyle.textColor;
-                   target.style.border = `${filterStyle.borderWidth}px solid transparent`;
+                   target.style.border = `${filterStyle.borderWidth || 1}px solid transparent`;
                  }
                }}
              >

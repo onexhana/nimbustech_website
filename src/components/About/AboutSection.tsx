@@ -158,14 +158,18 @@ export default function AboutSection() {
                   }
                   
                   // 기본값 반환 (현재 사이트 색상)
-                  return {
-                    backgroundColor: "#00A3E0",
-                    textColor: "#ffffff",
-                    borderColor: "#00A3E0",
-                    borderWidth: 1,
-                    fontSize: 18,
-                    fontWeight: 550
-                  };
+        return {
+          backgroundColor: "#00A3E0",
+          textColor: "#ffffff",
+          borderColor: "#00A3E0",
+          borderWidth: 1,
+          fontSize: 18,
+          fontWeight: 550,
+          borderRadius: 20,
+          padding: "8px 16px",
+          hoverBackgroundColor: "#008CC0",
+          hoverTextColor: "#ffffff"
+        };
                 };
                 
                 const filterStyle = getFilterStyle(tab.name);
@@ -174,17 +178,18 @@ export default function AboutSection() {
                   <button
                     key={tab.name}
                     /* 버튼 스타일: 관리자 설정 반영 */
-                    style={{
-                      backgroundColor: activeTab === tab.name ? 'white' : filterStyle.backgroundColor,
-                      color: activeTab === tab.name ? filterStyle.borderColor : filterStyle.textColor,
-                      border: activeTab === tab.name ? `1px solid ${filterStyle.borderColor}` : `1px solid ${filterStyle.borderColor}`,
-                      borderRadius: '20px',
-                      padding: '8px 16px',
-                      fontSize: `${filterStyle.fontSize}px`,
-                      fontWeight: filterStyle.fontWeight,
-                      cursor: 'pointer',
-                      minWidth: '60px'
-                    }}
+                      style={{
+                        backgroundColor: activeTab === tab.name ? 'white' : filterStyle.backgroundColor,
+                        color: activeTab === tab.name ? filterStyle.borderColor : filterStyle.textColor,
+                        border: activeTab === tab.name ? `${(filterStyle.borderWidth || 1) + 1}px solid ${filterStyle.borderColor}` : `${filterStyle.borderWidth || 1}px solid ${filterStyle.borderColor}`,
+                        borderRadius: `${filterStyle.borderRadius || 20}px`,
+                        padding: filterStyle.padding || '8px 16px',
+                        fontSize: `${filterStyle.fontSize || 18}px`,
+                        fontWeight: filterStyle.fontWeight || 550,
+                        cursor: 'pointer',
+                        minWidth: '60px',
+                        transition: 'all 0.3s ease'
+                      }}
                     onClick={() => handleTabChange(tab.name)}
                   >
                     {tab.name} {/* 탭명 표시 */}

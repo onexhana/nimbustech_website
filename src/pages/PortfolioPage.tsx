@@ -66,7 +66,11 @@ const PortfolioPage = () => {
                     borderColor: "#00A3E0",
                     borderWidth: 1,
                     fontSize: 14,
-                    fontWeight: 600
+                    fontWeight: 600,
+                    borderRadius: 20,
+                    padding: "8px 20px",
+                    hoverBackgroundColor: "#008CC0",
+                    hoverTextColor: "#ffffff"
                   };
                 };
                 
@@ -78,12 +82,13 @@ const PortfolioPage = () => {
                     style={{
                       backgroundColor: selectedCategory === category ? 'white' : filterStyle.backgroundColor,
                       color: selectedCategory === category ? filterStyle.borderColor : filterStyle.textColor,
-                      border: `1px solid ${filterStyle.borderColor}`,
-                      borderRadius: '20px',
-                      padding: '8px 20px',
-                      fontSize: `${filterStyle.fontSize}px`,
-                      fontWeight: filterStyle.fontWeight,
-                      cursor: 'pointer'
+                      border: `${filterStyle.borderWidth || 1}px solid ${filterStyle.borderColor}`,
+                      borderRadius: `${filterStyle.borderRadius || 20}px`,
+                      padding: filterStyle.padding || '8px 20px',
+                      fontSize: `${filterStyle.fontSize || 14}px`,
+                      fontWeight: filterStyle.fontWeight || 600,
+                      cursor: 'pointer',
+                      transition: 'all 0.3s ease'
                     }}
                     onClick={() => handleCategoryChange(category)}
                   >

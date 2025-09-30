@@ -36,14 +36,18 @@ export default function AboutTab({ tabs, activeTab, onTabChange, fontSize, activ
     }
     
     // 기본값 반환 (현재 사이트 색상)
-    return {
-      backgroundColor: "#00A3E0",
-      textColor: "#ffffff",
-      borderColor: "#00A3E0",
-      borderWidth: 1,
-      fontSize: 22,
-      fontWeight: 650
-    };
+      return {
+        backgroundColor: "#00A3E0",
+        textColor: "#ffffff",
+        borderColor: "#00A3E0",
+        borderWidth: 1,
+        fontSize: 22,
+        fontWeight: 650,
+        borderRadius: 25,
+        padding: "8px 24px",
+        hoverBackgroundColor: "#008CC0",
+        hoverTextColor: "#ffffff"
+      };
   };
 
   return (
@@ -61,17 +65,17 @@ export default function AboutTab({ tabs, activeTab, onTabChange, fontSize, activ
           <button
             key={tab}
             // 버튼 스타일: 관리자 설정 반영
-            style={{
-              backgroundColor: activeTab === tab ? 'white' : filterStyle.backgroundColor,
-              color: activeTab === tab ? filterStyle.borderColor : filterStyle.textColor,
-              border: activeTab === tab ? `1px solid ${filterStyle.borderColor}` : `1px solid transparent`,
-              fontSize: `${filterStyle.fontSize}px`,
-              fontWeight: filterStyle.fontWeight,
-              padding: '8px 24px',
-              borderRadius: '25px',
-              cursor: 'pointer',
-              transition: 'all 0.3s ease'
-            }}
+        style={{
+          backgroundColor: activeTab === tab ? 'white' : filterStyle.backgroundColor,
+          color: activeTab === tab ? filterStyle.borderColor : filterStyle.textColor,
+          border: activeTab === tab ? `${(filterStyle.borderWidth || 1) + 1}px solid ${filterStyle.borderColor}` : `${filterStyle.borderWidth || 1}px solid transparent`,
+          fontSize: `${filterStyle.fontSize || 22}px`,
+          fontWeight: filterStyle.fontWeight || 650,
+          padding: filterStyle.padding || '8px 24px',
+          borderRadius: `${filterStyle.borderRadius || 25}px`,
+          cursor: 'pointer',
+          transition: 'all 0.3s ease'
+        }}
             // 마우스 진입 시 hoveredTab 상태 업데이트
             onMouseEnter={() => setHoveredTab(tab)}
             // 마우스 이탈 시 hoveredTab 초기화
