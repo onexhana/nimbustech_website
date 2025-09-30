@@ -69,6 +69,8 @@ export interface AboutCard {
   fontSize?: {
     title?: number;
     description?: number;
+    mobileTitle?: number;
+    mobileDescription?: number;
   };
 }
 
@@ -88,6 +90,8 @@ export interface AboutData {
     cardDescription: number;
     tabName: number;
     mobileTabName?: number;
+    mobileCardTitle?: number;
+    mobileCardDescription?: number;
   };
   tabActiveColor?: string;
   tabInactiveColor?: string;
