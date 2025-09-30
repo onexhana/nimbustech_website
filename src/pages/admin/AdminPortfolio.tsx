@@ -8,7 +8,7 @@ export default function AdminPortfolio() {
   const [isEditing, setIsEditing] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("공공");
   const [logoSliderCategory, setLogoSliderCategory] = useState("고객사");
-  const [activeSection, setActiveSection] = useState<"portfolio" | "logoSlider" | "fontStyle" | "imageSize">("portfolio");
+  const [activeSection, setActiveSection] = useState<"portfolio" | "logoSlider" | "fontStyle" | "imageSize" | "filterStyle">("portfolio");
   const [logoSliderSettings, setLogoSliderSettings] = useState({
     web: {
       speed: 50,
@@ -39,6 +39,24 @@ export default function AdminPortfolio() {
       mobile: { width: number; height: number };
     }
   }>({});
+  const [filterStyleSettings, setFilterStyleSettings] = useState({
+    active: {
+      backgroundColor: "#ffffff",
+      textColor: "#2563eb",
+      borderColor: "#2563eb",
+      borderWidth: 1,
+      fontSize: 16,
+      fontWeight: 600
+    },
+    inactive: {
+      backgroundColor: "#2563eb",
+      textColor: "#ffffff",
+      borderColor: "#2563eb",
+      borderWidth: 0,
+      fontSize: 16,
+      fontWeight: 600
+    }
+  });
   const [showAddForm, setShowAddForm] = useState(false);
   const [newProject, setNewProject] = useState({
     title: "",
@@ -84,6 +102,18 @@ export default function AdminPortfolio() {
         setImageSizeSettings(JSON.parse(savedImageSizeSettings));
       } catch (error) {
         console.error('이미지 크기 설정 로드 실패:', error);
+      }
+    }
+  }, []);
+
+  // 필터 스타일 설정 로드
+  useEffect(() => {
+    const savedFilterStyleSettings = localStorage.getItem('filterStyleSettings');
+    if (savedFilterStyleSettings) {
+      try {
+        setFilterStyleSettings(JSON.parse(savedFilterStyleSettings));
+      } catch (error) {
+        console.error('필터 스타일 설정 로드 실패:', error);
       }
     }
   }, []);
@@ -146,6 +176,13 @@ export default function AdminPortfolio() {
     setFontStyleSettings(settings);
     localStorage.setItem('fontStyleSettings', JSON.stringify(settings));
     alert('글씨 스타일 설정이 저장되었습니다!');
+  };
+
+  // 필터 스타일 설정 저장
+  const saveFilterStyleSettings = (settings: typeof filterStyleSettings) => {
+    setFilterStyleSettings(settings);
+    localStorage.setItem('filterStyleSettings', JSON.stringify(settings));
+    alert('필터 스타일 설정이 저장되었습니다!');
   };
 
   // 로고 업로드 핸들러
@@ -540,6 +577,89 @@ export default function AdminPortfolio() {
               )}
             </div>
 
+            {/* 필터 관리 */}
+            <div style={{
+              background: 'rgba(255, 255, 255, 0.8)',
+              backdropFilter: 'blur(10px)',
+              borderRadius: '12px',
+              boxShadow: '0 10px 15px rgba(0, 0, 0, 0.1)',
+              border: '1px solid rgba(255, 255, 255, 0.2)',
+              padding: '1.5rem',
+              marginTop: '1.5rem',
+              transition: 'all 0.3s ease'
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
+                <div style={{
+                  width: '32px',
+                  height: '32px',
+                  background: 'linear-gradient(135deg, #f59e0b, #f97316)',
+                  borderRadius: '8px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}>
+                  <svg width="20" height="20" fill="none" stroke="white" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.207A1 1 0 013 6.5V4z" />
+                  </svg>
+                </div>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#111827', margin: 0 }}>
+                  필터 관리
+                </h3>
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                <button
+                  onClick={() => setActiveSection("filterStyle")}
+                  style={{
+                    padding: '0.75rem 1rem',
+                    fontSize: '0.875rem',
+                    fontWeight: '600',
+                    borderRadius: '8px',
+                    border: 'none',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.5rem',
+                    transition: 'all 0.2s ease',
+                    ...(activeSection === "filterStyle" ? {
+                      background: 'linear-gradient(135deg, #f59e0b, #f97316)',
+                      color: 'white',
+                      boxShadow: '0 4px 12px rgba(245, 158, 11, 0.3)'
+                    } : {
+                      background: 'rgba(255, 255, 255, 0.6)',
+                      color: '#374151',
+                      border: '1px solid rgba(229, 231, 235, 0.5)'
+                    })
+                  }}
+                  onMouseEnter={(e) => {
+                    if (activeSection !== "filterStyle") {
+                      e.currentTarget.style.background = 'rgba(245, 158, 11, 0.1)';
+                      e.currentTarget.style.borderColor = 'rgba(245, 158, 11, 0.3)';
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (activeSection !== "filterStyle") {
+                      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.6)';
+                      e.currentTarget.style.borderColor = 'rgba(229, 231, 235, 0.5)';
+                    }
+                  }}
+                >
+                  <span style={{
+                    fontSize: '0.75rem',
+                    fontWeight: 'bold',
+                    background: activeSection === "filterStyle" ? 'rgba(255, 255, 255, 0.2)' : 'rgba(245, 158, 11, 0.1)',
+                    color: activeSection === "filterStyle" ? 'white' : '#f59e0b',
+                    padding: '0.25rem 0.5rem',
+                    borderRadius: '4px',
+                    minWidth: '20px',
+                    textAlign: 'center'
+                  }}>
+                    🎨
+                  </span>
+                  필터 스타일
+                </button>
+              </div>
+            </div>
+
             {/* 로고 슬라이드 관리 */}
             <div style={{
               background: 'rgba(255, 255, 255, 0.8)',
@@ -660,6 +780,7 @@ export default function AdminPortfolio() {
                     {activeSection === "portfolio" ? `${selectedCategory} 프로젝트 관리` : 
                      activeSection === "fontStyle" ? "글씨 스타일 설정" : 
                      activeSection === "imageSize" ? "이미지 크기 설정" :
+                     activeSection === "filterStyle" ? "필터 스타일 설정" :
                      `${logoSliderCategory} 관리`}
                   </h3>
                 </div>
@@ -1505,6 +1626,367 @@ export default function AdminPortfolio() {
                       </button>
                     </div>
                   )}
+                </div>
+              )}
+
+              {/* 필터 스타일 설정 콘텐츠 */}
+              {activeSection === "filterStyle" && (
+                <div style={{
+                  background: 'rgba(255, 255, 255, 0.6)',
+                  backdropFilter: 'blur(10px)',
+                  border: '1px solid rgba(229, 231, 235, 0.5)',
+                  borderRadius: '12px',
+                  padding: '1.5rem',
+                  marginBottom: '1rem',
+                  transition: 'all 0.3s ease'
+                }}>
+                  {/* 활성 상태 필터 설정 */}
+                  <div style={{ marginBottom: '2rem' }}>
+                    <h4 style={{ fontSize: '1rem', fontWeight: 'bold', color: '#111827', marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                      <div style={{
+                        width: '24px',
+                        height: '24px',
+                        background: 'linear-gradient(135deg, #10b981, #14b8a6)',
+                        borderRadius: '6px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center'
+                      }}>
+                        <span style={{ color: 'white', fontWeight: 'bold', fontSize: '0.75rem' }}>✓</span>
+                      </div>
+                      활성 상태 필터
+                    </h4>
+                    
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1rem' }}>
+                      <div>
+                        <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                          배경색
+                        </label>
+                        <input
+                          type="color"
+                          value={filterStyleSettings.active.backgroundColor}
+                          onChange={(e) => {
+                            const newSettings = { ...filterStyleSettings };
+                            newSettings.active.backgroundColor = e.target.value;
+                            setFilterStyleSettings(newSettings);
+                          }}
+                          style={{
+                            width: '100%',
+                            height: '40px',
+                            border: '2px solid #e5e7eb',
+                            borderRadius: '8px',
+                            cursor: 'pointer'
+                          }}
+                        />
+                      </div>
+                      <div>
+                        <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                          글자색
+                        </label>
+                        <input
+                          type="color"
+                          value={filterStyleSettings.active.textColor}
+                          onChange={(e) => {
+                            const newSettings = { ...filterStyleSettings };
+                            newSettings.active.textColor = e.target.value;
+                            setFilterStyleSettings(newSettings);
+                          }}
+                          style={{
+                            width: '100%',
+                            height: '40px',
+                            border: '2px solid #e5e7eb',
+                            borderRadius: '8px',
+                            cursor: 'pointer'
+                          }}
+                        />
+                      </div>
+                    </div>
+
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '1rem' }}>
+                      <div>
+                        <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                          테두리색
+                        </label>
+                        <input
+                          type="color"
+                          value={filterStyleSettings.active.borderColor}
+                          onChange={(e) => {
+                            const newSettings = { ...filterStyleSettings };
+                            newSettings.active.borderColor = e.target.value;
+                            setFilterStyleSettings(newSettings);
+                          }}
+                          style={{
+                            width: '100%',
+                            height: '40px',
+                            border: '2px solid #e5e7eb',
+                            borderRadius: '8px',
+                            cursor: 'pointer'
+                          }}
+                        />
+                      </div>
+                      <div>
+                        <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                          테두리 굵기 (px)
+                        </label>
+                        <input
+                          type="number"
+                          value={filterStyleSettings.active.borderWidth}
+                          onChange={(e) => {
+                            const newSettings = { ...filterStyleSettings };
+                            newSettings.active.borderWidth = parseInt(e.target.value) || 0;
+                            setFilterStyleSettings(newSettings);
+                          }}
+                          style={{
+                            width: '100%',
+                            padding: '0.5rem 0.75rem',
+                            border: '2px solid #e5e7eb',
+                            borderRadius: '8px',
+                            outline: 'none',
+                            fontSize: '0.875rem',
+                            background: 'white',
+                            color: '#111827',
+                            boxSizing: 'border-box'
+                          }}
+                        />
+                      </div>
+                      <div>
+                        <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                          글자 크기 (px)
+                        </label>
+                        <input
+                          type="number"
+                          value={filterStyleSettings.active.fontSize}
+                          onChange={(e) => {
+                            const newSettings = { ...filterStyleSettings };
+                            newSettings.active.fontSize = parseInt(e.target.value) || 16;
+                            setFilterStyleSettings(newSettings);
+                          }}
+                          style={{
+                            width: '100%',
+                            padding: '0.5rem 0.75rem',
+                            border: '2px solid #e5e7eb',
+                            borderRadius: '8px',
+                            outline: 'none',
+                            fontSize: '0.875rem',
+                            background: 'white',
+                            color: '#111827',
+                            boxSizing: 'border-box'
+                          }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* 비활성 상태 필터 설정 */}
+                  <div style={{ marginBottom: '2rem' }}>
+                    <h4 style={{ fontSize: '1rem', fontWeight: 'bold', color: '#111827', marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                      <div style={{
+                        width: '24px',
+                        height: '24px',
+                        background: 'linear-gradient(135deg, #6b7280, #9ca3af)',
+                        borderRadius: '6px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center'
+                      }}>
+                        <span style={{ color: 'white', fontWeight: 'bold', fontSize: '0.75rem' }}>○</span>
+                      </div>
+                      비활성 상태 필터
+                    </h4>
+                    
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1rem' }}>
+                      <div>
+                        <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                          배경색
+                        </label>
+                        <input
+                          type="color"
+                          value={filterStyleSettings.inactive.backgroundColor}
+                          onChange={(e) => {
+                            const newSettings = { ...filterStyleSettings };
+                            newSettings.inactive.backgroundColor = e.target.value;
+                            setFilterStyleSettings(newSettings);
+                          }}
+                          style={{
+                            width: '100%',
+                            height: '40px',
+                            border: '2px solid #e5e7eb',
+                            borderRadius: '8px',
+                            cursor: 'pointer'
+                          }}
+                        />
+                      </div>
+                      <div>
+                        <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                          글자색
+                        </label>
+                        <input
+                          type="color"
+                          value={filterStyleSettings.inactive.textColor}
+                          onChange={(e) => {
+                            const newSettings = { ...filterStyleSettings };
+                            newSettings.inactive.textColor = e.target.value;
+                            setFilterStyleSettings(newSettings);
+                          }}
+                          style={{
+                            width: '100%',
+                            height: '40px',
+                            border: '2px solid #e5e7eb',
+                            borderRadius: '8px',
+                            cursor: 'pointer'
+                          }}
+                        />
+                      </div>
+                    </div>
+
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '1rem' }}>
+                      <div>
+                        <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                          테두리색
+                        </label>
+                        <input
+                          type="color"
+                          value={filterStyleSettings.inactive.borderColor}
+                          onChange={(e) => {
+                            const newSettings = { ...filterStyleSettings };
+                            newSettings.inactive.borderColor = e.target.value;
+                            setFilterStyleSettings(newSettings);
+                          }}
+                          style={{
+                            width: '100%',
+                            height: '40px',
+                            border: '2px solid #e5e7eb',
+                            borderRadius: '8px',
+                            cursor: 'pointer'
+                          }}
+                        />
+                      </div>
+                      <div>
+                        <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                          테두리 굵기 (px)
+                        </label>
+                        <input
+                          type="number"
+                          value={filterStyleSettings.inactive.borderWidth}
+                          onChange={(e) => {
+                            const newSettings = { ...filterStyleSettings };
+                            newSettings.inactive.borderWidth = parseInt(e.target.value) || 0;
+                            setFilterStyleSettings(newSettings);
+                          }}
+                          style={{
+                            width: '100%',
+                            padding: '0.5rem 0.75rem',
+                            border: '2px solid #e5e7eb',
+                            borderRadius: '8px',
+                            outline: 'none',
+                            fontSize: '0.875rem',
+                            background: 'white',
+                            color: '#111827',
+                            boxSizing: 'border-box'
+                          }}
+                        />
+                      </div>
+                      <div>
+                        <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                          글자 크기 (px)
+                        </label>
+                        <input
+                          type="number"
+                          value={filterStyleSettings.inactive.fontSize}
+                          onChange={(e) => {
+                            const newSettings = { ...filterStyleSettings };
+                            newSettings.inactive.fontSize = parseInt(e.target.value) || 16;
+                            setFilterStyleSettings(newSettings);
+                          }}
+                          style={{
+                            width: '100%',
+                            padding: '0.5rem 0.75rem',
+                            border: '2px solid #e5e7eb',
+                            borderRadius: '8px',
+                            outline: 'none',
+                            fontSize: '0.875rem',
+                            background: 'white',
+                            color: '#111827',
+                            boxSizing: 'border-box'
+                          }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* 필터 미리보기 */}
+                  <div style={{ marginBottom: '2rem' }}>
+                    <h4 style={{ fontSize: '1rem', fontWeight: 'bold', color: '#111827', marginBottom: '1rem' }}>
+                      필터 미리보기
+                    </h4>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', padding: '1rem', background: 'rgba(255, 255, 255, 0.8)', borderRadius: '8px', border: '1px solid #e5e7eb' }}>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                        <span style={{ fontSize: '0.875rem', fontWeight: '600', color: '#374151' }}>활성 상태:</span>
+                        <button style={{
+                          padding: '0.75rem 1rem',
+                          fontSize: `${filterStyleSettings.active.fontSize}px`,
+                          fontWeight: filterStyleSettings.active.fontWeight,
+                          color: filterStyleSettings.active.textColor,
+                          backgroundColor: filterStyleSettings.active.backgroundColor,
+                          border: `${filterStyleSettings.active.borderWidth}px solid ${filterStyleSettings.active.borderColor}`,
+                          borderRadius: '8px',
+                          cursor: 'pointer',
+                          width: 'fit-content'
+                        }}>
+                          공공
+                        </button>
+                      </div>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                        <span style={{ fontSize: '0.875rem', fontWeight: '600', color: '#374151' }}>비활성 상태:</span>
+                        <div style={{ display: 'flex', gap: '0.5rem' }}>
+                          <button style={{
+                            padding: '0.75rem 1rem',
+                            fontSize: `${filterStyleSettings.inactive.fontSize}px`,
+                            fontWeight: filterStyleSettings.inactive.fontWeight,
+                            color: filterStyleSettings.inactive.textColor,
+                            backgroundColor: filterStyleSettings.inactive.backgroundColor,
+                            border: `${filterStyleSettings.inactive.borderWidth}px solid ${filterStyleSettings.inactive.borderColor}`,
+                            borderRadius: '8px',
+                            cursor: 'pointer'
+                          }}>
+                            금융
+                          </button>
+                          <button style={{
+                            padding: '0.75rem 1rem',
+                            fontSize: `${filterStyleSettings.inactive.fontSize}px`,
+                            fontWeight: filterStyleSettings.inactive.fontWeight,
+                            color: filterStyleSettings.inactive.textColor,
+                            backgroundColor: filterStyleSettings.inactive.backgroundColor,
+                            border: `${filterStyleSettings.inactive.borderWidth}px solid ${filterStyleSettings.inactive.borderColor}`,
+                            borderRadius: '8px',
+                            cursor: 'pointer'
+                          }}>
+                            일반 / 제조
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* 저장 버튼 */}
+                  <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.75rem' }}>
+                    <button
+                      onClick={() => saveFilterStyleSettings(filterStyleSettings)}
+                      style={{
+                        padding: '0.75rem 1.5rem',
+                        fontSize: '0.875rem',
+                        fontWeight: '500',
+                        color: 'white',
+                        background: 'linear-gradient(135deg, #f59e0b, #f97316)',
+                        border: 'none',
+                        borderRadius: '12px',
+                        cursor: 'pointer',
+                        transition: 'all 0.2s ease'
+                      }}
+                    >
+                      필터 스타일 저장
+                    </button>
+                  </div>
                 </div>
               )}
 

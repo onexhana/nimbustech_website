@@ -80,6 +80,7 @@ const PortfolioCardList = ({ projects }: Props) => {
             {duplicatedProjects.map((project, index) => (
               <SwiperSlide key={`${project.id}-${index}`}>
                 <PortfolioCard
+                  id={project.id}
                   title={project.title}
                   description={project.description}
                   image={project.image}

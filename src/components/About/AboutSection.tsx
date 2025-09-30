@@ -126,10 +126,10 @@ export default function AboutSection() {
                 lineHeight: '1.4',
                 margin: 0
               }}>
-                <span style={{ fontWeight: 700, display: 'block', fontSize: `${aboutData.fontSize?.mainTitle || 28}px` }}>
+                <span style={{ fontWeight: 700, display: 'block', fontSize: '40px' }}>
                   {aboutData.mainTitle}
                 </span>
-                <span style={{ fontWeight: 400, display: 'block', marginTop: '4px', marginBottom: '30px',fontSize: `${aboutData.fontSize?.subtitle || 19}px` }}>
+                <span style={{ fontWeight: 400, display: 'block', marginTop: '4px', marginBottom: '30px', fontSize: '26px' }}>
                 {aboutData.subtitle}
                 </span>
               </h2>
@@ -154,7 +154,7 @@ export default function AboutSection() {
                     border: activeTab === tab.name ? 'none' : '1px solid #00A3E0',
                     borderRadius: '20px',
                     padding: '8px 16px',
-                    fontSize: `${aboutData.fontSize?.tabName || 14}px`,
+                    fontSize: '18px',
                     fontWeight: '550',
                     cursor: 'pointer',
                     minWidth: '60px'
@@ -191,10 +191,10 @@ export default function AboutSection() {
                   <SwiperSlide key={i}>
                     <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', minHeight: '12vw' }}>
                       <div>
-                        <h3 style={{ fontSize: `${aboutData.fontSize?.cardTitle || 20}px`, fontWeight: '600', color: '#000000', margin: '0 0 20px 0' }}>
+                        <h3 style={{ fontSize: '28px', fontWeight: '600', color: '#000000', margin: '0 0 20px 0' }}>
                           {card.title}
                         </h3>
-                        <div style={{ fontSize: `${aboutData.fontSize?.cardDescription || 16}px`, color: '#000000', fontWeight: '400', lineHeight: '1.5' }}>
+                        <div style={{ fontSize: '20px', color: '#000000', fontWeight: '400', lineHeight: '1.5' }}>
                           {card.description.map((line: string, j: number) => (
                             <p key={j} style={{ margin: '0', marginLeft: '0' }}>{line}</p>
                           ))}
@@ -267,7 +267,7 @@ export default function AboutSection() {
               tabs={aboutData.tabs.map(tab => tab.name)}
               activeTab={activeTab}
               onTabChange={handleTabChange}
-              fontSize={aboutData.fontSize?.tabName}
+              fontSize={18}
               activeColor={aboutData.tabActiveColor}
               inactiveColor={aboutData.tabInactiveColor}
             />
@@ -343,8 +343,8 @@ export default function AboutSection() {
                         backgroundColor={aboutData.cardBackgroundColor || "#ffffff"}
                         width={isMobile ? "380px" : undefined}
                         minHeight={isMobile ? "200px" : "12vw"}
-                        titleFontSize={aboutData.fontSize?.cardTitle}
-                        descriptionFontSize={aboutData.fontSize?.cardDescription}
+                        titleFontSize={28}
+                        descriptionFontSize={20}
                         hoverEffect={aboutData.cardHoverEffect}
                       />
                     </div>
