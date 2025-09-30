@@ -126,10 +126,22 @@ export default function AboutSection() {
                 lineHeight: '1.4',
                 margin: 0
               }}>
-                <span style={{ fontWeight: 700, display: 'block', fontSize: `${aboutData.fontSize?.mainTitle || 28}px` }}>
+                <span style={{ 
+                  fontWeight: 700, 
+                  display: 'block', 
+                  fontSize: `${aboutData.fontSize?.mobileMainTitle || aboutData.fontSize?.mainTitle || 28}px`,
+                  color: aboutData.colors?.mobileMainTitle || aboutData.colors?.mainTitle || '#000000'
+                }}>
                   {aboutData.mainTitle}
                 </span>
-                <span style={{ fontWeight: 400, display: 'block', marginTop: '4px', marginBottom: '30px',fontSize: `${aboutData.fontSize?.subtitle || 19}px` }}>
+                <span style={{ 
+                  fontWeight: 400, 
+                  display: 'block', 
+                  marginTop: '4px', 
+                  marginBottom: '30px',
+                  fontSize: `${aboutData.fontSize?.mobileSubtitle || aboutData.fontSize?.subtitle || 19}px`,
+                  color: aboutData.colors?.mobileSubtitle || aboutData.colors?.subtitle || '#000000'
+                }}>
                 {aboutData.subtitle}
                 </span>
               </h2>
@@ -149,12 +161,14 @@ export default function AboutSection() {
                   key={tab.name}
                   /* 버튼 스타일: 활성 탭은 파란색, 비활성 탭은 흰색 배경 */
                   style={{
-                    backgroundColor: activeTab === tab.name ? '#00A3E0' : 'white',
-                    color: activeTab === tab.name ? 'white' : '#000000',
-                    border: activeTab === tab.name ? 'none' : '1px solid #00A3E0',
+                    backgroundColor: activeTab === tab.name ? 
+                      (aboutData.mobileTabActiveColor || aboutData.tabActiveColor || '#00A3E0') : 'white',
+                    color: activeTab === tab.name ? 'white' : 
+                      (aboutData.mobileTabInactiveColor || aboutData.tabInactiveColor || '#000000'),
+                    border: activeTab === tab.name ? 'none' : `1px solid ${aboutData.mobileTabActiveColor || aboutData.tabActiveColor || '#00A3E0'}`,
                     borderRadius: '20px',
                     padding: '8px 16px',
-                    fontSize: `${aboutData.fontSize?.tabName || 14}px`,
+                    fontSize: `${aboutData.fontSize?.mobileTabName || aboutData.fontSize?.tabName || 14}px`,
                     fontWeight: '550',
                     cursor: 'pointer',
                     minWidth: '60px'
@@ -191,10 +205,20 @@ export default function AboutSection() {
                   <SwiperSlide key={i}>
                     <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', minHeight: '12vw' }}>
                       <div>
-                        <h3 style={{ fontSize: `${aboutData.fontSize?.cardTitle || 20}px`, fontWeight: '600', color: '#000000', margin: '0 0 20px 0' }}>
+                        <h3 style={{ 
+                          fontSize: `${card.fontSize?.title || aboutData.fontSize?.mobileCardTitle || aboutData.fontSize?.cardTitle || 20}px`, 
+                          fontWeight: '600', 
+                          color: aboutData.colors?.mobileCardTitle || aboutData.colors?.cardTitle || aboutData.cardTitleColor || '#000000', 
+                          margin: '0 0 20px 0' 
+                        }}>
                           {card.title}
                         </h3>
-                        <div style={{ fontSize: `${aboutData.fontSize?.cardDescription || 16}px`, color: '#000000', fontWeight: '400', lineHeight: '1.5' }}>
+                        <div style={{ 
+                          fontSize: `${card.fontSize?.description || aboutData.fontSize?.mobileCardDescription || aboutData.fontSize?.cardDescription || 16}px`, 
+                          color: aboutData.colors?.mobileCardDescription || aboutData.colors?.cardDescription || aboutData.cardDescriptionColor || '#000000', 
+                          fontWeight: '400', 
+                          lineHeight: '1.5' 
+                        }}>
                           {card.description.map((line: string, j: number) => (
                             <p key={j} style={{ margin: '0', marginLeft: '0' }}>{line}</p>
                           ))}
@@ -267,9 +291,9 @@ export default function AboutSection() {
               tabs={aboutData.tabs.map(tab => tab.name)}
               activeTab={activeTab}
               onTabChange={handleTabChange}
-              fontSize={aboutData.fontSize?.tabName}
-              activeColor={aboutData.tabActiveColor}
-              inactiveColor={aboutData.tabInactiveColor}
+              fontSize={aboutData.fontSize?.desktopTabName || aboutData.fontSize?.tabName}
+              activeColor={aboutData.desktopTabActiveColor || aboutData.tabActiveColor}
+              inactiveColor={aboutData.desktopTabInactiveColor || aboutData.tabInactiveColor}
             />
 
             {/* ======================================== */}
@@ -338,13 +362,13 @@ export default function AboutSection() {
                         linkAsButton={activeTab === '솔루션'}
                         linkText={activeTab === '솔루션' ? "자세히 보기" : undefined}
                         borderRadius="35px"
-                        titleColor={aboutData.cardTitleColor || "#000000"}
-                        descriptionColor={aboutData.cardDescriptionColor || "#6B7280"}
+                        titleColor={aboutData.colors?.desktopCardTitle || aboutData.colors?.cardTitle || aboutData.cardTitleColor || "#000000"}
+                        descriptionColor={aboutData.colors?.desktopCardDescription || aboutData.colors?.cardDescription || aboutData.cardDescriptionColor || "#6B7280"}
                         backgroundColor={aboutData.cardBackgroundColor || "#ffffff"}
                         width={isMobile ? "380px" : undefined}
                         minHeight={isMobile ? "200px" : "12vw"}
-                        titleFontSize={aboutData.fontSize?.cardTitle}
-                        descriptionFontSize={aboutData.fontSize?.cardDescription}
+                        titleFontSize={card.fontSize?.title || aboutData.fontSize?.desktopCardTitle || aboutData.fontSize?.cardTitle}
+                        descriptionFontSize={card.fontSize?.description || aboutData.fontSize?.desktopCardDescription || aboutData.fontSize?.cardDescription}
                         hoverEffect={aboutData.cardHoverEffect}
                       />
                     </div>
