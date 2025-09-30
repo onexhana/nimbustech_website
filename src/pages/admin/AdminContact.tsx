@@ -1526,7 +1526,7 @@ export default function AdminContact() {
                         disabled={!isEditing}
                         style={{
                           width: '100%',
-                          maxWidth: '280px',
+                          maxWidth: '180px',
                           padding: '0.3rem 0.5rem',
                           border: '1px solid #e5e7eb',
                           borderRadius: '4px',
@@ -1549,7 +1549,7 @@ export default function AdminContact() {
                         disabled={!isEditing}
                         style={{
                           width: '100%',
-                          maxWidth: '280px',
+                          maxWidth: '180px',
                           padding: '0.3rem 0.5rem',
                           border: '1px solid #e5e7eb',
                           borderRadius: '4px',
