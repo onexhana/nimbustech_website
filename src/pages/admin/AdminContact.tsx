@@ -8,6 +8,7 @@ export default function AdminContact() {
   const [contactData, setContactData] = useState<ContactData | null>(null);
   const [isEditing, setIsEditing] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState(0); // 0: 데스크톱, 1: 모바일
 
   useEffect(() => {
     const loadContactData = async () => {
@@ -249,7 +250,7 @@ export default function AdminContact() {
               padding: '1.5rem',
               transition: 'all 0.3s ease'
             }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.5rem' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
                 <div style={{
                   width: '32px',
                   height: '32px',
@@ -267,88 +268,281 @@ export default function AdminContact() {
                   가치 섹션 관리
                 </h3>
               </div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                {contactData.sections.map((section, index) => (
-                  <div key={index} style={{
-                    background: 'rgba(255, 255, 255, 0.6)',
-                    backdropFilter: 'blur(10px)',
-                    border: '1px solid rgba(229, 231, 235, 0.5)',
-                    borderRadius: '12px',
-                    padding: '1rem',
-                    transition: 'all 0.3s ease'
-                  }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1rem' }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                        <div style={{
-                          width: '32px',
-                          height: '32px',
-                          background: 'linear-gradient(135deg, #f59e0b, #f97316)',
-                          borderRadius: '8px',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center'
-                        }}>
-                          <span style={{ color: 'white', fontWeight: 'bold', fontSize: '0.875rem' }}>{index + 1}</span>
-                        </div>
-                        <h4 style={{ fontSize: '1.125rem', fontWeight: 'bold', color: '#111827', margin: 0 }}>
-                          {section.title} 섹션
-                        </h4>
-                      </div>
-                    </div>
-                    
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                      <div>
-                        <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
-                          제목
-                        </label>
-                        <input
-                          type="text"
-                          value={section.title}
-                          onChange={(e) => updateSection(index, 'title', e.target.value)}
-                          disabled={!isEditing}
-                          style={{
-                            width: '100%',
-                            maxWidth: '280px',
-                            padding: '0.3rem 0.5rem',
-                            border: '1px solid #e5e7eb',
-                            borderRadius: '4px',
-                            outline: 'none',
-                            fontSize: '0.75rem',
-                            transition: 'all 0.2s ease',
-                            background: !isEditing ? '#f9fafb' : 'white',
-                            color: !isEditing ? '#6b7280' : '#111827'
-                          }}
-                        />
-                      </div>
-                      <div>
-                        <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
-                          설명 (줄바꿈으로 구분)
-                        </label>
-                        <textarea
-                          value={section.description}
-                          onChange={(e) => updateSection(index, 'description', e.target.value)}
-                          disabled={!isEditing}
-                          rows={3}
-                          style={{
-                            width: '100%',
-                            maxWidth: '280px',
-                            padding: '0.3rem 0.5rem',
-                            border: '1px solid #e5e7eb',
-                            borderRadius: '4px',
-                            outline: 'none',
-                            fontSize: '0.75rem',
-                            transition: 'all 0.2s ease',
-                            background: !isEditing ? '#f9fafb' : 'white',
-                            color: !isEditing ? '#6b7280' : '#111827',
-                            resize: 'none',
-                            minHeight: '40px'
-                          }}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                ))}
+              
+              {/* 데스크톱/모바일 탭 */}
+              <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1.5rem' }}>
+                <button
+                  onClick={() => setActiveTab(0)}
+                  style={{
+                    padding: '0.5rem 1rem',
+                    borderRadius: '6px',
+                    border: 'none',
+                    background: activeTab === 0 ? '#8b5cf6' : '#f3f4f6',
+                    color: activeTab === 0 ? 'white' : '#6b7280',
+                    fontSize: '0.875rem',
+                    fontWeight: '500',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease'
+                  }}
+                >
+                  데스크톱
+                </button>
+                <button
+                  onClick={() => setActiveTab(1)}
+                  style={{
+                    padding: '0.5rem 1rem',
+                    borderRadius: '6px',
+                    border: 'none',
+                    background: activeTab === 1 ? '#8b5cf6' : '#f3f4f6',
+                    color: activeTab === 1 ? 'white' : '#6b7280',
+                    fontSize: '0.875rem',
+                    fontWeight: '500',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease'
+                  }}
+                >
+                  모바일
+                </button>
               </div>
+              {/* 데스크톱 버전 */}
+              {activeTab === 0 && (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                  <div style={{ 
+                    padding: '1rem', 
+                    background: 'rgba(59, 130, 246, 0.05)', 
+                    borderRadius: '8px', 
+                    border: '1px solid rgba(59, 130, 246, 0.1)',
+                    marginBottom: '1rem'
+                  }}>
+                    <h4 style={{ fontSize: '1rem', fontWeight: '600', color: '#1e40af', margin: '0 0 1rem 0' }}>
+                      데스크톱 버전
+                    </h4>
+                  </div>
+                  
+                  {contactData.sections.map((section, index) => (
+                    <div key={index} style={{
+                      background: 'rgba(255, 255, 255, 0.6)',
+                      backdropFilter: 'blur(10px)',
+                      border: '1px solid rgba(229, 231, 235, 0.5)',
+                      borderRadius: '12px',
+                      padding: '1rem',
+                      transition: 'all 0.3s ease'
+                    }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1rem' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                          <div style={{
+                            width: '32px',
+                            height: '32px',
+                            background: 'linear-gradient(135deg, #f59e0b, #f97316)',
+                            borderRadius: '8px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center'
+                          }}>
+                            <span style={{ color: 'white', fontWeight: 'bold', fontSize: '0.875rem' }}>{index + 1}</span>
+                          </div>
+                          <h4 style={{ fontSize: '1.125rem', fontWeight: 'bold', color: '#111827', margin: 0 }}>
+                            {section.title} 섹션 (데스크톱)
+                          </h4>
+                        </div>
+                      </div>
+                      
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                        <div>
+                          <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                            제목
+                          </label>
+                          <input
+                            type="text"
+                            value={section.desktop?.title || section.title}
+                            onChange={(e) => {
+                              if (!contactData) return;
+                              const newSections = [...contactData.sections];
+                              newSections[index] = { 
+                                ...newSections[index], 
+                                desktop: { 
+                                  ...newSections[index].desktop, 
+                                  title: e.target.value 
+                                }
+                              };
+                              setContactData({ ...contactData, sections: newSections });
+                            }}
+                            disabled={!isEditing}
+                            style={{
+                              width: '100%',
+                              maxWidth: '280px',
+                              padding: '0.3rem 0.5rem',
+                              border: '1px solid #e5e7eb',
+                              borderRadius: '4px',
+                              outline: 'none',
+                              fontSize: '0.75rem',
+                              transition: 'all 0.2s ease',
+                              background: !isEditing ? '#f9fafb' : 'white',
+                              color: !isEditing ? '#6b7280' : '#111827'
+                            }}
+                          />
+                        </div>
+                        <div>
+                          <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                            설명 (줄바꿈으로 구분)
+                          </label>
+                          <textarea
+                            value={section.desktop?.description || section.description}
+                            onChange={(e) => {
+                              if (!contactData) return;
+                              const newSections = [...contactData.sections];
+                              newSections[index] = { 
+                                ...newSections[index], 
+                                desktop: { 
+                                  ...newSections[index].desktop, 
+                                  description: e.target.value 
+                                }
+                              };
+                              setContactData({ ...contactData, sections: newSections });
+                            }}
+                            disabled={!isEditing}
+                            rows={3}
+                            style={{
+                              width: '100%',
+                              maxWidth: '280px',
+                              padding: '0.3rem 0.5rem',
+                              border: '1px solid #e5e7eb',
+                              borderRadius: '4px',
+                              outline: 'none',
+                              fontSize: '0.75rem',
+                              transition: 'all 0.2s ease',
+                              background: !isEditing ? '#f9fafb' : 'white',
+                              color: !isEditing ? '#6b7280' : '#111827',
+                              resize: 'none',
+                              minHeight: '40px'
+                            }}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {/* 모바일 버전 */}
+              {activeTab === 1 && (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                  <div style={{ 
+                    padding: '1rem', 
+                    background: 'rgba(34, 197, 94, 0.05)', 
+                    borderRadius: '8px', 
+                    border: '1px solid rgba(34, 197, 94, 0.1)',
+                    marginBottom: '1rem'
+                  }}>
+                    <h4 style={{ fontSize: '1rem', fontWeight: '600', color: '#15803d', margin: '0 0 1rem 0' }}>
+                      모바일 버전
+                    </h4>
+                  </div>
+                  
+                  {contactData.sections.map((section, index) => (
+                    <div key={index} style={{
+                      background: 'rgba(255, 255, 255, 0.6)',
+                      backdropFilter: 'blur(10px)',
+                      border: '1px solid rgba(229, 231, 235, 0.5)',
+                      borderRadius: '12px',
+                      padding: '1rem',
+                      transition: 'all 0.3s ease'
+                    }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1rem' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                          <div style={{
+                            width: '32px',
+                            height: '32px',
+                            background: 'linear-gradient(135deg, #10b981, #14b8a6)',
+                            borderRadius: '8px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center'
+                          }}>
+                            <span style={{ color: 'white', fontWeight: 'bold', fontSize: '0.875rem' }}>{index + 1}</span>
+                          </div>
+                          <h4 style={{ fontSize: '1.125rem', fontWeight: 'bold', color: '#111827', margin: 0 }}>
+                            {section.title} 섹션 (모바일)
+                          </h4>
+                        </div>
+                      </div>
+                      
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                        <div>
+                          <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                            제목
+                          </label>
+                          <input
+                            type="text"
+                            value={section.mobile?.title || section.title}
+                            onChange={(e) => {
+                              if (!contactData) return;
+                              const newSections = [...contactData.sections];
+                              newSections[index] = { 
+                                ...newSections[index], 
+                                mobile: { 
+                                  ...newSections[index].mobile, 
+                                  title: e.target.value 
+                                }
+                              };
+                              setContactData({ ...contactData, sections: newSections });
+                            }}
+                            disabled={!isEditing}
+                            style={{
+                              width: '100%',
+                              maxWidth: '280px',
+                              padding: '0.3rem 0.5rem',
+                              border: '1px solid #e5e7eb',
+                              borderRadius: '4px',
+                              outline: 'none',
+                              fontSize: '0.75rem',
+                              transition: 'all 0.2s ease',
+                              background: !isEditing ? '#f9fafb' : 'white',
+                              color: !isEditing ? '#6b7280' : '#111827'
+                            }}
+                          />
+                        </div>
+                        <div>
+                          <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                            설명 (줄바꿈으로 구분)
+                          </label>
+                          <textarea
+                            value={section.mobile?.description || section.description}
+                            onChange={(e) => {
+                              if (!contactData) return;
+                              const newSections = [...contactData.sections];
+                              newSections[index] = { 
+                                ...newSections[index], 
+                                mobile: { 
+                                  ...newSections[index].mobile, 
+                                  description: e.target.value 
+                                }
+                              };
+                              setContactData({ ...contactData, sections: newSections });
+                            }}
+                            disabled={!isEditing}
+                            rows={3}
+                            style={{
+                              width: '100%',
+                              maxWidth: '280px',
+                              padding: '0.3rem 0.5rem',
+                              border: '1px solid #e5e7eb',
+                              borderRadius: '4px',
+                              outline: 'none',
+                              fontSize: '0.75rem',
+                              transition: 'all 0.2s ease',
+                              background: !isEditing ? '#f9fafb' : 'white',
+                              color: !isEditing ? '#6b7280' : '#111827',
+                              resize: 'none',
+                              minHeight: '40px'
+                            }}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
 

@@ -14,6 +14,10 @@ export default function AdminAbout() {
   const [isEditing, setIsEditing] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [activeTab, setActiveTab] = useState(0);
+  const [mainTitleTab, setMainTitleTab] = useState(0); // 메인 타이틀 관리용 탭
+  const [tabNavTab, setTabNavTab] = useState(0); // 탭 네비게이션 관리용 탭
+  const [cardStyleTab, setCardStyleTab] = useState(0); // 카드 스타일 관리용 탭
+  const [tabCardTab, setTabCardTab] = useState(0); // 탭별 카드 관리용 탭
 
   useEffect(() => {
     const loadAboutData = async () => {
@@ -365,7 +369,7 @@ export default function AdminAbout() {
             </div>
           </div>
 
-          {/* 메인 타이틀 관리 (모바일 전용) */}
+          {/* 메인 타이틀 관리 */}
           <div>
             <div style={{
               background: 'rgba(255, 255, 255, 0.8)',
@@ -391,121 +395,337 @@ export default function AdminAbout() {
                   </svg>
                 </div>
                 <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#111827', margin: 0 }}>
-                  메인 타이틀 관리 (모바일 전용)
+                  메인 타이틀 관리
                 </h3>
               </div>
               
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-                {/* 메인 제목 */}
-                <div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
-                    <label style={{ fontSize: '0.875rem', fontWeight: '600', color: '#374151' }}>
-                      메인 제목
-                    </label>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                      <span style={{ fontSize: '0.75rem', color: '#6b7280' }}>크기:</span>
-                      <input
-                        type="number"
-                        min="12"
-                        max="48"
-                        value={aboutData.fontSize?.mainTitle || 30}
-                        onChange={(e) => aboutData && setAboutData({
-                          ...aboutData, 
-                          fontSize: { ...aboutData.fontSize, mainTitle: parseInt(e.target.value) || 30 }
-                        })}
-                        disabled={!isEditing}
-                        style={{
-                          width: '60px',
-                          padding: '0.25rem 0.5rem',
-                          border: '1px solid #e5e7eb',
-                          borderRadius: '4px',
-                          outline: 'none',
-                          fontSize: '0.75rem',
-                          textAlign: 'center',
-                          background: !isEditing ? '#f9fafb' : 'white',
-                          color: !isEditing ? '#6b7280' : '#111827'
-                        }}
-                      />
-                      <span style={{ fontSize: '0.75rem', color: '#6b7280' }}>px</span>
-                    </div>
-                  </div>
-                  <input
-                    type="text"
-                    value={aboutData.mainTitle}
-                    onChange={(e) => aboutData && setAboutData({
-                      ...aboutData, 
-                      mainTitle: e.target.value
-                    })}
-                    disabled={!isEditing}
-                    style={{
-                      width: '100%',
-                      padding: '0.75rem',
-                      border: '1px solid #e5e7eb',
-                      borderRadius: '8px',
-                      outline: 'none',
-                      fontSize: `${aboutData.fontSize?.mainTitle || 30}px`,
-                      transition: 'all 0.2s ease',
-                      background: !isEditing ? '#f9fafb' : 'white',
-                      color: !isEditing ? '#6b7280' : '#111827'
-                    }}
-                  />
-                </div>
-
-                {/* 부제목 */}
-                <div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
-                    <label style={{ fontSize: '0.875rem', fontWeight: '600', color: '#374151' }}>
-                      부제목
-                    </label>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                      <span style={{ fontSize: '0.75rem', color: '#6b7280' }}>크기:</span>
-                      <input
-                        type="number"
-                        min="8"
-                        max="32"
-                        value={aboutData.fontSize?.subtitle || 18}
-                        onChange={(e) => aboutData && setAboutData({
-                          ...aboutData, 
-                          fontSize: { ...aboutData.fontSize, subtitle: parseInt(e.target.value) || 18 }
-                        })}
-                        disabled={!isEditing}
-                        style={{
-                          width: '60px',
-                          padding: '0.25rem 0.5rem',
-                          border: '1px solid #e5e7eb',
-                          borderRadius: '4px',
-                          outline: 'none',
-                          fontSize: '0.75rem',
-                          textAlign: 'center',
-                          background: !isEditing ? '#f9fafb' : 'white',
-                          color: !isEditing ? '#6b7280' : '#111827'
-                        }}
-                      />
-                      <span style={{ fontSize: '0.75rem', color: '#6b7280' }}>px</span>
-                    </div>
-                  </div>
-                  <input
-                    type="text"
-                    value={aboutData.subtitle}
-                    onChange={(e) => aboutData && setAboutData({
-                      ...aboutData, 
-                      subtitle: e.target.value
-                    })}
-                    disabled={!isEditing}
-                    style={{
-                      width: '100%',
-                      padding: '0.75rem',
-                      border: '1px solid #e5e7eb',
-                      borderRadius: '8px',
-                      outline: 'none',
-                      fontSize: `${aboutData.fontSize?.subtitle || 18}px`,
-                      transition: 'all 0.2s ease',
-                      background: !isEditing ? '#f9fafb' : 'white',
-                      color: !isEditing ? '#6b7280' : '#111827'
-                    }}
-                  />
-                </div>
+              {/* 데스크톱/모바일 탭 */}
+              <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1.5rem' }}>
+                <button
+                  onClick={() => setMainTitleTab(0)}
+                  style={{
+                    padding: '0.5rem 1rem',
+                    borderRadius: '6px',
+                    border: 'none',
+                    background: mainTitleTab === 0 ? '#3b82f6' : '#f3f4f6',
+                    color: mainTitleTab === 0 ? 'white' : '#6b7280',
+                    fontSize: '0.875rem',
+                    fontWeight: '500',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease'
+                  }}
+                >
+                  데스크톱
+                </button>
+                <button
+                  onClick={() => setMainTitleTab(1)}
+                  style={{
+                    padding: '0.5rem 1rem',
+                    borderRadius: '6px',
+                    border: 'none',
+                    background: mainTitleTab === 1 ? '#3b82f6' : '#f3f4f6',
+                    color: mainTitleTab === 1 ? 'white' : '#6b7280',
+                    fontSize: '0.875rem',
+                    fontWeight: '500',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease'
+                  }}
+                >
+                  모바일
+                </button>
               </div>
+              
+              {/* 데스크톱 버전 */}
+              {mainTitleTab === 0 && (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                  <div style={{ 
+                    padding: '1rem', 
+                    background: 'rgba(59, 130, 246, 0.05)', 
+                    borderRadius: '8px', 
+                    border: '1px solid rgba(59, 130, 246, 0.1)' 
+                  }}>
+                    <h4 style={{ fontSize: '1rem', fontWeight: '600', color: '#1e40af', margin: '0 0 1rem 0' }}>
+                      데스크톱 버전
+                    </h4>
+                    
+                    {/* 데스크톱 메인 제목 */}
+                    <div style={{ marginBottom: '1rem' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
+                        <label style={{ fontSize: '0.875rem', fontWeight: '600', color: '#374151' }}>
+                          메인 제목
+                        </label>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                          <span style={{ fontSize: '0.75rem', color: '#6b7280' }}>크기:</span>
+                          <input
+                            type="number"
+                            min="12"
+                            max="48"
+                            value={aboutData.fontSize?.desktop?.mainTitle || 30}
+                            onChange={(e) => aboutData && setAboutData({
+                              ...aboutData, 
+                              fontSize: { 
+                                ...aboutData.fontSize, 
+                                desktop: { 
+                                  ...aboutData.fontSize?.desktop, 
+                                  mainTitle: parseInt(e.target.value) || 30 
+                                }
+                              }
+                            })}
+                            disabled={!isEditing}
+                            style={{
+                              width: '60px',
+                              padding: '0.25rem 0.5rem',
+                              border: '1px solid #e5e7eb',
+                              borderRadius: '4px',
+                              outline: 'none',
+                              fontSize: '0.75rem',
+                              textAlign: 'center',
+                              background: !isEditing ? '#f9fafb' : 'white',
+                              color: !isEditing ? '#6b7280' : '#111827'
+                            }}
+                          />
+                          <span style={{ fontSize: '0.75rem', color: '#6b7280' }}>px</span>
+                        </div>
+                      </div>
+                      <input
+                        type="text"
+                        value={aboutData.desktop?.mainTitle || aboutData.mainTitle}
+                        onChange={(e) => aboutData && setAboutData({
+                          ...aboutData, 
+                          desktop: { 
+                            ...aboutData.desktop, 
+                            mainTitle: e.target.value 
+                          }
+                        })}
+                        disabled={!isEditing}
+                        style={{
+                          width: '60%',
+                          maxWidth: '1500px',
+                          padding: '0.75rem',
+                          border: '1px solid #e5e7eb',
+                          borderRadius: '8px',
+                          outline: 'none',
+                          fontSize: `${aboutData.fontSize?.desktop?.mainTitle || 30}px`,
+                          transition: 'all 0.2s ease',
+                          background: !isEditing ? '#f9fafb' : 'white',
+                          color: !isEditing ? '#6b7280' : '#111827'
+                        }}
+                      />
+                    </div>
+
+                    {/* 데스크톱 부제목 */}
+                    <div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
+                        <label style={{ fontSize: '0.875rem', fontWeight: '600', color: '#374151' }}>
+                          부제목
+                        </label>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                          <span style={{ fontSize: '0.75rem', color: '#6b7280' }}>크기:</span>
+                          <input
+                            type="number"
+                            min="8"
+                            max="32"
+                            value={aboutData.fontSize?.desktop?.subtitle || 18}
+                            onChange={(e) => aboutData && setAboutData({
+                              ...aboutData, 
+                              fontSize: { 
+                                ...aboutData.fontSize, 
+                                desktop: { 
+                                  ...aboutData.fontSize?.desktop, 
+                                  subtitle: parseInt(e.target.value) || 18 
+                                }
+                              }
+                            })}
+                            disabled={!isEditing}
+                            style={{
+                              width: '60px',
+                              padding: '0.25rem 0.5rem',
+                              border: '1px solid #e5e7eb',
+                              borderRadius: '4px',
+                              outline: 'none',
+                              fontSize: '0.75rem',
+                              textAlign: 'center',
+                              background: !isEditing ? '#f9fafb' : 'white',
+                              color: !isEditing ? '#6b7280' : '#111827'
+                            }}
+                          />
+                          <span style={{ fontSize: '0.75rem', color: '#6b7280' }}>px</span>
+                        </div>
+                      </div>
+                      <input
+                        type="text"
+                        value={aboutData.desktop?.subtitle || aboutData.subtitle}
+                        onChange={(e) => aboutData && setAboutData({
+                          ...aboutData, 
+                          desktop: { 
+                            ...aboutData.desktop, 
+                            subtitle: e.target.value 
+                          }
+                        })}
+                        disabled={!isEditing}
+                        style={{
+                          width: '60%',
+                          maxWidth: '1500px',
+                          padding: '0.75rem',
+                          border: '1px solid #e5e7eb',
+                          borderRadius: '8px',
+                          outline: 'none',
+                          fontSize: `${aboutData.fontSize?.desktop?.subtitle || 18}px`,
+                          transition: 'all 0.2s ease',
+                          background: !isEditing ? '#f9fafb' : 'white',
+                          color: !isEditing ? '#6b7280' : '#111827'
+                        }}
+                      />
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* 모바일 버전 */}
+              {mainTitleTab === 1 && (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                  <div style={{ 
+                    padding: '1rem', 
+                    background: 'rgba(34, 197, 94, 0.05)', 
+                    borderRadius: '8px', 
+                    border: '1px solid rgba(34, 197, 94, 0.1)' 
+                  }}>
+                    <h4 style={{ fontSize: '1rem', fontWeight: '600', color: '#15803d', margin: '0 0 1rem 0' }}>
+                      모바일 버전
+                    </h4>
+                    
+                    {/* 모바일 메인 제목 */}
+                    <div style={{ marginBottom: '1rem' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
+                        <label style={{ fontSize: '0.875rem', fontWeight: '600', color: '#374151' }}>
+                          메인 제목
+                        </label>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                          <span style={{ fontSize: '0.75rem', color: '#6b7280' }}>크기:</span>
+                          <input
+                            type="number"
+                            min="12"
+                            max="48"
+                            value={aboutData.fontSize?.mobile?.mainTitle || 30}
+                            onChange={(e) => aboutData && setAboutData({
+                              ...aboutData, 
+                              fontSize: { 
+                                ...aboutData.fontSize, 
+                                mobile: { 
+                                  ...aboutData.fontSize?.mobile, 
+                                  mainTitle: parseInt(e.target.value) || 30 
+                                }
+                              }
+                            })}
+                            disabled={!isEditing}
+                            style={{
+                              width: '60px',
+                              padding: '0.25rem 0.5rem',
+                              border: '1px solid #e5e7eb',
+                              borderRadius: '4px',
+                              outline: 'none',
+                              fontSize: '0.75rem',
+                              textAlign: 'center',
+                              background: !isEditing ? '#f9fafb' : 'white',
+                              color: !isEditing ? '#6b7280' : '#111827'
+                            }}
+                          />
+                          <span style={{ fontSize: '0.75rem', color: '#6b7280' }}>px</span>
+                        </div>
+                      </div>
+                      <input
+                        type="text"
+                        value={aboutData.mobile?.mainTitle || aboutData.mainTitle}
+                        onChange={(e) => aboutData && setAboutData({
+                          ...aboutData, 
+                          mobile: { 
+                            ...aboutData.mobile, 
+                            mainTitle: e.target.value 
+                          }
+                        })}
+                        disabled={!isEditing}
+                        style={{
+                          width: '60%',
+                          maxWidth: '1500px',
+                          padding: '0.75rem',
+                          border: '1px solid #e5e7eb',
+                          borderRadius: '8px',
+                          outline: 'none',
+                          fontSize: `${aboutData.fontSize?.mobile?.mainTitle || 30}px`,
+                          transition: 'all 0.2s ease',
+                          background: !isEditing ? '#f9fafb' : 'white',
+                          color: !isEditing ? '#6b7280' : '#111827'
+                        }}
+                      />
+                    </div>
+
+                    {/* 모바일 부제목 */}
+                    <div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
+                        <label style={{ fontSize: '0.875rem', fontWeight: '600', color: '#374151' }}>
+                          부제목
+                        </label>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                          <span style={{ fontSize: '0.75rem', color: '#6b7280' }}>크기:</span>
+                          <input
+                            type="number"
+                            min="8"
+                            max="32"
+                            value={aboutData.fontSize?.mobile?.subtitle || 18}
+                            onChange={(e) => aboutData && setAboutData({
+                              ...aboutData, 
+                              fontSize: { 
+                                ...aboutData.fontSize, 
+                                mobile: { 
+                                  ...aboutData.fontSize?.mobile, 
+                                  subtitle: parseInt(e.target.value) || 18 
+                                }
+                              }
+                            })}
+                            disabled={!isEditing}
+                            style={{
+                              width: '60px',
+                              padding: '0.25rem 0.5rem',
+                              border: '1px solid #e5e7eb',
+                              borderRadius: '4px',
+                              outline: 'none',
+                              fontSize: '0.75rem',
+                              textAlign: 'center',
+                              background: !isEditing ? '#f9fafb' : 'white',
+                              color: !isEditing ? '#6b7280' : '#111827'
+                            }}
+                          />
+                          <span style={{ fontSize: '0.75rem', color: '#6b7280' }}>px</span>
+                        </div>
+                      </div>
+                      <input
+                        type="text"
+                        value={aboutData.mobile?.subtitle || aboutData.subtitle}
+                        onChange={(e) => aboutData && setAboutData({
+                          ...aboutData, 
+                          mobile: { 
+                            ...aboutData.mobile, 
+                            subtitle: e.target.value 
+                          }
+                        })}
+                        disabled={!isEditing}
+                        style={{
+                          width: '60%',
+                          maxWidth: '1500px',
+                          padding: '0.75rem',
+                          border: '1px solid #e5e7eb',
+                          borderRadius: '8px',
+                          outline: 'none',
+                          fontSize: `${aboutData.fontSize?.mobile?.subtitle || 18}px`,
+                          transition: 'all 0.2s ease',
+                          background: !isEditing ? '#f9fafb' : 'white',
+                          color: !isEditing ? '#6b7280' : '#111827'
+                        }}
+                      />
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
 
@@ -539,152 +759,285 @@ export default function AdminAbout() {
                 </h3>
               </div>
               
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-                {/* 탭 이름 편집 */}
-                <div>
-                  <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.75rem' }}>
-                    탭 이름 편집
-                  </label>
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1rem' }}>
-                    {aboutData.tabs.map((tab, index) => (
-                      <div key={index}>
-                        <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: '500', color: '#6b7280', marginBottom: '0.25rem' }}>
-                          {index + 1}번째 탭
-                        </label>
-                        <input
-                          type="text"
-                          value={tab.name}
-                          onChange={(e) => {
-                            if (!aboutData) return;
-                            const newTabs = [...aboutData.tabs];
-                            newTabs[index].name = e.target.value;
-                            setAboutData({...aboutData, tabs: newTabs});
-                          }}
-                          disabled={!isEditing}
-                          style={{
-                            width: '100%',
-                            padding: '0.5rem',
-                            border: '1px solid #e5e7eb',
-                            borderRadius: '6px',
-                            outline: 'none',
-                            fontSize: '0.875rem',
-                            transition: 'all 0.2s ease',
-                            background: !isEditing ? '#f9fafb' : 'white',
-                            color: !isEditing ? '#6b7280' : '#111827'
-                          }}
-                        />
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* 탭 스타일 설정 */}
-                <div>
-                  <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.75rem' }}>
-                    탭 스타일 설정
-                  </label>
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem' }}>
-                    <div>
-                      <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: '500', color: '#6b7280', marginBottom: '0.5rem' }}>
-                        탭 글씨 크기
-                      </label>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                        <input
-                          type="number"
-                          min="10"
-                          max="24"
-                          value={aboutData.fontSize?.tabName || 16}
-                          onChange={(e) => aboutData && setAboutData({
-                            ...aboutData, 
-                            fontSize: { ...aboutData.fontSize, tabName: parseInt(e.target.value) || 16 }
-                          })}
-                          disabled={!isEditing}
-                          style={{
-                            width: '80px',
-                            padding: '0.3rem 0.5rem',
-                            border: '1px solid #e5e7eb',
-                            borderRadius: '4px',
-                            outline: 'none',
-                            fontSize: '0.75rem',
-                            textAlign: 'center',
-                            background: !isEditing ? '#f9fafb' : 'white',
-                            color: !isEditing ? '#6b7280' : '#111827'
-                          }}
-                        />
-                        <span style={{ 
-                          fontSize: '0.75rem', 
-                          fontWeight: '600', 
-                          color: '#374151'
-                        }}>
-                          px
-                        </span>
-                      </div>
-                    </div>
-                    <div>
-                      <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: '500', color: '#6b7280', marginBottom: '0.5rem' }}>
-                        활성 탭 색상
-                      </label>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                        <input
-                          type="color"
-                          value={aboutData.tabActiveColor || '#00A3E0'}
-                          onChange={(e) => aboutData && setAboutData({
-                            ...aboutData, 
-                            tabActiveColor: e.target.value
-                          })}
-                          disabled={!isEditing}
-                          style={{
-                            width: '40px',
-                            height: '32px',
-                            border: '1px solid #e5e7eb',
-                            borderRadius: '4px',
-                            outline: 'none',
-                            cursor: isEditing ? 'pointer' : 'not-allowed'
-                          }}
-                        />
-                        <span style={{ 
-                          fontSize: '0.75rem', 
-                          fontWeight: '600', 
-                          color: '#374151'
-                        }}>
-                          {aboutData.tabActiveColor || '#00A3E0'}
-                        </span>
-                      </div>
-                    </div>
-                    <div>
-                      <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: '500', color: '#6b7280', marginBottom: '0.5rem' }}>
-                        비활성 탭 색상
-                      </label>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                        <input
-                          type="color"
-                          value={aboutData.tabInactiveColor || '#374151'}
-                          onChange={(e) => aboutData && setAboutData({
-                            ...aboutData, 
-                            tabInactiveColor: e.target.value
-                          })}
-                          disabled={!isEditing}
-                          style={{
-                            width: '40px',
-                            height: '32px',
-                            border: '1px solid #e5e7eb',
-                            borderRadius: '4px',
-                            outline: 'none',
-                            cursor: isEditing ? 'pointer' : 'not-allowed'
-                          }}
-                        />
-                        <span style={{ 
-                          fontSize: '0.75rem', 
-                          fontWeight: '600', 
-                          color: '#374151'
-                        }}>
-                          {aboutData.tabInactiveColor || '#374151'}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+              {/* 데스크톱/모바일 탭 */}
+              <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1.5rem' }}>
+                <button
+                  onClick={() => setTabNavTab(0)}
+                  style={{
+                    padding: '0.5rem 1rem',
+                    borderRadius: '6px',
+                    border: 'none',
+                    background: tabNavTab === 0 ? '#8b5cf6' : '#f3f4f6',
+                    color: tabNavTab === 0 ? 'white' : '#6b7280',
+                    fontSize: '0.875rem',
+                    fontWeight: '500',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease'
+                  }}
+                >
+                  데스크톱
+                </button>
+                <button
+                  onClick={() => setTabNavTab(1)}
+                  style={{
+                    padding: '0.5rem 1rem',
+                    borderRadius: '6px',
+                    border: 'none',
+                    background: tabNavTab === 1 ? '#8b5cf6' : '#f3f4f6',
+                    color: tabNavTab === 1 ? 'white' : '#6b7280',
+                    fontSize: '0.875rem',
+                    fontWeight: '500',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease'
+                  }}
+                >
+                  모바일
+                </button>
               </div>
+              
+              {/* 데스크톱 버전 */}
+              {tabNavTab === 0 && (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                  <div style={{ 
+                    padding: '1rem', 
+                    background: 'rgba(59, 130, 246, 0.05)', 
+                    borderRadius: '8px', 
+                    border: '1px solid rgba(59, 130, 246, 0.1)',
+                    marginBottom: '1rem'
+                  }}>
+                    <h4 style={{ fontSize: '1rem', fontWeight: '600', color: '#1e40af', margin: '0 0 1rem 0' }}>
+                      데스크톱 버전
+                    </h4>
+                  </div>
+                  
+                  {/* 탭 이름 편집 */}
+                  <div>
+                    <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.75rem' }}>
+                      탭 이름 편집 (데스크톱)
+                    </label>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1rem' }}>
+                      {aboutData.tabs.map((tab, index) => (
+                        <div key={index}>
+                          <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: '500', color: '#6b7280', marginBottom: '0.25rem' }}>
+                            {index + 1}번째 탭
+                          </label>
+                          <input
+                            type="text"
+                            value={tab.desktop?.name || tab.name}
+                            onChange={(e) => {
+                              if (!aboutData) return;
+                              const newTabs = [...aboutData.tabs];
+                              newTabs[index] = {
+                                ...newTabs[index],
+                                desktop: {
+                                  ...newTabs[index].desktop,
+                                  name: e.target.value
+                                }
+                              };
+                              setAboutData({...aboutData, tabs: newTabs});
+                            }}
+                            disabled={!isEditing}
+                            style={{
+                              width: '70%',
+                              maxWidth: '200px',
+                              padding: '0.5rem',
+                              border: '1px solid #e5e7eb',
+                              borderRadius: '6px',
+                              outline: 'none',
+                              fontSize: '0.875rem',
+                              transition: 'all 0.2s ease',
+                              background: !isEditing ? '#f9fafb' : 'white',
+                              color: !isEditing ? '#6b7280' : '#111827'
+                            }}
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* 모바일 버전 */}
+              {mainTitleTab === 1 && (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                  <div style={{ 
+                    padding: '1rem', 
+                    background: 'rgba(34, 197, 94, 0.05)', 
+                    borderRadius: '8px', 
+                    border: '1px solid rgba(34, 197, 94, 0.1)',
+                    marginBottom: '1rem'
+                  }}>
+                    <h4 style={{ fontSize: '1rem', fontWeight: '600', color: '#15803d', margin: '0 0 1rem 0' }}>
+                      모바일 버전
+                    </h4>
+                  </div>
+                  
+                  {/* 탭 이름 편집 */}
+                  <div>
+                    <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.75rem' }}>
+                      탭 이름 편집 (모바일)
+                    </label>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1rem' }}>
+                      {aboutData.tabs.map((tab, index) => (
+                        <div key={index}>
+                          <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: '500', color: '#6b7280', marginBottom: '0.25rem' }}>
+                            {index + 1}번째 탭
+                          </label>
+                          <input
+                            type="text"
+                            value={tab.mobile?.name || tab.name}
+                            onChange={(e) => {
+                              if (!aboutData) return;
+                              const newTabs = [...aboutData.tabs];
+                              newTabs[index] = {
+                                ...newTabs[index],
+                                mobile: {
+                                  ...newTabs[index].mobile,
+                                  name: e.target.value
+                                }
+                              };
+                              setAboutData({...aboutData, tabs: newTabs});
+                            }}
+                            disabled={!isEditing}
+                            style={{
+                              width: '70%',
+                              maxWidth: '200px',
+                              padding: '0.5rem',
+                              border: '1px solid #e5e7eb',
+                              borderRadius: '6px',
+                              outline: 'none',
+                              fontSize: '0.875rem',
+                              transition: 'all 0.2s ease',
+                              background: !isEditing ? '#f9fafb' : 'white',
+                              color: !isEditing ? '#6b7280' : '#111827'
+                            }}
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+                  {/* 탭 스타일 설정 */}
+                  <div>
+                    <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.75rem' }}>
+                      탭 스타일 설정 (데스크톱)
+                    </label>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem' }}>
+                      <div>
+                        <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: '500', color: '#6b7280', marginBottom: '0.5rem' }}>
+                          탭 글씨 크기
+                        </label>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                          <input
+                            type="number"
+                            min="10"
+                            max="24"
+                            value={aboutData.fontSize?.desktop?.tabName || aboutData.fontSize?.tabName || 16}
+                            onChange={(e) => aboutData && setAboutData({
+                              ...aboutData, 
+                              fontSize: { 
+                                ...aboutData.fontSize, 
+                                desktop: { 
+                                  ...aboutData.fontSize?.desktop, 
+                                  tabName: parseInt(e.target.value) || 16 
+                                }
+                              }
+                            })}
+                            disabled={!isEditing}
+                            style={{
+                              width: '80px',
+                              padding: '0.3rem 0.5rem',
+                              border: '1px solid #e5e7eb',
+                              borderRadius: '4px',
+                              outline: 'none',
+                              fontSize: '0.75rem',
+                              textAlign: 'center',
+                              background: !isEditing ? '#f9fafb' : 'white',
+                              color: !isEditing ? '#6b7280' : '#111827'
+                            }}
+                          />
+                          <span style={{ 
+                            fontSize: '0.75rem', 
+                            fontWeight: '600', 
+                            color: '#374151'
+                          }}>
+                            px
+                          </span>
+                        </div>
+                      </div>
+                      <div>
+                        <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: '500', color: '#6b7280', marginBottom: '0.5rem' }}>
+                          활성 탭 색상
+                        </label>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                          <input
+                            type="color"
+                            value={aboutData.desktop?.tabActiveColor || aboutData.tabActiveColor || '#00A3E0'}
+                            onChange={(e) => aboutData && setAboutData({
+                              ...aboutData, 
+                              desktop: { 
+                                ...aboutData.desktop, 
+                                tabActiveColor: e.target.value 
+                              }
+                            })}
+                            disabled={!isEditing}
+                            style={{
+                              width: '40px',
+                              height: '32px',
+                              border: '1px solid #e5e7eb',
+                              borderRadius: '4px',
+                              outline: 'none',
+                              cursor: isEditing ? 'pointer' : 'not-allowed'
+                            }}
+                          />
+                          <span style={{ 
+                            fontSize: '0.75rem', 
+                            fontWeight: '600', 
+                            color: '#374151'
+                          }}>
+                            {aboutData.desktop?.tabActiveColor || aboutData.tabActiveColor || '#00A3E0'}
+                          </span>
+                        </div>
+                      </div>
+                      <div>
+                        <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: '500', color: '#6b7280', marginBottom: '0.5rem' }}>
+                          비활성 탭 색상
+                        </label>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                          <input
+                            type="color"
+                            value={aboutData.desktop?.tabInactiveColor || aboutData.tabInactiveColor || '#374151'}
+                            onChange={(e) => aboutData && setAboutData({
+                              ...aboutData, 
+                              desktop: { 
+                                ...aboutData.desktop, 
+                                tabInactiveColor: e.target.value 
+                              }
+                            })}
+                            disabled={!isEditing}
+                            style={{
+                              width: '40px',
+                              height: '32px',
+                              border: '1px solid #e5e7eb',
+                              borderRadius: '4px',
+                              outline: 'none',
+                              cursor: isEditing ? 'pointer' : 'not-allowed'
+                            }}
+                          />
+                          <span style={{ 
+                            fontSize: '0.75rem', 
+                            fontWeight: '600', 
+                            color: '#374151'
+                          }}>
+                            {aboutData.desktop?.tabInactiveColor || aboutData.tabInactiveColor || '#374151'}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
             </div>
           </div>
 
@@ -718,131 +1071,348 @@ export default function AdminAbout() {
                 </h3>
               </div>
               
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1rem' }}>
-                <div>
-                  <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
-                    카드 배경색
-                  </label>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <input
-                      type="color"
-                      value={aboutData.cardBackgroundColor || '#ffffff'}
-                      onChange={(e) => aboutData && setAboutData({
-                        ...aboutData, 
-                        cardBackgroundColor: e.target.value
-                      })}
-                      disabled={!isEditing}
-                      style={{
-                        width: '40px',
-                        height: '32px',
-                        border: '1px solid #e5e7eb',
-                        borderRadius: '4px',
-                        outline: 'none',
-                        cursor: isEditing ? 'pointer' : 'not-allowed'
-                      }}
-                    />
-                    <span style={{ 
-                      fontSize: '0.75rem', 
-                      fontWeight: '600', 
-                      color: '#374151'
-                    }}>
-                      {aboutData.cardBackgroundColor || '#ffffff'}
-                    </span>
-                  </div>
-                </div>
-                <div>
-                  <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
-                    카드 제목 색상
-                  </label>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <input
-                      type="color"
-                      value={aboutData.cardTitleColor || '#000000'}
-                      onChange={(e) => aboutData && setAboutData({
-                        ...aboutData, 
-                        cardTitleColor: e.target.value
-                      })}
-                      disabled={!isEditing}
-                      style={{
-                        width: '40px',
-                        height: '32px',
-                        border: '1px solid #e5e7eb',
-                        borderRadius: '4px',
-                        outline: 'none',
-                        cursor: isEditing ? 'pointer' : 'not-allowed'
-                      }}
-                    />
-                    <span style={{ 
-                      fontSize: '0.75rem', 
-                      fontWeight: '600', 
-                      color: '#374151'
-                    }}>
-                      {aboutData.cardTitleColor || '#000000'}
-                    </span>
-                  </div>
-                </div>
-                <div>
-                  <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
-                    카드 설명 색상
-                  </label>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <input
-                      type="color"
-                      value={aboutData.cardDescriptionColor || '#6B7280'}
-                      onChange={(e) => aboutData && setAboutData({
-                        ...aboutData, 
-                        cardDescriptionColor: e.target.value
-                      })}
-                      disabled={!isEditing}
-                      style={{
-                        width: '40px',
-                        height: '32px',
-                        border: '1px solid #e5e7eb',
-                        borderRadius: '4px',
-                        outline: 'none',
-                        cursor: isEditing ? 'pointer' : 'not-allowed'
-                      }}
-                    />
-                    <span style={{ 
-                      fontSize: '0.75rem', 
-                      fontWeight: '600', 
-                      color: '#374151'
-                    }}>
-                      {aboutData.cardDescriptionColor || '#6B7280'}
-                    </span>
-                  </div>
-                </div>
-                <div>
-                  <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
-                    호버 효과
-                  </label>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <input
-                      type="checkbox"
-                      checked={aboutData.cardHoverEffect !== false}
-                      onChange={(e) => aboutData && setAboutData({
-                        ...aboutData, 
-                        cardHoverEffect: e.target.checked
-                      })}
-                      disabled={!isEditing}
-                      style={{
-                        width: '16px',
-                        height: '16px',
-                        cursor: isEditing ? 'pointer' : 'not-allowed'
-                      }}
-                    />
-                    <span style={{ 
-                      fontSize: '0.75rem', 
-                      fontWeight: '600', 
-                      color: '#374151'
-                    }}>
-                      {aboutData.cardHoverEffect !== false ? '활성화' : '비활성화'}
-                    </span>
-                  </div>
-                </div>
+              {/* 데스크톱/모바일 탭 */}
+              <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1.5rem' }}>
+                <button
+                  onClick={() => setActiveTab(0)}
+                  style={{
+                    padding: '0.5rem 1rem',
+                    borderRadius: '6px',
+                    border: 'none',
+                    background: activeTab === 0 ? '#10b981' : '#f3f4f6',
+                    color: activeTab === 0 ? 'white' : '#6b7280',
+                    fontSize: '0.875rem',
+                    fontWeight: '500',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease'
+                  }}
+                >
+                  데스크톱
+                </button>
+                <button
+                  onClick={() => setActiveTab(1)}
+                  style={{
+                    padding: '0.5rem 1rem',
+                    borderRadius: '6px',
+                    border: 'none',
+                    background: activeTab === 1 ? '#10b981' : '#f3f4f6',
+                    color: activeTab === 1 ? 'white' : '#6b7280',
+                    fontSize: '0.875rem',
+                    fontWeight: '500',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease'
+                  }}
+                >
+                  모바일
+                </button>
               </div>
+              
+              {/* 데스크톱 버전 */}
+              {mainTitleTab === 0 && (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                  <div style={{ 
+                    padding: '1rem', 
+                    background: 'rgba(59, 130, 246, 0.05)', 
+                    borderRadius: '8px', 
+                    border: '1px solid rgba(59, 130, 246, 0.1)',
+                    marginBottom: '1rem'
+                  }}>
+                    <h4 style={{ fontSize: '1rem', fontWeight: '600', color: '#1e40af', margin: '0 0 1rem 0' }}>
+                      데스크톱 버전
+                    </h4>
+                  </div>
+                  
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1rem' }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                        카드 배경색
+                      </label>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                        <input
+                          type="color"
+                          value={aboutData.desktop?.cardBackgroundColor || aboutData.cardBackgroundColor || '#ffffff'}
+                          onChange={(e) => aboutData && setAboutData({
+                            ...aboutData, 
+                            desktop: { 
+                              ...aboutData.desktop, 
+                              cardBackgroundColor: e.target.value 
+                            }
+                          })}
+                          disabled={!isEditing}
+                          style={{
+                            width: '40px',
+                            height: '32px',
+                            border: '1px solid #e5e7eb',
+                            borderRadius: '4px',
+                            outline: 'none',
+                            cursor: isEditing ? 'pointer' : 'not-allowed'
+                          }}
+                        />
+                        <span style={{ 
+                          fontSize: '0.75rem', 
+                          fontWeight: '600', 
+                          color: '#374151'
+                        }}>
+                          {aboutData.desktop?.cardBackgroundColor || aboutData.cardBackgroundColor || '#ffffff'}
+                        </span>
+                      </div>
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                        카드 제목 색상
+                      </label>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                        <input
+                          type="color"
+                          value={aboutData.desktop?.cardTitleColor || aboutData.cardTitleColor || '#000000'}
+                          onChange={(e) => aboutData && setAboutData({
+                            ...aboutData, 
+                            desktop: { 
+                              ...aboutData.desktop, 
+                              cardTitleColor: e.target.value 
+                            }
+                          })}
+                          disabled={!isEditing}
+                          style={{
+                            width: '40px',
+                            height: '32px',
+                            border: '1px solid #e5e7eb',
+                            borderRadius: '4px',
+                            outline: 'none',
+                            cursor: isEditing ? 'pointer' : 'not-allowed'
+                          }}
+                        />
+                        <span style={{ 
+                          fontSize: '0.75rem', 
+                          fontWeight: '600', 
+                          color: '#374151'
+                        }}>
+                          {aboutData.desktop?.cardTitleColor || aboutData.cardTitleColor || '#000000'}
+                        </span>
+                      </div>
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                        카드 설명 색상
+                      </label>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                        <input
+                          type="color"
+                          value={aboutData.desktop?.cardDescriptionColor || aboutData.cardDescriptionColor || '#6B7280'}
+                          onChange={(e) => aboutData && setAboutData({
+                            ...aboutData, 
+                            desktop: { 
+                              ...aboutData.desktop, 
+                              cardDescriptionColor: e.target.value 
+                            }
+                          })}
+                          disabled={!isEditing}
+                          style={{
+                            width: '40px',
+                            height: '32px',
+                            border: '1px solid #e5e7eb',
+                            borderRadius: '4px',
+                            outline: 'none',
+                            cursor: isEditing ? 'pointer' : 'not-allowed'
+                          }}
+                        />
+                        <span style={{ 
+                          fontSize: '0.75rem', 
+                          fontWeight: '600', 
+                          color: '#374151'
+                        }}>
+                          {aboutData.desktop?.cardDescriptionColor || aboutData.cardDescriptionColor || '#6B7280'}
+                        </span>
+                      </div>
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                        호버 효과
+                      </label>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                        <input
+                          type="checkbox"
+                          checked={aboutData.desktop?.cardHoverEffect !== false && (aboutData.desktop?.cardHoverEffect ?? aboutData.cardHoverEffect !== false)}
+                          onChange={(e) => aboutData && setAboutData({
+                            ...aboutData, 
+                            desktop: { 
+                              ...aboutData.desktop, 
+                              cardHoverEffect: e.target.checked 
+                            }
+                          })}
+                          disabled={!isEditing}
+                          style={{
+                            width: '16px',
+                            height: '16px',
+                            cursor: isEditing ? 'pointer' : 'not-allowed'
+                          }}
+                        />
+                        <span style={{ 
+                          fontSize: '0.75rem', 
+                          fontWeight: '600', 
+                          color: '#374151'
+                        }}>
+                          {aboutData.desktop?.cardHoverEffect !== false && (aboutData.desktop?.cardHoverEffect ?? aboutData.cardHoverEffect !== false) ? '활성화' : '비활성화'}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* 모바일 버전 */}
+              {mainTitleTab === 1 && (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                  <div style={{ 
+                    padding: '1rem', 
+                    background: 'rgba(34, 197, 94, 0.05)', 
+                    borderRadius: '8px', 
+                    border: '1px solid rgba(34, 197, 94, 0.1)',
+                    marginBottom: '1rem'
+                  }}>
+                    <h4 style={{ fontSize: '1rem', fontWeight: '600', color: '#15803d', margin: '0 0 1rem 0' }}>
+                      모바일 버전
+                    </h4>
+                  </div>
+                  
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1rem' }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                        카드 배경색
+                      </label>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                        <input
+                          type="color"
+                          value={aboutData.mobile?.cardBackgroundColor || aboutData.cardBackgroundColor || '#ffffff'}
+                          onChange={(e) => aboutData && setAboutData({
+                            ...aboutData, 
+                            mobile: { 
+                              ...aboutData.mobile, 
+                              cardBackgroundColor: e.target.value 
+                            }
+                          })}
+                          disabled={!isEditing}
+                          style={{
+                            width: '40px',
+                            height: '32px',
+                            border: '1px solid #e5e7eb',
+                            borderRadius: '4px',
+                            outline: 'none',
+                            cursor: isEditing ? 'pointer' : 'not-allowed'
+                          }}
+                        />
+                        <span style={{ 
+                          fontSize: '0.75rem', 
+                          fontWeight: '600', 
+                          color: '#374151'
+                        }}>
+                          {aboutData.mobile?.cardBackgroundColor || aboutData.cardBackgroundColor || '#ffffff'}
+                        </span>
+                      </div>
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                        카드 제목 색상
+                      </label>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                        <input
+                          type="color"
+                          value={aboutData.mobile?.cardTitleColor || aboutData.cardTitleColor || '#000000'}
+                          onChange={(e) => aboutData && setAboutData({
+                            ...aboutData, 
+                            mobile: { 
+                              ...aboutData.mobile, 
+                              cardTitleColor: e.target.value 
+                            }
+                          })}
+                          disabled={!isEditing}
+                          style={{
+                            width: '40px',
+                            height: '32px',
+                            border: '1px solid #e5e7eb',
+                            borderRadius: '4px',
+                            outline: 'none',
+                            cursor: isEditing ? 'pointer' : 'not-allowed'
+                          }}
+                        />
+                        <span style={{ 
+                          fontSize: '0.75rem', 
+                          fontWeight: '600', 
+                          color: '#374151'
+                        }}>
+                          {aboutData.mobile?.cardTitleColor || aboutData.cardTitleColor || '#000000'}
+                        </span>
+                      </div>
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                        카드 설명 색상
+                      </label>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                        <input
+                          type="color"
+                          value={aboutData.mobile?.cardDescriptionColor || aboutData.cardDescriptionColor || '#6B7280'}
+                          onChange={(e) => aboutData && setAboutData({
+                            ...aboutData, 
+                            mobile: { 
+                              ...aboutData.mobile, 
+                              cardDescriptionColor: e.target.value 
+                            }
+                          })}
+                          disabled={!isEditing}
+                          style={{
+                            width: '40px',
+                            height: '32px',
+                            border: '1px solid #e5e7eb',
+                            borderRadius: '4px',
+                            outline: 'none',
+                            cursor: isEditing ? 'pointer' : 'not-allowed'
+                          }}
+                        />
+                        <span style={{ 
+                          fontSize: '0.75rem', 
+                          fontWeight: '600', 
+                          color: '#374151'
+                        }}>
+                          {aboutData.mobile?.cardDescriptionColor || aboutData.cardDescriptionColor || '#6B7280'}
+                        </span>
+                      </div>
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                        호버 효과
+                      </label>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                        <input
+                          type="checkbox"
+                          checked={aboutData.mobile?.cardHoverEffect !== false && (aboutData.mobile?.cardHoverEffect ?? aboutData.cardHoverEffect !== false)}
+                          onChange={(e) => aboutData && setAboutData({
+                            ...aboutData, 
+                            mobile: { 
+                              ...aboutData.mobile, 
+                              cardHoverEffect: e.target.checked 
+                            }
+                          })}
+                          disabled={!isEditing}
+                          style={{
+                            width: '16px',
+                            height: '16px',
+                            cursor: isEditing ? 'pointer' : 'not-allowed'
+                          }}
+                        />
+                        <span style={{ 
+                          fontSize: '0.75rem', 
+                          fontWeight: '600', 
+                          color: '#374151'
+                        }}>
+                          {aboutData.mobile?.cardHoverEffect !== false && (aboutData.mobile?.cardHoverEffect ?? aboutData.cardHoverEffect !== false) ? '활성화' : '비활성화'}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
-          </div>
           </div>
 
           {/* 탭별 카드 관리 */}
@@ -859,7 +1429,7 @@ export default function AdminAbout() {
               paddingRight: '24px',
               transition: 'all 0.3s ease'
             }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
                   <div style={{
                     width: '32px',
@@ -903,54 +1473,172 @@ export default function AdminAbout() {
                   </button>
                 )}
               </div>
-
-              {/* 탭 선택 */}
+              
+              {/* 데스크톱/모바일 탭 */}
               <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1.5rem' }}>
-                {aboutData.tabs.map((tab, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setActiveTab(index)}
-                    style={{
-                      padding: '0.5rem 1rem',
-                      fontSize: '0.8rem',
-                      fontWeight: '600',
-                      borderRadius: '8px',
-                      border: 'none',
-                      cursor: 'pointer',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '0.25rem',
-                      transition: 'all 0.2s ease',
-                      ...(activeTab === index ? {
-                        background: 'linear-gradient(135deg, #2563eb, #6366f1)',
-                        color: 'white',
-                        boxShadow: '0 10px 15px rgba(0, 0, 0, 0.2)',
-                        transform: 'scale(1.05)'
-                      } : {
-                        background: 'rgba(255, 255, 255, 0.5)',
-                        color: '#374151',
-                        border: '1px solid #e5e7eb'
-                      })
-                    }}
-                  >
-                    <span>{tab.name}</span>
-                    <span style={{
-                      padding: '0.25rem 0.5rem',
-                      fontSize: '0.75rem',
-                      borderRadius: '9999px',
-                      ...(activeTab === index ? {
-                        background: 'rgba(255, 255, 255, 0.2)',
-                        color: 'white'
-                      } : {
-                        background: '#f3f4f6',
-                        color: '#6b7280'
-                      })
-                    }}>
-                      {tab.cards.length}
-                    </span>
-                  </button>
-                ))}
+                <button
+                  onClick={() => setActiveTab(0)}
+                  style={{
+                    padding: '0.5rem 1rem',
+                    borderRadius: '6px',
+                    border: 'none',
+                    background: activeTab === 0 ? '#10b981' : '#f3f4f6',
+                    color: activeTab === 0 ? 'white' : '#6b7280',
+                    fontSize: '0.875rem',
+                    fontWeight: '500',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease'
+                  }}
+                >
+                  데스크톱
+                </button>
+                <button
+                  onClick={() => setActiveTab(1)}
+                  style={{
+                    padding: '0.5rem 1rem',
+                    borderRadius: '6px',
+                    border: 'none',
+                    background: activeTab === 1 ? '#10b981' : '#f3f4f6',
+                    color: activeTab === 1 ? 'white' : '#6b7280',
+                    fontSize: '0.875rem',
+                    fontWeight: '500',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease'
+                  }}
+                >
+                  모바일
+                </button>
               </div>
+
+              {/* 데스크톱 버전 */}
+              {mainTitleTab === 0 && (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                  <div style={{ 
+                    padding: '1rem', 
+                    background: 'rgba(59, 130, 246, 0.05)', 
+                    borderRadius: '8px', 
+                    border: '1px solid rgba(59, 130, 246, 0.1)',
+                    marginBottom: '1rem'
+                  }}>
+                    <h4 style={{ fontSize: '1rem', fontWeight: '600', color: '#1e40af', margin: '0 0 1rem 0' }}>
+                      데스크톱 버전
+                    </h4>
+                  </div>
+                  
+                  {/* 탭 선택 */}
+                  <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1.5rem' }}>
+                    {aboutData.tabs.map((tab, index) => (
+                      <button
+                        key={index}
+                        onClick={() => setActiveTab(index)}
+                        style={{
+                          padding: '0.5rem 1rem',
+                          fontSize: '0.8rem',
+                          fontWeight: '600',
+                          borderRadius: '8px',
+                          border: 'none',
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '0.25rem',
+                          transition: 'all 0.2s ease',
+                          ...(activeTab === index ? {
+                            background: 'linear-gradient(135deg, #2563eb, #6366f1)',
+                            color: 'white',
+                            boxShadow: '0 10px 15px rgba(0, 0, 0, 0.2)',
+                            transform: 'scale(1.05)'
+                          } : {
+                            background: 'rgba(255, 255, 255, 0.5)',
+                            color: '#374151',
+                            border: '1px solid #e5e7eb'
+                          })
+                        }}
+                      >
+                        <span>{tab.desktop?.name || tab.name}</span>
+                        <span style={{
+                          padding: '0.25rem 0.5rem',
+                          fontSize: '0.75rem',
+                          borderRadius: '9999px',
+                          ...(activeTab === index ? {
+                            background: 'rgba(255, 255, 255, 0.2)',
+                            color: 'white'
+                          } : {
+                            background: '#f3f4f6',
+                            color: '#6b7280'
+                          })
+                        }}>
+                          {tab.cards.length}
+                        </span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* 모바일 버전 */}
+              {mainTitleTab === 1 && (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                  <div style={{ 
+                    padding: '1rem', 
+                    background: 'rgba(34, 197, 94, 0.05)', 
+                    borderRadius: '8px', 
+                    border: '1px solid rgba(34, 197, 94, 0.1)',
+                    marginBottom: '1rem'
+                  }}>
+                    <h4 style={{ fontSize: '1rem', fontWeight: '600', color: '#15803d', margin: '0 0 1rem 0' }}>
+                      모바일 버전
+                    </h4>
+                  </div>
+                  
+                  {/* 탭 선택 */}
+                  <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1.5rem' }}>
+                    {aboutData.tabs.map((tab, index) => (
+                      <button
+                        key={index}
+                        onClick={() => setActiveTab(index)}
+                        style={{
+                          padding: '0.5rem 1rem',
+                          fontSize: '0.8rem',
+                          fontWeight: '600',
+                          borderRadius: '8px',
+                          border: 'none',
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '0.25rem',
+                          transition: 'all 0.2s ease',
+                          ...(activeTab === index ? {
+                            background: 'linear-gradient(135deg, #10b981, #14b8a6)',
+                            color: 'white',
+                            boxShadow: '0 10px 15px rgba(0, 0, 0, 0.2)',
+                            transform: 'scale(1.05)'
+                          } : {
+                            background: 'rgba(255, 255, 255, 0.5)',
+                            color: '#374151',
+                            border: '1px solid #e5e7eb'
+                          })
+                        }}
+                      >
+                        <span>{tab.mobile?.name || tab.name}</span>
+                        <span style={{
+                          padding: '0.25rem 0.5rem',
+                          fontSize: '0.75rem',
+                          borderRadius: '9999px',
+                          ...(activeTab === index ? {
+                            background: 'rgba(255, 255, 255, 0.2)',
+                            color: 'white'
+                          } : {
+                            background: '#f3f4f6',
+                            color: '#6b7280'
+                          })
+                        }}>
+                          {tab.cards.length}
+                        </span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
 
               {/* 카드 목록 */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>

@@ -12,6 +12,12 @@ interface AboutCard {
 interface AboutTab {
   name: string;
   cards: AboutCard[];
+  desktop?: {
+    name?: string;
+  };
+  mobile?: {
+    name?: string;
+  };
 }
 
 // About 데이터 타입 정의
@@ -19,6 +25,49 @@ interface AboutData {
   mainTitle: string;
   subtitle: string;
   tabs: AboutTab[];
+  fontSize?: {
+    mainTitle: number;
+    subtitle: number;
+    cardTitle: number;
+    cardDescription: number;
+    tabName: number;
+    desktop?: {
+      mainTitle?: number;
+      subtitle?: number;
+      tabName?: number;
+    };
+    mobile?: {
+      mainTitle?: number;
+      subtitle?: number;
+      tabName?: number;
+    };
+  };
+  desktop?: {
+    mainTitle?: string;
+    subtitle?: string;
+    tabActiveColor?: string;
+    tabInactiveColor?: string;
+    cardBackgroundColor?: string;
+    cardTitleColor?: string;
+    cardDescriptionColor?: string;
+    cardHoverEffect?: boolean;
+  };
+  mobile?: {
+    mainTitle?: string;
+    subtitle?: string;
+    tabActiveColor?: string;
+    tabInactiveColor?: string;
+    cardBackgroundColor?: string;
+    cardTitleColor?: string;
+    cardDescriptionColor?: string;
+    cardHoverEffect?: boolean;
+  };
+  tabActiveColor?: string;
+  tabInactiveColor?: string;
+  cardBackgroundColor?: string;
+  cardTitleColor?: string;
+  cardDescriptionColor?: string;
+  cardHoverEffect?: boolean;
 }
 
 // Context 타입 정의
