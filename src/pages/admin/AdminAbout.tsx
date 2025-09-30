@@ -378,7 +378,7 @@ export default function AdminAbout() {
                     disabled={!isEditing}
                     style={{
                       width: '100%',
-                      maxWidth: '300px',
+                      maxWidth: '150px',
                       padding: '0.3rem 0.5rem',
                       border: '1px solid #e5e7eb',
                       borderRadius: '4px',
@@ -411,7 +411,7 @@ export default function AdminAbout() {
                     disabled={!isEditing}
                     style={{
                       width: '100%',
-                      maxWidth: '300px',
+                      maxWidth: '150px',
                       padding: '0.3rem 0.5rem',
                       border: '1px solid #e5e7eb',
                       borderRadius: '4px',
@@ -511,6 +511,7 @@ export default function AdminAbout() {
                     disabled={!isEditing}
                     style={{
                       width: '100%',
+                      maxWidth: '700px',
                       padding: '0.75rem',
                       border: '1px solid #e5e7eb',
                       borderRadius: '8px',
@@ -566,6 +567,7 @@ export default function AdminAbout() {
                     disabled={!isEditing}
                     style={{
                       width: '100%',
+                      maxWidth: '700px',
                       padding: '0.75rem',
                       border: '1px solid #e5e7eb',
                       borderRadius: '8px',
@@ -636,6 +638,7 @@ export default function AdminAbout() {
                           disabled={!isEditing}
                           style={{
                             width: '100%',
+                            maxWidth: '120px',
                             padding: '0.5rem',
                             border: '1px solid #e5e7eb',
                             borderRadius: '6px',
@@ -817,6 +820,7 @@ export default function AdminAbout() {
                           disabled={!isEditing}
                           style={{
                             width: '100%',
+                            maxWidth: '120px',
                             padding: '0.5rem',
                             border: '1px solid #e5e7eb',
                             borderRadius: '6px',
