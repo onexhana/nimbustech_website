@@ -8,7 +8,7 @@ export default function AdminPortfolio() {
   const [isEditing, setIsEditing] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("공공");
   const [logoSliderCategory, setLogoSliderCategory] = useState("고객사");
-  const [activeSection, setActiveSection] = useState<"portfolio" | "logoSlider" | "fontStyle">("portfolio");
+  const [activeSection, setActiveSection] = useState<"portfolio" | "logoSlider" | "fontStyle" | "imageSize">("portfolio");
   const [logoSliderSettings, setLogoSliderSettings] = useState({
     web: {
       speed: 50,
@@ -31,6 +31,12 @@ export default function AdminPortfolio() {
         web: { size: number; weight: number; color: string };
         mobile: { size: number; weight: number; color: string };
       };
+    }
+  }>({});
+  const [imageSizeSettings, setImageSizeSettings] = useState<{
+    [projectId: number]: {
+      web: { width: number; height: number };
+      mobile: { width: number; height: number };
     }
   }>({});
   const [showAddForm, setShowAddForm] = useState(false);
@@ -70,6 +76,18 @@ export default function AdminPortfolio() {
     }
   }, []);
 
+  // 이미지 크기 설정 로드
+  useEffect(() => {
+    const savedImageSizeSettings = localStorage.getItem('imageSizeSettings');
+    if (savedImageSizeSettings) {
+      try {
+        setImageSizeSettings(JSON.parse(savedImageSizeSettings));
+      } catch (error) {
+        console.error('이미지 크기 설정 로드 실패:', error);
+      }
+    }
+  }, []);
+
   // 로고 슬라이드 설정 저장
   const saveLogoSliderSettings = (settings: typeof logoSliderSettings) => {
     setLogoSliderSettings(settings);
@@ -101,6 +119,26 @@ export default function AdminPortfolio() {
     newSettings[projectId] = settings;
     setFontStyleSettings(newSettings);
     localStorage.setItem('fontStyleSettings', JSON.stringify(newSettings));
+  };
+
+  // 개별 프로젝트 이미지 크기 설정 가져오기
+  const getProjectImageSize = (projectId: number) => {
+    if (!imageSizeSettings[projectId]) {
+      // 기본값 설정
+      return {
+        web: { width: 400, height: 300 },
+        mobile: { width: 300, height: 200 }
+      };
+    }
+    return imageSizeSettings[projectId];
+  };
+
+  // 개별 프로젝트 이미지 크기 설정 업데이트
+  const updateProjectImageSize = (projectId: number, settings: any) => {
+    const newSettings = { ...imageSizeSettings };
+    newSettings[projectId] = settings;
+    setImageSizeSettings(newSettings);
+    localStorage.setItem('imageSizeSettings', JSON.stringify(newSettings));
   };
 
   // 글씨 스타일 설정 저장 (전체)
@@ -502,89 +540,6 @@ export default function AdminPortfolio() {
               )}
             </div>
 
-            {/* 글씨 스타일 설정 */}
-            <div style={{
-              background: 'rgba(255, 255, 255, 0.8)',
-              backdropFilter: 'blur(10px)',
-              borderRadius: '12px',
-              boxShadow: '0 10px 15px rgba(0, 0, 0, 0.1)',
-              border: '1px solid rgba(255, 255, 255, 0.2)',
-              padding: '1.5rem',
-              marginTop: '1.5rem',
-              transition: 'all 0.3s ease'
-            }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
-                <div style={{
-                  width: '32px',
-                  height: '32px',
-                  background: 'linear-gradient(135deg, #8b5cf6, #ec4899)',
-                  borderRadius: '8px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center'
-                }}>
-                  <svg width="20" height="20" fill="none" stroke="white" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                  </svg>
-                </div>
-                <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#111827', margin: 0 }}>
-                  글씨 스타일 설정
-                </h3>
-              </div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                <button
-                  onClick={() => setActiveSection("fontStyle")}
-                  style={{
-                    padding: '0.75rem 1rem',
-                    fontSize: '0.875rem',
-                    fontWeight: '600',
-                    borderRadius: '8px',
-                    border: 'none',
-                    cursor: 'pointer',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.5rem',
-                    transition: 'all 0.2s ease',
-                    ...(activeSection === "fontStyle" ? {
-                      background: 'linear-gradient(135deg, #8b5cf6, #ec4899)',
-                      color: 'white',
-                      boxShadow: '0 4px 12px rgba(139, 92, 246, 0.3)'
-                    } : {
-                      background: 'rgba(255, 255, 255, 0.6)',
-                      color: '#374151',
-                      border: '1px solid rgba(229, 231, 235, 0.5)'
-                    })
-                  }}
-                  onMouseEnter={(e) => {
-                    if (activeSection !== "fontStyle") {
-                      e.currentTarget.style.background = 'rgba(139, 92, 246, 0.1)';
-                      e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.3)';
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    if (activeSection !== "fontStyle") {
-                      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.6)';
-                      e.currentTarget.style.borderColor = 'rgba(229, 231, 235, 0.5)';
-                    }
-                  }}
-                >
-                  <span style={{
-                    fontSize: '0.75rem',
-                    fontWeight: 'bold',
-                    background: activeSection === "fontStyle" ? 'rgba(255, 255, 255, 0.2)' : 'rgba(139, 92, 246, 0.1)',
-                    color: activeSection === "fontStyle" ? 'white' : '#8b5cf6',
-                    padding: '0.25rem 0.5rem',
-                    borderRadius: '4px',
-                    minWidth: '20px',
-                    textAlign: 'center'
-                  }}>
-                    A
-                  </span>
-                  텍스트 스타일
-                </button>
-              </div>
-            </div>
-
             {/* 로고 슬라이드 관리 */}
             <div style={{
               background: 'rgba(255, 255, 255, 0.8)',
@@ -704,6 +659,7 @@ export default function AdminPortfolio() {
                   <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#111827', margin: 0 }}>
                     {activeSection === "portfolio" ? `${selectedCategory} 프로젝트 관리` : 
                      activeSection === "fontStyle" ? "글씨 스타일 설정" : 
+                     activeSection === "imageSize" ? "이미지 크기 설정" :
                      `${logoSliderCategory} 관리`}
                   </h3>
                 </div>
@@ -1242,6 +1198,316 @@ export default function AdminPortfolio() {
                 </div>
               )}
 
+              {/* 이미지 크기 설정 콘텐츠 */}
+              {activeSection === "imageSize" && (
+                <div style={{
+                  background: 'rgba(255, 255, 255, 0.6)',
+                  backdropFilter: 'blur(10px)',
+                  border: '1px solid rgba(229, 231, 235, 0.5)',
+                  borderRadius: '12px',
+                  padding: '1.5rem',
+                  marginBottom: '1rem',
+                  transition: 'all 0.3s ease'
+                }}>
+                  {selectedProjectForFontStyle ? (
+                    <>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+                        <h4 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#111827', margin: 0, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                          <div style={{
+                            width: '32px',
+                            height: '32px',
+                            background: 'linear-gradient(135deg, #10b981, #14b8a6)',
+                            borderRadius: '8px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center'
+                          }}>
+                            <span style={{ color: 'white', fontWeight: 'bold', fontSize: '0.875rem' }}>📷</span>
+                          </div>
+                          {portfolioData.projects.find(p => p.id === selectedProjectForFontStyle)?.title || '프로젝트'} 이미지 크기 설정
+                        </h4>
+                        <button
+                          onClick={() => {
+                            setSelectedProjectForFontStyle(null);
+                            setActiveSection("portfolio");
+                          }}
+                          style={{
+                            padding: '0.5rem 1rem',
+                            fontSize: '0.875rem',
+                            fontWeight: '500',
+                            color: '#374151',
+                            background: 'rgba(255, 255, 255, 0.8)',
+                            border: '1px solid #d1d5db',
+                            borderRadius: '8px',
+                            cursor: 'pointer',
+                            transition: 'all 0.2s ease'
+                          }}
+                        >
+                          ← 프로젝트 목록으로
+                        </button>
+                      </div>
+
+                      {/* 웹 이미지 크기 설정 */}
+                      <div style={{ marginBottom: '2rem' }}>
+                        <h5 style={{ fontSize: '1rem', fontWeight: 'bold', color: '#111827', marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                          <div style={{
+                            width: '24px',
+                            height: '24px',
+                            background: 'linear-gradient(135deg, #3b82f6, #1d4ed8)',
+                            borderRadius: '6px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center'
+                          }}>
+                            <span style={{ color: 'white', fontWeight: 'bold', fontSize: '0.75rem' }}>🖥️</span>
+                          </div>
+                          웹(데스크톱) 이미지 크기
+                        </h5>
+                        
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                          <div>
+                            <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                              너비 (px)
+                            </label>
+                            <input
+                              type="number"
+                              value={getProjectImageSize(selectedProjectForFontStyle).web.width}
+                              onChange={(e) => {
+                                const currentSettings = getProjectImageSize(selectedProjectForFontStyle);
+                                const newSettings = { ...currentSettings };
+                                newSettings.web.width = parseInt(e.target.value) || 400;
+                                updateProjectImageSize(selectedProjectForFontStyle, newSettings);
+                              }}
+                              style={{
+                                width: '100%',
+                                padding: '0.5rem 0.75rem',
+                                border: '2px solid #e5e7eb',
+                                borderRadius: '8px',
+                                outline: 'none',
+                                fontSize: '0.875rem',
+                                background: 'white',
+                                color: '#111827',
+                                boxSizing: 'border-box'
+                              }}
+                            />
+                          </div>
+                          <div>
+                            <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                              높이 (px)
+                            </label>
+                            <input
+                              type="number"
+                              value={getProjectImageSize(selectedProjectForFontStyle).web.height}
+                              onChange={(e) => {
+                                const currentSettings = getProjectImageSize(selectedProjectForFontStyle);
+                                const newSettings = { ...currentSettings };
+                                newSettings.web.height = parseInt(e.target.value) || 300;
+                                updateProjectImageSize(selectedProjectForFontStyle, newSettings);
+                              }}
+                              style={{
+                                width: '100%',
+                                padding: '0.5rem 0.75rem',
+                                border: '2px solid #e5e7eb',
+                                borderRadius: '8px',
+                                outline: 'none',
+                                fontSize: '0.875rem',
+                                background: 'white',
+                                color: '#111827',
+                                boxSizing: 'border-box'
+                              }}
+                            />
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* 모바일 이미지 크기 설정 */}
+                      <div style={{ marginBottom: '2rem' }}>
+                        <h5 style={{ fontSize: '1rem', fontWeight: 'bold', color: '#111827', marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                          <div style={{
+                            width: '24px',
+                            height: '24px',
+                            background: 'linear-gradient(135deg, #10b981, #14b8a6)',
+                            borderRadius: '6px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center'
+                          }}>
+                            <span style={{ color: 'white', fontWeight: 'bold', fontSize: '0.75rem' }}>📱</span>
+                          </div>
+                          모바일 이미지 크기
+                        </h5>
+                        
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                          <div>
+                            <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                              너비 (px)
+                            </label>
+                            <input
+                              type="number"
+                              value={getProjectImageSize(selectedProjectForFontStyle).mobile.width}
+                              onChange={(e) => {
+                                const currentSettings = getProjectImageSize(selectedProjectForFontStyle);
+                                const newSettings = { ...currentSettings };
+                                newSettings.mobile.width = parseInt(e.target.value) || 300;
+                                updateProjectImageSize(selectedProjectForFontStyle, newSettings);
+                              }}
+                              style={{
+                                width: '100%',
+                                padding: '0.5rem 0.75rem',
+                                border: '2px solid #e5e7eb',
+                                borderRadius: '8px',
+                                outline: 'none',
+                                fontSize: '0.875rem',
+                                background: 'white',
+                                color: '#111827',
+                                boxSizing: 'border-box'
+                              }}
+                            />
+                          </div>
+                          <div>
+                            <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                              높이 (px)
+                            </label>
+                            <input
+                              type="number"
+                              value={getProjectImageSize(selectedProjectForFontStyle).mobile.height}
+                              onChange={(e) => {
+                                const currentSettings = getProjectImageSize(selectedProjectForFontStyle);
+                                const newSettings = { ...currentSettings };
+                                newSettings.mobile.height = parseInt(e.target.value) || 200;
+                                updateProjectImageSize(selectedProjectForFontStyle, newSettings);
+                              }}
+                              style={{
+                                width: '100%',
+                                padding: '0.5rem 0.75rem',
+                                border: '2px solid #e5e7eb',
+                                borderRadius: '8px',
+                                outline: 'none',
+                                fontSize: '0.875rem',
+                                background: 'white',
+                                color: '#111827',
+                                boxSizing: 'border-box'
+                              }}
+                            />
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* 이미지 미리보기 */}
+                      <div style={{ marginBottom: '2rem' }}>
+                        <h5 style={{ fontSize: '1rem', fontWeight: 'bold', color: '#111827', marginBottom: '1rem' }}>
+                          이미지 미리보기
+                        </h5>
+                        <div style={{ display: 'flex', gap: '2rem', justifyContent: 'center' }}>
+                          <div style={{ textAlign: 'center' }}>
+                            <h6 style={{ fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                              웹 크기 ({getProjectImageSize(selectedProjectForFontStyle).web.width} × {getProjectImageSize(selectedProjectForFontStyle).web.height})
+                            </h6>
+                            <div style={{
+                              width: '200px',
+                              height: `${200 * (getProjectImageSize(selectedProjectForFontStyle).web.height / getProjectImageSize(selectedProjectForFontStyle).web.width)}px`,
+                              border: '2px solid #e5e7eb',
+                              borderRadius: '8px',
+                              background: 'linear-gradient(45deg, #f3f4f6 25%, transparent 25%), linear-gradient(-45deg, #f3f4f6 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #f3f4f6 75%), linear-gradient(-45deg, transparent 75%, #f3f4f6 75%)',
+                              backgroundSize: '20px 20px',
+                              backgroundPosition: '0 0, 0 10px, 10px -10px, -10px 0px',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              color: '#6b7280',
+                              fontSize: '0.75rem'
+                            }}>
+                              이미지 미리보기
+                            </div>
+                          </div>
+                          <div style={{ textAlign: 'center' }}>
+                            <h6 style={{ fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.5rem' }}>
+                              모바일 크기 ({getProjectImageSize(selectedProjectForFontStyle).mobile.width} × {getProjectImageSize(selectedProjectForFontStyle).mobile.height})
+                            </h6>
+                            <div style={{
+                              width: '150px',
+                              height: `${150 * (getProjectImageSize(selectedProjectForFontStyle).mobile.height / getProjectImageSize(selectedProjectForFontStyle).mobile.width)}px`,
+                              border: '2px solid #e5e7eb',
+                              borderRadius: '8px',
+                              background: 'linear-gradient(45deg, #f3f4f6 25%, transparent 25%), linear-gradient(-45deg, #f3f4f6 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #f3f4f6 75%), linear-gradient(-45deg, transparent 75%, #f3f4f6 75%)',
+                              backgroundSize: '20px 20px',
+                              backgroundPosition: '0 0, 0 10px, 10px -10px, -10px 0px',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              color: '#6b7280',
+                              fontSize: '0.75rem'
+                            }}>
+                              이미지 미리보기
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* 저장 버튼 */}
+                      <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.75rem' }}>
+                        <button
+                          onClick={() => {
+                            alert(`${portfolioData.projects.find(p => p.id === selectedProjectForFontStyle)?.title || '프로젝트'}의 이미지 크기 설정이 저장되었습니다!`);
+                          }}
+                          style={{
+                            padding: '0.75rem 1.5rem',
+                            fontSize: '0.875rem',
+                            fontWeight: '500',
+                            color: 'white',
+                            background: 'linear-gradient(135deg, #10b981, #14b8a6)',
+                            border: 'none',
+                            borderRadius: '12px',
+                            cursor: 'pointer',
+                            transition: 'all 0.2s ease'
+                          }}
+                        >
+                          이 프로젝트 이미지 크기 저장
+                        </button>
+                      </div>
+                    </>
+                  ) : (
+                    <div style={{ textAlign: 'center', padding: '2rem' }}>
+                      <div style={{
+                        width: '64px',
+                        height: '64px',
+                        background: 'linear-gradient(135deg, #10b981, #14b8a6)',
+                        borderRadius: '50%',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        margin: '0 auto 1rem'
+                      }}>
+                        <span style={{ color: 'white', fontSize: '1.5rem' }}>📷</span>
+                      </div>
+                      <h4 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#111827', marginBottom: '0.5rem' }}>
+                        개별 프로젝트 이미지 크기 설정
+                      </h4>
+                      <p style={{ fontSize: '0.875rem', color: '#6b7280', marginBottom: '1.5rem' }}>
+                        프로젝트 목록에서 "이미지 크기" 버튼을 클릭하여<br/>
+                        각 프로젝트별로 웹/모바일 이미지 크기를 설정할 수 있습니다.
+                      </p>
+                      <button
+                        onClick={() => setActiveSection("portfolio")}
+                        style={{
+                          padding: '0.75rem 1.5rem',
+                          fontSize: '0.875rem',
+                          fontWeight: '500',
+                          color: 'white',
+                          background: 'linear-gradient(135deg, #3b82f6, #1d4ed8)',
+                          border: 'none',
+                          borderRadius: '12px',
+                          cursor: 'pointer',
+                          transition: 'all 0.2s ease'
+                        }}
+                      >
+                        프로젝트 목록으로 돌아가기
+                      </button>
+                    </div>
+                  )}
+                </div>
+              )}
+
               {/* 로고 슬라이드 관리 콘텐츠 */}
               {activeSection === "logoSlider" && (
               <div style={{
@@ -1632,6 +1898,29 @@ export default function AdminPortfolio() {
                             }}
                           >
                             글씨 스타일
+                          </button>
+                        )}
+                        {isEditing && (
+                          <button
+                            onClick={() => {
+                              const currentSettings = getProjectImageSize(project.id);
+                              // 이미지 크기 설정 모달이나 섹션을 여는 로직
+                              setActiveSection("imageSize");
+                              setSelectedProjectForFontStyle(project.id);
+                            }}
+                            style={{
+                              padding: '0.5rem',
+                              fontSize: '0.75rem',
+                              fontWeight: '500',
+                              color: '#10b981',
+                              background: 'rgba(16, 185, 129, 0.1)',
+                              border: '1px solid rgba(16, 185, 129, 0.2)',
+                              borderRadius: '6px',
+                              cursor: 'pointer',
+                              transition: 'all 0.2s ease'
+                            }}
+                          >
+                            이미지 크기
                           </button>
                         )}
                         {isEditing && (
