@@ -58,6 +58,26 @@ export interface ContactData {
     sectionDescription: number;
     buttonText: number;
     companyInfo: number;
+    desktopMainTitle?: number;
+    desktopSubtitle?: number;
+    desktopSectionTitle?: number;
+    desktopSectionDescription?: number;
+    desktopButtonText?: number;
+    desktopCompanyInfo?: number;
+  };
+  colors?: {
+    mainTitle?: string;
+    subtitle?: string;
+    sectionTitle?: string;
+    sectionDescription?: string;
+    buttonText?: string;
+    companyInfo?: string;
+    desktopMainTitle?: string;
+    desktopSubtitle?: string;
+    desktopSectionTitle?: string;
+    desktopSectionDescription?: string;
+    desktopButtonText?: string;
+    desktopCompanyInfo?: string;
   };
 }
 
@@ -69,6 +89,8 @@ export interface AboutCard {
   fontSize?: {
     title?: number;
     description?: number;
+    mobileTitle?: number;
+    mobileDescription?: number;
   };
 }
 
@@ -87,11 +109,18 @@ export interface AboutData {
     cardTitle: number;
     cardDescription: number;
     tabName: number;
+    mobileTabName?: number;
+    mobileCardTitle?: number;
+    mobileCardDescription?: number;
   };
   tabActiveColor?: string;
   tabInactiveColor?: string;
+  mobileTabActiveColor?: string;
+  mobileTabInactiveColor?: string;
   cardBackgroundColor?: string;
   cardTitleColor?: string;
   cardDescriptionColor?: string;
   cardHoverEffect?: boolean;
+  pageTitle?: string;
+  metaDescription?: string;
 }
