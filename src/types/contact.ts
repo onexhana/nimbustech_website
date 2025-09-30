@@ -19,6 +19,14 @@ export interface HiringData {
 export interface ContactSection {
   title: string;
   description: string;
+  desktop?: {
+    title?: string;
+    description?: string;
+  };
+  mobile?: {
+    title?: string;
+    description?: string;
+  };
 }
 
 export interface ContactButton {
@@ -97,6 +105,12 @@ export interface AboutCard {
 export interface AboutTab {
   name: string;
   cards: AboutCard[];
+  desktop?: {
+    name?: string;
+  };
+  mobile?: {
+    name?: string;
+  };
 }
 
 export interface AboutData {
@@ -109,9 +123,36 @@ export interface AboutData {
     cardTitle: number;
     cardDescription: number;
     tabName: number;
-    mobileTabName?: number;
-    mobileCardTitle?: number;
-    mobileCardDescription?: number;
+    desktop?: {
+      mainTitle?: number;
+      subtitle?: number;
+      tabName?: number;
+    };
+    mobile?: {
+      mainTitle?: number;
+      subtitle?: number;
+      tabName?: number;
+    };
+  };
+  desktop?: {
+    mainTitle?: string;
+    subtitle?: string;
+    tabActiveColor?: string;
+    tabInactiveColor?: string;
+    cardBackgroundColor?: string;
+    cardTitleColor?: string;
+    cardDescriptionColor?: string;
+    cardHoverEffect?: boolean;
+  };
+  mobile?: {
+    mainTitle?: string;
+    subtitle?: string;
+    tabActiveColor?: string;
+    tabInactiveColor?: string;
+    cardBackgroundColor?: string;
+    cardTitleColor?: string;
+    cardDescriptionColor?: string;
+    cardHoverEffect?: boolean;
   };
   tabActiveColor?: string;
   tabInactiveColor?: string;
