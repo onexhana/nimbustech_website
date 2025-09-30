@@ -18,6 +18,7 @@ export default function AdminAbout() {
   const [tabNavTab, setTabNavTab] = useState(0); // 탭 네비게이션 관리용 탭
   const [cardStyleTab, setCardStyleTab] = useState(0); // 카드 스타일 관리용 탭
   const [tabCardTab, setTabCardTab] = useState(0); // 탭별 카드 관리용 탭
+  const [activeVersion, setActiveVersion] = useState<'desktop' | 'mobile'>('desktop'); // 데스크탑/모바일 버전 선택
 
   useEffect(() => {
     const loadAboutData = async () => {
@@ -1114,6 +1115,8 @@ export default function AdminAbout() {
           </div>
           )}
 
+          {/* JSX Fragment wrapper */}
+          <>
           {/* 탭 네비게이션 관리 - 모바일 버전 */}
           {activeVersion === 'mobile' && (
           <div>
@@ -2798,6 +2801,7 @@ export default function AdminAbout() {
             </div>
           </div>
         </div>
+          </>
       </main>
     </div>
   );
