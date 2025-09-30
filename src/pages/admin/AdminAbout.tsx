@@ -14,6 +14,7 @@ export default function AdminAbout() {
   const [isEditing, setIsEditing] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [activeTab, setActiveTab] = useState(0);
+  const [activeVersion, setActiveVersion] = useState<'desktop' | 'mobile'>('desktop');
 
   useEffect(() => {
     const loadAboutData = async () => {
@@ -262,6 +263,77 @@ export default function AdminAbout() {
 
       {/* 메인 콘텐츠 */}
       <main style={{ maxWidth: '1200px', margin: '0 auto', padding: '2rem 1rem' }}>
+        {/* 모바일/데스크톱 버전 선택 탭 */}
+        <div style={{ 
+          background: 'rgba(255, 255, 255, 0.9)', 
+          backdropFilter: 'blur(10px)', 
+          borderRadius: '12px', 
+          padding: '1rem', 
+          marginBottom: '1.5rem',
+          boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'
+        }}>
+          <div style={{ display: 'flex', gap: '0.5rem' }}>
+            <button
+              onClick={() => setActiveVersion('desktop')}
+              style={{
+                padding: '0.75rem 1.5rem',
+                fontSize: '0.875rem',
+                fontWeight: '600',
+                borderRadius: '8px',
+                border: 'none',
+                cursor: 'pointer',
+                transition: 'all 0.2s ease',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.5rem',
+                ...(activeVersion === 'desktop' ? {
+                  background: 'linear-gradient(135deg, #2563eb, #6366f1)',
+                  color: 'white',
+                  boxShadow: '0 4px 6px rgba(37, 99, 235, 0.3)'
+                } : {
+                  background: 'rgba(255, 255, 255, 0.5)',
+                  color: '#6b7280',
+                  border: '1px solid rgba(229, 231, 235, 0.5)'
+                })
+              }}
+            >
+              <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+              데스크톱 버전
+            </button>
+            <button
+              onClick={() => setActiveVersion('mobile')}
+              style={{
+                padding: '0.75rem 1.5rem',
+                fontSize: '0.875rem',
+                fontWeight: '600',
+                borderRadius: '8px',
+                border: 'none',
+                cursor: 'pointer',
+                transition: 'all 0.2s ease',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.5rem',
+                ...(activeVersion === 'mobile' ? {
+                  background: 'linear-gradient(135deg, #2563eb, #6366f1)',
+                  color: 'white',
+                  boxShadow: '0 4px 6px rgba(37, 99, 235, 0.3)'
+                } : {
+                  background: 'rgba(255, 255, 255, 0.5)',
+                  color: '#6b7280',
+                  border: '1px solid rgba(229, 231, 235, 0.5)'
+                })
+              }}
+            >
+              <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
+              </svg>
+              모바일 버전
+            </button>
+          </div>
+        </div>
+
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
           {/* 상단 섹션들 */}
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '1.5rem', alignItems: 'start' }}>
@@ -509,7 +581,8 @@ export default function AdminAbout() {
             </div>
           </div>
 
-          {/* 탭 네비게이션 관리 */}
+          {/* 탭 네비게이션 관리 - 데스크탑 버전 */}
+          {activeVersion === 'desktop' && (
           <div>
             <div style={{
               background: 'rgba(255, 255, 255, 0.8)',
@@ -535,7 +608,7 @@ export default function AdminAbout() {
                   </svg>
                 </div>
                 <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#111827', margin: 0 }}>
-                  탭 네비게이션 관리
+                  탭 네비게이션 관리 (데스크탑)
                 </h3>
               </div>
               
@@ -581,7 +654,7 @@ export default function AdminAbout() {
                 {/* 탭 스타일 설정 */}
                 <div>
                   <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.75rem' }}>
-                    탭 스타일 설정
+                    탭 스타일 설정 (데스크탑)
                   </label>
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem' }}>
                     <div>
@@ -687,6 +760,188 @@ export default function AdminAbout() {
               </div>
             </div>
           </div>
+          )}
+
+          {/* 탭 네비게이션 관리 - 모바일 버전 */}
+          {activeVersion === 'mobile' && (
+          <div>
+            <div style={{
+              background: 'rgba(255, 255, 255, 0.8)',
+              backdropFilter: 'blur(10px)',
+              borderRadius: '12px',
+              boxShadow: '0 10px 15px rgba(0, 0, 0, 0.1)',
+              border: '1px solid rgba(255, 255, 255, 0.2)',
+              padding: '1.5rem',
+              transition: 'all 0.3s ease'
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
+                <div style={{
+                  width: '32px',
+                  height: '32px',
+                  background: 'linear-gradient(135deg, #8b5cf6, #7c3aed)',
+                  borderRadius: '8px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}>
+                  <svg width="20" height="20" fill="none" stroke="white" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
+                  </svg>
+                </div>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#111827', margin: 0 }}>
+                  탭 네비게이션 관리 (모바일)
+                </h3>
+              </div>
+              
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                {/* 탭 이름 편집 */}
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.75rem' }}>
+                    탭 이름 편집
+                  </label>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1rem' }}>
+                    {aboutData.tabs.map((tab, index) => (
+                      <div key={index}>
+                        <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: '500', color: '#6b7280', marginBottom: '0.25rem' }}>
+                          {index + 1}번째 탭
+                        </label>
+                        <input
+                          type="text"
+                          value={tab.name}
+                          onChange={(e) => {
+                            if (!aboutData) return;
+                            const newTabs = [...aboutData.tabs];
+                            newTabs[index].name = e.target.value;
+                            setAboutData({...aboutData, tabs: newTabs});
+                          }}
+                          disabled={!isEditing}
+                          style={{
+                            width: '100%',
+                            padding: '0.5rem',
+                            border: '1px solid #e5e7eb',
+                            borderRadius: '6px',
+                            outline: 'none',
+                            fontSize: '0.875rem',
+                            transition: 'all 0.2s ease',
+                            background: !isEditing ? '#f9fafb' : 'white',
+                            color: !isEditing ? '#6b7280' : '#111827'
+                          }}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* 탭 스타일 설정 */}
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#374151', marginBottom: '0.75rem' }}>
+                    탭 스타일 설정 (모바일)
+                  </label>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem' }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: '500', color: '#6b7280', marginBottom: '0.5rem' }}>
+                        탭 글씨 크기
+                      </label>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                        <input
+                          type="number"
+                          min="10"
+                          max="24"
+                          value={aboutData.fontSize?.mobileTabName || 14}
+                          onChange={(e) => aboutData && setAboutData({
+                            ...aboutData, 
+                            fontSize: { ...aboutData.fontSize, mobileTabName: parseInt(e.target.value) || 14 }
+                          })}
+                          disabled={!isEditing}
+                          style={{
+                            width: '80px',
+                            padding: '0.3rem 0.5rem',
+                            border: '1px solid #e5e7eb',
+                            borderRadius: '4px',
+                            outline: 'none',
+                            fontSize: '0.75rem',
+                            textAlign: 'center',
+                            background: !isEditing ? '#f9fafb' : 'white',
+                            color: !isEditing ? '#6b7280' : '#111827'
+                          }}
+                        />
+                        <span style={{ 
+                          fontSize: '0.75rem', 
+                          fontWeight: '600', 
+                          color: '#374151'
+                        }}>
+                          px
+                        </span>
+                      </div>
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: '500', color: '#6b7280', marginBottom: '0.5rem' }}>
+                        활성 탭 색상
+                      </label>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                        <input
+                          type="color"
+                          value={aboutData.mobileTabActiveColor || '#00A3E0'}
+                          onChange={(e) => aboutData && setAboutData({
+                            ...aboutData, 
+                            mobileTabActiveColor: e.target.value
+                          })}
+                          disabled={!isEditing}
+                          style={{
+                            width: '40px',
+                            height: '32px',
+                            border: '1px solid #e5e7eb',
+                            borderRadius: '4px',
+                            outline: 'none',
+                            cursor: isEditing ? 'pointer' : 'not-allowed'
+                          }}
+                        />
+                        <span style={{ 
+                          fontSize: '0.75rem', 
+                          fontWeight: '600', 
+                          color: '#374151'
+                        }}>
+                          {aboutData.mobileTabActiveColor || '#00A3E0'}
+                        </span>
+                      </div>
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: '500', color: '#6b7280', marginBottom: '0.5rem' }}>
+                        비활성 탭 색상
+                      </label>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                        <input
+                          type="color"
+                          value={aboutData.mobileTabInactiveColor || '#374151'}
+                          onChange={(e) => aboutData && setAboutData({
+                            ...aboutData, 
+                            mobileTabInactiveColor: e.target.value
+                          })}
+                          disabled={!isEditing}
+                          style={{
+                            width: '40px',
+                            height: '32px',
+                            border: '1px solid #e5e7eb',
+                            borderRadius: '4px',
+                            outline: 'none',
+                            cursor: isEditing ? 'pointer' : 'not-allowed'
+                          }}
+                        />
+                        <span style={{ 
+                          fontSize: '0.75rem', 
+                          fontWeight: '600', 
+                          color: '#374151'
+                        }}>
+                          {aboutData.mobileTabInactiveColor || '#374151'}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          )}
 
           {/* 카드 스타일 관리 */}
           <div>
@@ -1309,20 +1564,26 @@ export default function AdminAbout() {
             <div style={{ marginBottom: '1.5rem', padding: '1rem', background: 'rgba(255, 255, 255, 0.7)', borderRadius: '8px' }}>
               <div style={{ 
                 display: 'flex', 
-                gap: '20px', 
+                gap: activeVersion === 'mobile' ? '10px' : '20px', 
                 marginBottom: '20px',
-                marginLeft: '50px'
+                marginLeft: activeVersion === 'mobile' ? '20px' : '50px',
+                flexWrap: activeVersion === 'mobile' ? 'wrap' : 'nowrap'
               }}>
                 {aboutData.tabs.map((tab, index) => (
                   <button
                     key={tab.name}
                     style={{
-                      backgroundColor: index === 0 ? (aboutData.tabActiveColor || '#00A3E0') : 'transparent',
-                      color: index === 0 ? '#ffffff' : (aboutData.tabInactiveColor || '#374151'),
+                      backgroundColor: index === 0 ? 
+                        (activeVersion === 'mobile' ? (aboutData.mobileTabActiveColor || '#00A3E0') : (aboutData.tabActiveColor || '#00A3E0')) : 
+                        'transparent',
+                      color: index === 0 ? '#ffffff' : 
+                        (activeVersion === 'mobile' ? (aboutData.mobileTabInactiveColor || '#374151') : (aboutData.tabInactiveColor || '#374151')),
                       border: 'none',
-                      fontSize: `${aboutData.fontSize?.tabName || 16}px`,
+                      fontSize: activeVersion === 'mobile' ? 
+                        `${aboutData.fontSize?.mobileTabName || 14}px` : 
+                        `${aboutData.fontSize?.tabName || 16}px`,
                       fontWeight: '650',
-                      padding: '8px 24px',
+                      padding: activeVersion === 'mobile' ? '6px 16px' : '8px 24px',
                       borderRadius: '25px',
                       cursor: 'pointer',
                       transition: 'all 0.3s ease'
@@ -1333,7 +1594,7 @@ export default function AdminAbout() {
                 ))}
               </div>
               <div style={{ fontSize: '0.75rem', color: '#9ca3af', textAlign: 'center' }}>
-                탭 네비게이션 미리보기
+                {activeVersion === 'desktop' ? '데스크탑 탭 네비게이션 미리보기' : '모바일 탭 네비게이션 미리보기'}
               </div>
             </div>
             

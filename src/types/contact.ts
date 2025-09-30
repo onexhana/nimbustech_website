@@ -87,11 +87,16 @@ export interface AboutData {
     cardTitle: number;
     cardDescription: number;
     tabName: number;
+    mobileTabName?: number;
   };
   tabActiveColor?: string;
   tabInactiveColor?: string;
+  mobileTabActiveColor?: string;
+  mobileTabInactiveColor?: string;
   cardBackgroundColor?: string;
   cardTitleColor?: string;
   cardDescriptionColor?: string;
   cardHoverEffect?: boolean;
+  pageTitle?: string;
+  metaDescription?: string;
 }
