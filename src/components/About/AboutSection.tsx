@@ -120,16 +120,16 @@ export default function AboutSection() {
             {/* 모바일 메인 멘트 */}
             <div style={{ textAlign: 'center', marginBottom: '20px' }}>
               <h2 style={{
-                fontSize: '27px',
+                fontSize: '20px',
                 fontWeight: '700',
                 color: '#000000',
                 lineHeight: '1.4',
                 margin: 0
               }}>
-                <span style={{ fontWeight: 700, display: 'block', fontSize: '40px' }}>
+                <span style={{ fontWeight: 700, display: 'block', fontSize: '28px' }}>
                   {aboutData.mainTitle}
                 </span>
-                <span style={{ fontWeight: 400, display: 'block', marginTop: '4px', marginBottom: '30px', fontSize: '26px' }}>
+                <span style={{ fontWeight: 400, display: 'block', marginTop: '4px', marginBottom: '30px', fontSize: '18px' }}>
                 {aboutData.subtitle}
                 </span>
               </h2>
@@ -163,7 +163,7 @@ export default function AboutSection() {
           textColor: "#ffffff",
           borderColor: "#00A3E0",
           borderWidth: 1,
-          fontSize: 18,
+          fontSize: 14,
           fontWeight: 550,
           borderRadius: 20,
           padding: "8px 16px",
@@ -184,7 +184,7 @@ export default function AboutSection() {
                         border: activeTab === tab.name ? `${(filterStyle.borderWidth || 1) + 1}px solid ${filterStyle.borderColor}` : `${filterStyle.borderWidth || 1}px solid ${filterStyle.borderColor}`,
                         borderRadius: `${filterStyle.borderRadius || 20}px`,
                         padding: filterStyle.padding || '8px 16px',
-                        fontSize: `${filterStyle.fontSize || 18}px`,
+                        fontSize: `${filterStyle.fontSize || 14}px`,
                         fontWeight: filterStyle.fontWeight || 550,
                         cursor: 'pointer',
                         minWidth: '60px',
@@ -223,10 +223,10 @@ export default function AboutSection() {
                   <SwiperSlide key={i}>
                     <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', minHeight: '12vw' }}>
                       <div>
-                        <h3 style={{ fontSize: '28px', fontWeight: '600', color: '#000000', margin: '0 0 20px 0' }}>
+                        <h3 style={{ fontSize: '20px', fontWeight: '600', color: '#000000', margin: '0 0 20px 0' }}>
                           {card.title}
                         </h3>
-                        <div style={{ fontSize: '20px', color: '#000000', fontWeight: '400', lineHeight: '1.5' }}>
+                        <div style={{ fontSize: '16px', color: '#000000', fontWeight: '400', lineHeight: '1.5' }}>
                           {card.description.map((line: string, j: number) => (
                             <p key={j} style={{ margin: '0', marginLeft: '0' }}>{line}</p>
                           ))}
