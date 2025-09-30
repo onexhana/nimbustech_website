@@ -820,6 +820,7 @@ export default function AdminAbout() {
                           disabled={!isEditing}
                           style={{
                             width: '100%',
+                            maxWidth: '120px',
                             padding: '0.5rem',
                             border: '1px solid #e5e7eb',
                             borderRadius: '6px',
