@@ -524,10 +524,10 @@ export default function AdminContact() {
                       type="number"
                       min="10"
                       max="28"
-                      value={contactData.fontSize?.desktopSectionTitle || contactData.fontSize?.sectionTitle || 18}
+                      value={contactData.fontSize?.desktopSectionTitle || contactData.fontSize?.sectionTitle || 42}
                       onChange={(e) => contactData && setContactData({
                         ...contactData, 
-                        fontSize: { ...contactData.fontSize, desktopSectionTitle: parseInt(e.target.value) || 18 }
+                        fontSize: { ...contactData.fontSize, desktopSectionTitle: parseInt(e.target.value) || 42 }
                       })}
                       disabled={!isEditing}
                       style={{
@@ -560,10 +560,10 @@ export default function AdminContact() {
                       type="number"
                       min="8"
                       max="20"
-                      value={contactData.fontSize?.desktopSectionDescription || contactData.fontSize?.sectionDescription || 16}
+                      value={contactData.fontSize?.desktopSectionDescription || contactData.fontSize?.sectionDescription || 21}
                       onChange={(e) => contactData && setContactData({
                         ...contactData, 
-                        fontSize: { ...contactData.fontSize, desktopSectionDescription: parseInt(e.target.value) || 16 }
+                        fontSize: { ...contactData.fontSize, desktopSectionDescription: parseInt(e.target.value) || 21 }
                       })}
                       disabled={!isEditing}
                       style={{
@@ -596,10 +596,10 @@ export default function AdminContact() {
                       type="number"
                       min="10"
                       max="24"
-                      value={contactData.fontSize?.desktopButtonText || contactData.fontSize?.buttonText || 18}
+                      value={contactData.fontSize?.desktopButtonText || contactData.fontSize?.buttonText || 32}
                       onChange={(e) => contactData && setContactData({
                         ...contactData, 
-                        fontSize: { ...contactData.fontSize, desktopButtonText: parseInt(e.target.value) || 18 }
+                        fontSize: { ...contactData.fontSize, desktopButtonText: parseInt(e.target.value) || 32 }
                       })}
                       disabled={!isEditing}
                       style={{
@@ -776,10 +776,10 @@ export default function AdminContact() {
                       type="number"
                       min="10"
                       max="28"
-                      value={contactData.fontSize?.sectionTitle || 16}
+                      value={contactData.fontSize?.sectionTitle || 42}
                       onChange={(e) => contactData && setContactData({
                         ...contactData, 
-                        fontSize: { ...contactData.fontSize, sectionTitle: parseInt(e.target.value) || 16 }
+                        fontSize: { ...contactData.fontSize, sectionTitle: parseInt(e.target.value) || 42 }
                       })}
                       disabled={!isEditing}
                       style={{
@@ -812,10 +812,10 @@ export default function AdminContact() {
                       type="number"
                       min="8"
                       max="20"
-                      value={contactData.fontSize?.sectionDescription || 14}
+                      value={contactData.fontSize?.sectionDescription || 15}
                       onChange={(e) => contactData && setContactData({
                         ...contactData, 
-                        fontSize: { ...contactData.fontSize, sectionDescription: parseInt(e.target.value) || 14 }
+                        fontSize: { ...contactData.fontSize, sectionDescription: parseInt(e.target.value) || 15 }
                       })}
                       disabled={!isEditing}
                       style={{
@@ -848,10 +848,10 @@ export default function AdminContact() {
                       type="number"
                       min="10"
                       max="24"
-                      value={contactData.fontSize?.buttonText || 16}
+                      value={contactData.fontSize?.buttonText || 24}
                       onChange={(e) => contactData && setContactData({
                         ...contactData, 
-                        fontSize: { ...contactData.fontSize, buttonText: parseInt(e.target.value) || 16 }
+                        fontSize: { ...contactData.fontSize, buttonText: parseInt(e.target.value) || 24 }
                       })}
                       disabled={!isEditing}
                       style={{
@@ -1878,8 +1878,8 @@ export default function AdminContact() {
                   <div key={index} style={{ marginBottom: '1rem' }}>
                     <h5 style={{ 
                       fontSize: activeVersion === 'desktop' ? 
-                        `${contactData.fontSize?.desktopSectionTitle || contactData.fontSize?.sectionTitle || 18}px` :
-                        `${contactData.fontSize?.sectionTitle || 16}px`, 
+                        `${contactData.fontSize?.desktopSectionTitle || contactData.fontSize?.sectionTitle || 42}px` :
+                        `${contactData.fontSize?.sectionTitle || 42}px`, 
                       fontWeight: 'bold', 
                       color: activeVersion === 'desktop' ? 
                         (contactData.colors?.desktopSectionTitle || contactData.colors?.sectionTitle || '#3b82f6') :
@@ -1890,8 +1890,8 @@ export default function AdminContact() {
                     </h5>
                     <p style={{ 
                       fontSize: activeVersion === 'desktop' ? 
-                        `${contactData.fontSize?.desktopSectionDescription || contactData.fontSize?.sectionDescription || 16}px` :
-                        `${contactData.fontSize?.sectionDescription || 14}px`, 
+                        `${contactData.fontSize?.desktopSectionDescription || contactData.fontSize?.sectionDescription || 21}px` :
+                        `${contactData.fontSize?.sectionDescription || 15}px`, 
                       color: activeVersion === 'desktop' ? 
                         (contactData.colors?.desktopSectionDescription || contactData.colors?.sectionDescription || '#6b7280') :
                         (contactData.colors?.sectionDescription || '#6b7280'), 
