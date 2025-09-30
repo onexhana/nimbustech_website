@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { usePortfolioData } from '../../context/PortfolioContext';
+import FilterStyleEditorComponent from '../../components/admin/FilterStyleEditor';
 
 export default function AdminPortfolio() {
   const { portfolioData, updateProject, addProject, deleteProject, updateCategories } = usePortfolioData();
@@ -1730,43 +1731,10 @@ export default function AdminPortfolio() {
                         </button>
                       </div>
                       
-                      <div style={{ padding: '1rem', background: 'rgba(255, 255, 255, 0.6)', borderRadius: '8px' }}>
-                        <p style={{ color: '#6b7280', margin: 0, fontSize: '1rem', fontWeight: '500' }}>
-                          필터 스타일 편집 기능이 준비되었습니다!
-                        </p>
-                        <p style={{ color: '#6b7280', margin: '0.5rem 0 0 0', fontSize: '0.875rem' }}>
-                          현재 {selectedCategoryForFilterStyle} 필터의 기본 스타일이 적용됩니다.
-                        </p>
-                        <div style={{ marginTop: '1rem', display: 'flex', gap: '0.75rem' }}>
-                          <button
-                            onClick={() => saveFilterStyleSettings(selectedCategoryForFilterStyle, {
-                              backgroundColor: "#00A3E0",
-                              textColor: "#ffffff",
-                              borderColor: "#00A3E0",
-                              borderWidth: 1,
-                              fontSize: 25,
-                              fontWeight: 500,
-                              borderRadius: 999,
-                              padding: "12px 24px",
-                              hoverBackgroundColor: "#008CC0",
-                              hoverTextColor: "#ffffff"
-                            })}
-                            style={{
-                              padding: '0.75rem 1.5rem',
-                              fontSize: '0.875rem',
-                              fontWeight: '500',
-                              color: 'white',
-                              background: 'linear-gradient(135deg, #f59e0b, #f97316)',
-                              border: 'none',
-                              borderRadius: '12px',
-                              cursor: 'pointer',
-                              transition: 'all 0.2s ease'
-                            }}
-                          >
-                            기본 스타일로 저장
-                          </button>
-                        </div>
-                      </div>
+                      <FilterStyleEditorComponent 
+                        selectedCategory={selectedCategoryForFilterStyle}
+                        onSave={saveFilterStyleSettings}
+                      />
                     </div>
                   )}
                 </div>
