@@ -97,31 +97,63 @@ const PortfolioPage = () => {
                       justifyContent: 'space-between'
                     }}>
                       <div>
-                        <h3 style={{
-                          fontSize: '22px',
-                          fontWeight: '700',
-                          color: '#00A3E0',
-                          marginBottom: '-5px',
-                          textAlign: 'center'
-                        }}>
-                          {project.title}
-                        </h3>
-                        <div style={{
-                          fontSize: '16px',
-                          color: '#333',
-                          fontWeight: '500',
-                          lineHeight: '1.5',
-                          textAlign: 'center',
-                          marginBottom: '16px',
-                          minHeight: '50px',
-                          display: 'flex',
-                          flexDirection: 'column',
-                          justifyContent: 'center'
-                        }}>
-                          {project.description.split('\n').map((line, i) => (
-                            <p key={i} style={{ marginBottom: '4px' }}>{line}</p>
-                          ))}
-                        </div>
+                        {(() => {
+                          // 모바일용 프로젝트 스타일 가져오기
+                          const getProjectStyle = (projectId: number) => {
+                            const savedFontStyles = localStorage.getItem('fontStyleSettings');
+                            let fontStyle = null;
+                            
+                            if (savedFontStyles) {
+                              try {
+                                const fontStyles = JSON.parse(savedFontStyles);
+                                fontStyle = fontStyles[projectId];
+                              } catch (error) {
+                                console.error('글씨 스타일 로드 실패:', error);
+                              }
+                            }
+                            
+                            return fontStyle || {
+                              projectTitle: {
+                                mobile: { size: 22, weight: 700, color: "#00A3E0" }
+                              },
+                              projectDescription: {
+                                mobile: { size: 16, weight: 500, color: "#333" }
+                              }
+                            };
+                          };
+                          
+                          const fontStyle = getProjectStyle(project.id);
+                          
+                          return (
+                            <>
+                              <h3 style={{
+                                fontSize: `${fontStyle.projectTitle.mobile.size}px`,
+                                fontWeight: fontStyle.projectTitle.mobile.weight,
+                                color: fontStyle.projectTitle.mobile.color,
+                                marginBottom: '-5px',
+                                textAlign: 'center'
+                              }}>
+                                {project.title}
+                              </h3>
+                              <div style={{
+                                fontSize: `${fontStyle.projectDescription.mobile.size}px`,
+                                color: fontStyle.projectDescription.mobile.color,
+                                fontWeight: fontStyle.projectDescription.mobile.weight,
+                                lineHeight: '1.5',
+                                textAlign: 'center',
+                                marginBottom: '16px',
+                                minHeight: '50px',
+                                display: 'flex',
+                                flexDirection: 'column',
+                                justifyContent: 'center'
+                              }}>
+                                {project.description.split('\n').map((line, i) => (
+                                  <p key={i} style={{ marginBottom: '4px' }}>{line}</p>
+                                ))}
+                              </div>
+                            </>
+                          );
+                        })()}
                       </div>
                       
                       {/* 이미지 영역 */}
