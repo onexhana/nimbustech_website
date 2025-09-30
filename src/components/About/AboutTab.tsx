@@ -41,7 +41,7 @@ export default function AboutTab({ tabs, activeTab, onTabChange, fontSize, activ
         textColor: "#ffffff",
         borderColor: "#00A3E0",
         borderWidth: 1,
-        fontSize: 16,
+        fontSize: 22,
         fontWeight: 650,
         borderRadius: 25,
         padding: "8px 24px",
@@ -66,10 +66,10 @@ export default function AboutTab({ tabs, activeTab, onTabChange, fontSize, activ
             key={tab}
             // 버튼 스타일: 관리자 설정 반영
         style={{
-          backgroundColor: activeTab === tab ? 'white' : filterStyle.backgroundColor,
-          color: activeTab === tab ? filterStyle.borderColor : filterStyle.textColor,
+          backgroundColor: activeTab === tab ? filterStyle.backgroundColor : 'transparent',
+          color: activeTab === tab ? 'white' : '#6b7280',
           border: activeTab === tab ? `${(filterStyle.borderWidth || 1) + 1}px solid ${filterStyle.borderColor}` : `${filterStyle.borderWidth || 1}px solid transparent`,
-          fontSize: `${filterStyle.fontSize || 16}px`,
+          fontSize: `${filterStyle.fontSize || 22}px`,
           fontWeight: filterStyle.fontWeight || 650,
           padding: filterStyle.padding || '8px 24px',
           borderRadius: `${filterStyle.borderRadius || 25}px`,
