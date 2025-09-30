@@ -144,26 +144,53 @@ export default function AboutSection() {
               marginBottom: '25px'
             }}>
               {/* TAB_LIST 배열을 순회하며 각각 버튼 생성 */}
-              {aboutData.tabs.map((tab) => (
-                <button
-                  key={tab.name}
-                  /* 버튼 스타일: 활성 탭은 파란색, 비활성 탭은 흰색 배경 */
-                  style={{
-                    backgroundColor: activeTab === tab.name ? '#00A3E0' : 'white',
-                    color: activeTab === tab.name ? 'white' : '#000000',
-                    border: activeTab === tab.name ? 'none' : '1px solid #00A3E0',
-                    borderRadius: '20px',
-                    padding: '8px 16px',
-                    fontSize: '18px',
-                    fontWeight: '550',
-                    cursor: 'pointer',
-                    minWidth: '60px'
-                  }}
-                  onClick={() => handleTabChange(tab.name)}
-                >
-                  {tab.name} {/* 탭명 표시 */}
-                </button>
-              ))}
+              {aboutData.tabs.map((tab) => {
+                // 관리자에서 설정한 필터 스타일 가져오기
+                const getFilterStyle = (categoryName: string) => {
+                  const savedFilterStyles = localStorage.getItem('filterStyleSettings');
+                  if (savedFilterStyles) {
+                    try {
+                      const filterStyles = JSON.parse(savedFilterStyles);
+                      return filterStyles[categoryName];
+                    } catch (error) {
+                      console.error('필터 스타일 로드 실패:', error);
+                    }
+                  }
+                  
+                  // 기본값 반환 (현재 사이트 색상)
+                  return {
+                    backgroundColor: "#00A3E0",
+                    textColor: "#ffffff",
+                    borderColor: "#00A3E0",
+                    borderWidth: 1,
+                    fontSize: 18,
+                    fontWeight: 550
+                  };
+                };
+                
+                const filterStyle = getFilterStyle(tab.name);
+                
+                return (
+                  <button
+                    key={tab.name}
+                    /* 버튼 스타일: 관리자 설정 반영 */
+                    style={{
+                      backgroundColor: activeTab === tab.name ? 'white' : filterStyle.backgroundColor,
+                      color: activeTab === tab.name ? filterStyle.borderColor : filterStyle.textColor,
+                      border: activeTab === tab.name ? `1px solid ${filterStyle.borderColor}` : `1px solid ${filterStyle.borderColor}`,
+                      borderRadius: '20px',
+                      padding: '8px 16px',
+                      fontSize: `${filterStyle.fontSize}px`,
+                      fontWeight: filterStyle.fontWeight,
+                      cursor: 'pointer',
+                      minWidth: '60px'
+                    }}
+                    onClick={() => handleTabChange(tab.name)}
+                  >
+                    {tab.name} {/* 탭명 표시 */}
+                  </button>
+                );
+              })}
             </div>
 
             {/* 모바일용 Swiper 카드 슬라이더 */}

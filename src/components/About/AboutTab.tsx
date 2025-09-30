@@ -23,6 +23,29 @@ export default function AboutTab({ tabs, activeTab, onTabChange, fontSize, activ
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [hoveredTab, setHoveredTab] = useState<string | null>(null);
 
+  // 관리자에서 설정한 필터 스타일 가져오기
+  const getFilterStyle = (categoryName: string) => {
+    const savedFilterStyles = localStorage.getItem('filterStyleSettings');
+    if (savedFilterStyles) {
+      try {
+        const filterStyles = JSON.parse(savedFilterStyles);
+        return filterStyles[categoryName];
+      } catch (error) {
+        console.error('필터 스타일 로드 실패:', error);
+      }
+    }
+    
+    // 기본값 반환 (현재 사이트 색상)
+    return {
+      backgroundColor: "#00A3E0",
+      textColor: "#ffffff",
+      borderColor: "#00A3E0",
+      borderWidth: 1,
+      fontSize: 22,
+      fontWeight: 650
+    };
+  };
+
   return (
     <div style={{ 
       display: 'flex', 
@@ -31,32 +54,36 @@ export default function AboutTab({ tabs, activeTab, onTabChange, fontSize, activ
       marginLeft: '50px'
     }}>
       {/* tabs 배열을 순회하여 각 탭 버튼을 렌더링합니다. */}
-      {tabs.map((tab) => (
-        <button
-          key={tab}
-          // 버튼 스타일: activeTab과 hoveredTab에 따라 배경색과 글자색을 변경합니다.
-          style={{
-            backgroundColor: activeTab === tab ? (activeColor || '#00A3E0') : 'transparent',
-            color: activeTab === tab ? '#ffffff' : (inactiveColor || '#374151'),
-            border: 'none',
-            fontSize: `${fontSize || 22}px`,
-            fontWeight: '650',
-            padding: '8px 24px',
-            borderRadius: '25px',
-            cursor: 'pointer',
-            transition: 'all 0.3s ease'
-          }}
-          // 마우스 진입 시 hoveredTab 상태 업데이트
-          onMouseEnter={() => setHoveredTab(tab)}
-          // 마우스 이탈 시 hoveredTab 초기화
-          onMouseLeave={() => setHoveredTab(null)}
-          // 클릭 시 부모 콜백을 호출하여 탭을 전환합니다.
-          onClick={() => onTabChange(tab)}
-        >
-          {/* 탭 라벨을 화면에 표시합니다. */}
-          {tab}
-        </button>
-      ))}
+      {tabs.map((tab) => {
+        const filterStyle = getFilterStyle(tab);
+        
+        return (
+          <button
+            key={tab}
+            // 버튼 스타일: 관리자 설정 반영
+            style={{
+              backgroundColor: activeTab === tab ? 'white' : filterStyle.backgroundColor,
+              color: activeTab === tab ? filterStyle.borderColor : filterStyle.textColor,
+              border: activeTab === tab ? `1px solid ${filterStyle.borderColor}` : `1px solid transparent`,
+              fontSize: `${filterStyle.fontSize}px`,
+              fontWeight: filterStyle.fontWeight,
+              padding: '8px 24px',
+              borderRadius: '25px',
+              cursor: 'pointer',
+              transition: 'all 0.3s ease'
+            }}
+            // 마우스 진입 시 hoveredTab 상태 업데이트
+            onMouseEnter={() => setHoveredTab(tab)}
+            // 마우스 이탈 시 hoveredTab 초기화
+            onMouseLeave={() => setHoveredTab(null)}
+            // 클릭 시 부모 콜백을 호출하여 탭을 전환합니다.
+            onClick={() => onTabChange(tab)}
+          >
+            {/* 탭 라벨을 화면에 표시합니다. */}
+            {tab}
+          </button>
+        );
+      })}
     </div>
   );
 }

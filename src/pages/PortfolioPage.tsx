@@ -46,24 +46,51 @@ const PortfolioPage = () => {
               paddingLeft: '20px',
               paddingRight: '20px'
             }}>
-              {portfolioData.categories.map((category) => (
-                <button
-                  key={category}
-                  style={{
-                    backgroundColor: selectedCategory === category ? '#00A3E0' : 'white',
-                    color: selectedCategory === category ? 'white' : '#00A3E0',
-                    border: '1px solid #00A3E0',
-                    borderRadius: '20px',
-                    padding: '8px 20px',
-                    fontSize: '14px',
-                    fontWeight: '600',
-                    cursor: 'pointer'
-                  }}
-                  onClick={() => handleCategoryChange(category)}
-                >
-                  {category}
-                </button>
-              ))}
+              {portfolioData.categories.map((category) => {
+                // 관리자에서 설정한 필터 스타일 가져오기
+                const getFilterStyle = (categoryName: string) => {
+                  const savedFilterStyles = localStorage.getItem('filterStyleSettings');
+                  if (savedFilterStyles) {
+                    try {
+                      const filterStyles = JSON.parse(savedFilterStyles);
+                      return filterStyles[categoryName];
+                    } catch (error) {
+                      console.error('필터 스타일 로드 실패:', error);
+                    }
+                  }
+                  
+                  // 기본값 반환 (현재 사이트 색상)
+                  return {
+                    backgroundColor: "#00A3E0",
+                    textColor: "#ffffff",
+                    borderColor: "#00A3E0",
+                    borderWidth: 1,
+                    fontSize: 14,
+                    fontWeight: 600
+                  };
+                };
+                
+                const filterStyle = getFilterStyle(category);
+                
+                return (
+                  <button
+                    key={category}
+                    style={{
+                      backgroundColor: selectedCategory === category ? 'white' : filterStyle.backgroundColor,
+                      color: selectedCategory === category ? filterStyle.borderColor : filterStyle.textColor,
+                      border: `1px solid ${filterStyle.borderColor}`,
+                      borderRadius: '20px',
+                      padding: '8px 20px',
+                      fontSize: `${filterStyle.fontSize}px`,
+                      fontWeight: filterStyle.fontWeight,
+                      cursor: 'pointer'
+                    }}
+                    onClick={() => handleCategoryChange(category)}
+                  >
+                    {category}
+                  </button>
+                );
+              })}
             </div>
 
             {/* 모바일용 포트폴리오 카드 스와이퍼 */}
