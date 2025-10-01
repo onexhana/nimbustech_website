@@ -122,42 +122,42 @@ const HomeContext = createContext<HomeContextType | undefined>(undefined);
 // Provider 컴포넌트
 export function HomeProvider({ children }: { children: ReactNode }) {
   const [homeData, setHomeData] = useState<HomeData>(() => {
-    // localStorage 초기화 (임시로 기본값만 사용)
-    // const savedData = localStorage.getItem('homeData');
-    // if (savedData) {
-    //   try {
-    //     const parsedData = JSON.parse(savedData);
-    //     // 새로운 필드가 없는 경우 기본값으로 채우기 (데이터 마이그레이션)
-    //     const migratedData = {
-    //       ...defaultHomeData,
-    //       ...parsedData,
-    //       typingTextStyles: {
-    //         ...defaultHomeData.typingTextStyles,
-    //         ...parsedData.typingTextStyles
-    //       },
-    //       typingSpeed: {
-    //         ...defaultHomeData.typingSpeed,
-    //         ...parsedData.typingSpeed
-    //       },
-    //       buttonStyles: {
-    //         ...defaultHomeData.buttonStyles,
-    //         ...parsedData.buttonStyles
-    //       },
-    //       sliderTextColors: {
-    //         ...defaultHomeData.sliderTextColors,
-    //         ...parsedData.sliderTextColors
-    //       },
-    //       sliderTextSizes: {
-    //         ...defaultHomeData.sliderTextSizes,
-    //         ...parsedData.sliderTextSizes
-    //       }
-    //     };
-    //     return migratedData;
-    //   } catch (error) {
-    //     console.error('저장된 홈 데이터를 불러오는데 실패했습니다:', error);
-    //     return defaultHomeData;
-    //   }
-    // }
+    // localStorage에서 저장된 데이터 불러오기
+    const savedData = localStorage.getItem('homeData');
+    if (savedData) {
+      try {
+        const parsedData = JSON.parse(savedData);
+        // 새로운 필드가 없는 경우 기본값으로 채우기 (데이터 마이그레이션)
+        const migratedData = {
+          ...defaultHomeData,
+          ...parsedData,
+          typingTextStyles: {
+            ...defaultHomeData.typingTextStyles,
+            ...parsedData.typingTextStyles
+          },
+          typingSpeed: {
+            ...defaultHomeData.typingSpeed,
+            ...parsedData.typingSpeed
+          },
+          buttonStyles: {
+            ...defaultHomeData.buttonStyles,
+            ...parsedData.buttonStyles
+          },
+          sliderTextColors: {
+            ...defaultHomeData.sliderTextColors,
+            ...parsedData.sliderTextColors
+          },
+          sliderTextSizes: {
+            ...defaultHomeData.sliderTextSizes,
+            ...parsedData.sliderTextSizes
+          }
+        };
+        return migratedData;
+      } catch (error) {
+        console.error('저장된 홈 데이터를 불러오는데 실패했습니다:', error);
+        return defaultHomeData;
+      }
+    }
     return defaultHomeData;
   });
 
