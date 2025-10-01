@@ -123,36 +123,9 @@ export interface AboutData {
     cardTitle: number;
     cardDescription: number;
     tabName: number;
-    desktop?: {
-      mainTitle?: number;
-      subtitle?: number;
-      tabName?: number;
-    };
-    mobile?: {
-      mainTitle?: number;
-      subtitle?: number;
-      tabName?: number;
-    };
-  };
-  desktop?: {
-    mainTitle?: string;
-    subtitle?: string;
-    tabActiveColor?: string;
-    tabInactiveColor?: string;
-    cardBackgroundColor?: string;
-    cardTitleColor?: string;
-    cardDescriptionColor?: string;
-    cardHoverEffect?: boolean;
-  };
-  mobile?: {
-    mainTitle?: string;
-    subtitle?: string;
-    tabActiveColor?: string;
-    tabInactiveColor?: string;
-    cardBackgroundColor?: string;
-    cardTitleColor?: string;
-    cardDescriptionColor?: string;
-    cardHoverEffect?: boolean;
+    mobileTabName?: number;
+    mobileCardTitle?: number;
+    mobileCardDescription?: number;
   };
   tabActiveColor?: string;
   tabInactiveColor?: string;
