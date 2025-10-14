@@ -85,26 +85,30 @@ export default function PortfolioSection() {
             </div>
           ) : (
             <>
-              {/* 검은 실선 - 데스크톱만 */}
               <div style={{
-                width: '110px',
-                height: '3px',
-                backgroundColor: '#000000',
                 marginLeft: '50px',
-                marginBottom: '20px'
-              }}></div>
-              
-              <h2 style={{
-                fontSize: '45px',
-                fontWeight: '1100',
-                marginBottom: '80px',
-                color: '#1f2937',
-                lineHeight: '1.2',
-                letterSpacing: '-3.5px',
-                marginLeft: '50px'
+                marginBottom: '80px'
               }}>
-                Portfolio
-              </h2>
+                <h2 style={{
+                  fontSize: '50px',
+                  fontWeight: '700',
+                  marginBottom: '12px',
+                  color: '#000000',
+                  lineHeight: '1.3',
+                  letterSpacing: '-2px'
+                }}>
+                  고객 성공의 발자취
+                </h2>
+                <p style={{
+                  fontSize: '30px',
+                  fontWeight: '500',
+                  color: '#000000',
+                  lineHeight: '1.5',
+                  letterSpacing: '-0.5px'
+                }}>
+                  함께한 프로젝트, 그것이 님버스테크입니다.
+                </p>
+              </div>
             </>
           )}
         </div>
@@ -189,7 +193,7 @@ export default function PortfolioSection() {
                         </h3>
                         <div style={{
                           fontSize: `${portfolioData.fontSize?.description?.mobile || 16}px`,
-                          color: portfolioData.fontColor?.description?.mobile || '#000000',
+                          color: portfolioData.fontColor?.description?.mobile || '#000000', 
                           fontWeight: portfolioData.fontWeight?.description?.mobile || 600,
                           lineHeight: '1.5',
                           textAlign: 'center',
@@ -240,13 +244,19 @@ export default function PortfolioSection() {
           </>
         ) : (
           /* 데스크톱 레이아웃 */
-          <div className="flex gap-16 items-start" style={{ marginLeft: '64px', marginTop: '-0px' }}>
+          <div className="flex items-start" style={{ 
+            marginLeft: '64px', 
+            marginTop: '-0px',
+            gap: window.innerWidth <= 1366 ? '24px' : '64px' // 템플릿 크기(1366px 이하)에서만 간격 줄임
+          }}>
             <CategoryFilter 
               selectedCategory={selectedCategory}
               onCategoryChange={handleCategoryChange}
             />
 
-            <div className="flex flex-col h-full items-start" style={{ marginLeft: '200px' }}>
+            <div className="flex flex-col h-full items-start" style={{ 
+              marginLeft: window.innerWidth <= 1366 ? '60px' : '200px' // 템플릿 크기(1366px 이하)에서만 추가 간격도 줄임
+            }}>
               <div className="w-full">
                 <PortfolioCardList key={`${selectedCategory}-${swiperKey}`} projects={filtered} />
               </div>
