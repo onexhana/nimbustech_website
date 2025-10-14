@@ -311,15 +311,15 @@ export default function AboutSection() {
                   display: 'flex', 
                   flex: 'none', 
                   justifyContent: 'flex-start',
-                  width: 'calc(420px * 3 + 100px * 2)',
-                  minWidth: 'calc(420px * 3 + 100px * 2)'
+                  width: 'calc(420px * 3 + 80px * 2 + 100px)',
+                  minWidth: 'calc(420px * 3 + 80px * 2 + 100px)'
                 }}
               >
                 <div 
-                  className="overflow-visible"
+                  className="overflow-hidden"
                   style={{ 
-                  width: 'calc(420px * 3 + 100px * 2)', // 3장 카드(420px) + gap(100px * 2)
-                  minWidth: 'calc(420px * 3 + 100px * 2)',
+                  width: 'calc(420px * 3 + 80px * 2 + 100px)', // 3장 카드(420px) + gap(80px * 2) + 여유공간(100px)
+                  minWidth: 'calc(420px * 3 + 80px * 2 + 100px)',
                     margin: '0',
                     position: 'relative',
                     left: '0'
@@ -335,7 +335,7 @@ export default function AboutSection() {
                   onInit={(swiper: any) => {
                     swiperRef.current = swiper;
                   }}
-                  spaceBetween={100} // 고정 간격 100px
+                  spaceBetween={80} // 고정 간격 80px
                   slidesPerView={3}
                   slidesPerGroup={1}
                   loop={isMultiPage}
@@ -350,6 +350,20 @@ export default function AboutSection() {
                   resistanceRatio={0}
                   watchSlidesProgress={false}
                   freeMode={false}
+                  breakpoints={{
+                    768: {
+                      slidesPerView: 3,
+                      spaceBetween: 80,
+                    },
+                    1024: {
+                      slidesPerView: 3,
+                      spaceBetween: 80,
+                    },
+                    1280: {
+                      slidesPerView: 3,
+                      spaceBetween: 80,
+                    }
+                  }}
                   className="about-infinite-swiper"
                 >
                   {duplicatedCards.map((card, index) => (
