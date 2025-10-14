@@ -5,11 +5,13 @@ import { useHomeData } from '../../context/HomeContext';
 
 export default function HomeSection() {
   const [isMobile, setIsMobile] = useState(false);
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   const { homeData } = useHomeData();
 
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768); // 768px 미만을 모바일로 간주
+      setScreenWidth(window.innerWidth);
     };
 
     checkMobile();
@@ -19,6 +21,27 @@ export default function HomeSection() {
       window.removeEventListener('resize', checkMobile);
     };
   }, []);
+
+  // 화면 크기에 따른 부드러운 폰트 크기 계산 함수
+  const getResponsiveFontSize = (baseSizes: number[], isMobileView: boolean) => {
+    if (isMobileView) {
+      // 모바일: 768px 기준으로 비례 계산
+      const ratio = screenWidth / 768;
+      const minSize = 0.7; // 최소 70%
+      const maxSize = 1.0; // 최대 100%
+      const clampedRatio = Math.max(minSize, Math.min(maxSize, ratio));
+      
+      return baseSizes.map(size => Math.round(size * clampedRatio));
+    } else {
+      // 데스크톱: 1920px 기준으로 비례 계산
+      const ratio = screenWidth / 1920;
+      const minSize = 0.6; // 최소 60%
+      const maxSize = 1.0; // 최대 100%
+      const clampedRatio = Math.max(minSize, Math.min(maxSize, ratio));
+      
+      return baseSizes.map(size => Math.round(size * clampedRatio));
+    }
+  };
 
   // 타이핑 애니메이션을 위한 상태 관리
   const [currentLineIndex, setCurrentLineIndex] = useState(0);
@@ -36,6 +59,10 @@ export default function HomeSection() {
     mobileSizes: [35, 35, 35, 48]
   };
   const { colors, fontWeights, desktopSizes, mobileSizes } = typingTextStyles;
+
+  // 반응형 폰트 크기 계산
+  const responsiveDesktopSizes = getResponsiveFontSize(desktopSizes, false);
+  const responsiveMobileSizes = getResponsiveFontSize(mobileSizes, true);
 
   useEffect(() => {
     const typingSpeed = homeData.typingSpeed?.speed || 130;
@@ -78,7 +105,7 @@ export default function HomeSection() {
                   style={{ 
                     color: colors[index],
                     fontWeight: fontWeights[index],
-                    fontSize: isMobile ? `${mobileSizes[index]}px` : `${desktopSizes[index]}px`,
+                    fontSize: isMobile ? `${responsiveMobileSizes[index]}px` : `${responsiveDesktopSizes[index]}px`,
                     ...(index === 3 && { textShadow: '0 0 1px currentColor' })
                   }}
                 >    
