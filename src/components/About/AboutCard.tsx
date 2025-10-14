@@ -106,7 +106,7 @@ export default function AboutCard({ title, description, detailLink, borderRadius
         className="font-semibold text-blue-600 leading-tight"
         style={{
           color: titleColor || "#00A3E0",
-          fontSize: titleFontSize ? `${titleFontSize}px` : "28px",
+          fontSize: titleFontSize ? `${titleFontSize}px` : "18px",
           fontWeight: "600",
           margin: "16px 0 24px 8px",
         }}
@@ -119,7 +119,7 @@ export default function AboutCard({ title, description, detailLink, borderRadius
         className="text-gray-700 space-y-2 flex-1 overflow-hidden"
         style={{
           color: descriptionColor || "#374151",
-          fontSize: descriptionFontSize ? `${descriptionFontSize}px` : "20px",
+          fontSize: descriptionFontSize ? `${descriptionFontSize}px` : "19px",
           fontWeight: "500",
           display: "flex",
           flexDirection: "column",
@@ -173,7 +173,7 @@ export default function AboutCard({ title, description, detailLink, borderRadius
               style={{
                 color: "#00A3E0",
                 fontWeight: "600",
-                fontSize: "18px",
+                fontSize: "14px",
                 textDecoration: "none",
               }}
             >

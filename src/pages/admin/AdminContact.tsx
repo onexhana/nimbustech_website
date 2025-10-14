@@ -8,7 +8,7 @@ export default function AdminContact() {
   const [contactData, setContactData] = useState<ContactData | null>(null);
   const [isEditing, setIsEditing] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState(0); // 0: 데스크톱, 1: 모바일
+  const [activeVersion, setActiveVersion] = useState<'desktop' | 'mobile'>('desktop');
 
   useEffect(() => {
     const loadContactData = async () => {
