@@ -1,4 +1,5 @@
-import { createContext, useContext, useState, ReactNode } from 'react';
+import { createContext, useContext, useState, ReactNode, useEffect } from 'react';
+import { getContactData, saveContactData } from '../api/contact';
 
 // Contact 섹션 타입 정의
 interface ContactSection {
@@ -40,15 +41,46 @@ interface ContactData {
   buttons: ContactButton[];
   companyInfo: CompanyInfo;
   pdfFiles: PdfFile[];
+  fontSize?: {
+    mainTitle?: number;
+    subtitle?: number;
+    sectionTitle?: number;
+    sectionDescription?: number;
+    buttonText?: number;
+    companyInfo?: number;
+    // 데스크탑 전용
+    desktopMainTitle?: number;
+    desktopSubtitle?: number;
+    desktopSectionTitle?: number;
+    desktopSectionDescription?: number;
+    desktopButtonText?: number;
+    desktopCompanyInfo?: number;
+  };
+  colors?: {
+    mainTitle?: string;
+    subtitle?: string;
+    sectionTitle?: string;
+    sectionDescription?: string;
+    buttonText?: string;
+    companyInfo?: string;
+    // 데스크탑 전용
+    desktopMainTitle?: string;
+    desktopSubtitle?: string;
+    desktopSectionTitle?: string;
+    desktopSectionDescription?: string;
+    desktopButtonText?: string;
+    desktopCompanyInfo?: string;
+  };
 }
 
 // Context 타입 정의
 interface ContactContextType {
   contactData: ContactData;
-  updateSection: (index: number, section: Partial<ContactSection>) => void;
-  updateButton: (index: number, button: Partial<ContactButton>) => void;
-  updateCompanyInfo: (updatedInfo: Partial<CompanyInfo>) => void;
-  updatePdfFile: (index: number, file: Partial<PdfFile>) => void;
+  updateSection: (index: number, section: Partial<ContactSection>) => Promise<void>;
+  updateButton: (index: number, button: Partial<ContactButton>) => Promise<void>;
+  updateCompanyInfo: (updatedInfo: Partial<CompanyInfo>) => Promise<void>;
+  updatePdfFile: (index: number, file: Partial<PdfFile>) => Promise<void>;
+  refreshData: () => void;
 }
 
 // 기본 데이터
@@ -91,16 +123,16 @@ const defaultContactData: ContactData = {
       email: "nimbustech@nimbustech.co.kr"
     }
   },
-  pdfFiles: [
-    {
-      name: "개인정보 처리방침",
-      path: "/footer_pdf/개인정보 처리방침_v1.0.pdf"
-    },
-    {
-      name: "님버스테크 회사소개",
-      path: "/footer_pdf/님버스테크 회사소개_v3.5_20250923.pdf"
-    }
-  ]
+    pdfFiles: [
+      {
+        name: "개인정보 처리방침",
+        path: "/footer_pdf/개인정보 처리방침_v1.0.pdf"
+      },
+      {
+        name: "님버스테크 회사소개",
+        path: "/footer_pdf/님버스테크 회사소개_v3.5_20250923.pdf"
+      }
+    ]
 };
 
 // Context 생성
@@ -108,56 +140,74 @@ const ContactContext = createContext<ContactContextType | undefined>(undefined);
 
 // Provider 컴포넌트
 export function ContactProvider({ children }: { children: ReactNode }) {
-  const [contactData, setContactData] = useState<ContactData>(() => {
-    // localStorage에서 저장된 데이터가 있으면 불러오기
-    const savedData = localStorage.getItem('contactData');
-    if (savedData) {
-      try {
-        return JSON.parse(savedData);
-      } catch (error) {
-        console.error('저장된 Contact 데이터를 불러오는데 실패했습니다:', error);
-        return defaultContactData;
-      }
-    }
-    return defaultContactData;
-  });
+  const [contactData, setContactData] = useState<ContactData>(defaultContactData);
+  const [isLoading, setIsLoading] = useState(true);
 
-  // 데이터 업데이트 및 localStorage 저장
-  const updateContactData = (newData: ContactData) => {
+  // 초기 데이터 로드
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  // 데이터 로드 함수 (새로고침용)
+  const loadData = async () => {
+    try {
+      const data = await getContactData();
+      setContactData(data);
+    } catch (error) {
+      console.error('Contact 데이터 로드 실패:', error);
+      // 실패 시 기본 데이터 사용
+      setContactData(defaultContactData);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // 데이터 새로고침 함수
+  const refreshData = () => {
+    setIsLoading(true);
+    loadData();
+  };
+
+  // 데이터 업데이트 및 API를 통한 저장
+  const updateContactData = async (newData: ContactData) => {
     setContactData(newData);
-    localStorage.setItem('contactData', JSON.stringify(newData));
+    try {
+      await saveContactData(newData);
+    } catch (error) {
+      console.error('Contact 데이터 저장 실패:', error);
+    }
   };
 
   // 섹션 업데이트
-  const updateSection = (index: number, section: Partial<ContactSection>) => {
+  const updateSection = async (index: number, section: Partial<ContactSection>) => {
     const newSections = contactData.sections.map((s, i) => 
       i === index ? { ...s, ...section } : s
     );
-    updateContactData({ ...contactData, sections: newSections });
+    await updateContactData({ ...contactData, sections: newSections });
   };
 
   // 버튼 업데이트
-  const updateButton = (index: number, button: Partial<ContactButton>) => {
+  const updateButton = async (index: number, button: Partial<ContactButton>) => {
     const newButtons = contactData.buttons.map((b, i) => 
       i === index ? { ...b, ...button } : b
     );
-    updateContactData({ ...contactData, buttons: newButtons });
+    await updateContactData({ ...contactData, buttons: newButtons });
   };
 
   // 회사 정보 업데이트
-  const updateCompanyInfo = (updatedInfo: Partial<CompanyInfo>) => {
-    updateContactData({ 
+  const updateCompanyInfo = async (updatedInfo: Partial<CompanyInfo>) => {
+    await updateContactData({ 
       ...contactData, 
       companyInfo: { ...contactData.companyInfo, ...updatedInfo }
     });
   };
 
   // PDF 파일 업데이트
-  const updatePdfFile = (index: number, file: Partial<PdfFile>) => {
+  const updatePdfFile = async (index: number, file: Partial<PdfFile>) => {
     const newPdfFiles = contactData.pdfFiles.map((f, i) => 
       i === index ? { ...f, ...file } : f
     );
-    updateContactData({ ...contactData, pdfFiles: newPdfFiles });
+    await updateContactData({ ...contactData, pdfFiles: newPdfFiles });
   };
 
   const value: ContactContextType = {
@@ -165,8 +215,25 @@ export function ContactProvider({ children }: { children: ReactNode }) {
     updateSection,
     updateButton,
     updateCompanyInfo,
-    updatePdfFile
+    updatePdfFile,
+    refreshData
   };
+
+  // 로딩 중일 때는 현재 데이터로 렌더링 (동기 로딩이므로 로딩 상태가 거의 없음)
+  if (isLoading) {
+    return (
+      <ContactContext.Provider value={{
+        contactData: contactData,
+        updateSection: async () => {},
+        updateButton: async () => {},
+        updateCompanyInfo: async () => {},
+        updatePdfFile: async () => {},
+        refreshData: () => {}
+      }}>
+        {children}
+      </ContactContext.Provider>
+    );
+  }
 
   return (
     <ContactContext.Provider value={value}>

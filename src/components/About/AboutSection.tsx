@@ -126,10 +126,22 @@ export default function AboutSection() {
                 lineHeight: '1.4',
                 margin: 0
               }}>
-                <span style={{ fontWeight: 700, display: 'block', fontSize: '40px' }}>
+                <span style={{ 
+                  fontWeight: 700, 
+                  display: 'block', 
+                  fontSize: `${aboutData.fontSize?.mobileMainTitle || aboutData.fontSize?.mainTitle || 28}px`,
+                  color: aboutData.colors?.mobileMainTitle || aboutData.colors?.mainTitle || '#000000'
+                }}>
                   {aboutData.mainTitle}
                 </span>
-                <span style={{ fontWeight: 400, display: 'block', marginTop: '4px', marginBottom: '30px', fontSize: '26px' }}>
+                <span style={{ 
+                  fontWeight: 400, 
+                  display: 'block', 
+                  marginTop: '4px', 
+                  marginBottom: '30px',
+                  fontSize: `${aboutData.fontSize?.mobileSubtitle || aboutData.fontSize?.subtitle || 19}px`,
+                  color: aboutData.colors?.mobileSubtitle || aboutData.colors?.subtitle || '#000000'
+                }}>
                 {aboutData.subtitle}
                 </span>
               </h2>
@@ -144,58 +156,28 @@ export default function AboutSection() {
               marginBottom: '25px'
             }}>
               {/* TAB_LIST 배열을 순회하며 각각 버튼 생성 */}
-              {aboutData.tabs.map((tab) => {
-                // 관리자에서 설정한 필터 스타일 가져오기
-                const getFilterStyle = (categoryName: string) => {
-                  const savedFilterStyles = localStorage.getItem('filterStyleSettings');
-                  if (savedFilterStyles) {
-                    try {
-                      const filterStyles = JSON.parse(savedFilterStyles);
-                      return filterStyles[categoryName];
-                    } catch (error) {
-                      console.error('필터 스타일 로드 실패:', error);
-                    }
-                  }
-                  
-                  // 기본값 반환 (현재 사이트 색상)
-        return {
-          backgroundColor: "#00A3E0",
-          textColor: "#ffffff",
-          borderColor: "#00A3E0",
-          borderWidth: 1,
-          fontSize: 14,
-          fontWeight: 550,
-          borderRadius: 20,
-          padding: "8px 16px",
-          hoverBackgroundColor: "#008CC0",
-          hoverTextColor: "#ffffff"
-        };
-                };
-                
-                const filterStyle = getFilterStyle(tab.name);
-                
-                return (
-                  <button
-                    key={tab.name}
-                    /* 버튼 스타일: 관리자 설정 반영 */
-                      style={{
-                        backgroundColor: activeTab === tab.name ? 'white' : filterStyle.backgroundColor,
-                        color: activeTab === tab.name ? filterStyle.borderColor : filterStyle.textColor,
-                        border: activeTab === tab.name ? `${(filterStyle.borderWidth || 1) + 1}px solid ${filterStyle.borderColor}` : `${filterStyle.borderWidth || 1}px solid ${filterStyle.borderColor}`,
-                        borderRadius: `${filterStyle.borderRadius || 20}px`,
-                        padding: filterStyle.padding || '8px 16px',
-                        fontSize: `${filterStyle.fontSize || 18}px`,
-                        fontWeight: filterStyle.fontWeight || 550,
-                        cursor: 'pointer',
-                        minWidth: '60px',
-                        transition: 'all 0.3s ease'
-                      }}
-                    onClick={() => handleTabChange(tab.name)}
-                  >
-                    {tab.name} {/* 탭명 표시 */}
-                  </button>
-                );
-              })}
+              {aboutData.tabs.map((tab) => (
+                <button
+                  key={tab.name}
+                  /* 버튼 스타일: 활성 탭은 파란색, 비활성 탭은 흰색 배경 */
+                  style={{
+                    backgroundColor: activeTab === tab.name ? 
+                      (aboutData.mobileTabActiveColor || aboutData.tabActiveColor || '#00A3E0') : 'white',
+                    color: activeTab === tab.name ? 'white' : 
+                      (aboutData.mobileTabInactiveColor || aboutData.tabInactiveColor || '#000000'),
+                    border: activeTab === tab.name ? 'none' : `1px solid ${aboutData.mobileTabActiveColor || aboutData.tabActiveColor || '#00A3E0'}`,
+                    borderRadius: '20px',
+                    padding: '8px 16px',
+                    fontSize: `${aboutData.fontSize?.mobileTabName || aboutData.fontSize?.tabName || 14}px`,
+                    fontWeight: '550',
+                    cursor: 'pointer',
+                    minWidth: '60px'
+                  }}
+                  onClick={() => handleTabChange(tab.name)}
+                >
+                  {tab.name} {/* 탭명 표시 */}
+                </button>
+              ))}
             </div>
 
             {/* 모바일용 Swiper 카드 슬라이더 */}
@@ -223,10 +205,20 @@ export default function AboutSection() {
                   <SwiperSlide key={i}>
                     <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', minHeight: '12vw' }}>
                       <div>
-                        <h3 style={{ fontSize: '28px', fontWeight: '600', color: '#000000', margin: '0 0 20px 0' }}>
+                        <h3 style={{ 
+                          fontSize: `${card.fontSize?.title || aboutData.fontSize?.mobileCardTitle || aboutData.fontSize?.cardTitle || 20}px`, 
+                          fontWeight: '600', 
+                          color: aboutData.colors?.mobileCardTitle || aboutData.colors?.cardTitle || aboutData.cardTitleColor || '#000000', 
+                          margin: '0 0 20px 0' 
+                        }}>
                           {card.title}
                         </h3>
-                        <div style={{ fontSize: '20px', color: '#000000', fontWeight: '400', lineHeight: '1.5' }}>
+                        <div style={{ 
+                          fontSize: `${card.fontSize?.description || aboutData.fontSize?.mobileCardDescription || aboutData.fontSize?.cardDescription || 16}px`, 
+                          color: aboutData.colors?.mobileCardDescription || aboutData.colors?.cardDescription || aboutData.cardDescriptionColor || '#000000', 
+                          fontWeight: '400', 
+                          lineHeight: '1.5' 
+                        }}>
                           {card.description.map((line: string, j: number) => (
                             <p key={j} style={{ margin: '0', marginLeft: '0' }}>{line}</p>
                           ))}
@@ -299,9 +291,9 @@ export default function AboutSection() {
               tabs={aboutData.tabs.map(tab => tab.name)}
               activeTab={activeTab}
               onTabChange={handleTabChange}
-              fontSize={18}
-              activeColor={aboutData.tabActiveColor}
-              inactiveColor={aboutData.tabInactiveColor}
+              fontSize={aboutData.fontSize?.desktopTabName || aboutData.fontSize?.tabName}
+              activeColor={aboutData.desktopTabActiveColor || aboutData.tabActiveColor}
+              inactiveColor={aboutData.desktopTabInactiveColor || aboutData.tabInactiveColor}
             />
 
             {/* ======================================== */}
@@ -370,13 +362,13 @@ export default function AboutSection() {
                         linkAsButton={activeTab === '솔루션'}
                         linkText={activeTab === '솔루션' ? "자세히 보기" : undefined}
                         borderRadius="35px"
-                        titleColor={aboutData.cardTitleColor || "#000000"}
-                        descriptionColor={aboutData.cardDescriptionColor || "#6B7280"}
+                        titleColor={aboutData.colors?.desktopCardTitle || aboutData.colors?.cardTitle || aboutData.cardTitleColor || "#000000"}
+                        descriptionColor={aboutData.colors?.desktopCardDescription || aboutData.colors?.cardDescription || aboutData.cardDescriptionColor || "#6B7280"}
                         backgroundColor={aboutData.cardBackgroundColor || "#ffffff"}
                         width={isMobile ? "380px" : undefined}
                         minHeight={isMobile ? "200px" : "12vw"}
-                        titleFontSize={28}
-                        descriptionFontSize={20}
+                        titleFontSize={card.fontSize?.title || aboutData.fontSize?.desktopCardTitle || aboutData.fontSize?.cardTitle}
+                        descriptionFontSize={card.fontSize?.description || aboutData.fontSize?.desktopCardDescription || aboutData.fontSize?.cardDescription}
                         hoverEffect={aboutData.cardHoverEffect}
                       />
                     </div>
