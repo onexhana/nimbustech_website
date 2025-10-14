@@ -63,8 +63,8 @@ h1 {
   width: auto;
 }
 
-/* 768px 이상 데스크톱 */
-@media screen and (min-width: 768px) {
+/* 1024px 이상 데스크톱 */
+@media screen and (min-width: 1024px) {
   .desktop-logo {
     display: block;
     height: 18px;
@@ -79,7 +79,7 @@ h1 {
 
 
 /* 헤더 반응형 CSS */
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 1023px) {
   .desktop-menu-nav {
     display: none !important;
   }
@@ -88,7 +88,7 @@ h1 {
   }
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 1024px) {
   .desktop-menu-nav {
     display: flex !important;
   }

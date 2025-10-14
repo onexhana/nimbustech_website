@@ -13,7 +13,7 @@ const MainPage = () => {
           id="home" 
           className="min-h-screen w-full flex items-center justify-center bg-gradient-to-br from-blue-50 to-white"
         >
-          <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="w-full max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8">
             <HomeSection />
           </div>
         </section>
@@ -23,7 +23,9 @@ const MainPage = () => {
           id="about" 
           className="w-full"
         >
-          <AboutSection />
+          <div className="max-w-[1920px] mx-auto">
+            <AboutSection />
+          </div>
         </section>
 
         {/* Portfolio Section */}
@@ -31,7 +33,7 @@ const MainPage = () => {
           id="portfolio" 
           className="w-full bg-white py-16"
         >
-          <div className="w-full">
+          <div className="w-full max-w-[1920px] mx-auto">
             <PortfolioSection />
           </div>
         </section>
@@ -41,14 +43,16 @@ const MainPage = () => {
           id="contact" 
           className="w-full bg-gray-50 py-8 lg:py-16"
         >
-          <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="w-full max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8">
             <ContactSection />
           </div>
         </section>
       </main>
       {/* Footer */}
       <footer id="footer" className="w-full bg-gray-900 text-white">
-        <Footer />
+        <div className="max-w-[1920px] mx-auto">
+          <Footer />
+        </div>
       </footer>
     </div>
   );
