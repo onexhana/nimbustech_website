@@ -214,7 +214,7 @@ export default function AboutSection() {
                           {card.title}
                         </h3>
                         <div style={{ 
-                          fontSize: `${card.fontSize?.description || aboutData.fontSize?.mobileCardDescription || aboutData.fontSize?.cardDescription || 16}px`, 
+                          fontSize: `${card.fontSize?.description || aboutData.fontSize?.mobileCardDescription || aboutData.fontSize?.cardDescription || 20}px`, 
                           color: aboutData.colors?.mobileCardDescription || aboutData.colors?.cardDescription || aboutData.cardDescriptionColor || '#000000', 
                           fontWeight: '400', 
                           lineHeight: '1.5' 

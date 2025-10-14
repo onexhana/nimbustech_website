@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, ReactNode, useEffect } from 'react';
+import { createContext, useContext, useState, type ReactNode } from 'react';
 import { getAboutData } from '../api/contact';
 
 // About 카드 타입 정의
@@ -16,6 +16,12 @@ interface AboutCard {
 interface AboutTab {
   name: string;
   cards: AboutCard[];
+  desktop?: {
+    name?: string;
+  };
+  mobile?: {
+    name?: string;
+  };
 }
 
 // About 데이터 타입 정의
@@ -84,6 +90,10 @@ interface AboutContextType {
 const defaultAboutData: AboutData = {
   mainTitle: "고객 성공 리딩",
   subtitle: "신뢰성 높은 DT 서비스를 제공합니다.",
+  fontSize: {
+    cardDescription: 18,
+    mobileCardDescription: 20
+  },
   tabs: [
     {
       name: "ITO",

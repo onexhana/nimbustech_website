@@ -119,7 +119,7 @@ export default function AboutCard({ title, description, detailLink, borderRadius
         className="text-gray-700 space-y-2 flex-1 overflow-hidden"
         style={{
           color: descriptionColor || "#374151",
-          fontSize: descriptionFontSize ? `${descriptionFontSize}px` : "1.2vw",
+          fontSize: descriptionFontSize ? `${descriptionFontSize}px` : "1.8vw",
           fontWeight: "500",
           display: "flex",
           flexDirection: "column",
