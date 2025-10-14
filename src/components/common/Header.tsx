@@ -6,7 +6,7 @@ export default function Header() {
 
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768); // 768px 미만을 모바일로 간주
+      setIsMobile(window.innerWidth < 1024); // 1024px 미만을 모바일로 간주
     };
 
     checkMobile();
@@ -84,9 +84,9 @@ function HeaderWeb() {
         top: 0,
         left: 0,
         width: '100%',
+        height: '72px',
         backgroundColor: '#ffffff',
         zIndex: 50,
-        paddingBottom: '20px',
         boxShadow:
           '0 4px 6px -1px rgba(0, 0, 0, 0.19), 0 2px 4px -2px rgba(0,0,0,0.1)',
       }}
