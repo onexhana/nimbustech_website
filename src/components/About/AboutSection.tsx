@@ -106,10 +106,11 @@ export default function AboutSection() {
           ? `80px 0 ${activeTab === 'RPA' ? '40px' : '55px'} 0`
           : `80px 24px ${activeTab === 'RPA' ? '40px' : '60px'} 24px`,
         backgroundColor: '#F3F6F9',
-        marginTop: '120px'
+        marginTop: '120px',
+        overflow: 'visible'
       }}>
       {/* 메인 타이틀 영역 (AboutSection 컴포넌트 내부 상단) */}
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-7xl mx-auto" style={{ overflow: 'visible' }}>
         {/*
           isMobile 분기: 화면 너비가 모바일 기준(<768px)이면 이 블록 실행
           - 모바일용 필터 버튼들을 flex-wrap으로 가로/세로 배치
@@ -299,7 +300,7 @@ export default function AboutSection() {
             {/* ======================================== */}
             {/* 카드 영역 (모든 섹션: Swiper 무한루프) */}
             {/* ======================================== */}
-            <div className="flex items-start" style={{ position: 'relative', overflow: 'visible', display: 'flex', alignItems: 'flex-start', gap: '1vw', justifyContent: 'center', marginLeft: '5vw', marginRight: '5vw' }}>
+            <div className="flex items-start" style={{ position: 'relative', overflow: 'visible', display: 'flex', alignItems: 'flex-start', gap: '0', justifyContent: 'flex-start', marginLeft: '150px', marginRight: '0' }}>
 
               {/* 모든 섹션: 무한 루프 슬라이더 */}
               <div
@@ -308,16 +309,20 @@ export default function AboutSection() {
                   position: 'relative', 
                   overflow: 'visible', 
                   display: 'flex', 
-                  flex: '1', 
-                  justifyContent: 'center'
+                  flex: 'none', 
+                  justifyContent: 'flex-start',
+                  width: 'calc(380px * 3 + 110px * 2)',
+                  minWidth: 'calc(380px * 3 + 110px * 2)'
                 }}
               >
                 <div 
-                  className="overflow-hidden"
+                  className="overflow-visible"
                   style={{ 
-                    width: 'calc(380px * 3 + 30px * 2)', // 3장 카드(380px) + gap(30px * 2)
-                    minWidth: 'calc(380px * 3 + 30px * 2)',
-                    margin: '0 auto' // 중앙 정렬
+                  width: 'calc(380px * 3 + 110px * 2)', // 3장 카드(380px) + gap(110px * 2)
+                  minWidth: 'calc(380px * 3 + 110px * 2)',
+                    margin: '0',
+                    position: 'relative',
+                    left: '0'
                   }}
                 >
                 <Swiper
@@ -330,7 +335,7 @@ export default function AboutSection() {
                   onInit={(swiper: any) => {
                     swiperRef.current = swiper;
                   }}
-                  spaceBetween={30} // 고정 간격 30px
+                  spaceBetween={110} // 고정 간격 110px
                   slidesPerView={3}
                   slidesPerGroup={1}
                   loop={isMultiPage}
@@ -339,6 +344,7 @@ export default function AboutSection() {
                   navigation={false}
                   allowTouchMove={true}
                   centeredSlides={false}
+                  initialSlide={0}
                   speed={300}
                   resistance={false}
                   resistanceRatio={0}
