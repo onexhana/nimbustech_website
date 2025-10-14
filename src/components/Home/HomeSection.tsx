@@ -5,13 +5,11 @@ import { useHomeData } from '../../context/HomeContext';
 
 export default function HomeSection() {
   const [isMobile, setIsMobile] = useState(false);
-  const [screenWidth, setScreenWidth] = useState(1920);
   const { homeData } = useHomeData();
 
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768); // 768px 미만을 모바일로 간주
-      setScreenWidth(window.innerWidth);
     };
 
     checkMobile();
@@ -37,39 +35,7 @@ export default function HomeSection() {
     desktopSizes: [100, 100, 100, 120],
     mobileSizes: [35, 35, 35, 48]
   };
-  const { colors, fontWeights } = typingTextStyles;
-
-  // 화면 크기에 비례하는 폰트 크기 계산 함수
-  const getResponsiveFontSize = (baseSize: number, index: number, isMobileSize = false) => {
-    if (isMobileSize) {
-      // 모바일: 768px 기준으로 계산
-      const minSize = baseSize * 0.7; // 최소 크기 (70%)
-      const maxSize = baseSize; // 최대 크기 (100%)
-      
-      // 화면 너비에 따른 비례 계산 (768px 기준)
-      const ratio = Math.max(screenWidth / 768, 0.7); // 최소 70% 보장
-      const calculatedSize = baseSize * ratio;
-      
-      // 최소/최대 범위 내에서 조정
-      const finalSize = Math.max(minSize, Math.min(maxSize, calculatedSize));
-      
-      return `${finalSize}px`;
-    } else {
-      // 데스크톱: 화면 너비에 비례하여 크기 조정
-      // 1920px 기준으로 계산, 최소 크기 보장
-      const minSize = baseSize * 0.6; // 최소 크기 (60%)
-      const maxSize = baseSize; // 최대 크기 (100%)
-      
-      // 화면 너비에 따른 비례 계산
-      const ratio = Math.max(screenWidth / 1920, 0.6); // 최소 60% 보장
-      const calculatedSize = baseSize * ratio;
-      
-      // 최소/최대 범위 내에서 조정
-      const finalSize = Math.max(minSize, Math.min(maxSize, calculatedSize));
-      
-      return `${finalSize}px`;
-    }
-  };
+  const { colors, fontWeights, desktopSizes, mobileSizes } = typingTextStyles;
 
   useEffect(() => {
     const typingSpeed = homeData.typingSpeed?.speed || 130;
@@ -112,9 +78,7 @@ export default function HomeSection() {
                   style={{ 
                     color: colors[index],
                     fontWeight: fontWeights[index],
-                    fontSize: isMobile 
-                      ? getResponsiveFontSize(typingTextStyles.mobileSizes[index], index, true)
-                      : getResponsiveFontSize(typingTextStyles.desktopSizes[index], index, false),
+                    fontSize: isMobile ? `${mobileSizes[index]}px` : `${desktopSizes[index]}px`,
                     ...(index === 3 && { textShadow: '0 0 1px currentColor' })
                   }}
                 >    
