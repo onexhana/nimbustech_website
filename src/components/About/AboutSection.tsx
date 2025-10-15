@@ -348,7 +348,7 @@ export default function AboutSection() {
                   loop={isMultiPage}
                   loopedSlides={isMultiPage ? Math.max(3, cards.length) : 0}
                   pagination={false}
-                  navigation={false}
+                  navigation={activeTab === '솔루션'}
                   allowTouchMove={true}
                   centeredSlides={false}
                   initialSlide={0}
