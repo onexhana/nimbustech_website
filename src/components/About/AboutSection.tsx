@@ -306,11 +306,11 @@ export default function AboutSection() {
             {/* 카드 영역 (모든 섹션: Swiper 무한루프) */}
             {/* ======================================== */}
             <div className="relative w-full">
-              <div className="flex items-center" style={{ position: 'relative', justifyContent: 'center' }}>
+              <div className="flex items-center" style={{ position: 'relative', justifyContent: 'flex-start', marginLeft: '50px' }}>
                 {/* 카드 컨테이너 */}
                 <div className="overflow-hidden" style={{ 
-                  width: '100%',
-                  maxWidth: '1920px',
+                  width: 'calc(100% - 50px)',
+                  maxWidth: '1870px',
                   position: 'relative'
                 }}>
                 <Swiper
@@ -324,7 +324,7 @@ export default function AboutSection() {
                   onInit={(swiper: any) => {
                     swiperRef.current = swiper;
                   }}
-                  spaceBetween={20}
+                  spaceBetween={15}
                   slidesPerView={3}
                   slidesPerGroup={1}
                   loop={isMultiPage}
@@ -342,19 +342,19 @@ export default function AboutSection() {
                   breakpoints={{
                     768: {
                       slidesPerView: 3,
-                      spaceBetween: 15,
+                      spaceBetween: 12,
                     },
                     1024: {
                       slidesPerView: 3,
-                      spaceBetween: 20,
+                      spaceBetween: 15,
                     },
                     1280: {
                       slidesPerView: 3,
-                      spaceBetween: 25,
+                      spaceBetween: 18,
                     },
                     1920: {
                       slidesPerView: 3,
-                      spaceBetween: 30,
+                      spaceBetween: 20,
                     }
                   }}
                   className="about-infinite-swiper"
@@ -378,7 +378,7 @@ export default function AboutSection() {
                         titleColor={aboutData.colors?.desktopCardTitle || aboutData.colors?.cardTitle || aboutData.cardTitleColor || "#000000"}
                         descriptionColor={aboutData.colors?.desktopCardDescription || aboutData.colors?.cardDescription || aboutData.cardDescriptionColor || "#6B7280"}
                         backgroundColor={aboutData.cardBackgroundColor || "#ffffff"}
-                        width={isMobile ? "380px" : "420px"}
+                        width={isMobile ? "380px" : "360px"}
                         minHeight={isMobile ? "200px" : "200px"}
                         titleFontSize={card.fontSize?.title || aboutData.fontSize?.desktopCardTitle || aboutData.fontSize?.cardTitle}
                         descriptionFontSize={card.fontSize?.description || aboutData.fontSize?.desktopCardDescription || aboutData.fontSize?.cardDescription}
