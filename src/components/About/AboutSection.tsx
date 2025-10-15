@@ -321,14 +321,15 @@ export default function AboutSection() {
                 }}
               >
                 <div 
-                  className="overflow-hidden"
+                  className="overflow-visible"
                   style={{ 
                   width: '100%',
                   maxWidth: '1920px',
                     margin: '0',
                     position: 'relative',
                     left: '0',
-                    boxSizing: 'border-box'
+                    boxSizing: 'border-box',
+                    overflow: 'visible'
                   }}
                 >
                 <Swiper
