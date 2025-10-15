@@ -149,7 +149,7 @@ const buttons: ButtonItem[] = [
     title: "Employee Benefits",
     subtitle: "복지 혜택",
     description:
-      "최고의 열정과 패기를 갖춘\n인재들과 함께 일하고 성장하는 기업",
+      "최고의 열정과 패기를 갖춘 인재들과\n함께 일하고 성장하는 기업",
     link: "/#about",
     imagePath: "/popup_image/Employee Benefits.jpg",
     titleFontSize: 30,
@@ -175,7 +175,7 @@ export default function HomeButton() {
 
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
+      setIsMobile(window.innerWidth < 1000);
     };
     checkMobile();
     window.addEventListener('resize', checkMobile);
@@ -292,13 +292,13 @@ export default function HomeButton() {
             const isSelected = selectedIdx === idx;
             const hoverColor = homeData.buttonStyles?.hoverColor || "#00A3E0";
             const titleSize = isMobile 
-              ? homeData.buttonStyles?.titleSizes?.mobile || 20
-              : homeData.buttonStyles?.titleSizes?.desktop || 30;
+              ? homeData.buttonStyles?.titleSizes?.mobile || 10
+              : homeData.buttonStyles?.titleSizes?.desktop || 20;
             const subtitleSize = isMobile 
               ? homeData.buttonStyles?.subtitleSizes?.mobile || 28
               : homeData.buttonStyles?.subtitleSizes?.desktop || 40;
             const descriptionSize = isMobile 
-              ? homeData.buttonStyles?.descriptionSizes?.mobile || 14
+              ? homeData.buttonStyles?.descriptionSizes?.mobile || 12
               : homeData.buttonStyles?.descriptionSizes?.desktop || 20;
             
             return (
@@ -313,7 +313,7 @@ export default function HomeButton() {
                   <h3
                     className="font-medium transition-colors group-hover:text-blue-600"
                     style={{ 
-                      fontSize: `${titleSize}px`,
+                      fontSize: isMobile ? '10px' : '20px', // 강제로 고정 크기 적용
                       color: isSelected ? hoverColor : "#000000"
                     }}
                   >

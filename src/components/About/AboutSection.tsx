@@ -107,10 +107,14 @@ export default function AboutSection() {
           : `80px 24px ${activeTab === 'RPA' ? '40px' : '60px'} 24px`,
         backgroundColor: '#F3F6F9',
         marginTop: '120px',
-        overflow: 'visible'
+        overflow: 'hidden',
+        maxWidth: '1920px',
+        width: '100%',
+        margin: '0 auto',
+        boxSizing: 'border-box'
       }}>
       {/* 메인 타이틀 영역 (AboutSection 컴포넌트 내부 상단) */}
-      <div className="max-w-7xl mx-auto" style={{ overflow: 'visible' }}>
+      <div className="max-w-7xl mx-auto" style={{ overflow: 'visible', maxWidth: '1920px', width: '100%', boxSizing: 'border-box' }}>
         {/*
           isMobile 분기: 화면 너비가 모바일 기준(<768px)이면 이 블록 실행
           - 모바일용 필터 버튼들을 flex-wrap으로 가로/세로 배치
@@ -300,29 +304,32 @@ export default function AboutSection() {
             {/* ======================================== */}
             {/* 카드 영역 (모든 섹션: Swiper 무한루프) */}
             {/* ======================================== */}
-            <div className="flex items-start justify-center" style={{ position: 'relative', overflow: 'visible', display: 'flex', alignItems: 'flex-start', gap: '0', justifyContent: 'center', marginLeft: '0', marginRight: '0' }}>
+            <div className="flex items-start justify-center" style={{ position: 'relative', overflow: 'hidden', display: 'flex', alignItems: 'flex-start', gap: '0', justifyContent: 'center', marginLeft: '0', marginRight: '0', maxWidth: '1920px', width: '100%', margin: '0 auto', boxSizing: 'border-box' }}>
 
               {/* 모든 섹션: 무한 루프 슬라이더 */}
               <div
                 className="flex flex-1 justify-center"
                 style={{ 
                   position: 'relative', 
-                  overflow: 'visible', 
+                  overflow: 'hidden', 
                   display: 'flex', 
                   flex: 'none', 
                   justifyContent: 'center',
-                  width: 'calc(420px * 3 + 40px * 2 + 100px)',
-                  minWidth: 'calc(420px * 3 + 40px * 2 + 100px)'
+                  width: '100%',
+                  maxWidth: '1920px',
+                  boxSizing: 'border-box'
                 }}
               >
                 <div 
-                  className="overflow-hidden"
+                  className="overflow-visible"
                   style={{ 
-                  width: 'calc(420px * 3 + 40px * 2 + 100px)', // 3장 카드(420px) + gap(40px * 2) + 여유공간(100px)
-                  minWidth: 'calc(420px * 3 + 40px * 2 + 100px)',
+                  width: '100%',
+                  maxWidth: '1920px',
                     margin: '0',
                     position: 'relative',
-                    left: '0'
+                    left: '0',
+                    boxSizing: 'border-box',
+                    overflow: 'visible'
                   }}
                 >
                 <Swiper
@@ -335,7 +342,7 @@ export default function AboutSection() {
                   onInit={(swiper: any) => {
                     swiperRef.current = swiper;
                   }}
-                  spaceBetween={40}
+                  spaceBetween={20}
                   slidesPerView={3}
                   slidesPerGroup={1}
                   loop={isMultiPage}
@@ -353,19 +360,19 @@ export default function AboutSection() {
                   breakpoints={{
                     768: {
                       slidesPerView: 3,
-                      spaceBetween: 30,
+                      spaceBetween: 15,
                     },
                     1024: {
                       slidesPerView: 3,
-                      spaceBetween: 35,
+                      spaceBetween: 20,
                     },
                     1280: {
                       slidesPerView: 3,
-                      spaceBetween: 40,
+                      spaceBetween: 25,
                     },
                     1920: {
                       slidesPerView: 3,
-                      spaceBetween: 45,
+                      spaceBetween: 30,
                     }
                   }}
                   className="about-infinite-swiper"
