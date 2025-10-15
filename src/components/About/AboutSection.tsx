@@ -30,6 +30,7 @@ import AboutTab from './AboutTab';
 // Swiper 관련 import 제거
 import AboutCard from './AboutCard'; // 효과 버전 (호버 애니메이션 활성화)
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation } from 'swiper';
 import 'swiper/swiper-bundle.css';
 import { useAboutData } from '../../context/AboutContext';
 
@@ -304,36 +305,17 @@ export default function AboutSection() {
             {/* ======================================== */}
             {/* 카드 영역 (모든 섹션: Swiper 무한루프) */}
             {/* ======================================== */}
-            <div className="flex items-start justify-center" style={{ position: 'relative', overflow: 'hidden', display: 'flex', alignItems: 'flex-start', gap: '0', justifyContent: 'center', marginLeft: '0', marginRight: '0', maxWidth: '1920px', width: '100%', margin: '0 auto', boxSizing: 'border-box' }}>
-
-              {/* 모든 섹션: 무한 루프 슬라이더 */}
-              <div
-                className="flex flex-1 justify-center"
-                style={{ 
-                  position: 'relative', 
-                  overflow: 'hidden', 
-                  display: 'flex', 
-                  flex: 'none', 
-                  justifyContent: 'center',
+            <div className="relative w-full">
+              <div className="flex items-center" style={{ position: 'relative', justifyContent: 'center' }}>
+                {/* 카드 컨테이너 */}
+                <div className="overflow-hidden" style={{ 
                   width: '100%',
                   maxWidth: '1920px',
-                  boxSizing: 'border-box'
-                }}
-              >
-                <div 
-                  className="overflow-visible"
-                  style={{ 
-                  width: 'calc(420px * 3 + 90px * 2)',
-                  maxWidth: 'calc(420px * 3 + 90px * 2)',
-                    margin: '0 auto',
-                    position: 'relative',
-                    left: '0',
-                    boxSizing: 'border-box',
-                    overflow: 'visible'
-                  }}
-                >
+                  position: 'relative'
+                }}>
                 <Swiper
                   key={`${activeTab}-${cards.length}`} // 탭 변경 시 Swiper 재초기화
+                  modules={[Navigation]}
                   // eslint-disable-next-line @typescript-eslint/no-explicit-any
                   onSwiper={(swiper: any) => {
                     swiperRef.current = swiper;
@@ -436,7 +418,7 @@ export default function AboutSection() {
                 </div>
 
                 {/* 네비게이션 화살표 버튼 - 솔루션 섹션만 */}
-                {isMultiPage && (
+                {activeTab === '솔루션' && (
                   <>
                     <button
                       onClick={() => swiperRef.current?.slidePrev()}
@@ -487,27 +469,27 @@ export default function AboutSection() {
                   </>
                 )}
               </div>
-
-              {/* ======================================== */}
-              {/* CSS 애니메이션 스타일 (카드 등장 효과) */}
-              {/* ======================================== */}
-              <style>{`
-                @keyframes cardAppear {
-                  0% {
-                    opacity: 0;
-                    transform: translateY(30px) scale(0.9);
-                  }
-                  50% {
-                    opacity: 0.7;
-                    transform: translateY(-5px) scale(1.02);
-                  }
-                  100% {
-                    opacity: 1;
-                    transform: translateY(0) scale(1);
-                  }
-                }
-              `}</style>
             </div>
+
+            {/* ======================================== */}
+            {/* CSS 애니메이션 스타일 (카드 등장 효과) */}
+            {/* ======================================== */}
+            <style>{`
+              @keyframes cardAppear {
+                0% {
+                  opacity: 0;
+                  transform: translateY(30px) scale(0.9);
+                }
+                50% {
+                  opacity: 0.7;
+                  transform: translateY(-5px) scale(1.02);
+                }
+                100% {
+                  opacity: 1;
+                  transform: translateY(0) scale(1);
+                }
+              }
+            `}</style>
           </>
         )}
       </div>
