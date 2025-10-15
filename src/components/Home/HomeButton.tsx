@@ -287,18 +287,20 @@ export default function HomeButton() {
               >
                 <div className="mb-2">
                   <h3
-                    className="font-medium transition-colors group-hover:text-blue-600"
+                    className="transition-colors group-hover:text-blue-600"
                     style={{ 
                       fontSize: isMobile ? '10px' : '20px', // 강제로 고정 크기 적용
+                      fontWeight: 450,
                       color: isSelected ? hoverColor : "#000000"
                     }}
                   >
                     {renderTextWithBreaks(btn.title)}
                   </h3>
                   <p
-                    className="font-bold mt-1 transition-colors group-hover:text-blue-600"
+                    className="mt-1 transition-colors group-hover:text-blue-600"
                     style={{ 
                       fontSize: `${subtitleSize}px`,
+                      fontWeight: 710,
                       color: isSelected ? hoverColor : "#000000"
                     }}
                   >
