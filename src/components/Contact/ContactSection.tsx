@@ -103,25 +103,20 @@ export default function ContactSection() {
 
           {/* 우측 - 버튼 영역 */}
           <div
-            className={`flex flex-col gap-8 ${isMobile ? 'min-w-full' : ''}`}
+            className={`flex flex-col gap-8 ${isMobile ? 'min-w-full' : 'w-full max-w-[530px]'}`}
             style={isMobile ? undefined : { minWidth: '300px' }}
           >
             {contactData.buttons.map((button, index) => (
               <button
                 key={index}
-                className={`text-white ${isMobile ? `w-full h-[74px] px-8 flex items-center justify-center relative overflow-hidden border-none !font-black transition-all duration-300 hover:shadow-lg hover:-translate-y-1 ${index === 1 ? 'bg-white text-[#00A3E0]' : 'bg-[#00A3E0] text-white'}` : ''}`}
+                className={`text-white ${isMobile ? `w-full h-[74px] px-8 flex items-center justify-center relative overflow-hidden border-none !font-black transition-all duration-300 hover:shadow-lg hover:-translate-y-1 ${index === 1 ? 'bg-white text-[#00A3E0]' : 'bg-[#00A3E0] text-white'}` : 'w-full h-[80px] flex items-center justify-center relative overflow-hidden border-none transition-all duration-300 hover:shadow-lg hover:-translate-y-1'}`}
                 style={isMobile ? { 
                   fontSize: `${contactData.fontSize?.buttonText || 24}px`,
                   marginTop: index === 0 ? '32px' : '0px',
                   color: contactData.colors?.buttonText || (index === 1 ? '#00A3E0' : '#ffffff')
                 } : { 
                   backgroundColor: index === 0 ? '#00A3E0' : '#6b7280', 
-                  width: '530px', 
                   marginTop: index === 0 ? '320px' : '40px', 
-                  display: 'flex', 
-                  alignItems: 'center', 
-                  justifyContent: 'center', 
-                  height: '80px', 
                   padding: '0 32px', 
                   fontSize: `${contactData.fontSize?.desktopButtonText || contactData.fontSize?.buttonText || 32}px`, 
                   color: contactData.colors?.desktopButtonText || contactData.colors?.buttonText || '#ffffff', 
