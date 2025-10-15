@@ -300,7 +300,7 @@ export default function AboutSection() {
             {/* ======================================== */}
             {/* 카드 영역 (모든 섹션: Swiper 무한루프) */}
             {/* ======================================== */}
-            <div className="flex items-start justify-center" style={{ position: 'relative', overflow: 'visible', display: 'flex', alignItems: 'flex-start', gap: '0', justifyContent: 'center', marginLeft: '50px', marginRight: '50px' }}>
+            <div className="flex items-start justify-center" style={{ position: 'relative', overflow: 'visible', display: 'flex', alignItems: 'flex-start', gap: '0', justifyContent: 'center', marginLeft: '0', marginRight: '0' }}>
 
               {/* 모든 섹션: 무한 루프 슬라이더 */}
               <div
