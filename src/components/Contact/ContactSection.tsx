@@ -61,34 +61,39 @@ export default function ContactSection() {
           style={isMobile ? { gap: '4rem' } : { marginLeft: '50px', marginRight: '50px', gap: '100px' }}
         >
           {/* 좌측 - 가치 섹션들 */}
-          <div className="flex-1 space-y-16">
+          <div className="flex-1 space-y-16" style={isMobile ? {} : { width: '600px', minWidth: '600px' }}>
             {contactData.sections.map((section, index) => (
-              <div key={index}>
+              <div key={index} style={isMobile ? {} : { width: '100%', minWidth: '600px' }}>
                 <h3 style={{
                   fontSize: isMobile ? 
                     `${contactData.fontSize?.sectionTitle || 42}px` : 
-                    `${contactData.fontSize?.desktopSectionTitle || contactData.fontSize?.sectionTitle || 42}px`,
+                    '42px', // 데스크톱에서 고정 크기
                   fontWeight: '900',
                   color: isMobile ? 
                     (contactData.colors?.sectionTitle || '#00A3E0') : 
                     (contactData.colors?.desktopSectionTitle || contactData.colors?.sectionTitle || '#00A3E0'),
                   marginBottom: '2px',
                   letterSpacing: '-1.5px',
-                  marginLeft: isMobile ? '20px' : undefined
+                  marginLeft: isMobile ? '20px' : undefined,
+                  whiteSpace: isMobile ? 'normal' : 'nowrap', // 데스크톱에서 줄바꿈 방지
+                  overflow: isMobile ? 'visible' : 'visible'
                 }}>
                   {section.title}
                 </h3>
                 <p style={{
                   fontSize: isMobile ? 
                     `${contactData.fontSize?.sectionDescription || 15}px` : 
-                    `${contactData.fontSize?.desktopSectionDescription || contactData.fontSize?.sectionDescription || 21}px`,
+                    '21px', // 데스크톱에서 고정 크기
                   color: isMobile ? 
                     (contactData.colors?.sectionDescription || '#4b5563') : 
-                    (contactData.colors?.desktopSectionDescription || contactData.colors?.sectionDescription || '#4b5563'),
+                    '#4b5563', // 데스크톱에서 고정 색상
                   lineHeight: '1.6',
                   fontWeight: '700',
                   marginTop: '2px',
-                  marginLeft: isMobile ? '24px' : undefined
+                  marginLeft: isMobile ? '24px' : undefined,
+                  width: isMobile ? 'auto' : '600px', // 데스크톱에서 고정 너비
+                  minWidth: isMobile ? 'auto' : '600px',
+                  whiteSpace: isMobile ? 'normal' : 'pre-line' // 데스크톱에서 줄바꿈 고정
                 }}>
                   {section.description.split('\n').map((line, i) => (
                     <span key={i}>
