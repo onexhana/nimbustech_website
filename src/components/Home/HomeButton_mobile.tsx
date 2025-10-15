@@ -347,9 +347,10 @@ export default function HomeButtonMobile({ topOffset = '-40vh', marginTopSpacing
               >
                 <div className="text-center">
                   <h3
-                    className="font-semibold transition-colors group-hover:text-blue-600"
+                    className="transition-colors group-hover:text-blue-600"
                     style={{ 
                       fontSize: `${titleSize}px`, 
+                      fontWeight: 450,
                       marginBottom: '8px',
                       color: isSelected ? hoverColor : "#4a5568"
                     }}
@@ -357,9 +358,10 @@ export default function HomeButtonMobile({ topOffset = '-40vh', marginTopSpacing
                     {renderTextWithBreaks(btn.title)}
                   </h3>
                   <p
-                    className="font-bold transition-colors group-hover:text-blue-600"
+                    className="transition-colors group-hover:text-blue-600"
                     style={{ 
                       fontSize: `${subtitleSize}px`, 
+                      fontWeight: 710,
                       marginBottom: '12px',
                       color: isSelected ? hoverColor : "#000000"
                     }}
