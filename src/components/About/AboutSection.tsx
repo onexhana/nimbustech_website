@@ -300,27 +300,29 @@ export default function AboutSection() {
             {/* ======================================== */}
             {/* 카드 영역 (모든 섹션: Swiper 무한루프) */}
             {/* ======================================== */}
-            <div className="flex items-start justify-center" style={{ position: 'relative', overflow: 'visible', display: 'flex', alignItems: 'flex-start', gap: '0', marginLeft: '50px', marginRight: '50px' }}>
+            <div className="flex items-start" style={{ position: 'relative', overflow: 'visible', display: 'flex', alignItems: 'flex-start', gap: '0', justifyContent: 'flex-start', marginLeft: '50px', marginRight: '0' }}>
 
               {/* 모든 섹션: 무한 루프 슬라이더 */}
               <div
-                className="flex flex-1 max-w-full"
+                className="flex flex-1"
                 style={{ 
                   position: 'relative', 
                   overflow: 'visible', 
                   display: 'flex', 
-                  justifyContent: 'center',
-                  width: '100%',
-                  maxWidth: '100%'
+                  flex: 'none', 
+                  justifyContent: 'flex-start',
+                  width: 'calc(420px * 3 + 60px * 2 + 100px)',
+                  minWidth: 'calc(420px * 3 + 60px * 2 + 100px)'
                 }}
               >
                 <div 
-                  className="overflow-hidden w-full"
+                  className="overflow-hidden"
                   style={{ 
-                  width: '100%',
-                  maxWidth: '100%',
+                  width: 'calc(420px * 3 + 60px * 2 + 100px)', // 3장 카드(420px) + gap(60px * 2) + 여유공간(100px)
+                  minWidth: 'calc(420px * 3 + 60px * 2 + 100px)',
                     margin: '0',
-                    position: 'relative'
+                    position: 'relative',
+                    left: '0'
                   }}
                 >
                 <Swiper
@@ -333,7 +335,7 @@ export default function AboutSection() {
                   onInit={(swiper: any) => {
                     swiperRef.current = swiper;
                   }}
-                  spaceBetween={20}
+                  spaceBetween={60}
                   slidesPerView={3}
                   slidesPerGroup={1}
                   loop={isMultiPage}
@@ -351,19 +353,19 @@ export default function AboutSection() {
                   breakpoints={{
                     768: {
                       slidesPerView: 3,
-                      spaceBetween: 20,
+                      spaceBetween: 40,
                     },
                     1024: {
                       slidesPerView: 3,
-                      spaceBetween: 30,
+                      spaceBetween: 50,
                     },
                     1280: {
                       slidesPerView: 3,
-                      spaceBetween: 40,
+                      spaceBetween: 60,
                     },
                     1920: {
                       slidesPerView: 3,
-                      spaceBetween: 50,
+                      spaceBetween: 60,
                     }
                   }}
                   className="about-infinite-swiper"
