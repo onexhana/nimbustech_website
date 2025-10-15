@@ -91,14 +91,14 @@ const defaultHomeData: HomeData = {
     {
       title: "Employee Benefits",
       subtitle: "복지 혜택",
-      description: "최고의 열정과 패기를 갖춘\n인재들과 함께 일하고 성장하는 기업",
+      description: "열정과 패기를 갖춘 인재들과\n함께 일하고 성장하는 기업",
       imagePath: "/popup_image/Employee Benefits.jpg"
     }
   ],
   buttonStyles: {
     titleSizes: { desktop: 30, mobile: 20 },
     subtitleSizes: { desktop: 40, mobile: 28 },
-    descriptionSizes: { desktop: 20, mobile: 14 },
+    descriptionSizes: { desktop: 20, mobile: 12 },
     hoverColor: "#00A3E0"
   },
   sliderText: "LEADING CUSTOMER SUCCESS",
@@ -122,42 +122,8 @@ const HomeContext = createContext<HomeContextType | undefined>(undefined);
 // Provider 컴포넌트
 export function HomeProvider({ children }: { children: ReactNode }) {
   const [homeData, setHomeData] = useState<HomeData>(() => {
-    // localStorage에서 저장된 데이터 불러오기
-    const savedData = localStorage.getItem('homeData');
-    if (savedData) {
-      try {
-        const parsedData = JSON.parse(savedData);
-        // 새로운 필드가 없는 경우 기본값으로 채우기 (데이터 마이그레이션)
-        const migratedData = {
-          ...defaultHomeData,
-          ...parsedData,
-          typingTextStyles: {
-            ...defaultHomeData.typingTextStyles,
-            ...parsedData.typingTextStyles
-          },
-          typingSpeed: {
-            ...defaultHomeData.typingSpeed,
-            ...parsedData.typingSpeed
-          },
-          buttonStyles: {
-            ...defaultHomeData.buttonStyles,
-            ...parsedData.buttonStyles
-          },
-          sliderTextColors: {
-            ...defaultHomeData.sliderTextColors,
-            ...parsedData.sliderTextColors
-          },
-          sliderTextSizes: {
-            ...defaultHomeData.sliderTextSizes,
-            ...parsedData.sliderTextSizes
-          }
-        };
-        return migratedData;
-      } catch (error) {
-        console.error('저장된 홈 데이터를 불러오는데 실패했습니다:', error);
-        return defaultHomeData;
-      }
-    }
+    // localStorage 무시하고 기본값 사용
+    localStorage.removeItem('homeData'); // 강제 초기화
     return defaultHomeData;
   });
 
