@@ -91,8 +91,10 @@ const defaultAboutData: AboutData = {
   mainTitle: "고객 성공 리딩",
   subtitle: "신뢰성 높은 DT 서비스를 제공합니다.",
   fontSize: {
-    cardDescription: 18,
-    mobileCardDescription: 20
+    cardTitle: 28,
+    cardDescription: 22,
+    mobileCardTitle: 28,
+    mobileCardDescription: 22
   },
   tabs: [
     {
@@ -232,7 +234,25 @@ export function AboutProvider({ children }: { children: ReactNode }) {
     const savedData = localStorage.getItem('aboutData');
     if (savedData) {
       try {
-        return JSON.parse(savedData);
+        const parsedData = JSON.parse(savedData);
+        // 폰트 크기가 작으면 기본값으로 업데이트
+        if (!parsedData.fontSize || 
+            (parsedData.fontSize.cardTitle && parsedData.fontSize.cardTitle < 28) ||
+            (parsedData.fontSize.cardDescription && parsedData.fontSize.cardDescription < 22)) {
+          const updatedData = {
+            ...parsedData,
+            fontSize: {
+              cardTitle: 28,
+              cardDescription: 22,
+              mobileCardTitle: 28,
+              mobileCardDescription: 22,
+              ...parsedData.fontSize
+            }
+          };
+          localStorage.setItem('aboutData', JSON.stringify(updatedData));
+          return updatedData;
+        }
+        return parsedData;
       } catch (error) {
         console.error('저장된 About 데이터를 불러오는데 실패했습니다:', error);
         return defaultAboutData;

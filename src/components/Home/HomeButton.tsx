@@ -35,6 +35,30 @@ function InfiniteTextSlider({
   fontWeight = 300,
   fontWeights = {},
 }: InfiniteTextSliderProps) {
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setScreenWidth(window.innerWidth);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // 화면 크기에 따른 부드러운 폰트 크기 계산 함수
+  const getResponsiveFontSize = (baseSize: number) => {
+    // 1920px 기준으로 비례 계산
+    const ratio = screenWidth / 1920;
+    const minSize = 0.5; // 최소 50%
+    const maxSize = 1.2; // 최대 120%
+    const clampedRatio = Math.max(minSize, Math.min(maxSize, ratio));
+    
+    return Math.round(baseSize * clampedRatio);
+  };
+
+  // 반응형 폰트 크기 계산
+  const responsiveFontSize = getResponsiveFontSize(fontSize);
+
   // 텍스트를 충분히 복사해서 끊김 없는 무한 루프 구현
   const repeatedText = Array(6).fill(text);
 
@@ -72,7 +96,7 @@ function InfiniteTextSlider({
             key={i}
             className="flex-none"
             style={{
-              fontSize: `${fontSize}px`,
+              fontSize: `${responsiveFontSize}px`,
               lineHeight: "1.2",
               color: textColor,
               fontWeight: fontWeight,

@@ -76,13 +76,25 @@ function PartnerLogoSliderWeb({
   
   const [customerLogos, setCustomerLogos] = useState<Logo[]>(getCustomerLogos());
   const [partnerLogos, setPartnerLogos] = useState<Logo[]>(getPartnerLogos());
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   const [settings, setSettings] = useState({
     speed: 50,
     textColor: "#374151",
     textSize: 40
   });
 
-  // localStorage 변경 감지
+  // 화면 크기에 따른 부드러운 폰트 크기 계산 함수
+  const getResponsiveFontSize = (baseSize: number) => {
+    // 데스크톱: 1920px 기준으로 비례 계산
+    const ratio = screenWidth / 1920;
+    const minSize = 0.6; // 최소 60%
+    const maxSize = 1.2; // 최대 120%
+    const clampedRatio = Math.max(minSize, Math.min(maxSize, ratio));
+    
+    return Math.round(baseSize * clampedRatio);
+  };
+
+  // localStorage 변경 감지 및 화면 크기 감지
   useEffect(() => {
     const handleStorageChange = () => {
       setCustomerLogos(getCustomerLogos());
@@ -99,8 +111,14 @@ function PartnerLogoSliderWeb({
         }
       }
     };
+
+    const handleResize = () => {
+      setScreenWidth(window.innerWidth);
+    };
     
     window.addEventListener('storage', handleStorageChange);
+    window.addEventListener('resize', handleResize);
+    
     // 컴포넌트 마운트 시에도 다시 읽기
     setCustomerLogos(getCustomerLogos());
     setPartnerLogos(getPartnerLogos());
@@ -116,7 +134,10 @@ function PartnerLogoSliderWeb({
       }
     }
     
-    return () => window.removeEventListener('storage', handleStorageChange);
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener('resize', handleResize);
+    };
   }, []);
 
   const safeFactor = (v: number) => (v > 0 ? v : 1);
@@ -129,12 +150,15 @@ function PartnerLogoSliderWeb({
     { logos: partnerLogos, duration: bottomDuration, reverse: true },
   ];
 
+  // 반응형 텍스트 크기 계산
+  const responsiveTextSize = getResponsiveFontSize(settings.textSize);
+
   return (
     <section aria-label="협력사 로고 슬라이더 (웹)" className="w-full">
       <p 
         className="text-center mb-10"
         style={{
-          fontSize: `${settings.textSize}px`,
+          fontSize: `${responsiveTextSize}px`,
           color: settings.textColor,
           fontWeight: 600,
           marginTop: "120px",

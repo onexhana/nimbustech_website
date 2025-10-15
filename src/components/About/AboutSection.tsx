@@ -207,7 +207,7 @@ export default function AboutSection() {
                     <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', minHeight: '12vw' }}>
                       <div>
                         <h3 style={{ 
-                          fontSize: `${card.fontSize?.title || aboutData.fontSize?.mobileCardTitle || aboutData.fontSize?.cardTitle || 20}px`, 
+                          fontSize: `${card.fontSize?.title || aboutData.fontSize?.mobileCardTitle || aboutData.fontSize?.cardTitle || 28}px`, 
                           fontWeight: '600', 
                           color: aboutData.colors?.mobileCardTitle || aboutData.colors?.cardTitle || aboutData.cardTitleColor || '#000000', 
                           margin: '0 0 20px 0' 
@@ -215,7 +215,7 @@ export default function AboutSection() {
                           {card.title}
                         </h3>
                         <div style={{ 
-                          fontSize: `${card.fontSize?.description || aboutData.fontSize?.mobileCardDescription || aboutData.fontSize?.cardDescription || 20}px`, 
+                          fontSize: `${card.fontSize?.description || aboutData.fontSize?.mobileCardDescription || aboutData.fontSize?.cardDescription || 22}px`, 
                           color: aboutData.colors?.mobileCardDescription || aboutData.colors?.cardDescription || aboutData.cardDescriptionColor || '#000000', 
                           fontWeight: '400', 
                           lineHeight: '1.5' 
@@ -311,15 +311,15 @@ export default function AboutSection() {
                   display: 'flex', 
                   flex: 'none', 
                   justifyContent: 'flex-start',
-                  width: 'calc(420px * 3 + 80px * 2 + 100px)',
-                  minWidth: 'calc(420px * 3 + 80px * 2 + 100px)'
+                  width: 'calc(420px * 3 + 160px * 2 + 200px)',
+                  minWidth: 'calc(420px * 3 + 160px * 2 + 200px)'
                 }}
               >
                 <div 
                   className="overflow-hidden"
                   style={{ 
-                  width: 'calc(420px * 3 + 80px * 2 + 100px)', // 3장 카드(420px) + gap(80px * 2) + 여유공간(100px)
-                  minWidth: 'calc(420px * 3 + 80px * 2 + 100px)',
+                  width: 'calc(420px * 3 + 160px * 2 + 200px)', // 3장 카드(420px) + gap(160px * 2) + 여유공간(200px)
+                  minWidth: 'calc(420px * 3 + 160px * 2 + 200px)',
                     margin: '0',
                     position: 'relative',
                     left: '0'
@@ -335,7 +335,7 @@ export default function AboutSection() {
                   onInit={(swiper: any) => {
                     swiperRef.current = swiper;
                   }}
-                  spaceBetween={80} // 고정 간격 80px
+                  spaceBetween={120} // 카드 간격을 120px로 증가
                   slidesPerView={3}
                   slidesPerGroup={1}
                   loop={isMultiPage}
@@ -353,15 +353,19 @@ export default function AboutSection() {
                   breakpoints={{
                     768: {
                       slidesPerView: 3,
-                      spaceBetween: 80,
+                      spaceBetween: 100,
                     },
                     1024: {
                       slidesPerView: 3,
-                      spaceBetween: 80,
+                      spaceBetween: 120,
                     },
                     1280: {
                       slidesPerView: 3,
-                      spaceBetween: 80,
+                      spaceBetween: 140,
+                    },
+                    1920: {
+                      slidesPerView: 3,
+                      spaceBetween: 160,
                     }
                   }}
                   className="about-infinite-swiper"

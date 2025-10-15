@@ -109,13 +109,25 @@ function PartnerLogoSliderMobile({
   const mobileLogoHeight = 20;
   console.log('PartnerLogoSliderMobile 렌더링됨 - 원래 logoHeight:', logoHeight, '실제 사용:', mobileLogoHeight);
 
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   const [settings, setSettings] = useState({
     speed: 300,
     textColor: "#374151",
     textSize: 23
   });
 
-  // localStorage 변경 감지
+  // 화면 크기에 따른 부드러운 폰트 크기 계산 함수
+  const getResponsiveFontSize = (baseSize: number) => {
+    // 모바일: 768px 기준으로 비례 계산
+    const ratio = screenWidth / 768;
+    const minSize = 0.6; // 최소 60%
+    const maxSize = 1.2; // 최대 120%
+    const clampedRatio = Math.max(minSize, Math.min(maxSize, ratio));
+    
+    return Math.round(baseSize * clampedRatio);
+  };
+
+  // localStorage 변경 감지 및 화면 크기 감지
   useEffect(() => {
     const handleStorageChange = () => {
       // 로고슬라이드 설정 로드
@@ -129,8 +141,13 @@ function PartnerLogoSliderMobile({
         }
       }
     };
+
+    const handleResize = () => {
+      setScreenWidth(window.innerWidth);
+    };
     
     window.addEventListener('storage', handleStorageChange);
+    window.addEventListener('resize', handleResize);
     
     // 로고슬라이드 설정 로드
     const savedSettings = localStorage.getItem('logoSliderSettings');
@@ -143,7 +160,10 @@ function PartnerLogoSliderMobile({
       }
     }
     
-    return () => window.removeEventListener('storage', handleStorageChange);
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener('resize', handleResize);
+    };
   }, []);
 
   // 모바일에서는 설정에서 속도 가져오기
@@ -155,12 +175,15 @@ function PartnerLogoSliderMobile({
     { logos: [...ROW2].reverse(), duration: bottomDuration, reverse: true },
   ];
 
+  // 반응형 텍스트 크기 계산
+  const responsiveTextSize = getResponsiveFontSize(settings.textSize);
+
   return (
     <section aria-label="협력사 로고 슬라이더 (모바일)" className="w-full overflow-hidden">
       <p 
         className="text-center font-bold mb-8"
         style={{
-          fontSize: `${settings.textSize}px`,
+          fontSize: `${responsiveTextSize}px`,
           color: settings.textColor,
           fontWeight: 600,
           marginTop: "50px",
