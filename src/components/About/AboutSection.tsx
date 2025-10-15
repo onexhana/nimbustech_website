@@ -30,6 +30,7 @@ import AboutTab from './AboutTab';
 // Swiper 관련 import 제거
 import AboutCard from './AboutCard'; // 효과 버전 (호버 애니메이션 활성화)
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation } from 'swiper';
 import 'swiper/swiper-bundle.css';
 import { useAboutData } from '../../context/AboutContext';
 
@@ -334,6 +335,7 @@ export default function AboutSection() {
                 >
                 <Swiper
                   key={`${activeTab}-${cards.length}`} // 탭 변경 시 Swiper 재초기화
+                  modules={[Navigation]}
                   // eslint-disable-next-line @typescript-eslint/no-explicit-any
                   onSwiper={(swiper: any) => {
                     swiperRef.current = swiper;
@@ -486,8 +488,8 @@ export default function AboutSection() {
                     }
                   `}</style>
                 </div>
-
-                {/* 네비게이션 화살표 버튼 - 솔루션 섹션만 */}
+                
+                {/* 포트폴리오와 똑같은 네비게이션 화살표 버튼 - 솔루션 섹션만 */}
                 {isMultiPage && (
                   <>
                     <button
