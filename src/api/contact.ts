@@ -117,6 +117,12 @@ export async function getAboutData(): Promise<AboutData> {
   return {
     mainTitle: "고객 성공 리딩",
     subtitle: "신뢰성 높은 DT 서비스를 제공합니다.",
+    fontSize: {
+      cardTitle: 28,
+      cardDescription: 22,
+      mobileCardTitle: 28,
+      mobileCardDescription: 22
+    },
     tabs: [
       {
         name: "ITO",

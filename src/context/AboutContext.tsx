@@ -266,7 +266,29 @@ export function AboutProvider({ children }: { children: ReactNode }) {
   const loadData = async () => {
     try {
       const data = await getAboutData();
-      setAboutData(data);
+      
+      // 서버에서 가져온 데이터의 폰트 크기가 작으면 강제로 업데이트
+      if (!data.fontSize || 
+          (data.fontSize.cardTitle && data.fontSize.cardTitle < 28) ||
+          (data.fontSize.cardDescription && data.fontSize.cardDescription < 22) ||
+          (data.fontSize.mobileCardTitle && data.fontSize.mobileCardTitle < 28) ||
+          (data.fontSize.mobileCardDescription && data.fontSize.mobileCardDescription < 22)) {
+        console.log('서버에서 가져온 AboutData 폰트 크기가 작아 강제로 업데이트합니다.');
+        const updatedData = {
+          ...data,
+          fontSize: {
+            cardTitle: 28,
+            cardDescription: 22,
+            mobileCardTitle: 28,
+            mobileCardDescription: 22
+          }
+        };
+        setAboutData(updatedData);
+        // localStorage에도 저장
+        localStorage.setItem('aboutData', JSON.stringify(updatedData));
+      } else {
+        setAboutData(data);
+      }
     } catch (error) {
       console.error('About 데이터 로드 실패:', error);
       // 실패 시 기본 데이터 사용
