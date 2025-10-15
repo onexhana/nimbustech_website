@@ -323,9 +323,9 @@ export default function AboutSection() {
                 <div 
                   className="overflow-visible"
                   style={{ 
-                  width: '100%',
-                  maxWidth: '1920px',
-                    margin: '0',
+                  width: 'calc(420px * 3 + 90px * 2)',
+                  maxWidth: 'calc(420px * 3 + 90px * 2)',
+                    margin: '0 auto',
                     position: 'relative',
                     left: '0',
                     boxSizing: 'border-box',
@@ -342,7 +342,7 @@ export default function AboutSection() {
                   onInit={(swiper: any) => {
                     swiperRef.current = swiper;
                   }}
-                  spaceBetween={20}
+                  spaceBetween={90}
                   slidesPerView={3}
                   slidesPerGroup={1}
                   loop={isMultiPage}
@@ -360,19 +360,19 @@ export default function AboutSection() {
                   breakpoints={{
                     768: {
                       slidesPerView: 3,
-                      spaceBetween: 15,
+                      spaceBetween: 70,
                     },
                     1024: {
                       slidesPerView: 3,
-                      spaceBetween: 20,
+                      spaceBetween: 80,
                     },
                     1280: {
                       slidesPerView: 3,
-                      spaceBetween: 25,
+                      spaceBetween: 85,
                     },
                     1920: {
                       slidesPerView: 3,
-                      spaceBetween: 30,
+                      spaceBetween: 90,
                     }
                   }}
                   className="about-infinite-swiper"
