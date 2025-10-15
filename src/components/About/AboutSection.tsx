@@ -305,34 +305,14 @@ export default function AboutSection() {
             {/* ======================================== */}
             {/* 카드 영역 (모든 섹션: Swiper 무한루프) */}
             {/* ======================================== */}
-            <div className="flex items-start justify-center" style={{ position: 'relative', overflow: 'hidden', display: 'flex', alignItems: 'flex-start', gap: '0', justifyContent: 'center', marginLeft: '0', marginRight: '0', maxWidth: '1920px', width: '100%', margin: '0 auto', boxSizing: 'border-box' }}>
-
-              {/* 모든 섹션: 무한 루프 슬라이더 */}
-              <div
-                className="flex flex-1 justify-center"
-                style={{ 
-                  position: 'relative', 
-                  overflow: 'hidden', 
-                  display: 'flex', 
-                  flex: 'none', 
-                  justifyContent: 'center',
+            <div className="relative w-full">
+              <div className="flex items-center" style={{ position: 'relative', justifyContent: 'center' }}>
+                {/* 카드 컨테이너 */}
+                <div className="overflow-hidden" style={{ 
                   width: '100%',
                   maxWidth: '1920px',
-                  boxSizing: 'border-box'
-                }}
-              >
-                <div 
-                  className="overflow-visible"
-                  style={{ 
-                  width: '100%',
-                  maxWidth: '1920px',
-                    margin: '0',
-                    position: 'relative',
-                    left: '0',
-                    boxSizing: 'border-box',
-                    overflow: 'visible'
-                  }}
-                >
+                  position: 'relative'
+                }}>
                 <Swiper
                   key={`${activeTab}-${cards.length}`} // 탭 변경 시 Swiper 재초기화
                   modules={[Navigation]}
@@ -350,7 +330,7 @@ export default function AboutSection() {
                   loop={isMultiPage}
                   loopedSlides={isMultiPage ? Math.max(3, cards.length) : 0}
                   pagination={false}
-                  navigation={activeTab === '솔루션'}
+                  navigation={false}
                   allowTouchMove={true}
                   centeredSlides={false}
                   initialSlide={0}
@@ -409,58 +389,6 @@ export default function AboutSection() {
                   ))}
                 </Swiper>
                 
-                {/* 네비게이션 화살표 버튼 - 솔루션 섹션만 */}
-                {isMultiPage && (
-                  <>
-                    <button
-                      onClick={() => swiperRef.current?.slidePrev()}
-                      style={{
-                        position: 'absolute',
-                        top: '-5rem',
-                        right: '6rem',
-                        border: 'none',
-                        outline: 'none',
-                        width: '40px',
-                        height: '40px',
-                        borderRadius: '50%',
-                        backgroundColor: '#E5E7EB',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        cursor: 'pointer',
-                        zIndex: 10,
-                      }}
-                    >
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                        <path d="M15 6L9 12L15 18" stroke="#1F2937" strokeWidth="3" strokeLinecap="butt" strokeLinejoin="miter" />
-                      </svg>
-                    </button>
-                    <button
-                      onClick={() => swiperRef.current?.slideNext()}
-                      style={{
-                        position: 'absolute',
-                        top: '-5rem',
-                        right: '2rem',
-                        border: 'none',
-                        outline: 'none',
-                        width: '40px',
-                        height: '40px',
-                        borderRadius: '50%',
-                        backgroundColor: '#1F2937',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        cursor: 'pointer',
-                        zIndex: 10,
-                      }}
-                    >
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                        <path d="M9 6L15 12L9 18" stroke="#FFFFFF" strokeWidth="3" strokeLinecap="butt" strokeLinejoin="miter" />
-                      </svg>
-                    </button>
-                  </>
-                )}
-                
                   {/* Swiper 스타일 - 모든 섹션 공통 */}
                   <style>{`
                     .about-infinite-swiper {
@@ -488,9 +416,9 @@ export default function AboutSection() {
                     }
                   `}</style>
                 </div>
-                
-                {/* 포트폴리오와 똑같은 네비게이션 화살표 버튼 - 솔루션 섹션만 */}
-                {isMultiPage && (
+
+                {/* 네비게이션 화살표 버튼 - 솔루션 섹션만 */}
+                {activeTab === '솔루션' && (
                   <>
                     <button
                       onClick={() => swiperRef.current?.slidePrev()}
@@ -541,27 +469,27 @@ export default function AboutSection() {
                   </>
                 )}
               </div>
-
-              {/* ======================================== */}
-              {/* CSS 애니메이션 스타일 (카드 등장 효과) */}
-              {/* ======================================== */}
-              <style>{`
-                @keyframes cardAppear {
-                  0% {
-                    opacity: 0;
-                    transform: translateY(30px) scale(0.9);
-                  }
-                  50% {
-                    opacity: 0.7;
-                    transform: translateY(-5px) scale(1.02);
-                  }
-                  100% {
-                    opacity: 1;
-                    transform: translateY(0) scale(1);
-                  }
-                }
-              `}</style>
             </div>
+
+            {/* ======================================== */}
+            {/* CSS 애니메이션 스타일 (카드 등장 효과) */}
+            {/* ======================================== */}
+            <style>{`
+              @keyframes cardAppear {
+                0% {
+                  opacity: 0;
+                  transform: translateY(30px) scale(0.9);
+                }
+                50% {
+                  opacity: 0.7;
+                  transform: translateY(-5px) scale(1.02);
+                }
+                100% {
+                  opacity: 1;
+                  transform: translateY(0) scale(1);
+                }
+              }
+            `}</style>
           </>
         )}
       </div>
