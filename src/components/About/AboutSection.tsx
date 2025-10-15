@@ -300,29 +300,27 @@ export default function AboutSection() {
             {/* ======================================== */}
             {/* 카드 영역 (모든 섹션: Swiper 무한루프) */}
             {/* ======================================== */}
-            <div className="flex items-start" style={{ position: 'relative', overflow: 'visible', display: 'flex', alignItems: 'flex-start', gap: '0', justifyContent: 'flex-start', marginLeft: '50px', marginRight: '0' }}>
+            <div className="flex items-start justify-center" style={{ position: 'relative', overflow: 'visible', display: 'flex', alignItems: 'flex-start', gap: '0', marginLeft: '50px', marginRight: '50px' }}>
 
               {/* 모든 섹션: 무한 루프 슬라이더 */}
               <div
-                className="flex flex-1"
+                className="flex flex-1 max-w-full"
                 style={{ 
                   position: 'relative', 
                   overflow: 'visible', 
                   display: 'flex', 
-                  flex: 'none', 
-                  justifyContent: 'flex-start',
-                  width: 'calc(420px * 3 + 160px * 2 + 200px)',
-                  minWidth: 'calc(420px * 3 + 160px * 2 + 200px)'
+                  justifyContent: 'center',
+                  width: '100%',
+                  maxWidth: '100%'
                 }}
               >
                 <div 
-                  className="overflow-hidden"
+                  className="overflow-hidden w-full"
                   style={{ 
-                  width: 'calc(420px * 3 + 160px * 2 + 200px)', // 3장 카드(420px) + gap(160px * 2) + 여유공간(200px)
-                  minWidth: 'calc(420px * 3 + 160px * 2 + 200px)',
+                  width: '100%',
+                  maxWidth: '100%',
                     margin: '0',
-                    position: 'relative',
-                    left: '0'
+                    position: 'relative'
                   }}
                 >
                 <Swiper
@@ -335,11 +333,11 @@ export default function AboutSection() {
                   onInit={(swiper: any) => {
                     swiperRef.current = swiper;
                   }}
-                  spaceBetween={120} // 카드 간격을 120px로 증가
+                  spaceBetween={20}
                   slidesPerView={3}
                   slidesPerGroup={1}
                   loop={isMultiPage}
-                  loopedSlides={isMultiPage ? Math.max(3, cards.length) : 0} // 솔루션 섹션만 루프 슬라이드
+                  loopedSlides={isMultiPage ? Math.max(3, cards.length) : 0}
                   pagination={false}
                   navigation={false}
                   allowTouchMove={true}
@@ -353,19 +351,19 @@ export default function AboutSection() {
                   breakpoints={{
                     768: {
                       slidesPerView: 3,
-                      spaceBetween: 100,
+                      spaceBetween: 20,
                     },
                     1024: {
                       slidesPerView: 3,
-                      spaceBetween: 120,
+                      spaceBetween: 30,
                     },
                     1280: {
                       slidesPerView: 3,
-                      spaceBetween: 140,
+                      spaceBetween: 40,
                     },
                     1920: {
                       slidesPerView: 3,
-                      spaceBetween: 160,
+                      spaceBetween: 50,
                     }
                   }}
                   className="about-infinite-swiper"
