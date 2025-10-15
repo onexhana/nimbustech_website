@@ -407,6 +407,7 @@ export default function AboutSection() {
                   ))}
                 </Swiper>
                 
+                
                   {/* Swiper 스타일 - 모든 섹션 공통 */}
                   <style>{`
                     .about-infinite-swiper {
