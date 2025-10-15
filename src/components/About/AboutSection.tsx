@@ -311,15 +311,15 @@ export default function AboutSection() {
                   display: 'flex', 
                   flex: 'none', 
                   justifyContent: 'flex-start',
-                  width: 'calc(420px * 3 + 60px * 2 + 100px)',
-                  minWidth: 'calc(420px * 3 + 60px * 2 + 100px)'
+                  width: 'calc(420px * 3 + 40px * 2 + 100px)',
+                  minWidth: 'calc(420px * 3 + 40px * 2 + 100px)'
                 }}
               >
                 <div 
                   className="overflow-hidden"
                   style={{ 
-                  width: 'calc(420px * 3 + 60px * 2 + 100px)', // 3장 카드(420px) + gap(60px * 2) + 여유공간(100px)
-                  minWidth: 'calc(420px * 3 + 60px * 2 + 100px)',
+                  width: 'calc(420px * 3 + 40px * 2 + 100px)', // 3장 카드(420px) + gap(40px * 2) + 여유공간(100px)
+                  minWidth: 'calc(420px * 3 + 40px * 2 + 100px)',
                     margin: '0',
                     position: 'relative',
                     left: '0'
@@ -335,7 +335,7 @@ export default function AboutSection() {
                   onInit={(swiper: any) => {
                     swiperRef.current = swiper;
                   }}
-                  spaceBetween={60}
+                  spaceBetween={40}
                   slidesPerView={3}
                   slidesPerGroup={1}
                   loop={isMultiPage}
@@ -353,19 +353,19 @@ export default function AboutSection() {
                   breakpoints={{
                     768: {
                       slidesPerView: 3,
-                      spaceBetween: 40,
+                      spaceBetween: 30,
                     },
                     1024: {
                       slidesPerView: 3,
-                      spaceBetween: 50,
+                      spaceBetween: 35,
                     },
                     1280: {
                       slidesPerView: 3,
-                      spaceBetween: 60,
+                      spaceBetween: 40,
                     },
                     1920: {
                       slidesPerView: 3,
-                      spaceBetween: 60,
+                      spaceBetween: 45,
                     }
                   }}
                   className="about-infinite-swiper"
