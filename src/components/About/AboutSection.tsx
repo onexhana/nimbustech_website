@@ -30,6 +30,7 @@ import AboutTab from './AboutTab';
 // Swiper 관련 import 제거
 import AboutCard from './AboutCard'; // 효과 버전 (호버 애니메이션 활성화)
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation } from 'swiper';
 import 'swiper/swiper-bundle.css';
 import { useAboutData } from '../../context/AboutContext';
 
@@ -107,10 +108,14 @@ export default function AboutSection() {
           : `80px 24px ${activeTab === 'RPA' ? '40px' : '60px'} 24px`,
         backgroundColor: '#F3F6F9',
         marginTop: '120px',
-        overflow: 'visible'
+        overflow: 'hidden',
+        maxWidth: '1920px',
+        width: '100%',
+        margin: '0 auto',
+        boxSizing: 'border-box'
       }}>
       {/* 메인 타이틀 영역 (AboutSection 컴포넌트 내부 상단) */}
-      <div className="max-w-7xl mx-auto" style={{ overflow: 'visible' }}>
+      <div className="max-w-7xl mx-auto" style={{ overflow: 'visible', maxWidth: '1920px', width: '100%', boxSizing: 'border-box' }}>
         {/*
           isMobile 분기: 화면 너비가 모바일 기준(<768px)이면 이 블록 실행
           - 모바일용 필터 버튼들을 flex-wrap으로 가로/세로 배치
@@ -300,33 +305,17 @@ export default function AboutSection() {
             {/* ======================================== */}
             {/* 카드 영역 (모든 섹션: Swiper 무한루프) */}
             {/* ======================================== */}
-            <div className="flex items-start justify-center" style={{ position: 'relative', overflow: 'visible', display: 'flex', alignItems: 'flex-start', gap: '0', justifyContent: 'center', marginLeft: '50px', marginRight: '50px' }}>
-
-              {/* 모든 섹션: 무한 루프 슬라이더 */}
-              <div
-                className="flex flex-1 justify-center"
-                style={{ 
-                  position: 'relative', 
-                  overflow: 'visible', 
-                  display: 'flex', 
-                  flex: 'none', 
-                  justifyContent: 'center',
-                  width: 'calc(420px * 3 + 40px * 2 + 100px)',
-                  minWidth: 'calc(420px * 3 + 40px * 2 + 100px)'
-                }}
-              >
-                <div 
-                  className="overflow-hidden"
-                  style={{ 
+            <div className="relative w-full">
+              <div className="flex items-center" style={{ position: 'relative', justifyContent: 'center' }}>
+                {/* 카드 컨테이너 */}
+                <div className="overflow-hidden" style={{ 
                   width: '100%',
-                  maxWidth: '1400px',
-                    margin: '0',
-                    position: 'relative',
-                    left: '0'
-                  }}
-                >
+                  maxWidth: '1920px',
+                  position: 'relative'
+                }}>
                 <Swiper
                   key={`${activeTab}-${cards.length}`} // 탭 변경 시 Swiper 재초기화
+                  modules={[Navigation]}
                   // eslint-disable-next-line @typescript-eslint/no-explicit-any
                   onSwiper={(swiper: any) => {
                     swiperRef.current = swiper;
@@ -335,7 +324,7 @@ export default function AboutSection() {
                   onInit={(swiper: any) => {
                     swiperRef.current = swiper;
                   }}
-                  spaceBetween={60}
+                  spaceBetween={90}
                   slidesPerView={3}
                   slidesPerGroup={1}
                   loop={isMultiPage}
@@ -353,19 +342,19 @@ export default function AboutSection() {
                   breakpoints={{
                     768: {
                       slidesPerView: 3,
-                      spaceBetween: 40,
+                      spaceBetween: 70,
                     },
                     1024: {
                       slidesPerView: 3,
-                      spaceBetween: 50,
+                      spaceBetween: 80,
                     },
                     1280: {
                       slidesPerView: 3,
-                      spaceBetween: 60,
+                      spaceBetween: 85,
                     },
                     1920: {
                       slidesPerView: 3,
-                      spaceBetween: 80,
+                      spaceBetween: 90,
                     }
                   }}
                   className="about-infinite-swiper"
@@ -429,7 +418,7 @@ export default function AboutSection() {
                 </div>
 
                 {/* 네비게이션 화살표 버튼 - 솔루션 섹션만 */}
-                {isMultiPage && (
+                {activeTab === '솔루션' && (
                   <>
                     <button
                       onClick={() => swiperRef.current?.slidePrev()}
@@ -480,27 +469,27 @@ export default function AboutSection() {
                   </>
                 )}
               </div>
-
-              {/* ======================================== */}
-              {/* CSS 애니메이션 스타일 (카드 등장 효과) */}
-              {/* ======================================== */}
-              <style>{`
-                @keyframes cardAppear {
-                  0% {
-                    opacity: 0;
-                    transform: translateY(30px) scale(0.9);
-                  }
-                  50% {
-                    opacity: 0.7;
-                    transform: translateY(-5px) scale(1.02);
-                  }
-                  100% {
-                    opacity: 1;
-                    transform: translateY(0) scale(1);
-                  }
-                }
-              `}</style>
             </div>
+
+            {/* ======================================== */}
+            {/* CSS 애니메이션 스타일 (카드 등장 효과) */}
+            {/* ======================================== */}
+            <style>{`
+              @keyframes cardAppear {
+                0% {
+                  opacity: 0;
+                  transform: translateY(30px) scale(0.9);
+                }
+                50% {
+                  opacity: 0.7;
+                  transform: translateY(-5px) scale(1.02);
+                }
+                100% {
+                  opacity: 1;
+                  transform: translateY(0) scale(1);
+                }
+              }
+            `}</style>
           </>
         )}
       </div>
