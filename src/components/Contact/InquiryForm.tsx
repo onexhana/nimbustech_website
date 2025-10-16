@@ -29,7 +29,7 @@ export default function InquiryForm() {
         data-web-form="https://salesmap.kr/web-form/e2fb0363-5a7d-44db-878a-d24463b86765"
         style={{ width: '100%', minHeight: '500px', backgroundColor: 'transparent' }}
       />
-      {/* 웹폼 기본 배경 투명화 및 상단 헤더 숨김 스타일 적용 */}
+      {/* 웹폼 기본 배경 투명화 및 상단 헤더 수정 스타일 적용 */}
       <style>{`
         /* 배경 투명 처리 */
         #salesmap-web-form,
@@ -39,6 +39,35 @@ export default function InquiryForm() {
         /* 웹폼 상단 헤더 숨기기 */
         #salesmap-web-form > *:first-child {
           display: none !important;
+        }
+        /* 웹폼 제목 텍스트 변경 - 더 강력한 선택자 */
+        #salesmap-web-form h1,
+        #salesmap-web-form h2,
+        #salesmap-web-form h3,
+        #salesmap-web-form [class*="title"],
+        #salesmap-web-form [class*="Title"],
+        #salesmap-web-form [class*="header"],
+        #salesmap-web-form [class*="Header"] {
+          visibility: hidden !important;
+          position: relative !important;
+          height: auto !important;
+        }
+        #salesmap-web-form h1::before,
+        #salesmap-web-form h2::before,
+        #salesmap-web-form h3::before,
+        #salesmap-web-form [class*="title"]::before,
+        #salesmap-web-form [class*="Title"]::before,
+        #salesmap-web-form [class*="header"]::before,
+        #salesmap-web-form [class*="Header"]::before {
+          content: "고객사 문의" !important;
+          visibility: visible !important;
+          position: absolute !important;
+          left: 0 !important;
+          top: 0 !important;
+          font-size: 24px !important;
+          font-weight: 700 !important;
+          color: #000000 !important;
+          display: block !important;
         }
       `}</style>
     </>

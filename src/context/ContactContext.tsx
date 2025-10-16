@@ -101,11 +101,11 @@ const defaultContactData: ContactData = {
   ],
   buttons: [
     {
-      text: "고객사 직원",
+      text: "고객사 문의",
       type: "inquiry"
     },
     {
-      text: "인재 채용", 
+      text: "인재 문의", 
       type: "hiring"
     }
   ],
