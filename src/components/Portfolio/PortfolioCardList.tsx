@@ -91,13 +91,11 @@ const PortfolioCardList = ({ projects }: Props) => {
           
           {/* Swiper 동적 크기 설정을 위한 스타일 */}
           <style>{`
-            /* 화면 너비별 동적 컨테이너 크기 */
+            /* 화면 너비별 동적 컨테이너 크기 (이전 구성 복원) */
             .portfolio-dynamic-width {
               width: calc(380px * 2 + 32px * 1 + 70px) !important; /* 기본: 2개 카드 + 화살표 공간 */
               min-width: calc(380px * 2 + 32px * 1 + 70px) !important;
             }
-            
-            /* 큰 화면(1800px 이상): 3개 카드 */
             @media (min-width: 1800px) {
               .portfolio-dynamic-width {
                 width: calc(380px * 3 + 32px * 2 + 70px) !important;
