@@ -309,8 +309,8 @@ export default function AboutSection() {
               <div className="flex items-center justify-center">
                 {/* 카드 컨테이너 */}
                 <div className="overflow-hidden" style={{ 
-                  width: 'calc(100vw - 100px)',
-                  maxWidth: '1200px',
+                  width: 'calc(100vw - 200px)',
+                  maxWidth: '1500px',
                   position: 'relative',
                   margin: '0 auto',
                   display: 'flex',
@@ -327,18 +327,18 @@ export default function AboutSection() {
                   onInit={(swiper: any) => {
                     swiperRef.current = swiper;
                   }}
-                  spaceBetween={30}
+                  spaceBetween={120}
                   slidesPerView={3}
                   slidesPerGroup={1}
                   loop={isMultiPage}
-                  loopedSlides={isMultiPage ? Math.max(3, cards.length) : 0}
+                  loopedSlides={isMultiPage ? Math.max(3, Math.ceil(duplicatedCards.length / 2)) : 0}
                   slidesOffsetBefore={0}
                   slidesOffsetAfter={0}
                   pagination={false}
                   navigation={false}
                   allowTouchMove={true}
-                  centeredSlides={true}
-                  initialSlide={1}
+                  centeredSlides={false}
+                  initialSlide={isMultiPage ? Math.ceil(duplicatedCards.length / 2) : 0}
                   speed={300}
                   resistance={true}
                   resistanceRatio={0.85}
@@ -367,8 +367,8 @@ export default function AboutSection() {
                         titleColor={aboutData.colors?.desktopCardTitle || aboutData.colors?.cardTitle || aboutData.cardTitleColor || "#000000"}
                         descriptionColor={aboutData.colors?.desktopCardDescription || aboutData.colors?.cardDescription || aboutData.cardDescriptionColor || "#6B7280"}
                         backgroundColor={aboutData.cardBackgroundColor || "#ffffff"}
-                        width="340px"
-                        minHeight="240px"
+                        width="380px"
+                        minHeight="280px"
                         titleFontSize={card.fontSize?.title || aboutData.fontSize?.desktopCardTitle || aboutData.fontSize?.cardTitle}
                         descriptionFontSize={card.fontSize?.description || aboutData.fontSize?.desktopCardDescription || aboutData.fontSize?.cardDescription}
                         hoverEffect={aboutData.cardHoverEffect}
@@ -384,21 +384,17 @@ export default function AboutSection() {
                       width: 100% !important;
                       overflow: hidden !important;
                       margin: 0 auto !important;
-                      display: flex !important;
-                      justify-content: center !important;
                     }
                     .about-infinite-swiper .swiper-wrapper {
                       overflow: hidden !important;
                       display: flex !important;
                       align-items: flex-start !important;
-                      justify-content: center !important;
-                      transform: translateX(0) !important;
                     }
                     .about-infinite-swiper .swiper-slide {
-                      width: 340px !important;
-                      min-width: 340px !important;
-                      max-width: 340px !important;
-                      height: 240px !important;
+                      width: 380px !important;
+                      min-width: 380px !important;
+                      max-width: 380px !important;
+                      height: 280px !important;
                       flex-shrink: 0 !important;
                       flex-grow: 0 !important;
                       display: block !important;
