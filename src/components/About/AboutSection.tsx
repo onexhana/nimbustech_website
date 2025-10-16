@@ -306,13 +306,15 @@ export default function AboutSection() {
             {/* 카드 영역 (모든 섹션: Swiper 무한루프) */}
             {/* ======================================== */}
             <div className="relative w-full">
-              <div className="flex items-center">
+              <div className="flex items-center justify-center">
                 {/* 카드 컨테이너 */}
                 <div className="overflow-hidden" style={{ 
-                  width: 'calc(100vw - 122px)',
-                  maxWidth: '1100px',
+                  width: 'calc(100vw - 100px)',
+                  maxWidth: '1200px',
                   position: 'relative',
-                  marginLeft: '50px'
+                  margin: '0 auto',
+                  display: 'flex',
+                  justifyContent: 'center'
                 }}>
                 <Swiper
                   key={`${activeTab}-${cards.length}`} // 탭 변경 시 Swiper 재초기화
@@ -325,16 +327,18 @@ export default function AboutSection() {
                   onInit={(swiper: any) => {
                     swiperRef.current = swiper;
                   }}
-                  spaceBetween={40}
+                  spaceBetween={30}
                   slidesPerView={3}
                   slidesPerGroup={1}
                   loop={isMultiPage}
                   loopedSlides={isMultiPage ? Math.max(3, cards.length) : 0}
+                  slidesOffsetBefore={0}
+                  slidesOffsetAfter={0}
                   pagination={false}
                   navigation={false}
                   allowTouchMove={true}
-                  centeredSlides={false}
-                  initialSlide={0}
+                  centeredSlides={true}
+                  initialSlide={1}
                   speed={300}
                   resistance={true}
                   resistanceRatio={0.85}
@@ -363,8 +367,8 @@ export default function AboutSection() {
                         titleColor={aboutData.colors?.desktopCardTitle || aboutData.colors?.cardTitle || aboutData.cardTitleColor || "#000000"}
                         descriptionColor={aboutData.colors?.desktopCardDescription || aboutData.colors?.cardDescription || aboutData.cardDescriptionColor || "#6B7280"}
                         backgroundColor={aboutData.cardBackgroundColor || "#ffffff"}
-                        width="350px"
-                        minHeight="200px"
+                        width="340px"
+                        minHeight="220px"
                         titleFontSize={card.fontSize?.title || aboutData.fontSize?.desktopCardTitle || aboutData.fontSize?.cardTitle}
                         descriptionFontSize={card.fontSize?.description || aboutData.fontSize?.desktopCardDescription || aboutData.fontSize?.cardDescription}
                         hoverEffect={aboutData.cardHoverEffect}
@@ -380,16 +384,21 @@ export default function AboutSection() {
                       width: 100% !important;
                       overflow: hidden !important;
                       margin: 0 auto !important;
+                      display: flex !important;
+                      justify-content: center !important;
                     }
                     .about-infinite-swiper .swiper-wrapper {
                       overflow: hidden !important;
                       display: flex !important;
                       align-items: flex-start !important;
+                      justify-content: center !important;
+                      transform: translateX(0) !important;
                     }
                     .about-infinite-swiper .swiper-slide {
-                      width: 350px !important;
-                      min-width: 350px !important;
-                      max-width: 350px !important;
+                      width: 340px !important;
+                      min-width: 340px !important;
+                      max-width: 340px !important;
+                      height: 220px !important;
                       flex-shrink: 0 !important;
                       flex-grow: 0 !important;
                       display: block !important;
@@ -414,7 +423,7 @@ export default function AboutSection() {
                       style={{
                         position: 'absolute',
                         top: '-5rem',
-                        right: '6rem',
+                        right: '8rem',
                         border: 'none',
                         outline: 'none',
                         width: '40px',
@@ -437,7 +446,7 @@ export default function AboutSection() {
                       style={{
                         position: 'absolute',
                         top: '-5rem',
-                        right: '2rem',
+                        right: '4rem',
                         border: 'none',
                         outline: 'none',
                         width: '40px',
