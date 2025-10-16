@@ -38,21 +38,17 @@ interface AboutCardProps {
 export default function AboutCard({ title, description, detailLink, borderRadius, titleColor, descriptionColor, backgroundColor, width, minHeight, linkAsButton, linkText, titleFontSize, descriptionFontSize, hoverEffect }: AboutCardProps) {
   return (
     <div
-      className="transition-all duration-300 cursor-pointer"
+      className="bg-gray-100 rounded-lg border border-gray-200 shadow-sm transition-all duration-300 cursor-pointer flex flex-col"
       style={{
         backgroundColor: backgroundColor || "#f3f4f6",
-        borderRadius: borderRadius || "16px",
-        padding: "20px 16px",
+        borderRadius: borderRadius || "8px",
+        padding: "16px",
         border: "1px solid #e5e7eb",
-        height: minHeight || "280px",
-        width: width || "380px",
-        maxWidth: width || "380px",
-        minWidth: width || "380px",
+        minHeight: minHeight || "20vw",
+        width: width || "25vw",
+        maxWidth: width || "25vw",
         flexShrink: 0,      // ✅ 강제로 줄어들지 않도록
         display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-between",
-        overflow: "hidden"
       }}
       onMouseEnter={(e) => {
         if (hoverEffect !== false) {
@@ -112,10 +108,7 @@ export default function AboutCard({ title, description, detailLink, borderRadius
           color: titleColor || "#00A3E0",
           fontSize: titleFontSize ? `${titleFontSize}px` : "28px",
           fontWeight: "600",
-          margin: "0 0 16px 8px",
-          height: "60px",
-          display: "flex",
-          alignItems: "center"
+          margin: "16px 0 24px 8px",
         }}
       >
         {title}
@@ -131,7 +124,6 @@ export default function AboutCard({ title, description, detailLink, borderRadius
           display: "flex",
           flexDirection: "column",
           justifyContent: "flex-start",
-          minHeight: "100px"
         }}
       >
         {description.map((line, i) => (
@@ -139,7 +131,7 @@ export default function AboutCard({ title, description, detailLink, borderRadius
             key={i}
             className="leading-relaxed"
             style={{
-              marginBottom: "12px",
+              marginBottom: "8px",
               marginLeft: "8px",
               lineHeight: "1.5",
               wordBreak: "keep-all",
@@ -153,7 +145,7 @@ export default function AboutCard({ title, description, detailLink, borderRadius
 
       {/* 상세 링크 */}
       {detailLink && (
-        <div style={{ marginTop: "16px", marginLeft: "8px", height: "40px", display: "flex", alignItems: "center" }}>
+        <div style={{ marginTop: "16px", marginLeft: "8px" }}>
           {linkAsButton ? (
             <a
               href={detailLink}
