@@ -367,8 +367,8 @@ export default function AboutSection() {
                         backgroundColor={aboutData.cardBackgroundColor || "#ffffff"}
                         width={isMobile ? "380px" : undefined}
                         minHeight={isMobile ? "200px" : "12vw"}
-                        titleFontSize={card.fontSize?.title || aboutData.fontSize?.desktopCardTitle || aboutData.fontSize?.cardTitle}
-                        descriptionFontSize={card.fontSize?.description || aboutData.fontSize?.desktopCardDescription || aboutData.fontSize?.cardDescription}
+                        titleFontSize={undefined}
+                        descriptionFontSize={undefined}
                         hoverEffect={aboutData.cardHoverEffect}
                       />
                     </div>
