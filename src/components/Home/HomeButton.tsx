@@ -176,7 +176,7 @@ export default function HomeButton() {
 
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 1000);
+      setIsMobile(window.innerWidth < 768); // 768px 미만을 모바일로 간주
       setScreenWidth(window.innerWidth);
     };
     checkMobile();
@@ -303,7 +303,7 @@ export default function HomeButton() {
     <>
       {renderModal()}
       <div className="w-full bg-white">
-        <div className="grid grid-cols-4 border-t border-gray-200">
+        <div className={`grid ${isMobile ? 'grid-cols-2' : 'grid-cols-4'} border-t border-gray-200`}>
           {homeData.buttonData.map((btn, idx) => {
             const isSelected = selectedIdx === idx;
             const hoverColor = homeData.buttonStyles?.hoverColor || "#00A3E0";
@@ -321,8 +321,10 @@ export default function HomeButton() {
               <div
                 key={idx}
                 onClick={() => setSelectedIdx(idx)}
-                className={`aspect-square w-full flex flex-col cursor-pointer justify-center p-8 text-center transition-colors border-b border-gray-200 group ${
-                  idx !== homeData.buttonData.length - 1 ? "border-r" : ""
+                className={`${isMobile ? 'aspect-square' : 'aspect-square'} w-full flex flex-col cursor-pointer justify-center p-8 text-center transition-colors border-b border-gray-200 group ${
+                  isMobile 
+                    ? (idx % 2 !== 1 ? "border-r" : "") // 모바일: 홀수 인덱스에만 오른쪽 경계선
+                    : (idx !== homeData.buttonData.length - 1 ? "border-r" : "") // 데스크톱: 마지막이 아닌 경우
                 } ${isSelected ? "bg-gray-100" : "hover:bg-gray-50"}`}
               >
                 <div className="mb-2">

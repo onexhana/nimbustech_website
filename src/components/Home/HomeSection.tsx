@@ -90,8 +90,12 @@ export default function HomeSection() {
     <>
       <section
         id="home"
-        className="w-full min-h-screen bg-white flex items-start justify-end px-4"
-        style={{ paddingTop: '100px', paddingBottom: '80px' }}
+        className="w-full bg-white flex items-start justify-end px-4"
+        style={{ 
+          paddingTop: '90px', 
+          paddingBottom: isMobile ? '50px' : '80px',
+          minHeight: isMobile ? 'auto' : '100vh'
+        }}
       >
         <div className="text-right" style={{ marginRight: '32px' }}>
           <div>

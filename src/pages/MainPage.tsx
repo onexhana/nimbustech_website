@@ -12,7 +12,7 @@ const MainPage = () => {
         {/* Home Section */}
         <section 
           id="home" 
-          className="min-h-screen w-full flex items-center justify-center bg-gradient-to-br from-blue-50 to-white"
+          className="w-full flex items-center justify-center bg-gradient-to-br from-blue-50 to-white"
         >
           <div className="w-full max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8">
             <HomeSection />
@@ -22,7 +22,7 @@ const MainPage = () => {
         {/* Home Button Section */}
         <section 
           id="home-buttons" 
-          className="w-full bg-white py-16"
+          className="w-full bg-white py-6 md:py-16"
         >
           <div className="w-full max-w-[1920px] mx-auto">
             <HomeButton />
