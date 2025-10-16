@@ -30,7 +30,6 @@ import AboutTab from './AboutTab';
 // Swiper 관련 import 제거
 import AboutCard from './AboutCard'; // 효과 버전 (호버 애니메이션 활성화)
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation } from 'swiper';
 import 'swiper/swiper-bundle.css';
 import { useAboutData } from '../../context/AboutContext';
 
@@ -48,30 +47,13 @@ export default function AboutSection() {
   const [activeTab, setActiveTab] = useState("ITO");
   const [currentSlide, setCurrentSlide] = useState(0); // 슬라이더 현재 위치
   const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 768);
-  const [screenSize, setScreenSize] = useState<'mobile' | 'tablet' | 'desktop' | 'large'>('desktop');
   
   // Swiper ref for infinite loop (솔루션 섹션용)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const swiperRef = useRef<any>(null);
   
   useEffect(() => {
-    const handleResize = () => {
-      const width = window.innerWidth;
-      setIsMobile(width < 768);
-      
-      // 화면 크기별 분류
-      if (width < 768) {
-        setScreenSize('mobile');
-      } else if (width < 1024) {
-        setScreenSize('tablet');
-      } else if (width < 1440) {
-        setScreenSize('desktop');
-      } else {
-        setScreenSize('large');
-      }
-    };
-    
-    handleResize(); // 초기 실행
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
@@ -94,58 +76,10 @@ export default function AboutSection() {
   }, [refreshData]);
   
   const cards = aboutData.tabs.find(tab => tab.name === activeTab)?.cards || [];
-  const isMultiPage = activeTab === '솔루션'; // 솔루션 탭만 무한루프
+  const isMultiPage = true; // 모든 탭을 무한루프로 변경
   
-  // 솔루션 탭만 무한 루프를 위한 카드 복제
-  const duplicatedCards = isMultiPage ? Array(2).fill(cards).flat() : cards;
-
-  // 화면 크기별 카드 및 컨테이너 설정 - 3개 카드 + 간격이 모두 들어가도록 조정
-  const getCardConfig = () => {
-    switch (screenSize) {
-      case 'mobile':
-        return { 
-          cardWidth: '90vw', 
-          containerWidth: '100vw', 
-          marginLeft: '0px', 
-          spaceBetween: 20,
-          maxWidth: '100vw'
-        };
-      case 'tablet':
-        return { 
-          cardWidth: '280px', 
-          containerWidth: '980px', // 정확히 3개 카드만 보이도록 계산: 280*3 + 140*2 = 1120px
-          marginLeft: '40px', 
-          spaceBetween: 140, // 간격 140px
-          maxWidth: '980px' // 정확히 3개 카드만 보이도록 설정
-        };
-      case 'desktop':
-        return { 
-          cardWidth: '320px', 
-          containerWidth: '960px', // 3개 카드만 보이도록 더 줄임: 320*3 = 960px
-          marginLeft: '50px', 
-          spaceBetween: 140, // 간격 140px
-          maxWidth: '960px' // 3개 카드만 보이도록 더 줄임
-        };
-      case 'large':
-        return { 
-          cardWidth: '350px', 
-          containerWidth: '1050px', // 3개 카드만 보이도록 더 줄임: 350*3 = 1050px
-          marginLeft: '60px', 
-          spaceBetween: 140, // 간격 140px
-          maxWidth: '1050px' // 3개 카드만 보이도록 더 줄임
-        };
-      default:
-        return { 
-          cardWidth: '350px', 
-          containerWidth: '1050px', // 3개 카드만 보이도록 설정
-          marginLeft: '60px', 
-          spaceBetween: 140,
-          maxWidth: '1050px'
-        };
-    }
-  };
-
-  const cardConfig = getCardConfig();
+  // 모든 섹션용 무한 루프를 위한 카드 복제 (카드 수가 적은 경우 더 많이 복제)
+  const duplicatedCards = cards.length >= 7 ? Array(2).fill(cards).flat() : Array(4).fill(cards).flat();
 
   // 탭 변경 핸들러: activeTab, currentSlide 및 애니메이션 상태를 초기화합니다.
   const handleTabChange = (tab: string) => {
@@ -166,46 +100,16 @@ export default function AboutSection() {
 
 
   return (
-    <div id="about-gray-start" style={{ position: 'relative' }}>
-      {/* 솔루션 섹션용 정사각형 오버레이 - 스크롤에 따라오지 않음 */}
-      {activeTab === '솔루션' && !isMobile && screenSize !== 'desktop' && (
-        <>
-          <div style={{
-            position: 'absolute',
-            top: '170px',
-            left: '0px',
-            width: '54px',
-            height: '264px',
-            backgroundColor: '#F3F6F9',
-            zIndex: 10,
-            pointerEvents: 'none'
-          }} />
-          <div style={{
-            position: 'absolute',
-            top: '170px',
-            right: '0px',
-            width: '114px',
-            height: '264px',
-            backgroundColor: '#F3F6F9',
-            zIndex: 10,
-            pointerEvents: 'none'
-          }} />
-        </>
-      )}
+    <div id="about-gray-start">
       <div className="w-full" style={{
         padding: isMobile
           ? `80px 0 ${activeTab === 'RPA' ? '40px' : '55px'} 0`
           : `80px 24px ${activeTab === 'RPA' ? '40px' : '60px'} 24px`,
         backgroundColor: '#F3F6F9',
-        marginTop: '120px',
-        overflow: 'hidden',
-        maxWidth: '1920px',
-        width: '100%',
-        margin: '0 auto',
-        boxSizing: 'border-box'
+        marginTop: '120px'
       }}>
       {/* 메인 타이틀 영역 (AboutSection 컴포넌트 내부 상단) */}
-      <div className="max-w-7xl mx-auto" style={{ overflow: 'visible', maxWidth: '1920px', width: '100%', boxSizing: 'border-box' }}>
+      <div className="max-w-7xl mx-auto">
         {/*
           isMobile 분기: 화면 너비가 모바일 기준(<768px)이면 이 블록 실행
           - 모바일용 필터 버튼들을 flex-wrap으로 가로/세로 배치
@@ -302,7 +206,7 @@ export default function AboutSection() {
                     <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', minHeight: '12vw' }}>
                       <div>
                         <h3 style={{ 
-                          fontSize: `${card.fontSize?.title || aboutData.fontSize?.mobileCardTitle || aboutData.fontSize?.cardTitle || 28}px`, 
+                          fontSize: `${card.fontSize?.title || aboutData.fontSize?.mobileCardTitle || aboutData.fontSize?.cardTitle || 20}px`, 
                           fontWeight: '600', 
                           color: aboutData.colors?.mobileCardTitle || aboutData.colors?.cardTitle || aboutData.cardTitleColor || '#000000', 
                           margin: '0 0 20px 0' 
@@ -310,7 +214,7 @@ export default function AboutSection() {
                           {card.title}
                         </h3>
                         <div style={{ 
-                          fontSize: `${card.fontSize?.description || aboutData.fontSize?.mobileCardDescription || aboutData.fontSize?.cardDescription || 22}px`, 
+                          fontSize: `${card.fontSize?.description || aboutData.fontSize?.mobileCardDescription || aboutData.fontSize?.cardDescription || 16}px`, 
                           color: aboutData.colors?.mobileCardDescription || aboutData.colors?.cardDescription || aboutData.cardDescriptionColor || '#000000', 
                           fontWeight: '400', 
                           lineHeight: '1.5' 
@@ -320,7 +224,7 @@ export default function AboutSection() {
                           ))}
                         </div>
                       </div>
-                      {activeTab === '솔루션' && card.link && (
+                      {activeTab === '솔루션' && (
                         <div style={{ textAlign: 'left', marginTop: '20px', marginLeft: '8px' }}>
                           <a
                             href={card.link}
@@ -395,18 +299,29 @@ export default function AboutSection() {
             {/* ======================================== */}
             {/* 카드 영역 (모든 섹션: Swiper 무한루프) */}
             {/* ======================================== */}
-            <div className="relative w-full">
-              <div className="flex items-center">
-                {/* 카드 컨테이너 */}
-                <div className="overflow-visible" style={{ 
-                  width: cardConfig.containerWidth,
-                  maxWidth: cardConfig.maxWidth,
-                  position: 'relative',
-                  marginLeft: cardConfig.marginLeft
-                }}>
+            <div className="flex items-start" style={{ position: 'relative', overflow: 'visible', display: 'flex', alignItems: 'flex-start', gap: '1vw', justifyContent: 'center', marginLeft: '5vw', marginRight: '5vw' }}>
+
+              {/* 모든 섹션: 무한 루프 슬라이더 */}
+              <div
+                className="flex flex-1"
+                style={{ 
+                  position: 'relative', 
+                  overflow: 'visible', 
+                  display: 'flex', 
+                  flex: '1', 
+                  justifyContent: 'center'
+                }}
+              >
+                <div 
+                  className="overflow-hidden"
+                  style={{ 
+                    width: 'calc(30vw * 3 + 1vw * 2)', // 3장 카드(30vw) + gap(1vw * 2)
+                    minWidth: 'calc(30vw * 3 + 1vw * 2)',
+                    margin: '0 auto' // 중앙 정렬
+                  }}
+                >
                 <Swiper
                   key={`${activeTab}-${cards.length}`} // 탭 변경 시 Swiper 재초기화
-                  modules={[Navigation]}
                   // eslint-disable-next-line @typescript-eslint/no-explicit-any
                   onSwiper={(swiper: any) => {
                     swiperRef.current = swiper;
@@ -415,23 +330,20 @@ export default function AboutSection() {
                   onInit={(swiper: any) => {
                     swiperRef.current = swiper;
                   }}
-                  spaceBetween={cardConfig.spaceBetween}
-                  slidesPerView={screenSize === 'mobile' ? 1 : 3}
+                  spaceBetween={window.innerWidth * 0.01} // 1vw에 해당하는 픽셀 값
+                  slidesPerView={3}
                   slidesPerGroup={1}
-                  loop={isMultiPage}
-                  loopedSlides={isMultiPage ? Math.max(3, cards.length) : 0}
+                  loop={true}
+                  loopedSlides={Math.max(3, cards.length)} // 최소 3개 이상의 루프 슬라이드 보장
                   pagination={false}
                   navigation={false}
                   allowTouchMove={true}
                   centeredSlides={false}
-                  initialSlide={0}
                   speed={300}
-                  resistance={true}
-                  resistanceRatio={0.85}
-                  watchSlidesProgress={true}
+                  resistance={false}
+                  resistanceRatio={0}
+                  watchSlidesProgress={false}
                   freeMode={false}
-                  grabCursor={true}
-                  threshold={5}
                   className="about-infinite-swiper"
                 >
                   {duplicatedCards.map((card, index) => (
@@ -453,8 +365,8 @@ export default function AboutSection() {
                         titleColor={aboutData.colors?.desktopCardTitle || aboutData.colors?.cardTitle || aboutData.cardTitleColor || "#000000"}
                         descriptionColor={aboutData.colors?.desktopCardDescription || aboutData.colors?.cardDescription || aboutData.cardDescriptionColor || "#6B7280"}
                         backgroundColor={aboutData.cardBackgroundColor || "#ffffff"}
-                        width={cardConfig.cardWidth}
-                        minHeight={screenSize === 'mobile' ? '180px' : screenSize === 'tablet' ? '190px' : '200px'}
+                        width={isMobile ? "380px" : undefined}
+                        minHeight={isMobile ? "200px" : "12vw"}
                         titleFontSize={card.fontSize?.title || aboutData.fontSize?.desktopCardTitle || aboutData.fontSize?.cardTitle}
                         descriptionFontSize={card.fontSize?.description || aboutData.fontSize?.desktopCardDescription || aboutData.fontSize?.cardDescription}
                         hoverEffect={aboutData.cardHoverEffect}
@@ -470,27 +382,19 @@ export default function AboutSection() {
                       width: 100% !important;
                       overflow: visible !important;
                       margin: 0 auto !important;
-                      padding: 0 !important;
                     }
                     .about-infinite-swiper .swiper-wrapper {
                       overflow: visible !important;
-                      display: flex !important;
-                      align-items: flex-start !important;
-                      gap: ${cardConfig.spaceBetween}px !important;
                     }
-                    .about-infinite-swiper .swiper-slide {
-                      width: ${cardConfig.cardWidth} !important;
-                      min-width: ${cardConfig.cardWidth} !important;
-                      max-width: ${cardConfig.cardWidth} !important;
-                      flex-shrink: 0 !important;
-                      flex-grow: 0 !important;
-                      display: block !important;
-                      position: relative !important;
-                      margin-right: 0 !important;
+                    /* 모바일에서만 고정 폭 적용 */
+                    @media (max-width: 768px) {
+                      .about-infinite-swiper .swiper-slide {
+                        width: 380px !important;
+                        flex-shrink: 0 !important;
+                      }
                     }
                     .about-infinite-swiper .swiper-slide > div {
                       margin: 10px 0;
-                      width: 100%;
                     }
                     .about-infinite-swiper .swiper-slide-duplicate {
                       opacity: 1 !important;
@@ -500,8 +404,8 @@ export default function AboutSection() {
                   `}</style>
                 </div>
 
-                {/* 네비게이션 화살표 버튼 - 솔루션 탭에서만 표시 */}
-                {!isMobile && activeTab === '솔루션' && (
+                {/* 네비게이션 화살표 버튼 */}
+                {activeTab === '솔루션' && (
                   <>
                     <button
                       onClick={() => swiperRef.current?.slidePrev()}
@@ -552,27 +456,27 @@ export default function AboutSection() {
                   </>
                 )}
               </div>
-            </div>
 
-            {/* ======================================== */}
-            {/* CSS 애니메이션 스타일 (카드 등장 효과) */}
-            {/* ======================================== */}
-            <style>{`
-              @keyframes cardAppear {
-                0% {
-                  opacity: 0;
-                  transform: translateY(30px) scale(0.9);
+              {/* ======================================== */}
+              {/* CSS 애니메이션 스타일 (카드 등장 효과) */}
+              {/* ======================================== */}
+              <style>{`
+                @keyframes cardAppear {
+                  0% {
+                    opacity: 0;
+                    transform: translateY(30px) scale(0.9);
+                  }
+                  50% {
+                    opacity: 0.7;
+                    transform: translateY(-5px) scale(1.02);
+                  }
+                  100% {
+                    opacity: 1;
+                    transform: translateY(0) scale(1);
+                  }
                 }
-                50% {
-                  opacity: 0.7;
-                  transform: translateY(-5px) scale(1.02);
-                }
-                100% {
-                  opacity: 1;
-                  transform: translateY(0) scale(1);
-                }
-              }
-            `}</style>
+              `}</style>
+            </div>
           </>
         )}
       </div>
