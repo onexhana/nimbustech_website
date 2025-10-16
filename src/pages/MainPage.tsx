@@ -1,4 +1,5 @@
 import HomeSection from '../components/Home/HomeSection';
+import HomeButton from '../components/Home/HomeButton';
 import AboutSection from '../components/About/AboutSection';
 import PortfolioSection from '../components/Portfolio/PortfolioSection';
 import ContactSection from '../components/Contact/ContactSection';
@@ -15,6 +16,16 @@ const MainPage = () => {
         >
           <div className="w-full max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8">
             <HomeSection />
+          </div>
+        </section>
+
+        {/* Home Button Section */}
+        <section 
+          id="home-buttons" 
+          className="w-full bg-white py-16"
+        >
+          <div className="w-full max-w-[1920px] mx-auto">
+            <HomeButton />
           </div>
         </section>
 
