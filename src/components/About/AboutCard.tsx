@@ -106,7 +106,7 @@ export default function AboutCard({ title, description, detailLink, borderRadius
         className="font-semibold text-blue-600 leading-tight"
         style={{
           color: titleColor || "#00A3E0",
-          fontSize: titleFontSize ? `${titleFontSize}px` : "28px",
+          fontSize: titleFontSize ? `${titleFontSize}px` : "2vw",
           fontWeight: "600",
           margin: "16px 0 24px 8px",
         }}
@@ -116,10 +116,10 @@ export default function AboutCard({ title, description, detailLink, borderRadius
 
       {/* 설명 */}
       <div
-        className="text-gray-700 space-y-2 flex-1"
+        className="text-gray-700 space-y-2 flex-1 overflow-hidden"
         style={{
           color: descriptionColor || "#374151",
-          fontSize: descriptionFontSize ? `${descriptionFontSize}px` : "22px",
+          fontSize: descriptionFontSize ? `${descriptionFontSize}px` : "1.2vw",
           fontWeight: "500",
           display: "flex",
           flexDirection: "column",
@@ -129,13 +129,11 @@ export default function AboutCard({ title, description, detailLink, borderRadius
         {description.map((line, i) => (
           <div
             key={i}
-            className="leading-relaxed"
+            className="leading-relaxed truncate"
             style={{
               marginBottom: "8px",
               marginLeft: "8px",
               lineHeight: "1.5",
-              wordBreak: "keep-all",
-              whiteSpace: "normal",
             }}
           >
             {line}
@@ -175,7 +173,7 @@ export default function AboutCard({ title, description, detailLink, borderRadius
               style={{
                 color: "#00A3E0",
                 fontWeight: "600",
-                fontSize: "14px",
+                fontSize: "1vw",
                 textDecoration: "none",
               }}
             >
