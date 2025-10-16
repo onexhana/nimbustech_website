@@ -217,7 +217,8 @@ const defaultAboutData: AboutData = {
           title: "BCP Solutions",
           description: [
             "솔루션과 컨설팅으로 비즈니스 연속성을 보장합니다"
-          ]
+          ],
+          link: "https://www.krbcp.com/"
         }
       ]
     }
@@ -251,6 +252,17 @@ export function AboutProvider({ children }: { children: ReactNode }) {
           };
           localStorage.setItem('aboutData', JSON.stringify(updatedData));
           return updatedData;
+        }
+        
+        // BCP Solutions 링크가 누락된 경우 업데이트
+        const solutionTab = parsedData.tabs?.find(tab => tab.name === '솔루션');
+        if (solutionTab) {
+          const bcpCard = solutionTab.cards?.find(card => card.title === 'BCP Solutions');
+          if (bcpCard && !bcpCard.link) {
+            bcpCard.link = 'https://www.krbcp.com/';
+            localStorage.setItem('aboutData', JSON.stringify(parsedData));
+            return parsedData;
+          }
         }
         return parsedData;
       } catch (error) {
@@ -287,6 +299,15 @@ export function AboutProvider({ children }: { children: ReactNode }) {
         // localStorage에도 저장
         localStorage.setItem('aboutData', JSON.stringify(updatedData));
       } else {
+        // BCP Solutions 링크가 누락된 경우 업데이트
+        const solutionTab = data.tabs?.find(tab => tab.name === '솔루션');
+        if (solutionTab) {
+          const bcpCard = solutionTab.cards?.find(card => card.title === 'BCP Solutions');
+          if (bcpCard && !bcpCard.link) {
+            bcpCard.link = 'https://www.krbcp.com/';
+            localStorage.setItem('aboutData', JSON.stringify(data));
+          }
+        }
         setAboutData(data);
       }
     } catch (error) {

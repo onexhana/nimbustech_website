@@ -113,34 +113,34 @@ export default function AboutSection() {
       case 'tablet':
         return { 
           cardWidth: '280px', 
-          containerWidth: 'calc(100vw - 80px)', // 여유 공간 확보
+          containerWidth: '980px', // 정확히 3개 카드만 보이도록 계산: 280*3 + 140*2 = 1120px
           marginLeft: '40px', 
           spaceBetween: 140, // 간격 140px
-          maxWidth: '1480px' // 최대 너비 확장
+          maxWidth: '980px' // 정확히 3개 카드만 보이도록 설정
         };
       case 'desktop':
         return { 
           cardWidth: '320px', 
-          containerWidth: 'calc(100vw - 100px)', // 여유 공간 확보
+          containerWidth: '960px', // 3개 카드만 보이도록 더 줄임: 320*3 = 960px
           marginLeft: '50px', 
           spaceBetween: 140, // 간격 140px
-          maxWidth: '1580px' // 최대 너비 확장
+          maxWidth: '960px' // 3개 카드만 보이도록 더 줄임
         };
       case 'large':
         return { 
           cardWidth: '350px', 
-          containerWidth: 'calc(100vw - 120px)', // 여유 공간 확보
+          containerWidth: '1050px', // 3개 카드만 보이도록 더 줄임: 350*3 = 1050px
           marginLeft: '60px', 
           spaceBetween: 140, // 간격 140px
-          maxWidth: '1680px' // 최대 너비 확장
+          maxWidth: '1050px' // 3개 카드만 보이도록 더 줄임
         };
       default:
         return { 
           cardWidth: '350px', 
-          containerWidth: 'calc(100vw - 120px)', 
+          containerWidth: '1050px', // 3개 카드만 보이도록 설정
           marginLeft: '60px', 
           spaceBetween: 140,
-          maxWidth: '1680px'
+          maxWidth: '1050px'
         };
     }
   };
@@ -166,7 +166,32 @@ export default function AboutSection() {
 
 
   return (
-    <div id="about-gray-start">
+    <div id="about-gray-start" style={{ position: 'relative' }}>
+      {/* 솔루션 섹션용 정사각형 오버레이 - 스크롤에 따라오지 않음 */}
+      {activeTab === '솔루션' && !isMobile && screenSize !== 'desktop' && (
+        <>
+          <div style={{
+            position: 'absolute',
+            top: '170px',
+            left: '0px',
+            width: '54px',
+            height: '264px',
+            backgroundColor: '#F3F6F9',
+            zIndex: 10,
+            pointerEvents: 'none'
+          }} />
+          <div style={{
+            position: 'absolute',
+            top: '170px',
+            right: '0px',
+            width: '114px',
+            height: '264px',
+            backgroundColor: '#F3F6F9',
+            zIndex: 10,
+            pointerEvents: 'none'
+          }} />
+        </>
+      )}
       <div className="w-full" style={{
         padding: isMobile
           ? `80px 0 ${activeTab === 'RPA' ? '40px' : '55px'} 0`

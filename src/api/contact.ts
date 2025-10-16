@@ -244,7 +244,8 @@ export async function getAboutData(): Promise<AboutData> {
             title: "BCP Solutions",
             description: [
               "솔루션과 컨설팅으로 비즈니스 연속성을 보장합니다"
-            ]
+            ],
+            link: "https://www.krbcp.com/"
           }
         ]
       }
