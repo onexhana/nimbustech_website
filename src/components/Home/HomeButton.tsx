@@ -381,7 +381,7 @@ export default function HomeButton() {
         </div>
 
         {/* 무한 텍스트 슬라이더 */}
-        <div className="w-full py-16 bg-gray-100" style={{ marginTop: "20px" }}>
+        <div className="w-full py-16 bg-gray-100" style={{ marginTop: "20px", marginBottom: "120px" }}>
           <InfiniteTextSlider
             text={homeData.sliderText || "LEADING CUSTOMER SUCCESS"}
             fontSize={getResponsiveFontSize(homeData.sliderTextSizes?.desktop || 110)}
