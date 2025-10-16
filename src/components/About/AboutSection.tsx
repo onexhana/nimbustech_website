@@ -363,12 +363,12 @@ export default function AboutSection() {
                         detailLink={activeTab === '솔루션' ? card.link : undefined}
                         linkAsButton={activeTab === '솔루션'}
                         linkText={activeTab === '솔루션' ? "자세히 보기" : undefined}
-                        borderRadius="35px"
+                        borderRadius="16px"
                         titleColor={aboutData.colors?.desktopCardTitle || aboutData.colors?.cardTitle || aboutData.cardTitleColor || "#000000"}
                         descriptionColor={aboutData.colors?.desktopCardDescription || aboutData.colors?.cardDescription || aboutData.cardDescriptionColor || "#6B7280"}
                         backgroundColor={aboutData.cardBackgroundColor || "#ffffff"}
                         width="340px"
-                        minHeight="220px"
+                        minHeight="240px"
                         titleFontSize={card.fontSize?.title || aboutData.fontSize?.desktopCardTitle || aboutData.fontSize?.cardTitle}
                         descriptionFontSize={card.fontSize?.description || aboutData.fontSize?.desktopCardDescription || aboutData.fontSize?.cardDescription}
                         hoverEffect={aboutData.cardHoverEffect}
@@ -398,14 +398,18 @@ export default function AboutSection() {
                       width: 340px !important;
                       min-width: 340px !important;
                       max-width: 340px !important;
-                      height: 220px !important;
+                      height: 240px !important;
                       flex-shrink: 0 !important;
                       flex-grow: 0 !important;
                       display: block !important;
                       position: relative !important;
+                      border-radius: 16px !important;
+                      overflow: hidden !important;
                     }
                     .about-infinite-swiper .swiper-slide > div {
                       margin: 10px 0;
+                      border-radius: 16px !important;
+                      overflow: hidden !important;
                     }
                     .about-infinite-swiper .swiper-slide-duplicate {
                       opacity: 1 !important;

@@ -38,20 +38,21 @@ interface AboutCardProps {
 export default function AboutCard({ title, description, detailLink, borderRadius, titleColor, descriptionColor, backgroundColor, width, minHeight, linkAsButton, linkText, titleFontSize, descriptionFontSize, hoverEffect }: AboutCardProps) {
   return (
     <div
-      className="bg-gray-100 rounded-lg border border-gray-200 shadow-sm transition-all duration-300 cursor-pointer flex flex-col"
+      className="transition-all duration-300 cursor-pointer"
       style={{
         backgroundColor: backgroundColor || "#f3f4f6",
-        borderRadius: borderRadius || "8px",
-        padding: "16px",
+        borderRadius: borderRadius || "16px",
+        padding: "20px 16px",
         border: "1px solid #e5e7eb",
-        height: minHeight || "200px",
+        height: minHeight || "240px",
         width: width || "340px",
         maxWidth: width || "340px",
         minWidth: width || "340px",
         flexShrink: 0,      // ✅ 강제로 줄어들지 않도록
         display: "flex",
         flexDirection: "column",
-        justifyContent: "space-between"
+        justifyContent: "space-between",
+        overflow: "hidden"
       }}
       onMouseEnter={(e) => {
         if (hoverEffect !== false) {
@@ -130,7 +131,7 @@ export default function AboutCard({ title, description, detailLink, borderRadius
           display: "flex",
           flexDirection: "column",
           justifyContent: "flex-start",
-          minHeight: "80px"
+          minHeight: "100px"
         }}
       >
         {description.map((line, i) => (
@@ -138,7 +139,7 @@ export default function AboutCard({ title, description, detailLink, borderRadius
             key={i}
             className="leading-relaxed truncate"
             style={{
-              marginBottom: "8px",
+              marginBottom: "12px",
               marginLeft: "8px",
               lineHeight: "1.5",
             }}
