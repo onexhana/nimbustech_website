@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, ReactNode, useEffect } from 'react';
+import { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
 import { getContactData, saveContactData } from '../api/contact';
 
 // Contact 섹션 타입 정의
@@ -10,7 +10,7 @@ interface ContactSection {
 // Contact 버튼 타입 정의
 interface ContactButton {
   text: string;
-  type: string;
+  type: 'inquiry' | 'hiring';
 }
 
 // 회사 정보 타입 정의
@@ -41,14 +41,13 @@ interface ContactData {
   buttons: ContactButton[];
   companyInfo: CompanyInfo;
   pdfFiles: PdfFile[];
-  fontSize?: {
-    mainTitle?: number;
-    subtitle?: number;
-    sectionTitle?: number;
-    sectionDescription?: number;
-    buttonText?: number;
-    companyInfo?: number;
-    // 데스크탑 전용
+  fontSize: {
+    mainTitle: number;
+    subtitle: number;
+    sectionTitle: number;
+    sectionDescription: number;
+    buttonText: number;
+    companyInfo: number;
     desktopMainTitle?: number;
     desktopSubtitle?: number;
     desktopSectionTitle?: number;
@@ -101,7 +100,7 @@ const defaultContactData: ContactData = {
   ],
   buttons: [
     {
-      text: "고객사 직원",
+      text: "고객 문의",
       type: "inquiry"
     },
     {
@@ -132,7 +131,15 @@ const defaultContactData: ContactData = {
         name: "님버스테크 회사소개",
         path: "/footer_pdf/님버스테크 회사소개_v3.5_20250923.pdf"
       }
-    ]
+    ],
+    fontSize: {
+      mainTitle: 30,
+      subtitle: 18,
+      sectionTitle: 24,
+      sectionDescription: 16,
+      buttonText: 20,
+      companyInfo: 14
+    }
 };
 
 // Context 생성
