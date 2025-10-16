@@ -116,7 +116,7 @@ export default function AboutCard({ title, description, detailLink, borderRadius
 
       {/* 설명 */}
       <div
-        className="text-gray-700 space-y-2 flex-1 overflow-hidden"
+        className="text-gray-700 space-y-2 flex-1"
         style={{
           color: descriptionColor || "#374151",
           fontSize: descriptionFontSize ? `${descriptionFontSize}px` : "22px",
@@ -129,11 +129,13 @@ export default function AboutCard({ title, description, detailLink, borderRadius
         {description.map((line, i) => (
           <div
             key={i}
-            className="leading-relaxed truncate"
+            className="leading-relaxed"
             style={{
               marginBottom: "8px",
               marginLeft: "8px",
               lineHeight: "1.5",
+              wordBreak: "keep-all",
+              whiteSpace: "normal",
             }}
           >
             {line}

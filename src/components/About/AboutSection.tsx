@@ -48,13 +48,30 @@ export default function AboutSection() {
   const [activeTab, setActiveTab] = useState("ITO");
   const [currentSlide, setCurrentSlide] = useState(0); // 슬라이더 현재 위치
   const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 768);
+  const [screenSize, setScreenSize] = useState<'mobile' | 'tablet' | 'desktop' | 'large'>('desktop');
   
   // Swiper ref for infinite loop (솔루션 섹션용)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const swiperRef = useRef<any>(null);
   
   useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    const handleResize = () => {
+      const width = window.innerWidth;
+      setIsMobile(width < 768);
+      
+      // 화면 크기별 분류
+      if (width < 768) {
+        setScreenSize('mobile');
+      } else if (width < 1024) {
+        setScreenSize('tablet');
+      } else if (width < 1440) {
+        setScreenSize('desktop');
+      } else {
+        setScreenSize('large');
+      }
+    };
+    
+    handleResize(); // 초기 실행
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
@@ -77,10 +94,58 @@ export default function AboutSection() {
   }, [refreshData]);
   
   const cards = aboutData.tabs.find(tab => tab.name === activeTab)?.cards || [];
-  const isMultiPage = activeTab === '솔루션'; // 솔루션 섹션만 무한루프
+  const isMultiPage = activeTab === '솔루션'; // 솔루션 탭만 무한루프
   
-  // 솔루션 섹션만 무한 루프를 위한 카드 복제
+  // 솔루션 탭만 무한 루프를 위한 카드 복제
   const duplicatedCards = isMultiPage ? Array(2).fill(cards).flat() : cards;
+
+  // 화면 크기별 카드 및 컨테이너 설정 - 3개 카드 + 간격이 모두 들어가도록 조정
+  const getCardConfig = () => {
+    switch (screenSize) {
+      case 'mobile':
+        return { 
+          cardWidth: '90vw', 
+          containerWidth: '100vw', 
+          marginLeft: '0px', 
+          spaceBetween: 20,
+          maxWidth: '100vw'
+        };
+      case 'tablet':
+        return { 
+          cardWidth: '280px', 
+          containerWidth: 'calc(100vw - 80px)', // 여유 공간 확보
+          marginLeft: '40px', 
+          spaceBetween: 140, // 간격 140px
+          maxWidth: '1480px' // 최대 너비 확장
+        };
+      case 'desktop':
+        return { 
+          cardWidth: '320px', 
+          containerWidth: 'calc(100vw - 100px)', // 여유 공간 확보
+          marginLeft: '50px', 
+          spaceBetween: 140, // 간격 140px
+          maxWidth: '1580px' // 최대 너비 확장
+        };
+      case 'large':
+        return { 
+          cardWidth: '350px', 
+          containerWidth: 'calc(100vw - 120px)', // 여유 공간 확보
+          marginLeft: '60px', 
+          spaceBetween: 140, // 간격 140px
+          maxWidth: '1680px' // 최대 너비 확장
+        };
+      default:
+        return { 
+          cardWidth: '350px', 
+          containerWidth: 'calc(100vw - 120px)', 
+          marginLeft: '60px', 
+          spaceBetween: 140,
+          maxWidth: '1680px'
+        };
+    }
+  };
+
+  const cardConfig = getCardConfig();
 
   // 탭 변경 핸들러: activeTab, currentSlide 및 애니메이션 상태를 초기화합니다.
   const handleTabChange = (tab: string) => {
@@ -230,7 +295,7 @@ export default function AboutSection() {
                           ))}
                         </div>
                       </div>
-                      {activeTab === '솔루션' && (
+                      {activeTab === '솔루션' && card.link && (
                         <div style={{ textAlign: 'left', marginTop: '20px', marginLeft: '8px' }}>
                           <a
                             href={card.link}
@@ -308,11 +373,11 @@ export default function AboutSection() {
             <div className="relative w-full">
               <div className="flex items-center">
                 {/* 카드 컨테이너 */}
-                <div className="overflow-hidden" style={{ 
-                  width: 'calc(100vw - 122px)',
-                  maxWidth: '1100px',
+                <div className="overflow-visible" style={{ 
+                  width: cardConfig.containerWidth,
+                  maxWidth: cardConfig.maxWidth,
                   position: 'relative',
-                  marginLeft: '50px'
+                  marginLeft: cardConfig.marginLeft
                 }}>
                 <Swiper
                   key={`${activeTab}-${cards.length}`} // 탭 변경 시 Swiper 재초기화
@@ -325,8 +390,8 @@ export default function AboutSection() {
                   onInit={(swiper: any) => {
                     swiperRef.current = swiper;
                   }}
-                  spaceBetween={40}
-                  slidesPerView={3}
+                  spaceBetween={cardConfig.spaceBetween}
+                  slidesPerView={screenSize === 'mobile' ? 1 : 3}
                   slidesPerGroup={1}
                   loop={isMultiPage}
                   loopedSlides={isMultiPage ? Math.max(3, cards.length) : 0}
@@ -363,8 +428,8 @@ export default function AboutSection() {
                         titleColor={aboutData.colors?.desktopCardTitle || aboutData.colors?.cardTitle || aboutData.cardTitleColor || "#000000"}
                         descriptionColor={aboutData.colors?.desktopCardDescription || aboutData.colors?.cardDescription || aboutData.cardDescriptionColor || "#6B7280"}
                         backgroundColor={aboutData.cardBackgroundColor || "#ffffff"}
-                        width="350px"
-                        minHeight="200px"
+                        width={cardConfig.cardWidth}
+                        minHeight={screenSize === 'mobile' ? '180px' : screenSize === 'tablet' ? '190px' : '200px'}
                         titleFontSize={card.fontSize?.title || aboutData.fontSize?.desktopCardTitle || aboutData.fontSize?.cardTitle}
                         descriptionFontSize={card.fontSize?.description || aboutData.fontSize?.desktopCardDescription || aboutData.fontSize?.cardDescription}
                         hoverEffect={aboutData.cardHoverEffect}
@@ -378,25 +443,29 @@ export default function AboutSection() {
                   <style>{`
                     .about-infinite-swiper {
                       width: 100% !important;
-                      overflow: hidden !important;
+                      overflow: visible !important;
                       margin: 0 auto !important;
+                      padding: 0 !important;
                     }
                     .about-infinite-swiper .swiper-wrapper {
-                      overflow: hidden !important;
+                      overflow: visible !important;
                       display: flex !important;
                       align-items: flex-start !important;
+                      gap: ${cardConfig.spaceBetween}px !important;
                     }
                     .about-infinite-swiper .swiper-slide {
-                      width: 350px !important;
-                      min-width: 350px !important;
-                      max-width: 350px !important;
+                      width: ${cardConfig.cardWidth} !important;
+                      min-width: ${cardConfig.cardWidth} !important;
+                      max-width: ${cardConfig.cardWidth} !important;
                       flex-shrink: 0 !important;
                       flex-grow: 0 !important;
                       display: block !important;
                       position: relative !important;
+                      margin-right: 0 !important;
                     }
                     .about-infinite-swiper .swiper-slide > div {
                       margin: 10px 0;
+                      width: 100%;
                     }
                     .about-infinite-swiper .swiper-slide-duplicate {
                       opacity: 1 !important;
@@ -406,8 +475,8 @@ export default function AboutSection() {
                   `}</style>
                 </div>
 
-                {/* 네비게이션 화살표 버튼 - 솔루션 섹션만 */}
-                {activeTab === '솔루션' && (
+                {/* 네비게이션 화살표 버튼 - 솔루션 탭에서만 표시 */}
+                {!isMobile && activeTab === '솔루션' && (
                   <>
                     <button
                       onClick={() => swiperRef.current?.slidePrev()}
