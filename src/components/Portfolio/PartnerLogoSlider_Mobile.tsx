@@ -70,27 +70,68 @@ function MobileTrack({
           type: "tween"
         }}
       >
-        {rollingSequence.map((logo, i) => (
-          <img
-            key={`${logo.alt}-${i}`}
-            src={logo.src}
-            alt={logo.alt}
-            className="flex-none object-contain opacity-80 hover:opacity-100 transition"
-             style={{ 
-               height: `${logoHeight}px !important`,
-               width: 'auto',
-               maxWidth: 'none',
-               maxHeight: `${logoHeight}px`,
-               minHeight: `${logoHeight}px`,
-               imageRendering: 'auto',
-               filter: 'contrast(1.1) saturate(1.05)',
-               objectFit: 'contain',
-               verticalAlign: 'middle',
-               display: 'inline-block'
-             }}
-            loading="eager"
-          />
-        ))}
+        {rollingSequence.map((logo, i) => {
+          // 모바일용 개별 로고별 최적 컨테이너 크기 계산
+          const getOptimalSize = (logoName) => {
+            // 축소할 로고들 (더 작게)
+            if (logoName.includes('조달청')) {
+              return { width: logoHeight * 1.0, height: logoHeight }; // 조달청: 더 축소
+            }
+            if (logoName.includes('어빌리티') || logoName.includes('ABILITY')) {
+              return { width: logoHeight * 1.0, height: logoHeight }; // 어빌리티시스템즈: 더 축소
+            }
+            if (logoName.includes('Aable') || logoName.includes('에이블')) {
+              return { width: logoHeight * 1.0, height: logoHeight }; // Aable: 더 축소
+            }
+            if (logoName.includes('U.AI') || logoName.includes('U AI')) {
+              return { width: logoHeight * 1.0, height: logoHeight }; // U.AI: 더 축소
+            }
+            
+            // 확대할 로고들
+            if (logoName.includes('대신정보통신')) {
+              return { width: logoHeight * 2.2, height: logoHeight }; // 대신정보통신: 확대
+            }
+            
+            // DB 로고들 (동일한 크기로 맞춤)
+            if (logoName.includes('DB')) {
+              return { width: logoHeight * 1.6, height: logoHeight }; // DB생명, DB손해보험: 동일 크기
+            }
+            
+            // 기본값 (AJ렌탈 기준)
+            return { width: logoHeight * 1.8, height: logoHeight };
+          };
+
+          const containerSize = getOptimalSize(logo.alt);
+
+          return (
+            <div
+              key={`${logo.alt}-${i}`}
+              className="flex-none flex items-center justify-center"
+              style={{
+                width: containerSize.width,
+                height: containerSize.height,
+                minWidth: containerSize.width,
+                minHeight: containerSize.height
+              }}
+            >
+              <img
+                src={logo.src}
+                alt={logo.alt}
+                className="object-contain opacity-80 hover:opacity-100 transition"
+                style={{ 
+                  width: '100%',
+                  height: '100%',
+                  maxWidth: '100%',
+                  maxHeight: '100%',
+                  imageRendering: 'auto',
+                  filter: 'contrast(1.1) saturate(1.05)',
+                  objectFit: 'contain'
+                }}
+                loading="eager"
+              />
+            </div>
+          );
+        })}
       </motion.div>
       {/* 그라데이션 페이드 */}
       <div className="pointer-events-none absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-white to-transparent" />
