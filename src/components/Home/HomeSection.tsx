@@ -90,52 +90,56 @@ export default function HomeSection() {
     <>
       <section
         id="home"
-        className="w-full h-screen bg-white flex items-start justify-end px-4"
-        style={{ paddingTop: '100px' }}
+        className="w-full min-h-screen bg-white flex items-start justify-end px-4"
+        style={{ paddingTop: '100px', paddingBottom: '80px' }}
       >
         <div className="text-right" style={{ marginRight: '32px' }}>
           <div>
-            {texts.map((text, index) => (
-              <div key={index} style={{   
-                marginBottom: index < texts.length - 1 ? '1px' : '0',
-                marginTop: index === 0 ? '0px' : '0'
-              }}>
-                <span 
-                  className="tracking-tight"
-                  style={{ 
-                    color: colors[index],
-                    fontWeight: fontWeights[index],
-                    fontSize: isMobile ? `${responsiveMobileSizes[index]}px` : `${responsiveDesktopSizes[index]}px`,
-                    ...(index === 3 && { textShadow: '0 0 1px currentColor' })
-                  }}
-                >    
-                  <>
-                    {completedLines.includes(index) ? (
-                      text
-                    ) : index === currentLineIndex ? (
-                      <>
-                        {text.substring(0, currentCharIndex)}
-                        <span className="animate-pulse">|</span>
-                      </>
-                    ) : (
-                      <span style={{ opacity: 0 }}>{text}</span>
-                    )}
-                  </>
-                </span>
-              </div>
-            ))}
+            {texts.map((text, index) => {
+              // 화면 크기에 따른 텍스트 간격 계산
+              const getResponsiveMargin = () => {
+                if (isMobile) {
+                  return screenWidth < 480 ? '20px' : '25px'; // 모바일에서는 더 큰 간격
+                } else {
+                  return screenWidth < 1200 ? '30px' : '40px'; // 데스크톱에서는 화면 크기에 따라 조정
+                }
+              };
+              
+              return (
+                <div key={index} style={{   
+                  marginBottom: index < texts.length - 1 ? getResponsiveMargin() : '0',
+                  marginTop: index === 0 ? '0px' : '0'
+                }}>
+                  <span 
+                    className="tracking-tight"
+                    style={{ 
+                      color: colors[index],
+                      fontWeight: fontWeights[index],
+                      fontSize: isMobile ? `${responsiveMobileSizes[index]}px` : `${responsiveDesktopSizes[index]}px`,
+                      lineHeight: '1.2', // 텍스트 겹침 방지를 위한 line-height 추가
+                      display: 'block', // 블록 요소로 만들어 간격 확보
+                      ...(index === 3 && { textShadow: '0 0 1px currentColor' })
+                    }}
+                  >    
+                    <>
+                      {completedLines.includes(index) ? (
+                        text
+                      ) : index === currentLineIndex ? (
+                        <>
+                          {text.substring(0, currentCharIndex)}
+                          <span className="animate-pulse">|</span>
+                        </>
+                      ) : (
+                        <span style={{ opacity: 0 }}>{text}</span>
+                      )}
+                    </>
+                  </span>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
-      {isMobile ? (
-        <HomeButtonMobile
-          topOffset="-0vh"
-          marginTopSpacing="-60vh"
-          marginBottomSpacing="2rem"
-        />
-      ) : (
-        <HomeButton />
-      )}
     </>
   );
 }

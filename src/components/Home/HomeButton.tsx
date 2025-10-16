@@ -172,10 +172,12 @@ export default function HomeButton() {
   const { homeData } = useHomeData();
   const [selectedIdx, setSelectedIdx] = useState<number | null>(null);
   const [isMobile, setIsMobile] = useState(false);
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
 
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 1000);
+      setScreenWidth(window.innerWidth);
     };
     checkMobile();
     window.addEventListener('resize', checkMobile);
@@ -202,6 +204,20 @@ export default function HomeButton() {
   }, [selectedIdx]);
 
   const handleCloseModal = () => setSelectedIdx(null);
+
+  // 화면 크기에 따른 부드러운 마진 계산 함수
+  const getResponsiveMarginTop = () => {
+    // 화면 크기에 따라 조정하되, 최소한의 안전한 공간은 보장
+    if (screenWidth >= 1920) {
+      return 40; // 큰 화면: 40px
+    } else if (screenWidth >= 1200) {
+      return 35; // 중간 화면: 35px
+    } else if (screenWidth >= 768) {
+      return 30; // 작은 화면: 30px (최소 안전 공간)
+    } else {
+      return 30; // 모바일: 30px (최소 안전 공간 유지)
+    }
+  };
 
   const renderModal = () => {
     if (selectedIdx === null) return null;
@@ -286,7 +302,7 @@ export default function HomeButton() {
   return (
     <>
       {renderModal()}
-      <div className="w-full bg-white" style={{ marginTop: "100px" }}>
+      <div className="w-full bg-white">
         <div className="grid grid-cols-4 border-t border-gray-200">
           {homeData.buttonData.map((btn, idx) => {
             const isSelected = selectedIdx === idx;
