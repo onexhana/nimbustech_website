@@ -61,7 +61,8 @@ function MobileTrack({
           overflow: "hidden",
           width: "max-content" // 내용에 맞게 너비 설정
         }}
-        animate={{ x: reverse ? ["0%", "-33.33%"] : ["-33.33%", "0%"] }}
+        // 데스크톱과 동일한 방향 규칙: reverse=false → 왼쪽으로, true → 오른쪽으로
+        animate={{ x: reverse ? ["-33.33%", "0%"] : ["0%", "-33.33%"] }}
         transition={{ 
           duration: duration, 
           repeat: Infinity, 
@@ -72,7 +73,7 @@ function MobileTrack({
       >
         {rollingSequence.map((logo, i) => {
           // 모바일용 개별 로고별 최적 컨테이너 크기 계산
-          const getOptimalSize = (logoName) => {
+          const getOptimalSize = (logoName: string) => {
             // 축소할 로고들 (더 작게)
             if (logoName.includes('조달청')) {
               return { width: logoHeight * 1.0, height: logoHeight }; // 조달청: 더 축소
@@ -141,30 +142,26 @@ function MobileTrack({
 }
 
 function PartnerLogoSliderMobile({
-  logoHeight = 17,  // 로고 크기를 1/3로 줄임 (기존 대비)
-  gap = 20,         // 간격 더 좁게
+  logoHeight = 20,
+  gap = 20,
   rowSpacing = 15,
   bottomSpacing = 15,
 }: PartnerLogoSliderMobileProps) {
-  // 모바일에서는 강제로 작은 크기 사용
-  const mobileLogoHeight = 20;
-  console.log('PartnerLogoSliderMobile 렌더링됨 - 원래 logoHeight:', logoHeight, '실제 사용:', mobileLogoHeight);
 
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   const [settings, setSettings] = useState({
     speed: 300,
     textColor: "#374151",
-    textSize: 23
+    textSize: 26
   });
 
   // 화면 크기에 따른 부드러운 폰트 크기 계산 함수
   const getResponsiveFontSize = (baseSize: number) => {
-    // 모바일: 768px 기준으로 비례 계산
+    // 모바일: 768px 기준으로 비례 계산 (최소치를 높여 작은 화면에서도 충분한 크기 보장)
     const ratio = screenWidth / 768;
-    const minSize = 0.6; // 최소 60%
-    const maxSize = 1.2; // 최대 120%
+    const minSize = 0.85; // 최소 85%
+    const maxSize = 1.3;  // 최대 130%
     const clampedRatio = Math.max(minSize, Math.min(maxSize, ratio));
-    
     return Math.round(baseSize * clampedRatio);
   };
 
@@ -207,6 +204,11 @@ function PartnerLogoSliderMobile({
     };
   }, []);
 
+  // 화면 너비에 따라 로고 높이를 연속적으로 조정하되, 최소/최대 보장
+  // 최소 26px, 최대 46px, 기본은 화면너비의 7vw 근사
+  const mobileLogoHeight = Math.round(Math.max(32, Math.min(60, screenWidth * 0.085)));
+  const mobileGap = Math.round(Math.max(16, Math.min(32, screenWidth * 0.045)));
+
   // 모바일에서는 설정에서 속도 가져오기
   const topDuration = settings.speed;
   const bottomDuration = settings.speed;
@@ -217,7 +219,7 @@ function PartnerLogoSliderMobile({
   ];
 
   // 반응형 텍스트 크기 계산
-  const responsiveTextSize = getResponsiveFontSize(settings.textSize);
+  const responsiveTextSize = Math.round(Math.min(34, getResponsiveFontSize(settings.textSize)));
 
   return (
     <section aria-label="협력사 로고 슬라이더 (모바일)" className="w-full overflow-hidden">
@@ -236,7 +238,7 @@ function PartnerLogoSliderMobile({
       </p>
       {rows.map((row, i) => (
         <div key={i} style={{ marginTop: i === 0 ? 0 : rowSpacing }}>
-          <MobileTrack {...row} logoHeight={mobileLogoHeight} gap={gap} reverse={row.reverse} />
+          <MobileTrack {...row} logoHeight={mobileLogoHeight} gap={mobileGap} reverse={row.reverse} />
         </div>
       ))}
       {bottomSpacing > 0 && <div style={{ height: bottomSpacing }} />}

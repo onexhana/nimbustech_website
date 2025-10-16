@@ -94,6 +94,14 @@ function PartnerLogoSliderWeb({
     return Math.round(baseSize * clampedRatio);
   };
 
+  // 모바일 직전 구간(<= 767px)에선 로고 최소 크기 보장 (보이는 섹션에서 사용될 수 있음)
+  const getResponsiveLogoHeight = (base: number) => {
+    if (screenWidth < 768) {
+      return Math.round(Math.max(base, 28));
+    }
+    return base;
+  };
+
   // localStorage 변경 감지 및 화면 크기 감지
   useEffect(() => {
     const handleStorageChange = () => {
@@ -217,7 +225,7 @@ function WebTrack({
       >
         {rollingSequence.map((logo, i) => {
           // 개별 로고별 최적 컨테이너 크기 계산
-          const getOptimalSize = (logoName) => {
+          const getOptimalSize = (logoName: string) => {
             // 축소할 로고들 (더 작게)
             if (logoName.includes('조달청')) {
               return { width: logoHeight * 1.2, height: logoHeight }; // 조달청: 더 축소
