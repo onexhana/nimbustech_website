@@ -105,6 +105,18 @@ const PortfolioCardList = ({ projects }: Props) => {
               }
             }
             
+            /* 가장자리 오버플로우 가림용 페이드 마스크 */
+            .portfolio-container { position: relative; }
+            .portfolio-container::after {
+              content: '';
+              position: absolute;
+              top: 0; bottom: 0;
+              width: 50px;
+              pointer-events: none;
+              z-index: 5;
+            }
+            .portfolio-container::after { right: 0; background: linear-gradient(to left, #ffffff 70%, rgba(255,255,255,0) 100%); }
+
             .portfolio-swiper {
               width: 100% !important;
               overflow: visible !important;
