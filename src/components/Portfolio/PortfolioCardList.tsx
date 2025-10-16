@@ -146,16 +146,23 @@ const PortfolioCardList = ({ projects }: Props) => {
                 width: 100% !important;
               }
             }
+
+            /* 네비게이션 버튼의 반응형 위치 조정 */
+            .portfolio-nav { position: absolute; top: -5rem; right: 2rem; }
+            .portfolio-nav-prev { right: 6rem; }
+            @media (max-width: 1919px) { .portfolio-nav { top: -4rem; } }
+            @media (max-width: 1599px) { .portfolio-nav { top: -3.5rem; } }
+            @media (max-width: 1365px) { .portfolio-nav { top: -3rem; } }
+            @media (max-width: 1199px) { .portfolio-nav { top: -2.5rem; } }
+            @media (max-width: 1023px) { .portfolio-nav { top: -2rem; } }
           `}</style>
         </div>
         {/* 네비게이션 화살표 버튼 */}
         <>
           <button
             onClick={() => swiperRef.current?.slidePrev()}
+            className="portfolio-nav portfolio-nav-prev"
             style={{
-              position: 'absolute',
-              top: '-5rem',
-              right: '6rem',
               border: 'none',
               outline: 'none',
               width: '40px',
@@ -175,10 +182,8 @@ const PortfolioCardList = ({ projects }: Props) => {
           </button>
           <button
             onClick={() => swiperRef.current?.slideNext()}
+            className="portfolio-nav portfolio-nav-next"
             style={{
-              position: 'absolute',
-              top: '-5rem',
-              right: '2rem',
               border: 'none',
               outline: 'none',
               width: '40px',
