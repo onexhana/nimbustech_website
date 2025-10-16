@@ -100,7 +100,7 @@ const defaultContactData: ContactData = {
   ],
   buttons: [
     {
-      text: "고객사 문의",
+      text: "고객 문의",
       type: "inquiry"
     },
     {
