@@ -389,7 +389,7 @@ export default function HomeButtonMobile({ topOffset = '-40vh', marginTopSpacing
           <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, borderTop: '1px solid #000000' }} />
         </div>
         {/* 모바일용 무한 텍스트 슬라이더 */}
-        <div className="w-full py-12 bg-gray-100" style={{ marginTop: '30px' }}> 
+        <div className="w-full py-12 bg-gray-100" style={{ marginTop: '30px', marginBottom: '120px' }}> 
           <InfiniteTextSlider 
             text={homeData.sliderText || "LEADING CUSTOMER SUCCESS"}
             fontSize={homeData.sliderTextSizes?.mobile || 60}
