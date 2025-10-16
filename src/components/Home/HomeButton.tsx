@@ -176,7 +176,8 @@ export default function HomeButton() {
 
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768); // 768px 미만을 모바일로 간주
+      // 단순하고 예측 가능한 브레이크포인트(768px)로 복귀
+      setIsMobile(window.innerWidth < 768);
       setScreenWidth(window.innerWidth);
     };
     checkMobile();
@@ -314,20 +315,15 @@ export default function HomeButton() {
     <>
       {renderModal()}
       <div className="w-full bg-white">
-        <div className={`grid ${isMobile ? 'grid-cols-2' : 'grid-cols-4'} border-t border-gray-200`}>
+        <div className={`grid grid-cols-4 max-[767px]:grid-cols-2 border-t border-gray-200`}>
           {homeData.buttonData.map((btn, idx) => {
             const isSelected = selectedIdx === idx;
             const hoverColor = homeData.buttonStyles?.hoverColor || "#00A3E0";
             // 반응형 폰트 크기 적용
-            const baseTitleSize = isMobile 
-              ? homeData.buttonStyles?.titleSizes?.mobile || 10
-              : homeData.buttonStyles?.titleSizes?.desktop || 20;
-            const baseSubtitleSize = isMobile 
-              ? homeData.buttonStyles?.subtitleSizes?.mobile || 28
-              : homeData.buttonStyles?.subtitleSizes?.desktop || 40;
-            const baseDescriptionSize = isMobile 
-              ? homeData.buttonStyles?.descriptionSizes?.mobile || 12
-              : homeData.buttonStyles?.descriptionSizes?.desktop || 20;
+            // 모바일/데스크톱 구분 없이 연속 변화하도록 데스크톱 기준값만 사용
+            const baseTitleSize = homeData.buttonStyles?.titleSizes?.desktop || 20;
+            const baseSubtitleSize = homeData.buttonStyles?.subtitleSizes?.desktop || 40;
+            const baseDescriptionSize = homeData.buttonStyles?.descriptionSizes?.desktop || 20;
             
             // 반응형 폰트 크기 계산
             const titleSize = getResponsiveFontSize(baseTitleSize);
@@ -381,7 +377,7 @@ export default function HomeButton() {
         </div>
 
         {/* 무한 텍스트 슬라이더 */}
-        <div className="w-full py-16 bg-gray-100" style={{ marginTop: "20px", marginBottom: "120px" }}>
+        <div className="w-full bg-gray-100" style={{ paddingTop: 'clamp(24px, 4vw, 64px)', paddingBottom: 'clamp(40px, 6vw, 96px)', marginTop: 'clamp(12px, 2.5vw, 24px)' }}>
           <InfiniteTextSlider
             text={homeData.sliderText || "LEADING CUSTOMER SUCCESS"}
             fontSize={getResponsiveFontSize(homeData.sliderTextSizes?.desktop || 110)}

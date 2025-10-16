@@ -22,7 +22,9 @@ const MainPage = () => {
         {/* Home Button Section */}
         <section 
           id="home-buttons" 
-          className="w-full bg-white py-6 md:py-16"
+          className="w-full bg-white"
+          // 홈버튼 섹션이 화면 폭이 줄어들면 더 붙도록 상단 패딩 최소화
+          style={{ paddingTop: 'clamp(4px, 1.8vw, 20px)', paddingBottom: 'clamp(12px, 3vw, 48px)' }}
         >
           <div className="w-full max-w-[1920px] mx-auto">
             <HomeButton />

@@ -22,25 +22,12 @@ export default function HomeSection() {
     };
   }, []);
 
-  // 화면 크기에 따른 부드러운 폰트 크기 계산 함수
-  const getResponsiveFontSize = (baseSizes: number[], isMobileView: boolean) => {
-    if (isMobileView) {
-      // 모바일: 768px 기준으로 비례 계산
-      const ratio = screenWidth / 768;
-      const minSize = 0.7; // 최소 70%
-      const maxSize = 1.0; // 최대 100%
-      const clampedRatio = Math.max(minSize, Math.min(maxSize, ratio));
-      
-      return baseSizes.map(size => Math.round(size * clampedRatio));
-    } else {
-      // 데스크톱: 1920px 기준으로 비례 계산
-      const ratio = screenWidth / 1920;
-      const minSize = 0.6; // 최소 60%
-      const maxSize = 1.0; // 최대 100%
-      const clampedRatio = Math.max(minSize, Math.min(maxSize, ratio));
-      
-      return baseSizes.map(size => Math.round(size * clampedRatio));
-    }
+  // 화면 크기에 따른 부드러운 폰트 크기 계산 함수 (브레이크포인트 없이 연속 변화)
+  const getResponsiveFontSize = (baseSizes: number[]) => {
+    // 1920px 기준으로 비율 계산, 최소 35%, 최대 100%
+    const ratio = screenWidth / 1920;
+    const clampedRatio = Math.max(0.35, Math.min(1.0, ratio));
+    return baseSizes.map(size => Math.round(size * clampedRatio));
   };
 
   // 타이핑 애니메이션을 위한 상태 관리
@@ -61,8 +48,7 @@ export default function HomeSection() {
   const { colors, fontWeights, desktopSizes, mobileSizes } = typingTextStyles;
 
   // 반응형 폰트 크기 계산
-  const responsiveDesktopSizes = getResponsiveFontSize(desktopSizes, false);
-  const responsiveMobileSizes = getResponsiveFontSize(mobileSizes, true);
+  const responsiveSizes = getResponsiveFontSize(desktopSizes);
 
   useEffect(() => {
     const typingSpeed = homeData.typingSpeed?.speed || 130;
@@ -93,8 +79,11 @@ export default function HomeSection() {
         className="w-full bg-white flex items-start justify-end px-4"
         style={{ 
           paddingTop: '90px', 
-          paddingBottom: isMobile ? '50px' : '80px',
-          minHeight: isMobile ? 'auto' : '100vh'
+          // 모든 구간에서 연속 변화: 창이 줄수록 더 작게
+          // 최소 8px, 비율 2.5vw, 최대 48px
+          paddingBottom: 'clamp(8px, 2.5vw, 48px)',
+          // 높이도 더 공격적으로 축소: 최소 360px, 비율 45vh, 최대 740px
+          minHeight: 'clamp(360px, 45vh, 740px)'
         }}
       >
         <div className="text-right" style={{ marginRight: '32px' }}>
@@ -119,7 +108,7 @@ export default function HomeSection() {
                     style={{ 
                       color: colors[index],
                       fontWeight: fontWeights[index],
-                      fontSize: isMobile ? `${responsiveMobileSizes[index]}px` : `${responsiveDesktopSizes[index]}px`,
+                      fontSize: `${responsiveSizes[index]}px`,
                       lineHeight: '1.2', // 텍스트 겹침 방지를 위한 line-height 추가
                       display: 'block', // 블록 요소로 만들어 간격 확보
                       ...(index === 3 && { textShadow: '0 0 1px currentColor' })
