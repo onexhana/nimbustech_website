@@ -371,7 +371,7 @@ export default function AboutSection() {
             {/* 카드 영역 (모든 섹션: Swiper 무한루프) */}
             {/* ======================================== */}
             <div className="relative w-full">
-              <div className="flex items-center justify-center">
+              <div className="flex items-center">
                 {/* 카드 컨테이너 */}
                 <div className="overflow-visible" style={{ 
                   width: cardConfig.containerWidth,
@@ -394,14 +394,12 @@ export default function AboutSection() {
                   slidesPerView={screenSize === 'mobile' ? 1 : 3}
                   slidesPerGroup={1}
                   loop={isMultiPage}
-                  loopedSlides={isMultiPage ? Math.max(3, Math.ceil(duplicatedCards.length / 2)) : 0}
-                  slidesOffsetBefore={0}
-                  slidesOffsetAfter={0}
+                  loopedSlides={isMultiPage ? Math.max(3, cards.length) : 0}
                   pagination={false}
                   navigation={false}
                   allowTouchMove={true}
                   centeredSlides={false}
-                  initialSlide={isMultiPage ? Math.ceil(duplicatedCards.length / 2) : 0}
+                  initialSlide={0}
                   speed={300}
                   resistance={true}
                   resistanceRatio={0.85}
@@ -426,7 +424,7 @@ export default function AboutSection() {
                         detailLink={activeTab === '솔루션' ? card.link : undefined}
                         linkAsButton={activeTab === '솔루션'}
                         linkText={activeTab === '솔루션' ? "자세히 보기" : undefined}
-                        borderRadius="16px"
+                        borderRadius="35px"
                         titleColor={aboutData.colors?.desktopCardTitle || aboutData.colors?.cardTitle || aboutData.cardTitleColor || "#000000"}
                         descriptionColor={aboutData.colors?.desktopCardDescription || aboutData.colors?.cardDescription || aboutData.cardDescriptionColor || "#6B7280"}
                         backgroundColor={aboutData.cardBackgroundColor || "#ffffff"}
@@ -485,7 +483,7 @@ export default function AboutSection() {
                       style={{
                         position: 'absolute',
                         top: '-5rem',
-                        right: '8rem',
+                        right: '6rem',
                         border: 'none',
                         outline: 'none',
                         width: '40px',
@@ -508,7 +506,7 @@ export default function AboutSection() {
                       style={{
                         position: 'absolute',
                         top: '-5rem',
-                        right: '4rem',
+                        right: '2rem',
                         border: 'none',
                         outline: 'none',
                         width: '40px',
