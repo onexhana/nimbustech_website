@@ -184,6 +184,17 @@ export default function HomeButton() {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
+  // 화면 크기에 따른 부드러운 폰트 크기 계산 함수 (타이핑 효과와 동일)
+  const getResponsiveFontSize = (baseSize: number) => {
+    // 1920px 기준으로 비례 계산
+    const ratio = screenWidth / 1920;
+    const minSize = 0.5; // 최소 50%
+    const maxSize = 1.2; // 최대 120%
+    const clampedRatio = Math.max(minSize, Math.min(maxSize, ratio));
+    
+    return Math.round(baseSize * clampedRatio);
+  };
+
   // ESC 키 닫기
   useEffect(() => {
     const handleEscKey = (event: KeyboardEvent) => {
@@ -307,15 +318,21 @@ export default function HomeButton() {
           {homeData.buttonData.map((btn, idx) => {
             const isSelected = selectedIdx === idx;
             const hoverColor = homeData.buttonStyles?.hoverColor || "#00A3E0";
-            const titleSize = isMobile 
+            // 반응형 폰트 크기 적용
+            const baseTitleSize = isMobile 
               ? homeData.buttonStyles?.titleSizes?.mobile || 10
               : homeData.buttonStyles?.titleSizes?.desktop || 20;
-            const subtitleSize = isMobile 
+            const baseSubtitleSize = isMobile 
               ? homeData.buttonStyles?.subtitleSizes?.mobile || 28
               : homeData.buttonStyles?.subtitleSizes?.desktop || 40;
-            const descriptionSize = isMobile 
+            const baseDescriptionSize = isMobile 
               ? homeData.buttonStyles?.descriptionSizes?.mobile || 12
               : homeData.buttonStyles?.descriptionSizes?.desktop || 20;
+            
+            // 반응형 폰트 크기 계산
+            const titleSize = getResponsiveFontSize(baseTitleSize);
+            const subtitleSize = getResponsiveFontSize(baseSubtitleSize);
+            const descriptionSize = getResponsiveFontSize(baseDescriptionSize);
             
             return (
               <div
@@ -331,7 +348,7 @@ export default function HomeButton() {
                   <h3
                     className="transition-colors group-hover:text-blue-600"
                     style={{ 
-                      fontSize: isMobile ? '10px' : '20px', // 강제로 고정 크기 적용
+                      fontSize: `${titleSize}px`,
                       fontWeight: 450,
                       color: isSelected ? hoverColor : "#000000"
                     }}
@@ -367,7 +384,7 @@ export default function HomeButton() {
         <div className="w-full py-16 bg-gray-100" style={{ marginTop: "20px" }}>
           <InfiniteTextSlider
             text={homeData.sliderText || "LEADING CUSTOMER SUCCESS"}
-            fontSize={homeData.sliderTextSizes?.desktop || 110}
+            fontSize={getResponsiveFontSize(homeData.sliderTextSizes?.desktop || 110)}
             textColor={homeData.sliderTextColors?.defaultColor || "#c2c2c2"}
             duration={25}
             gap={50}
