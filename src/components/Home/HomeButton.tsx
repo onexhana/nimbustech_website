@@ -172,12 +172,15 @@ export default function HomeButton() {
   const { homeData } = useHomeData();
   const [selectedIdx, setSelectedIdx] = useState<number | null>(null);
   const [isMobile, setIsMobile] = useState(false);
+  const [isSmallScreen, setIsSmallScreen] = useState(false); // 430px 이하 감지용
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
 
   useEffect(() => {
     const checkMobile = () => {
       // 단순하고 예측 가능한 브레이크포인트(768px)로 복귀
       setIsMobile(window.innerWidth < 768);
+      // 430px 이하에서만 흰색 배경 사용 (원본 이미지 크기까지는 투명)
+      setIsSmallScreen(window.innerWidth <= 430);
       setScreenWidth(window.innerWidth);
     };
     checkMobile();
@@ -254,9 +257,9 @@ export default function HomeButton() {
         <div
           style={{
             position: "relative",
-            backgroundColor: "white",
-            borderRadius: "8px",
-            boxShadow: "0 10px 25px rgba(0, 0, 0, 0.2)",
+            backgroundColor: !isSmallScreen ? "transparent" : "white", // 430px 초과에서는 투명 배경
+            borderRadius: !isSmallScreen ? "0px" : "8px", // 430px 초과에서는 둥근 모서리 제거
+            boxShadow: !isSmallScreen ? "none" : "0 10px 25px rgba(0, 0, 0, 0.2)", // 430px 초과에서는 그림자 제거
             maxWidth: isMobile ? (screenWidth < 400 ? "98vw" : "95vw") : "1024px",
             width: isMobile ? (screenWidth < 400 ? "98vw" : "95vw") : "100%",
             margin: isMobile ? (screenWidth < 400 ? "4px" : "8px") : "16px",
@@ -272,7 +275,7 @@ export default function HomeButton() {
               top: isMobile ? (screenWidth < 400 ? "6px" : "8px") : "16px",
               right: isMobile ? (screenWidth < 400 ? "6px" : "8px") : "16px",
               zIndex: 10,
-              backgroundColor: "white",
+              backgroundColor: !isSmallScreen ? "rgba(255, 255, 255, 0.8)" : "white", // 430px 초과에서는 반투명
               borderRadius: "50%",
               width: isMobile ? (screenWidth < 400 ? "24px" : "28px") : "32px",
               height: isMobile ? (screenWidth < 400 ? "24px" : "28px") : "32px",
@@ -282,7 +285,8 @@ export default function HomeButton() {
               border: "none",
               cursor: "pointer",
               fontSize: isMobile ? (screenWidth < 400 ? "14px" : "16px") : "18px",
-              boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+              boxShadow: !isSmallScreen ? "0 2px 8px rgba(0, 0, 0, 0.3)" : "0 2px 4px rgba(0, 0, 0, 0.1)",
+              backdropFilter: !isSmallScreen ? "blur(4px)" : "none", // 430px 초과에서는 블러 효과
             }}
             aria-label="모달 닫기"
           >
