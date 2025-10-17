@@ -296,7 +296,7 @@ export default function AboutSection() {
             {/* ======================================== */}
             {/* 카드 영역 (모든 섹션: Swiper 무한루프) */}
             {/* ======================================== */}
-            <div className="flex items-start" style={{ position: 'relative', overflow: 'visible', display: 'flex', alignItems: 'flex-start', gap: 'clamp(10px, 1vw, 20px)', justifyContent: 'center', marginLeft: 'clamp(25px, 5vw, 100px)', marginRight: 'clamp(25px, 5vw, 100px)' }}>
+            <div className="flex items-start" style={{ position: 'relative', overflow: 'visible', display: 'flex', alignItems: 'flex-start', gap: 'clamp(8px, 0.8vw, 16px)', justifyContent: 'center', marginLeft: 'clamp(25px, 5vw, 100px)', marginRight: 'clamp(25px, 5vw, 100px)' }}>
 
               {/* 모든 섹션: 무한 루프 슬라이더 */}
               <div
@@ -312,8 +312,8 @@ export default function AboutSection() {
                 <div 
                   className="overflow-hidden"
                   style={{ 
-                    width: 'calc(30vw * 3 + 1vw * 2)', // 3장 카드(30vw) + gap(1vw * 2)
-                    minWidth: 'calc(30vw * 3 + 1vw * 2)',
+                    width: 'calc(clamp(200px, 25vw, 500px) * 3 + clamp(8px, 0.8vw, 16px) * 2)', // 3장 카드 + gap
+                    minWidth: 'calc(clamp(200px, 25vw, 500px) * 3 + clamp(8px, 0.8vw, 16px) * 2)',
                     margin: '0 auto' // 중앙 정렬
                   }}
                 >
@@ -327,7 +327,7 @@ export default function AboutSection() {
                   onInit={(swiper: any) => {
                     swiperRef.current = swiper;
                   }}
-                  spaceBetween={Math.max(10, window.innerWidth * 0.01)} // 최소 10px, 1vw에 해당하는 픽셀 값
+                  spaceBetween={Math.max(8, window.innerWidth * 0.008)} // 최소 8px, 0.8vw에 해당하는 픽셀 값
                   slidesPerView={3}
                   slidesPerGroup={1}
                   loop={true}
@@ -391,7 +391,7 @@ export default function AboutSection() {
                       }
                     }
                     .about-infinite-swiper .swiper-slide > div {
-                      margin: 10px 0;
+                      margin: clamp(5px, 0.52vw, 10px) 0;
                     }
                     .about-infinite-swiper .swiper-slide-duplicate {
                       opacity: 1 !important;
@@ -408,12 +408,12 @@ export default function AboutSection() {
                       onClick={() => swiperRef.current?.slidePrev()}
                       style={{
                         position: 'absolute',
-                        top: '-5rem',
-                        right: '6rem',
+                        top: 'clamp(-2.5rem, -2.6vw, -5rem)',
+                        right: 'clamp(3rem, 3.13vw, 6rem)',
                         border: 'none',
                         outline: 'none',
-                        width: '40px',
-                        height: '40px',
+                        width: 'clamp(20px, 2.08vw, 40px)',
+                        height: 'clamp(20px, 2.08vw, 40px)',
                         borderRadius: '50%',
                         backgroundColor: '#E5E7EB',
                         display: 'flex',
@@ -423,7 +423,7 @@ export default function AboutSection() {
                         zIndex: 10,
                       }}
                     >
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                      <svg width="clamp(12px, 1.25vw, 24px)" height="clamp(12px, 1.25vw, 24px)" viewBox="0 0 24 24" fill="none">
                         <path d="M15 6L9 12L15 18" stroke="#1F2937" strokeWidth="3" strokeLinecap="butt" strokeLinejoin="miter" />
                       </svg>
                     </button>
@@ -431,12 +431,12 @@ export default function AboutSection() {
                       onClick={() => swiperRef.current?.slideNext()}
                       style={{
                         position: 'absolute',
-                        top: '-5rem',
-                        right: '2rem',
+                        top: 'clamp(-2.5rem, -2.6vw, -5rem)',
+                        right: 'clamp(1rem, 1.04vw, 2rem)',
                         border: 'none',
                         outline: 'none',
-                        width: '40px',
-                        height: '40px',
+                        width: 'clamp(20px, 2.08vw, 40px)',
+                        height: 'clamp(20px, 2.08vw, 40px)',
                         borderRadius: '50%',
                         backgroundColor: '#1F2937',
                         display: 'flex',
@@ -446,7 +446,7 @@ export default function AboutSection() {
                         zIndex: 10,
                       }}
                     >
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                      <svg width="clamp(12px, 1.25vw, 24px)" height="clamp(12px, 1.25vw, 24px)" viewBox="0 0 24 24" fill="none">
                         <path d="M9 6L15 12L9 18" stroke="#FFFFFF" strokeWidth="3" strokeLinecap="butt" strokeLinejoin="miter" />
                       </svg>
                     </button>
