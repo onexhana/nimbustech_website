@@ -247,6 +247,7 @@ export default function HomeButton() {
           alignItems: "center",
           justifyContent: "center",
           zIndex: 999998,
+          padding: isMobile ? "10px" : "16px",
         }}
         onClick={() => handleCloseModal()}
       >
@@ -256,10 +257,10 @@ export default function HomeButton() {
             backgroundColor: "white",
             borderRadius: "8px",
             boxShadow: "0 10px 25px rgba(0, 0, 0, 0.2)",
-            maxWidth: "1024px",
-            width: "100%",
-            margin: "16px",
-            maxHeight: "575px",
+            maxWidth: isMobile ? "95vw" : "1024px",
+            width: isMobile ? "95vw" : "100%",
+            margin: isMobile ? "8px" : "16px",
+            maxHeight: isMobile ? "90vh" : "575px",
             overflow: "hidden",
           }}
           onClick={(e) => e.stopPropagation()}
@@ -268,19 +269,19 @@ export default function HomeButton() {
             onClick={handleCloseModal}
             style={{
               position: "absolute",
-              top: "16px",
-              right: "16px",
+              top: isMobile ? "8px" : "16px",
+              right: isMobile ? "8px" : "16px",
               zIndex: 10,
               backgroundColor: "white",
               borderRadius: "50%",
-              width: "32px",
-              height: "32px",
+              width: isMobile ? "28px" : "32px",
+              height: isMobile ? "28px" : "32px",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
               border: "none",
               cursor: "pointer",
-              fontSize: "18px",
+              fontSize: isMobile ? "16px" : "18px",
               boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
             }}
             aria-label="모달 닫기"
@@ -297,8 +298,9 @@ export default function HomeButton() {
               style={{
                 width: "100%",
                 height: "auto",
-                objectFit: "contain",
-                maxHeight: "85vh",
+                objectFit: isMobile ? "contain" : "contain",
+                maxHeight: isMobile ? "80vh" : "85vh",
+                display: "block",
               }}
               onError={(e) => {
                 const imagePath = isMobile ? 
