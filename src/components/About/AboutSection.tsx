@@ -315,8 +315,8 @@ export default function AboutSection() {
                 <div 
                   className="overflow-hidden"
                   style={{ 
-                    width: 'calc(580px * 3 + 20px * 2)', // 3장 카드(580px) + gap(20px * 2)
-                    minWidth: 'calc(580px * 3 + 20px * 2)',
+                    width: 'calc(560px * 3 + 20px * 2)', // 3장 카드(560px) + gap(20px * 2)
+                    minWidth: 'calc(560px * 3 + 20px * 2)',
                     margin: '0 auto' // 중앙 정렬
                   }}
                 >
@@ -365,7 +365,7 @@ export default function AboutSection() {
                         titleColor={aboutData.colors?.desktopCardTitle || aboutData.colors?.cardTitle || aboutData.cardTitleColor || "#000000"}
                         descriptionColor={aboutData.colors?.desktopCardDescription || aboutData.colors?.cardDescription || aboutData.cardDescriptionColor || "#6B7280"}
                         backgroundColor={aboutData.cardBackgroundColor || "#ffffff"}
-                        width={isMobile ? "380px" : undefined}
+                        width={isMobile ? "380px" : "500px"}
                         minHeight={isMobile ? "200px" : "230px"}
                         titleFontSize={card.fontSize?.title || aboutData.fontSize?.desktopCardTitle || aboutData.fontSize?.cardTitle}
                         descriptionFontSize={card.fontSize?.description || aboutData.fontSize?.desktopCardDescription || aboutData.fontSize?.cardDescription}
