@@ -42,11 +42,11 @@ export default function AboutCard({ title, description, detailLink, borderRadius
       style={{
         backgroundColor: backgroundColor || "#f3f4f6",
         borderRadius: borderRadius || "8px",
-        padding: "clamp(12px, 1.5vw, 20px)",
+        padding: "clamp(8px, 1.04vw, 20px)",
         border: "1px solid #e5e7eb",
-        minHeight: minHeight || "20vw",
-        width: width || "25vw",
-        maxWidth: width || "25vw",
+        minHeight: minHeight || "clamp(160px, 20vw, 400px)",
+        width: width || "clamp(200px, 25vw, 500px)",
+        maxWidth: width || "clamp(200px, 25vw, 500px)",
         flexShrink: 0,      // ✅ 강제로 줄어들지 않도록
         display: "flex",
       }}
@@ -106,7 +106,7 @@ export default function AboutCard({ title, description, detailLink, borderRadius
         className="font-semibold text-blue-600 leading-tight"
         style={{
           color: titleColor || "#00A3E0",
-          fontSize: titleFontSize ? `${titleFontSize}px` : "clamp(12px, 2.5vw, 28px)",
+          fontSize: titleFontSize ? `${titleFontSize}px` : "clamp(14px, 1.46vw, 28px)",
           fontWeight: "600",
           margin: "clamp(8px, 1vw, 16px) 0 clamp(12px, 1.2vw, 20px) clamp(4px, 0.5vw, 8px)",
           wordBreak: "keep-all",
@@ -122,7 +122,7 @@ export default function AboutCard({ title, description, detailLink, borderRadius
         className="text-gray-700 space-y-2 flex-1"
         style={{
           color: descriptionColor || "#374151",
-          fontSize: descriptionFontSize ? `${descriptionFontSize}px` : "clamp(10px, 1.5vw, 20px)",
+          fontSize: descriptionFontSize ? `${descriptionFontSize}px` : "clamp(12px, 1.04vw, 20px)",
           fontWeight: "500",
           display: "flex",
           flexDirection: "column",
