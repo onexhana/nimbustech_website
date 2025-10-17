@@ -320,7 +320,7 @@ export default function AboutSection() {
                   overflow: 'visible', 
                   display: 'flex', 
                   flex: '1', 
-                  justifyContent: 'center'
+                  justifyContent: 'flex-start'
                 }}
               >
                 <div 
@@ -329,7 +329,8 @@ export default function AboutSection() {
                     width: 'calc(100vw - 200px)', // 화면 너비에서 좌우 마진(100px * 2) 제외
                     maxWidth: 'calc(560px * 3 + 20px * 2)', // 최대 너비 제한
                     minWidth: 'calc(400px * 3 + 20px * 2)', // 최소 너비 보장
-                    margin: '0 auto' // 중앙 정렬
+                    margin: '0',
+                    paddingLeft: '50px' // AboutTab과 같은 시작점
                   }}
                 >
                 <Swiper
@@ -347,6 +348,7 @@ export default function AboutSection() {
                   slidesPerGroup={1}
                   loop={true}
                   loopedSlides={Math.max(3, cards.length)} // 최소 3개 이상의 루프 슬라이드 보장
+                  slidesOffsetBefore={0} // 첫 번째 슬라이드 시작 위치
                   pagination={false}
                   navigation={false}
                   allowTouchMove={true}
