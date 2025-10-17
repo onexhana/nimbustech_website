@@ -12,6 +12,7 @@ export default function PortfolioSection() {
   const [selectedCategory, setSelectedCategory] = useState("공공");
   const [, setCurrentSlide] = useState(0);
   const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 768);
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   const [swiperKey, setSwiperKey] = useState(0); // Swiper 강제 재초기화를 위한 키
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const swiperRef = useRef<any>(null);
@@ -19,9 +20,50 @@ export default function PortfolioSection() {
   const filtered = portfolioData.projects.filter((p) => p.category === selectedCategory);
   
   useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth < 768);
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    const checkMobile = () => {
+      const currentWidth = window.innerWidth;
+      setIsMobile(currentWidth < 768);
+      setScreenWidth(currentWidth);
+      
+      // 디버깅용 로그 (값이 변경될 때만 출력)
+      const prevWidth = screenWidth;
+      if (Math.abs(currentWidth - prevWidth) > 10) {
+        console.log('PortfolioSection - 화면 크기 변경:', currentWidth, 'isMobile:', currentWidth < 768);
+      }
+    };
+    
+    // 초기 로딩 시 즉시 실행
+    checkMobile();
+    
+    // 리사이즈 이벤트 리스너 추가 (디바운싱 적용)
+    let resizeTimeout: NodeJS.Timeout;
+    const debouncedResize = () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(checkMobile, 150); // 150ms 디바운싱
+    };
+    
+    window.addEventListener('resize', debouncedResize);
+    
+    // 브라우저 확대/축소 감지를 위한 추가 이벤트들
+    window.addEventListener('orientationchange', checkMobile);
+    
+    // 브라우저 확대 비율 변경 감지 (Chrome, Edge 등)
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', debouncedResize);
+    }
+    
+    // 주기적으로 화면 크기 체크 (확대/축소 변경 감지용) - 3초마다 체크
+    const intervalCheck = setInterval(checkMobile, 3000);
+    
+    return () => {
+      window.removeEventListener('resize', debouncedResize);
+      window.removeEventListener('orientationchange', checkMobile);
+      if (window.visualViewport) {
+        window.visualViewport.removeEventListener('resize', debouncedResize);
+      }
+      clearTimeout(resizeTimeout);
+      clearInterval(intervalCheck);
+    };
   }, []);
   
   const handleCategoryChange = (category: string) => {
@@ -247,7 +289,7 @@ export default function PortfolioSection() {
           <div className="flex items-start" style={{ 
             marginLeft: '64px', 
             marginTop: '-0px',
-            gap: window.innerWidth <= 1366 ? '24px' : '64px' // 템플릿 크기(1366px 이하)에서만 간격 줄임
+            gap: screenWidth <= 1366 ? '24px' : '64px' // 템플릿 크기(1366px 이하)에서만 간격 줄임
           }}>
             <CategoryFilter 
               selectedCategory={selectedCategory}
@@ -255,7 +297,7 @@ export default function PortfolioSection() {
             />
 
             <div className="flex flex-col h-full items-start" style={{ 
-              marginLeft: window.innerWidth <= 1366 ? '60px' : '200px' // 템플릿 크기(1366px 이하)에서만 추가 간격도 줄임
+              marginLeft: screenWidth <= 1366 ? '60px' : '200px' // 템플릿 크기(1366px 이하)에서만 추가 간격도 줄임
             }}>
               <div className="w-full">
                 <PortfolioCardList key={`${selectedCategory}-${swiperKey}`} projects={filtered} />

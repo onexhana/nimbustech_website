@@ -177,15 +177,52 @@ export default function HomeButton() {
 
   useEffect(() => {
     const checkMobile = () => {
+      const currentWidth = window.innerWidth;
       // 단순하고 예측 가능한 브레이크포인트(768px)로 복귀
-      setIsMobile(window.innerWidth < 768);
-      // 430px 이하에서만 흰색 배경 사용 (원본 이미지 크기까지는 투명)
-      setIsSmallScreen(window.innerWidth <= 430);
-      setScreenWidth(window.innerWidth);
+      setIsMobile(currentWidth < 768);
+      // 350px 이하에서만 흰색 배경 사용 (원본 이미지 크기까지는 투명)
+      setIsSmallScreen(currentWidth <= 350);
+      setScreenWidth(currentWidth);
+      
+      // 디버깅용 로그 (값이 변경될 때만 출력)
+      const prevWidth = screenWidth;
+      if (Math.abs(currentWidth - prevWidth) > 10) {
+        console.log('화면 크기 변경:', currentWidth, 'isSmallScreen:', currentWidth <= 350, 'isMobile:', currentWidth < 768);
+      }
     };
+    
+    // 초기 로딩 시 즉시 실행
     checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
+    
+    // 리사이즈 이벤트 리스너 추가 (디바운싱 적용)
+    let resizeTimeout: NodeJS.Timeout;
+    const debouncedResize = () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(checkMobile, 150); // 150ms 디바운싱
+    };
+    
+    window.addEventListener('resize', debouncedResize);
+    
+    // 브라우저 확대/축소 감지를 위한 추가 이벤트들
+    window.addEventListener('orientationchange', checkMobile);
+    
+    // 브라우저 확대 비율 변경 감지 (Chrome, Edge 등)
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', debouncedResize);
+    }
+    
+    // 주기적으로 화면 크기 체크 (확대/축소 변경 감지용) - 3초마다 체크
+    const intervalCheck = setInterval(checkMobile, 3000);
+    
+    return () => {
+      window.removeEventListener('resize', debouncedResize);
+      window.removeEventListener('orientationchange', checkMobile);
+      if (window.visualViewport) {
+        window.visualViewport.removeEventListener('resize', debouncedResize);
+      }
+      clearTimeout(resizeTimeout);
+      clearInterval(intervalCheck);
+    };
   }, []);
 
   // 화면 크기에 따른 부드러운 폰트 크기 계산 함수 (타이핑 효과와 동일)
@@ -219,6 +256,18 @@ export default function HomeButton() {
   }, [selectedIdx]);
 
   const handleCloseModal = () => setSelectedIdx(null);
+
+  const handleButtonClick = (idx: number) => {
+    setSelectedIdx(idx);
+    // 모달이 열릴 때 화면 크기 다시 확인
+    setTimeout(() => {
+      const currentWidth = window.innerWidth;
+      setIsMobile(currentWidth < 768);
+      setIsSmallScreen(currentWidth <= 350);
+      setScreenWidth(currentWidth);
+      console.log('모달 열림 - 화면 크기:', currentWidth, 'isSmallScreen:', currentWidth <= 350);
+    }, 100);
+  };
 
   // 화면 크기에 따른 부드러운 마진 계산 함수
   const getResponsiveMarginTop = () => {
@@ -302,7 +351,7 @@ export default function HomeButton() {
               style={{
                 width: "100%",
                 height: "auto",
-                objectFit: isMobile ? (screenWidth < 400 ? "cover" : "contain") : "contain",
+                objectFit: "contain", // 모든 경우에 contain 사용하여 이미지가 잘리지 않도록
                 maxHeight: isMobile ? (screenWidth < 400 ? "85vh" : "80vh") : "85vh",
                 display: "block",
               }}
@@ -311,6 +360,7 @@ export default function HomeButton() {
                   homeData.buttonData[selectedIdx].imagePath.replace('/popup_image/', '/popup_image_mobile/').replace(/\.[^/.]+$/, '_mobile.png') :
                   homeData.buttonData[selectedIdx].imagePath;
                 console.error('이미지 로딩 실패:', imagePath);
+                console.error('화면 크기:', screenWidth, 'isMobile:', isMobile);
                 e.currentTarget.style.display = 'none';
               }}
               onLoad={() => {
@@ -318,6 +368,7 @@ export default function HomeButton() {
                   homeData.buttonData[selectedIdx].imagePath.replace('/popup_image/', '/popup_image_mobile/').replace(/\.[^/.]+$/, '_mobile.png') :
                   homeData.buttonData[selectedIdx].imagePath;
                 console.log('이미지 로딩 성공:', imagePath);
+                console.log('화면 크기:', screenWidth, 'isMobile:', isMobile);
               }}
             />
           </div>
@@ -348,7 +399,7 @@ export default function HomeButton() {
             return (
               <div
                 key={idx}
-                onClick={() => setSelectedIdx(idx)}
+                onClick={() => handleButtonClick(idx)}
                 className={`${isMobile ? 'aspect-square' : 'aspect-square'} w-full flex flex-col cursor-pointer justify-center p-8 text-center transition-colors border-b border-gray-200 group ${
                   isMobile 
                     ? (idx % 2 !== 1 ? "border-r" : "") // 모바일: 홀수 인덱스에만 오른쪽 경계선
