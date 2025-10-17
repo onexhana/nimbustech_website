@@ -78,7 +78,7 @@ export default function HomeSection() {
         id="home"
         className="w-full bg-white flex items-start justify-end px-4"
         style={{ 
-          paddingTop: '90px', 
+          paddingTop: isMobile ? '100px' : '150px', 
           // 모든 구간에서 연속 변화: 창이 줄수록 더 작게
           // 최소 8px, 비율 2.5vw, 최대 48px
           paddingBottom: 'clamp(8px, 2.5vw, 48px)',
