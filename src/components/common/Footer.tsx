@@ -21,7 +21,7 @@ export default function Footer() {
 
   return (
     <footer className="bg-[#00A3E0] text-white py-16 px-6 md:px-20">
-      <div className="w-full">
+      <div className="max-w-[1920px] mx-auto w-full">
         <div>
           {/* 좌측: 로고 및 회사 정보 */}
           <div className="flex flex-col space-y-4">

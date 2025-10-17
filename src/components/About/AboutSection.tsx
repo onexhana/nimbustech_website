@@ -109,7 +109,7 @@ export default function AboutSection() {
         marginTop: '120px'
       }}>
       {/* 메인 타이틀 영역 (AboutSection 컴포넌트 내부 상단) */}
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-[1920px] mx-auto">
         {/*
           isMobile 분기: 화면 너비가 모바일 기준(<768px)이면 이 블록 실행
           - 모바일용 필터 버튼들을 flex-wrap으로 가로/세로 배치
@@ -299,7 +299,7 @@ export default function AboutSection() {
             {/* ======================================== */}
             {/* 카드 영역 (모든 섹션: Swiper 무한루프) */}
             {/* ======================================== */}
-            <div className="flex items-start" style={{ position: 'relative', overflow: 'visible', display: 'flex', alignItems: 'flex-start', gap: '1vw', justifyContent: 'center', marginLeft: '5vw', marginRight: '5vw' }}>
+            <div className="flex items-start" style={{ position: 'relative', overflow: 'visible', display: 'flex', alignItems: 'flex-start', gap: '20px', justifyContent: 'center', marginLeft: '100px', marginRight: '100px' }}>
 
               {/* 모든 섹션: 무한 루프 슬라이더 */}
               <div
@@ -315,8 +315,8 @@ export default function AboutSection() {
                 <div 
                   className="overflow-hidden"
                   style={{ 
-                    width: 'calc(30vw * 3 + 1vw * 2)', // 3장 카드(30vw) + gap(1vw * 2)
-                    minWidth: 'calc(30vw * 3 + 1vw * 2)',
+                    width: 'calc(560px * 3 + 20px * 2)', // 3장 카드(560px) + gap(20px * 2)
+                    minWidth: 'calc(560px * 3 + 20px * 2)',
                     margin: '0 auto' // 중앙 정렬
                   }}
                 >
@@ -330,7 +330,7 @@ export default function AboutSection() {
                   onInit={(swiper: any) => {
                     swiperRef.current = swiper;
                   }}
-                  spaceBetween={window.innerWidth * 0.01} // 1vw에 해당하는 픽셀 값
+                  spaceBetween={20} // 고정 픽셀 값
                   slidesPerView={3}
                   slidesPerGroup={1}
                   loop={true}
@@ -365,10 +365,10 @@ export default function AboutSection() {
                         titleColor={aboutData.colors?.desktopCardTitle || aboutData.colors?.cardTitle || aboutData.cardTitleColor || "#000000"}
                         descriptionColor={aboutData.colors?.desktopCardDescription || aboutData.colors?.cardDescription || aboutData.cardDescriptionColor || "#6B7280"}
                         backgroundColor={aboutData.cardBackgroundColor || "#ffffff"}
-                        width={isMobile ? "380px" : undefined}
-                        minHeight={isMobile ? "200px" : "12vw"}
-                        titleFontSize={undefined}
-                        descriptionFontSize={undefined}
+                        width={isMobile ? "380px" : "500px"}
+                        minHeight={isMobile ? "200px" : "230px"}
+                        titleFontSize={card.fontSize?.title || aboutData.fontSize?.desktopCardTitle || aboutData.fontSize?.cardTitle}
+                        descriptionFontSize={card.fontSize?.description || aboutData.fontSize?.desktopCardDescription || aboutData.fontSize?.cardDescription}
                         hoverEffect={aboutData.cardHoverEffect}
                       />
                     </div>
