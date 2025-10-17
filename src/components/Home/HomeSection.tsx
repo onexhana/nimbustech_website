@@ -83,7 +83,7 @@ export default function HomeSection() {
           // 최소 8px, 비율 2.5vw, 최대 48px
           paddingBottom: 'clamp(8px, 2.5vw, 48px)',
           // 높이도 더 공격적으로 축소: 최소 360px, 비율 45vh, 최대 740px
-          minHeight: 'clamp(360px, 45vh, 740px)'
+          minHeight: isMobile ? '280px' : 'clamp(360px, 45vh, 740px)'
         }}
       >
         <div className="max-w-[1920px] w-full mx-auto text-right" style={{ marginRight: '32px' }}>
