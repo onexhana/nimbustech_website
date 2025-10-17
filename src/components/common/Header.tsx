@@ -91,7 +91,7 @@ function HeaderWeb() {
           '0 4px 6px -1px rgba(0, 0, 0, 0.19), 0 2px 4px -2px rgba(0,0,0,0.1)',
       }}
     >
-      <div className="max-w-7xl mx-auto px-8 h-16 flex justify-between items-center">
+      <div className="max-w-[1920px] mx-auto px-8 h-16 flex justify-between items-center">
         {/* 웹 로고 영역 */}
         <a
           href="#home"

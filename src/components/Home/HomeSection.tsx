@@ -86,7 +86,7 @@ export default function HomeSection() {
           minHeight: 'clamp(360px, 45vh, 740px)'
         }}
       >
-        <div className="text-right" style={{ marginRight: '32px' }}>
+        <div className="max-w-[1920px] w-full mx-auto text-right" style={{ marginRight: '32px' }}>
           <div>
             {texts.map((text, index) => {
               // 화면 크기에 따른 텍스트 간격 계산

@@ -54,7 +54,7 @@ export default function PortfolioSection() {
       {/* 포트폴리오 메인 섹션 */}
       <div className="pt-[120px] pl-16 pr-12 pb-24 bg-white">
         {/* Portfolio 페이지 제목 */}
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-[1920px] mx-auto">
           {/* 메인 타이틀 */}
           {isMobile ? (
             <div style={{
