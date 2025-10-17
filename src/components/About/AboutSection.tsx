@@ -104,12 +104,12 @@ export default function AboutSection() {
       <div className="w-full" style={{
         padding: isMobile
           ? `80px 0 ${activeTab === 'RPA' ? '40px' : '55px'} 0`
-          : `clamp(40px, 4.2vw, 80px) clamp(12px, 1.25vw, 24px) ${activeTab === 'RPA' ? 'clamp(20px, 2.1vw, 40px)' : 'clamp(30px, 3.1vw, 60px)'} clamp(12px, 1.25vw, 24px)`,
+          : `80px 24px ${activeTab === 'RPA' ? '40px' : '60px'} 24px`,
         backgroundColor: '#F3F6F9',
-        marginTop: 'clamp(60px, 6.25vw, 120px)'
+        marginTop: '120px'
       }}>
       {/* 메인 타이틀 영역 (AboutSection 컴포넌트 내부 상단) */}
-       <div style={{ maxWidth: '1920px', margin: '0 auto' }}>
+      <div className="max-w-[1920px] mx-auto">
         {/*
           isMobile 분기: 화면 너비가 모바일 기준(<768px)이면 이 블록 실행
           - 모바일용 필터 버튼들을 flex-wrap으로 가로/세로 배치
@@ -199,22 +199,22 @@ export default function AboutSection() {
                 loopedSlides={isMultiPage ? duplicatedCards.length : 0}
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 onInit={(swiper: any) => { swiperRef.current = swiper }}
-                style={{ padding: '0 clamp(10px, 1.04vw, 20px)' }}
+                style={{ padding: '0 20px' }}
               >
                 {(isMultiPage ? duplicatedCards : cards).map((card, i) => (
                   <SwiperSlide key={i}>
-                    <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', minHeight: 'clamp(120px, 12vw, 240px)' }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', minHeight: '12vw' }}>
                       <div>
                         <h3 style={{ 
-                          fontSize: `clamp(14px, ${(card.fontSize?.title || aboutData.fontSize?.mobileCardTitle || aboutData.fontSize?.cardTitle || 20) * 0.7}px, ${card.fontSize?.title || aboutData.fontSize?.mobileCardTitle || aboutData.fontSize?.cardTitle || 20}px)`, 
+                          fontSize: `${card.fontSize?.title || aboutData.fontSize?.mobileCardTitle || aboutData.fontSize?.cardTitle || 20}px`, 
                           fontWeight: '600', 
                           color: aboutData.colors?.mobileCardTitle || aboutData.colors?.cardTitle || aboutData.cardTitleColor || '#000000', 
-                          margin: '0 0 clamp(10px, 1.04vw, 20px) 0' 
+                          margin: '0 0 20px 0' 
                         }}>
                           {card.title}
                         </h3>
                         <div style={{ 
-                          fontSize: `clamp(12px, ${(card.fontSize?.description || aboutData.fontSize?.mobileCardDescription || aboutData.fontSize?.cardDescription || 16) * 0.7}px, ${card.fontSize?.description || aboutData.fontSize?.mobileCardDescription || aboutData.fontSize?.cardDescription || 16}px)`, 
+                          fontSize: `${card.fontSize?.description || aboutData.fontSize?.mobileCardDescription || aboutData.fontSize?.cardDescription || 16}px`, 
                           color: aboutData.colors?.mobileCardDescription || aboutData.colors?.cardDescription || aboutData.cardDescriptionColor || '#000000', 
                           fontWeight: '400', 
                           lineHeight: '1.5' 
@@ -225,7 +225,7 @@ export default function AboutSection() {
                         </div>
                       </div>
                       {activeTab === '솔루션' && (
-                        <div style={{ textAlign: 'left', marginTop: 'clamp(10px, 1.04vw, 20px)', marginLeft: 'clamp(4px, 0.42vw, 8px)' }}>
+                        <div style={{ textAlign: 'left', marginTop: '20px', marginLeft: '8px' }}>
                           <a
                             href={card.link}
                             target="_blank"
@@ -233,9 +233,9 @@ export default function AboutSection() {
                             style={{
                               backgroundColor: "#00A3E0",
                               color: "#ffffff",
-                              borderRadius: "clamp(10px, 1.04vw, 20px)",
-                              padding: "clamp(4px, 0.42vw, 8px) clamp(10px, 1.04vw, 20px)",
-                              fontSize: "clamp(12px, 0.83vw, 16px)",
+                              borderRadius: "20px",
+                              padding: "8px 20px",
+                              fontSize: "1rem",
                               fontWeight: 600,
                               textDecoration: "none",
                               border: "none",
@@ -258,8 +258,8 @@ export default function AboutSection() {
             <div style={{
               display: 'flex',
               justifyContent: 'center',
-              gap: 'clamp(3px, 0.31vw, 6px)',
-              marginTop: 'clamp(8px, 0.78vw, 15px)'
+              gap: '6px',
+              marginTop: '15px'
             }}>
               {Array.from({ length: cards.length }).map((_, i) => (
                 <button
@@ -269,9 +269,9 @@ export default function AboutSection() {
                     swiperRef.current?.slideToLoop(i);
                   }}
                   style={{
-                    width: i === (currentSlide % cards.length) ? 'clamp(12px, 1.25vw, 24px)' : 'clamp(4px, 0.42vw, 8px)',
-                    height: 'clamp(4px, 0.42vw, 8px)',
-                    borderRadius: i === (currentSlide % cards.length) ? 'clamp(2px, 0.21vw, 4px)' : '50%',
+                    width: i === (currentSlide % cards.length) ? '24px' : '8px',
+                    height: '8px',
+                    borderRadius: i === (currentSlide % cards.length) ? '4px' : '50%',
                     backgroundColor: i === (currentSlide % cards.length) ? '#00A3E0' : '#D1D5DB',
                     border: 'none',
                     padding: 0,
@@ -291,12 +291,15 @@ export default function AboutSection() {
               tabs={aboutData.tabs.map(tab => tab.name)}
               activeTab={activeTab}
               onTabChange={handleTabChange}
+              fontSize={aboutData.fontSize?.desktopTabName || aboutData.fontSize?.tabName}
+              activeColor={aboutData.desktopTabActiveColor || aboutData.tabActiveColor}
+              inactiveColor={aboutData.desktopTabInactiveColor || aboutData.tabInactiveColor}
             />
 
             {/* ======================================== */}
             {/* 카드 영역 (모든 섹션: Swiper 무한루프) */}
             {/* ======================================== */}
-             <div className="flex items-start" style={{ position: 'relative', overflow: 'visible', display: 'flex', alignItems: 'flex-start', gap: 'clamp(8px, 0.8vw, 16px)', justifyContent: 'center', marginLeft: 'clamp(25px, 5vw, 100px)', marginRight: 'clamp(25px, 5vw, 100px)' }}>
+            <div className="flex items-start" style={{ position: 'relative', overflow: 'visible', display: 'flex', alignItems: 'flex-start', gap: '20px', justifyContent: 'center', marginLeft: '100px', marginRight: '100px' }}>
 
               {/* 모든 섹션: 무한 루프 슬라이더 */}
               <div
@@ -309,40 +312,40 @@ export default function AboutSection() {
                   justifyContent: 'center'
                 }}
               >
-                 <div 
-                   className="overflow-hidden"
-                   style={{ 
-                     width: 'calc(clamp(200px, 25vw, 500px) * 3 + clamp(8px, 0.8vw, 16px) * 2)', // 3장 카드 + gap
-                     minWidth: 'calc(clamp(200px, 25vw, 500px) * 3 + clamp(8px, 0.8vw, 16px) * 2)',
-                     margin: '0 auto' // 중앙 정렬
-                   }}
-                 >
-                   <Swiper
-                     key={`${activeTab}-${cards.length}`} // 탭 변경 시 Swiper 재초기화
-                     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                     onSwiper={(swiper: any) => {
-                       swiperRef.current = swiper;
-                     }}
-                     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                     onInit={(swiper: any) => {
-                       swiperRef.current = swiper;
-                     }}
-                     spaceBetween={Math.max(8, window.innerWidth * 0.008)} // 최소 8px, 0.8vw에 해당하는 픽셀 값
-                     slidesPerView={3}
-                     slidesPerGroup={1}
-                     loop={true}
-                     loopedSlides={Math.max(3, cards.length)} // 최소 3개 이상의 루프 슬라이드 보장
-                     pagination={false}
-                     navigation={false}
-                     allowTouchMove={true}
-                     centeredSlides={false}
-                     speed={300}
-                     resistance={false}
-                     resistanceRatio={0}
-                     watchSlidesProgress={false}
-                     freeMode={false}
-                     className="about-infinite-swiper"
-                   >
+                <div 
+                  className="overflow-hidden"
+                  style={{ 
+                    width: 'calc(560px * 3 + 20px * 2)', // 3장 카드(560px) + gap(20px * 2)
+                    minWidth: 'calc(560px * 3 + 20px * 2)',
+                    margin: '0 auto' // 중앙 정렬
+                  }}
+                >
+                <Swiper
+                  key={`${activeTab}-${cards.length}`} // 탭 변경 시 Swiper 재초기화
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  onSwiper={(swiper: any) => {
+                    swiperRef.current = swiper;
+                  }}
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  onInit={(swiper: any) => {
+                    swiperRef.current = swiper;
+                  }}
+                  spaceBetween={20} // 고정 픽셀 값
+                  slidesPerView={3}
+                  slidesPerGroup={1}
+                  loop={true}
+                  loopedSlides={Math.max(3, cards.length)} // 최소 3개 이상의 루프 슬라이드 보장
+                  pagination={false}
+                  navigation={false}
+                  allowTouchMove={true}
+                  centeredSlides={false}
+                  speed={300}
+                  resistance={false}
+                  resistanceRatio={0}
+                  watchSlidesProgress={false}
+                  freeMode={false}
+                  className="about-infinite-swiper"
+                >
                   {duplicatedCards.map((card, index) => (
                   <SwiperSlide key={`${card.title}-${index}`}>
                     <div
@@ -362,10 +365,10 @@ export default function AboutSection() {
                         titleColor={aboutData.colors?.desktopCardTitle || aboutData.colors?.cardTitle || aboutData.cardTitleColor || "#000000"}
                         descriptionColor={aboutData.colors?.desktopCardDescription || aboutData.colors?.cardDescription || aboutData.cardDescriptionColor || "#6B7280"}
                         backgroundColor={aboutData.cardBackgroundColor || "#ffffff"}
-                         width={isMobile ? "380px" : undefined}
-                         minHeight={isMobile ? "200px" : "clamp(120px, 12vw, 240px)"}
-                         titleFontSize={undefined}
-                         descriptionFontSize={undefined}
+                        width={isMobile ? "380px" : "500px"}
+                        minHeight={isMobile ? "200px" : "230px"}
+                        titleFontSize={card.fontSize?.title || aboutData.fontSize?.desktopCardTitle || aboutData.fontSize?.cardTitle}
+                        descriptionFontSize={card.fontSize?.description || aboutData.fontSize?.desktopCardDescription || aboutData.fontSize?.cardDescription}
                         hoverEffect={aboutData.cardHoverEffect}
                       />
                     </div>
@@ -391,7 +394,7 @@ export default function AboutSection() {
                       }
                     }
                     .about-infinite-swiper .swiper-slide > div {
-                      margin: clamp(5px, 0.52vw, 10px) 0;
+                      margin: 10px 0;
                     }
                     .about-infinite-swiper .swiper-slide-duplicate {
                       opacity: 1 !important;
@@ -408,12 +411,12 @@ export default function AboutSection() {
                       onClick={() => swiperRef.current?.slidePrev()}
                       style={{
                         position: 'absolute',
-                        top: 'clamp(-2.5rem, -2.6vw, -5rem)',
-                        right: 'clamp(3rem, 3.13vw, 6rem)',
+                        top: '-5rem',
+                        right: '6rem',
                         border: 'none',
                         outline: 'none',
-                        width: 'clamp(20px, 2.08vw, 40px)',
-                        height: 'clamp(20px, 2.08vw, 40px)',
+                        width: '40px',
+                        height: '40px',
                         borderRadius: '50%',
                         backgroundColor: '#E5E7EB',
                         display: 'flex',
@@ -423,7 +426,7 @@ export default function AboutSection() {
                         zIndex: 10,
                       }}
                     >
-                      <svg width="clamp(12px, 1.25vw, 24px)" height="clamp(12px, 1.25vw, 24px)" viewBox="0 0 24 24" fill="none">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                         <path d="M15 6L9 12L15 18" stroke="#1F2937" strokeWidth="3" strokeLinecap="butt" strokeLinejoin="miter" />
                       </svg>
                     </button>
@@ -431,12 +434,12 @@ export default function AboutSection() {
                       onClick={() => swiperRef.current?.slideNext()}
                       style={{
                         position: 'absolute',
-                        top: 'clamp(-2.5rem, -2.6vw, -5rem)',
-                        right: 'clamp(1rem, 1.04vw, 2rem)',
+                        top: '-5rem',
+                        right: '2rem',
                         border: 'none',
                         outline: 'none',
-                        width: 'clamp(20px, 2.08vw, 40px)',
-                        height: 'clamp(20px, 2.08vw, 40px)',
+                        width: '40px',
+                        height: '40px',
                         borderRadius: '50%',
                         backgroundColor: '#1F2937',
                         display: 'flex',
@@ -446,7 +449,7 @@ export default function AboutSection() {
                         zIndex: 10,
                       }}
                     >
-                      <svg width="clamp(12px, 1.25vw, 24px)" height="clamp(12px, 1.25vw, 24px)" viewBox="0 0 24 24" fill="none">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                         <path d="M9 6L15 12L9 18" stroke="#FFFFFF" strokeWidth="3" strokeLinecap="butt" strokeLinejoin="miter" />
                       </svg>
                     </button>
