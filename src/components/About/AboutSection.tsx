@@ -109,7 +109,7 @@ export default function AboutSection() {
         marginTop: 'clamp(60px, 6.25vw, 120px)'
       }}>
       {/* 메인 타이틀 영역 (AboutSection 컴포넌트 내부 상단) */}
-      <div className="max-w-[1920px] mx-auto">
+       <div style={{ maxWidth: '1920px', margin: '0 auto' }}>
         {/*
           isMobile 분기: 화면 너비가 모바일 기준(<768px)이면 이 블록 실행
           - 모바일용 필터 버튼들을 flex-wrap으로 가로/세로 배치
@@ -296,7 +296,7 @@ export default function AboutSection() {
             {/* ======================================== */}
             {/* 카드 영역 (모든 섹션: Swiper 무한루프) */}
             {/* ======================================== */}
-            <div className="flex items-start" style={{ position: 'relative', overflow: 'visible', display: 'flex', alignItems: 'flex-start', gap: '20px', justifyContent: 'center', marginLeft: '100px', marginRight: '100px' }}>
+             <div className="flex items-start" style={{ position: 'relative', overflow: 'visible', display: 'flex', alignItems: 'flex-start', gap: 'clamp(8px, 0.8vw, 16px)', justifyContent: 'center', marginLeft: 'clamp(25px, 5vw, 100px)', marginRight: 'clamp(25px, 5vw, 100px)' }}>
 
               {/* 모든 섹션: 무한 루프 슬라이더 */}
               <div
@@ -309,44 +309,40 @@ export default function AboutSection() {
                   justifyContent: 'center'
                 }}
               >
-                <div 
-                  className="overflow-hidden"
-                  style={{ 
-
-                    width: 'calc(clamp(200px, 25vw, 500px) * 3 + clamp(8px, 0.8vw, 16px) * 2)', // 3장 카드 + gap
-                    minWidth: 'calc(clamp(200px, 25vw, 500px) * 3 + clamp(8px, 0.8vw, 16px) * 2)',
-
-                  }}
-                >
-                  key={`${activeTab}-${cards.length}`} // 탭 변경 시 Swiper 재초기화
-                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                  onSwiper={(swiper: any) => {
-                    swiperRef.current = swiper;
-                  }}
-                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                  onInit={(swiper: any) => {
-                    swiperRef.current = swiper;
-                  }}
-
-                  spaceBetween={Math.max(8, window.innerWidth * 0.008)} // 최소 8px, 0.8vw에 해당하는 픽셀 값
-
-                  spaceBetween={20} // 고정 픽셀 값
-
-                  slidesPerView={3}
-                  slidesPerGroup={1}
-                  loop={true}
-                  loopedSlides={Math.max(3, cards.length)} // 최소 3개 이상의 루프 슬라이드 보장
-                  pagination={false}
-                  navigation={false}
-                  allowTouchMove={true}
-                  centeredSlides={false}
-                  speed={300}
-                  resistance={false}
-                  resistanceRatio={0}
-                  watchSlidesProgress={false}
-                  freeMode={false}
-                  className="about-infinite-swiper"
-                >
+                 <div 
+                   className="overflow-hidden"
+                   style={{ 
+                     width: 'calc(clamp(200px, 25vw, 500px) * 3 + clamp(8px, 0.8vw, 16px) * 2)', // 3장 카드 + gap
+                     minWidth: 'calc(clamp(200px, 25vw, 500px) * 3 + clamp(8px, 0.8vw, 16px) * 2)',
+                     margin: '0 auto' // 중앙 정렬
+                   }}
+                 >
+                   <Swiper
+                     key={`${activeTab}-${cards.length}`} // 탭 변경 시 Swiper 재초기화
+                     // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                     onSwiper={(swiper: any) => {
+                       swiperRef.current = swiper;
+                     }}
+                     // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                     onInit={(swiper: any) => {
+                       swiperRef.current = swiper;
+                     }}
+                     spaceBetween={Math.max(8, window.innerWidth * 0.008)} // 최소 8px, 0.8vw에 해당하는 픽셀 값
+                     slidesPerView={3}
+                     slidesPerGroup={1}
+                     loop={true}
+                     loopedSlides={Math.max(3, cards.length)} // 최소 3개 이상의 루프 슬라이드 보장
+                     pagination={false}
+                     navigation={false}
+                     allowTouchMove={true}
+                     centeredSlides={false}
+                     speed={300}
+                     resistance={false}
+                     resistanceRatio={0}
+                     watchSlidesProgress={false}
+                     freeMode={false}
+                     className="about-infinite-swiper"
+                   >
                   {duplicatedCards.map((card, index) => (
                   <SwiperSlide key={`${card.title}-${index}`}>
                     <div
@@ -366,10 +362,10 @@ export default function AboutSection() {
                         titleColor={aboutData.colors?.desktopCardTitle || aboutData.colors?.cardTitle || aboutData.cardTitleColor || "#000000"}
                         descriptionColor={aboutData.colors?.desktopCardDescription || aboutData.colors?.cardDescription || aboutData.cardDescriptionColor || "#6B7280"}
                         backgroundColor={aboutData.cardBackgroundColor || "#ffffff"}
-                        width={isMobile ? "380px" : "500px"}
-                        minHeight={isMobile ? "200px" : "230px"}
-                        titleFontSize={card.fontSize?.title || aboutData.fontSize?.desktopCardTitle || aboutData.fontSize?.cardTitle}
-                        descriptionFontSize={card.fontSize?.description || aboutData.fontSize?.desktopCardDescription || aboutData.fontSize?.cardDescription}
+                         width={isMobile ? "380px" : undefined}
+                         minHeight={isMobile ? "200px" : "clamp(120px, 12vw, 240px)"}
+                         titleFontSize={undefined}
+                         descriptionFontSize={undefined}
                         hoverEffect={aboutData.cardHoverEffect}
                       />
                     </div>
