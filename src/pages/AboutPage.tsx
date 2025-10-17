@@ -13,7 +13,7 @@ import AboutSection from '../components/About/AboutSection';
 export default function AboutPage() {
   return (
     <>
-      <div className="about-page">
+      <div className="about-page max-w-[1920px] mx-auto">
         <AboutSection />
       </div>
       <style>{`
