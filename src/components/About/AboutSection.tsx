@@ -326,8 +326,9 @@ export default function AboutSection() {
                 <div 
                   className="overflow-hidden"
                   style={{ 
-                    width: 'calc(560px * 3 + 20px * 2)', // 3장 카드(560px) + gap(20px * 2)
-                    minWidth: 'calc(560px * 3 + 20px * 2)',
+                    width: 'calc(100vw - 200px)', // 화면 너비에서 좌우 마진(100px * 2) 제외
+                    maxWidth: 'calc(560px * 3 + 20px * 2)', // 최대 너비 제한
+                    minWidth: 'calc(400px * 3 + 20px * 2)', // 최소 너비 보장
                     margin: '0 auto' // 중앙 정렬
                   }}
                 >
@@ -341,7 +342,7 @@ export default function AboutSection() {
                   onInit={(swiper: any) => {
                     swiperRef.current = swiper;
                   }}
-                  spaceBetween={20} // 고정 픽셀 값
+                  spaceBetween={Math.max(10, window.innerWidth * 0.01)} // 최소 10px, 1vw에 해당하는 픽셀 값
                   slidesPerView={3}
                   slidesPerGroup={1}
                   loop={true}
@@ -376,7 +377,7 @@ export default function AboutSection() {
                         titleColor={aboutData.colors?.desktopCardTitle || aboutData.colors?.cardTitle || aboutData.cardTitleColor || "#000000"}
                         descriptionColor={aboutData.colors?.desktopCardDescription || aboutData.colors?.cardDescription || aboutData.cardDescriptionColor || "#6B7280"}
                         backgroundColor={aboutData.cardBackgroundColor || "#ffffff"}
-                        width={isMobile ? "380px" : "500px"}
+                        width={isMobile ? "380px" : undefined}
                         minHeight={isMobile ? "200px" : "230px"}
                         titleFontSize={card.fontSize?.title || aboutData.fontSize?.desktopCardTitle || aboutData.fontSize?.cardTitle}
                         descriptionFontSize={card.fontSize?.description || aboutData.fontSize?.desktopCardDescription || aboutData.fontSize?.cardDescription}

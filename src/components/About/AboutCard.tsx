@@ -45,8 +45,8 @@ export default function AboutCard({ title, description, detailLink, borderRadius
         padding: "clamp(12px, 1.5vw, 20px)",
         border: "1px solid #e5e7eb",
         minHeight: minHeight || "20vw",
-        width: width || "25vw",
-        maxWidth: width || "25vw",
+        width: width || "clamp(300px, 22vw, 500px)",
+        maxWidth: width || "clamp(300px, 22vw, 500px)",
         flexShrink: 0,      // ✅ 강제로 줄어들지 않도록
         display: "flex",
       }}
