@@ -289,7 +289,10 @@ export default function HomeButton() {
           </button>
           <div style={{ width: "100%" }}>
             <img
-              src={homeData.buttonData[selectedIdx].imagePath}
+              src={isMobile ? 
+                homeData.buttonData[selectedIdx].imagePath.replace('/popup_image/', '/popup_image_mobile/').replace(/\.[^/.]+$/, '_mobile.png') :
+                homeData.buttonData[selectedIdx].imagePath
+              }
               alt={selectedButton.subtitle}
               style={{
                 width: "100%",
@@ -298,11 +301,17 @@ export default function HomeButton() {
                 maxHeight: "85vh",
               }}
               onError={(e) => {
-                console.error('이미지 로딩 실패:', homeData.buttonData[selectedIdx].imagePath);
+                const imagePath = isMobile ? 
+                  homeData.buttonData[selectedIdx].imagePath.replace('/popup_image/', '/popup_image_mobile/').replace(/\.[^/.]+$/, '_mobile.png') :
+                  homeData.buttonData[selectedIdx].imagePath;
+                console.error('이미지 로딩 실패:', imagePath);
                 e.currentTarget.style.display = 'none';
               }}
               onLoad={() => {
-                console.log('이미지 로딩 성공:', homeData.buttonData[selectedIdx].imagePath);
+                const imagePath = isMobile ? 
+                  homeData.buttonData[selectedIdx].imagePath.replace('/popup_image/', '/popup_image_mobile/').replace(/\.[^/.]+$/, '_mobile.png') :
+                  homeData.buttonData[selectedIdx].imagePath;
+                console.log('이미지 로딩 성공:', imagePath);
               }}
             />
           </div>
