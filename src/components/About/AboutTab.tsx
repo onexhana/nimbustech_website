@@ -61,10 +61,10 @@
             backgroundColor: activeTab === tab ? filterStyle.backgroundColor : 'transparent',
             color: activeTab === tab ? 'white' : '#6b7280',
             border: activeTab === tab ? `${(filterStyle.borderWidth || 1) + 1}px solid ${filterStyle.borderColor}` : `${filterStyle.borderWidth || 1}px solid transparent`,
-            fontSize: `clamp(14px, ${(filterStyle.fontSize || 22) * 0.7}px, ${filterStyle.fontSize || 22}px)`,
+            fontSize: `clamp(18px, ${(filterStyle.fontSize || 22) * 0.9}px, ${filterStyle.fontSize || 22}px)`,
             fontWeight: filterStyle.fontWeight || 650,
-            padding: 'clamp(4px, 0.4vw, 8px) clamp(12px, 1.25vw, 24px)',
-            borderRadius: `clamp(12px, ${(filterStyle.borderRadius || 25) * 0.7}px, ${filterStyle.borderRadius || 25}px)`,
+            padding: 'clamp(10px, 14px, 20px) clamp(20px, 28px, 40px)',
+            borderRadius: `clamp(20px, ${(filterStyle.borderRadius || 25) * 1.2}px, ${filterStyle.borderRadius || 25}px)`,
             cursor: 'pointer',
             transition: 'all 0.3s ease'
           }}

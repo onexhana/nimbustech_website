@@ -414,8 +414,8 @@ export default function AboutSection() {
                         right: '150px',
                         border: 'none',
                         outline: 'none',
-                        width: 'clamp(20px, 2.08vw, 40px)',
-                        height: 'clamp(20px, 2.08vw, 40px)',
+                        width: 'clamp(30px, 50px, 70px)',
+                        height: 'clamp(30px, 50px, 70px)',
                         borderRadius: '50%',
                         backgroundColor: '#E5E7EB',
                         display: 'flex',
@@ -425,7 +425,7 @@ export default function AboutSection() {
                         zIndex: 10,
                       }}
                     >
-                      <svg width="clamp(12px, 1.25vw, 24px)" height="clamp(12px, 1.25vw, 24px)" viewBox="0 0 24 24" fill="none">
+                      <svg width="clamp(18px, 30px, 42px)" height="clamp(18px, 30px, 42px)" viewBox="0 0 24 24" fill="none">
                         <path d="M15 6L9 12L15 18" stroke="#1F2937" strokeWidth="3" strokeLinecap="butt" strokeLinejoin="miter" />
                       </svg>
                     </button>
@@ -434,11 +434,11 @@ export default function AboutSection() {
                       style={{
                         position: 'absolute',
                         top: '-5rem',
-                        right: '80px',
+                        right: '60px',
                         border: 'none',
                         outline: 'none',
-                        width: 'clamp(20px, 2.08vw, 40px)',
-                        height: 'clamp(20px, 2.08vw, 40px)',
+                        width: 'clamp(30px, 50px, 70px)',
+                        height: 'clamp(30px, 50px, 70px)',
                         borderRadius: '50%',
                         backgroundColor: '#1F2937',
                         display: 'flex',
@@ -448,7 +448,7 @@ export default function AboutSection() {
                         zIndex: 10,
                       }}
                     >
-                      <svg width="clamp(12px, 1.25vw, 24px)" height="clamp(12px, 1.25vw, 24px)" viewBox="0 0 24 24" fill="none">
+                      <svg width="clamp(18px, 30px, 42px)" height="clamp(18px, 30px, 42px)" viewBox="0 0 24 24" fill="none">
                         <path d="M9 6L15 12L9 18" stroke="#FFFFFF" strokeWidth="3" strokeLinecap="butt" strokeLinejoin="miter" />
                       </svg>
                     </button>
