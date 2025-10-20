@@ -80,6 +80,7 @@ const PortfolioCardList = ({ projects }: Props) => {
             {duplicatedProjects.map((project, index) => (
               <SwiperSlide key={`${project.id}-${index}`}>
                 <PortfolioCard
+                  id={project.id}
                   title={project.title}
                   description={project.description}
                   image={project.image}
@@ -90,13 +91,11 @@ const PortfolioCardList = ({ projects }: Props) => {
           
           {/* Swiper 동적 크기 설정을 위한 스타일 */}
           <style>{`
-            /* 화면 너비별 동적 컨테이너 크기 */
+            /* 화면 너비별 동적 컨테이너 크기 (이전 구성 복원) */
             .portfolio-dynamic-width {
               width: calc(380px * 2 + 32px * 1 + 70px) !important; /* 기본: 2개 카드 + 화살표 공간 */
               min-width: calc(380px * 2 + 32px * 1 + 70px) !important;
             }
-            
-            /* 큰 화면(1800px 이상): 3개 카드 */
             @media (min-width: 1800px) {
               .portfolio-dynamic-width {
                 width: calc(380px * 3 + 32px * 2 + 70px) !important;
@@ -104,6 +103,18 @@ const PortfolioCardList = ({ projects }: Props) => {
               }
             }
             
+            /* 가장자리 오버플로우 가림용 페이드 마스크 */
+            .portfolio-container { position: relative; }
+            .portfolio-container::after {
+              content: '';
+              position: absolute;
+              top: 0; bottom: 0;
+              width: 50px;
+              pointer-events: none;
+              z-index: 5;
+            }
+            .portfolio-container::after { right: 0; background: linear-gradient(to left, #ffffff 70%, rgba(255,255,255,0) 100%); }
+
             .portfolio-swiper {
               width: 100% !important;
               overflow: visible !important;
@@ -135,16 +146,23 @@ const PortfolioCardList = ({ projects }: Props) => {
                 width: 100% !important;
               }
             }
+
+            /* 네비게이션 버튼의 반응형 위치 조정 */
+            .portfolio-nav { position: absolute; top: -5rem; right: 2rem; }
+            .portfolio-nav-prev { right: 6rem; }
+            @media (max-width: 1919px) { .portfolio-nav { top: -4rem; } }
+            @media (max-width: 1599px) { .portfolio-nav { top: -3.5rem; } }
+            @media (max-width: 1365px) { .portfolio-nav { top: -3rem; } }
+            @media (max-width: 1199px) { .portfolio-nav { top: -2.5rem; } }
+            @media (max-width: 1023px) { .portfolio-nav { top: -2rem; } }
           `}</style>
         </div>
         {/* 네비게이션 화살표 버튼 */}
         <>
           <button
             onClick={() => swiperRef.current?.slidePrev()}
+            className="portfolio-nav portfolio-nav-prev"
             style={{
-              position: 'absolute',
-              top: '-5rem',
-              right: '6rem',
               border: 'none',
               outline: 'none',
               width: '40px',
@@ -164,10 +182,8 @@ const PortfolioCardList = ({ projects }: Props) => {
           </button>
           <button
             onClick={() => swiperRef.current?.slideNext()}
+            className="portfolio-nav portfolio-nav-next"
             style={{
-              position: 'absolute',
-              top: '-5rem',
-              right: '2rem',
               border: 'none',
               outline: 'none',
               width: '40px',

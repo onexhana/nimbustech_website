@@ -31,14 +31,6 @@ import AboutTab from './AboutTab';
 import AboutCard from './AboutCard'; // 효과 버전 (호버 애니메이션 활성화)
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
-import { getAboutData } from '../../api/contact';
-import type { AboutData } from '../../types/contact';
-//import AboutCard from './AboutCardNoEffect'; // 무효화 버전 (호버 효과 없음)
-
-const noEffect = AboutCard.name === 'AboutCardNoEffect';
-
-// ========================================
-// Context에서 데이터 가져오기
 import { useAboutData } from '../../context/AboutContext';
 
 // 탭 및 카드 데이터 (각 섹션별 6개씩 확장됨)
@@ -48,7 +40,7 @@ import { useAboutData } from '../../context/AboutContext';
 // 메인 컴포넌트 함수
 // ========================================
 export default function AboutSection() {
-  const { aboutData, setAboutData } = useAboutData();
+  const { aboutData, refreshData } = useAboutData();
   
   // 상태 관리:
   // activeTab - 선택된 탭, currentSlide - 현재 슬라이드 인덱스
@@ -66,21 +58,22 @@ export default function AboutSection() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  // 첫 번째 탭을 기본값으로 설정
   useEffect(() => {
-    const loadAboutData = async () => {
-      try {
-        const data = await getAboutData();
-        setAboutData(data);
-        // 첫 번째 탭을 기본값으로 설정
-        if (data.tabs.length > 0) {
-          setActiveTab(data.tabs[0].name);
-        }
-      } catch (error) {
-        console.error('About 데이터 로드 실패:', error);
-      }
+    if (aboutData.tabs.length > 0) {
+      setActiveTab(aboutData.tabs[0].name);
+    }
+  }, [aboutData]);
+
+  // 페이지 포커스 시 데이터 새로고침 (admin에서 수정 후 돌아올 때 반영)
+  useEffect(() => {
+    const handleFocus = () => {
+      refreshData();
     };
-    loadAboutData();
-  }, []);
+    
+    window.addEventListener('focus', handleFocus);
+    return () => window.removeEventListener('focus', handleFocus);
+  }, [refreshData]);
   
   const cards = aboutData.tabs.find(tab => tab.name === activeTab)?.cards || [];
   const isMultiPage = true; // 모든 탭을 무한루프로 변경
@@ -116,7 +109,7 @@ export default function AboutSection() {
         marginTop: '120px'
       }}>
       {/* 메인 타이틀 영역 (AboutSection 컴포넌트 내부 상단) */}
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-[1920px] mx-auto">
         {/*
           isMobile 분기: 화면 너비가 모바일 기준(<768px)이면 이 블록 실행
           - 모바일용 필터 버튼들을 flex-wrap으로 가로/세로 배치
@@ -133,10 +126,22 @@ export default function AboutSection() {
                 lineHeight: '1.4',
                 margin: 0
               }}>
-                <span style={{ fontWeight: 700, display: 'block', fontSize: `${aboutData.fontSize?.mainTitle || 28}px` }}>
+                <span style={{ 
+                  fontWeight: 700, 
+                  display: 'block', 
+                  fontSize: `${aboutData.fontSize?.mobileMainTitle || aboutData.fontSize?.mainTitle || 28}px`,
+                  color: aboutData.colors?.mobileMainTitle || aboutData.colors?.mainTitle || '#000000'
+                }}>
                   {aboutData.mainTitle}
                 </span>
-                <span style={{ fontWeight: 400, display: 'block', marginTop: '4px', marginBottom: '30px',fontSize: `${aboutData.fontSize?.subtitle || 19}px` }}>
+                <span style={{ 
+                  fontWeight: 400, 
+                  display: 'block', 
+                  marginTop: '4px', 
+                  marginBottom: '30px',
+                  fontSize: `${aboutData.fontSize?.mobileSubtitle || aboutData.fontSize?.subtitle || 19}px`,
+                  color: aboutData.colors?.mobileSubtitle || aboutData.colors?.subtitle || '#000000'
+                }}>
                 {aboutData.subtitle}
                 </span>
               </h2>
@@ -156,12 +161,14 @@ export default function AboutSection() {
                   key={tab.name}
                   /* 버튼 스타일: 활성 탭은 파란색, 비활성 탭은 흰색 배경 */
                   style={{
-                    backgroundColor: activeTab === tab.name ? '#00A3E0' : 'white',
-                    color: activeTab === tab.name ? 'white' : '#000000',
-                    border: activeTab === tab.name ? 'none' : '1px solid #00A3E0',
+                    backgroundColor: activeTab === tab.name ? 
+                      (aboutData.mobileTabActiveColor || aboutData.tabActiveColor || '#00A3E0') : 'white',
+                    color: activeTab === tab.name ? 'white' : 
+                      (aboutData.mobileTabInactiveColor || aboutData.tabInactiveColor || '#000000'),
+                    border: activeTab === tab.name ? 'none' : `1px solid ${aboutData.mobileTabActiveColor || aboutData.tabActiveColor || '#00A3E0'}`,
                     borderRadius: '20px',
                     padding: '8px 16px',
-                    fontSize: `${aboutData.fontSize?.tabName || 14}px`,
+                    fontSize: `${aboutData.fontSize?.mobileTabName || aboutData.fontSize?.tabName || 14}px`,
                     fontWeight: '550',
                     cursor: 'pointer',
                     minWidth: '60px'
@@ -198,10 +205,20 @@ export default function AboutSection() {
                   <SwiperSlide key={i}>
                     <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', minHeight: '12vw' }}>
                       <div>
-                        <h3 style={{ fontSize: `${aboutData.fontSize?.cardTitle || 20}px`, fontWeight: '600', color: '#000000', margin: '0 0 20px 0' }}>
+                        <h3 style={{ 
+                          fontSize: `${card.fontSize?.title || aboutData.fontSize?.mobileCardTitle || aboutData.fontSize?.cardTitle || 20}px`, 
+                          fontWeight: '600', 
+                          color: aboutData.colors?.mobileCardTitle || aboutData.colors?.cardTitle || aboutData.cardTitleColor || '#000000', 
+                          margin: '0 0 20px 0' 
+                        }}>
                           {card.title}
                         </h3>
-                        <div style={{ fontSize: `${aboutData.fontSize?.cardDescription || 16}px`, color: '#000000', fontWeight: '400', lineHeight: '1.5' }}>
+                        <div style={{ 
+                          fontSize: `${card.fontSize?.description || aboutData.fontSize?.mobileCardDescription || aboutData.fontSize?.cardDescription || 16}px`, 
+                          color: aboutData.colors?.mobileCardDescription || aboutData.colors?.cardDescription || aboutData.cardDescriptionColor || '#000000', 
+                          fontWeight: '400', 
+                          lineHeight: '1.5' 
+                        }}>
                           {card.description.map((line: string, j: number) => (
                             <p key={j} style={{ margin: '0', marginLeft: '0' }}>{line}</p>
                           ))}
@@ -274,13 +291,26 @@ export default function AboutSection() {
               tabs={aboutData.tabs.map(tab => tab.name)}
               activeTab={activeTab}
               onTabChange={handleTabChange}
-              fontSize={aboutData.fontSize?.tabName}
+              fontSize={aboutData.fontSize?.desktopTabName || aboutData.fontSize?.tabName}
+              activeColor={aboutData.desktopTabActiveColor || aboutData.tabActiveColor}
+              inactiveColor={aboutData.desktopTabInactiveColor || aboutData.tabInactiveColor}
             />
 
             {/* ======================================== */}
             {/* 카드 영역 (모든 섹션: Swiper 무한루프) */}
             {/* ======================================== */}
-            <div className="flex items-start" style={{ position: 'relative', overflow: 'visible', display: 'flex', alignItems: 'flex-start', gap: '1vw', justifyContent: 'center', marginLeft: '5vw', marginRight: '5vw' }}>
+            <div className="flex items-start" style={{ 
+              position: 'relative', 
+              overflow: 'visible', 
+              display: 'flex', 
+              alignItems: 'flex-start', 
+              gap: '20px', 
+              justifyContent: 'center', 
+              marginLeft: '100px', 
+              marginRight: '100px',
+              transform: window.innerWidth < 1600 ? 'scale(0.85)' : 'scale(1)',
+              transformOrigin: 'center'
+            }}>
 
               {/* 모든 섹션: 무한 루프 슬라이더 */}
               <div
@@ -290,15 +320,17 @@ export default function AboutSection() {
                   overflow: 'visible', 
                   display: 'flex', 
                   flex: '1', 
-                  justifyContent: 'center'
+                  justifyContent: 'flex-start'
                 }}
               >
                 <div 
                   className="overflow-hidden"
                   style={{ 
-                    width: 'calc(30vw * 3 + 1vw * 2)', // 3장 카드(30vw) + gap(1vw * 2)
-                    minWidth: 'calc(30vw * 3 + 1vw * 2)',
-                    margin: '0 auto' // 중앙 정렬
+                    width: 'calc(100vw - 200px)', // 화면 너비에서 좌우 마진(100px * 2) 제외
+                    maxWidth: 'calc(560px * 3 + 20px * 2)', // 최대 너비 제한
+                    minWidth: 'calc(400px * 3 + 20px * 2)', // 최소 너비 보장
+                    margin: '0',
+                    paddingLeft: '50px' // AboutTab과 같은 시작점
                   }}
                 >
                 <Swiper
@@ -311,11 +343,12 @@ export default function AboutSection() {
                   onInit={(swiper: any) => {
                     swiperRef.current = swiper;
                   }}
-                  spaceBetween={window.innerWidth * 0.01} // 1vw에 해당하는 픽셀 값
+                  spaceBetween={Math.max(10, window.innerWidth * 0.01)} // 최소 10px, 1vw에 해당하는 픽셀 값
                   slidesPerView={3}
                   slidesPerGroup={1}
                   loop={true}
                   loopedSlides={Math.max(3, cards.length)} // 최소 3개 이상의 루프 슬라이드 보장
+                  slidesOffsetBefore={0} // 첫 번째 슬라이드 시작 위치
                   pagination={false}
                   navigation={false}
                   allowTouchMove={true}
@@ -331,9 +364,9 @@ export default function AboutSection() {
                   <SwiperSlide key={`${card.title}-${index}`}>
                     <div
                       style={{
-                        opacity: noEffect ? 1 : 0,
-                        transform: noEffect ? 'translateY(0)' : 'translateY(30px) scale(0.9)',
-                        ...(noEffect ? {} : { animation: `cardAppear 0.6s ease-out ${(index % 3) * 0.15}s forwards` })
+                        opacity: 0,
+                        transform: 'translateY(30px) scale(0.9)',
+                        animation: `cardAppear 0.6s ease-out ${(index % 3) * 0.15}s forwards`
                       }}
                     >
                       <AboutCard
@@ -343,13 +376,14 @@ export default function AboutSection() {
                         linkAsButton={activeTab === '솔루션'}
                         linkText={activeTab === '솔루션' ? "자세히 보기" : undefined}
                         borderRadius="35px"
-                        titleColor="#000000"
-                        descriptionColor="#6B7280"
-                        backgroundColor="#ffffff"
+                        titleColor={aboutData.colors?.desktopCardTitle || aboutData.colors?.cardTitle || aboutData.cardTitleColor || "#000000"}
+                        descriptionColor={aboutData.colors?.desktopCardDescription || aboutData.colors?.cardDescription || aboutData.cardDescriptionColor || "#6B7280"}
+                        backgroundColor={aboutData.cardBackgroundColor || "#ffffff"}
                         width={isMobile ? "380px" : undefined}
-                        minHeight={isMobile ? "200px" : "12vw"}
-                        titleFontSize={aboutData.fontSize?.cardTitle}
-                        descriptionFontSize={aboutData.fontSize?.cardDescription}
+                        minHeight={isMobile ? "200px" : "230px"}
+                        titleFontSize={card.fontSize?.title || aboutData.fontSize?.desktopCardTitle || aboutData.fontSize?.cardTitle}
+                        descriptionFontSize={card.fontSize?.description || aboutData.fontSize?.desktopCardDescription || aboutData.fontSize?.cardDescription}
+                        hoverEffect={aboutData.cardHoverEffect}
                       />
                     </div>
                   </SwiperSlide>

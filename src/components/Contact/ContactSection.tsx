@@ -11,7 +11,7 @@ import HiringForm from './HiringForm';
 import { useContactData } from '../../context/ContactContext';
 
 export default function ContactSection() {
-  const { contactData } = useContactData();
+  const { contactData, refreshData } = useContactData();
   const [userType, setUserType] = useState<'inquiry' | 'hiring' | null>(null);
   const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 768);
   
@@ -20,6 +20,16 @@ export default function ContactSection() {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  // 페이지 포커스 시 데이터 새로고침 (admin에서 수정 후 돌아올 때 반영)
+  useEffect(() => {
+    const handleFocus = () => {
+      refreshData();
+    };
+    
+    window.addEventListener('focus', handleFocus);
+    return () => window.removeEventListener('focus', handleFocus);
+  }, [refreshData]);
 
   const handleCompanyDownload = () => {
     window.open('/footer_pdf/님버스테크 회사소개_v3.5_20250923.pdf', '_blank');
@@ -32,7 +42,7 @@ export default function ContactSection() {
   return (
     //contact & footer 사이 여백 100px
     <div className={`w-full px-6 ${isMobile ? 'bg-transparent' : 'bg-white'}`} style={{ position: 'relative', paddingTop: isMobile ? '50px' : '120px', paddingBottom: isMobile ? '0px' : '100px', backgroundColor: isMobile ? 'transparent' : undefined }}>
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-[1920px] mx-auto">
         {/* 검은 실선 (데스크탑에서만 표시) */}
         {!isMobile && (
           <div style={{
@@ -51,26 +61,39 @@ export default function ContactSection() {
           style={isMobile ? { gap: '4rem' } : { marginLeft: '50px', marginRight: '50px', gap: '100px' }}
         >
           {/* 좌측 - 가치 섹션들 */}
-          <div className="flex-1 space-y-16">
+          <div className="flex-1 space-y-16" style={isMobile ? {} : { width: '600px', minWidth: '600px' }}>
             {contactData.sections.map((section, index) => (
-              <div key={index}>
+              <div key={index} style={isMobile ? {} : { width: '100%', minWidth: '600px' }}>
                 <h3 style={{
-                  fontSize: `${contactData.fontSize?.sectionTitle || 42}px`,
+                  fontSize: isMobile ? 
+                    `${contactData.fontSize?.sectionTitle || 42}px` : 
+                    '42px', // 데스크톱에서 고정 크기
                   fontWeight: '900',
-                  color: '#00A3E0',
+                  color: isMobile ? 
+                    (contactData.colors?.sectionTitle || '#00A3E0') : 
+                    (contactData.colors?.desktopSectionTitle || contactData.colors?.sectionTitle || '#00A3E0'),
                   marginBottom: '2px',
                   letterSpacing: '-1.5px',
-                  marginLeft: isMobile ? '20px' : undefined
+                  marginLeft: isMobile ? '20px' : undefined,
+                  whiteSpace: isMobile ? 'normal' : 'nowrap', // 데스크톱에서 줄바꿈 방지
+                  overflow: isMobile ? 'visible' : 'visible'
                 }}>
                   {section.title}
                 </h3>
                 <p style={{
-                  fontSize: isMobile ? `${contactData.fontSize?.sectionDescription || 15}px` : `${contactData.fontSize?.sectionDescription || 21}px`,
-                  color: '#4b5563',
+                  fontSize: isMobile ? 
+                    `${contactData.fontSize?.sectionDescription || 15}px` : 
+                    '21px', // 데스크톱에서 고정 크기
+                  color: isMobile ? 
+                    (contactData.colors?.sectionDescription || '#4b5563') : 
+                    '#4b5563', // 데스크톱에서 고정 색상
                   lineHeight: '1.6',
                   fontWeight: '700',
                   marginTop: '2px',
-                  marginLeft: isMobile ? '24px' : undefined
+                  marginLeft: isMobile ? '24px' : undefined,
+                  width: isMobile ? 'auto' : '600px', // 데스크톱에서 고정 너비
+                  minWidth: isMobile ? 'auto' : '600px',
+                  whiteSpace: isMobile ? 'normal' : 'pre-line' // 데스크톱에서 줄바꿈 고정
                 }}>
                   {section.description.split('\n').map((line, i) => (
                     <span key={i}>
@@ -85,27 +108,23 @@ export default function ContactSection() {
 
           {/* 우측 - 버튼 영역 */}
           <div
-            className={`flex flex-col gap-8 ${isMobile ? 'min-w-full' : ''}`}
+            className={`flex flex-col gap-8 ${isMobile ? 'min-w-full' : 'w-full max-w-[530px]'}`}
             style={isMobile ? undefined : { minWidth: '300px' }}
           >
             {contactData.buttons.map((button, index) => (
               <button
                 key={index}
-                className={`text-white ${isMobile ? `w-full h-[74px] px-8 flex items-center justify-center relative overflow-hidden border-none !font-black transition-all duration-300 hover:shadow-lg hover:-translate-y-1 ${index === 1 ? 'bg-white text-[#00A3E0]' : 'bg-[#00A3E0] text-white'}` : ''}`}
+                className={`text-white ${isMobile ? `w-full h-[74px] px-8 flex items-center justify-center relative overflow-hidden border-none !font-black transition-all duration-300 hover:shadow-lg hover:-translate-y-1 ${index === 1 ? 'bg-white text-[#00A3E0]' : 'bg-[#00A3E0] text-white'}` : 'w-full h-[80px] flex items-center justify-center relative overflow-hidden border-none transition-all duration-300 hover:shadow-lg hover:-translate-y-1'}`}
                 style={isMobile ? { 
                   fontSize: `${contactData.fontSize?.buttonText || 24}px`,
-                  marginTop: index === 0 ? '32px' : '0px'
+                  marginTop: index === 0 ? '32px' : '0px',
+                  color: contactData.colors?.buttonText || (index === 1 ? '#00A3E0' : '#ffffff')
                 } : { 
                   backgroundColor: index === 0 ? '#00A3E0' : '#6b7280', 
-                  width: '530px', 
                   marginTop: index === 0 ? '320px' : '40px', 
-                  display: 'flex', 
-                  alignItems: 'center', 
-                  justifyContent: 'center', 
-                  height: '80px', 
                   padding: '0 32px', 
-                  fontSize: `${contactData.fontSize?.buttonText || 32}px`, 
-                  color: '#ffffff', 
+                  fontSize: `${contactData.fontSize?.desktopButtonText || contactData.fontSize?.buttonText || 32}px`, 
+                  color: contactData.colors?.desktopButtonText || contactData.colors?.buttonText || '#ffffff', 
                   fontWeight: '650', 
                   borderRadius: '0px', 
                   border: 'none', 
@@ -128,7 +147,7 @@ export default function ContactSection() {
                 <button
                   className="bg-[#00A3E0] text-white w-full h-[74px] px-8 flex items-center justify-center relative overflow-hidden border-none font-black transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
                   style={{ 
-                    color: '#ffffff',
+                    color: contactData.colors?.buttonText || '#ffffff',
                     fontSize: `${contactData.fontSize?.buttonText || 24}px`,
                     marginTop: '0px'
                   }}
@@ -141,7 +160,8 @@ export default function ContactSection() {
                   style={{ 
                     backgroundColor: '#ffffff',
                     fontSize: `${contactData.fontSize?.buttonText || 24}px`,
-                    marginTop: '0px'
+                    marginTop: '0px',
+                    color: contactData.colors?.buttonText || '#00A3E0'
                   }}
                   onClick={handlePrivacyPolicy}
                 >
@@ -238,6 +258,7 @@ export default function ContactSection() {
             )}
           </>
         )}
+
       </div>
     </div>
   );

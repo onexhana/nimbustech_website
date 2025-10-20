@@ -32,7 +32,7 @@ const PortfolioPage = () => {
 
   return (
     <>
-      <section className="pt-[100px] pl-16 pr-12 pb-24 bg-white">
+      <section className="pt-[100px] pl-16 pr-12 pb-24 bg-white max-w-[1920px] mx-auto">
         {/* 모바일과 데스크톱 레이아웃 분기 */}
         {isMobile ? (
           <>
@@ -46,24 +46,56 @@ const PortfolioPage = () => {
               paddingLeft: '20px',
               paddingRight: '20px'
             }}>
-              {portfolioData.categories.map((category) => (
-                <button
-                  key={category}
-                  style={{
-                    backgroundColor: selectedCategory === category ? '#00A3E0' : 'white',
-                    color: selectedCategory === category ? 'white' : '#00A3E0',
-                    border: '1px solid #00A3E0',
-                    borderRadius: '20px',
-                    padding: '8px 20px',
-                    fontSize: '14px',
-                    fontWeight: '600',
-                    cursor: 'pointer'
-                  }}
-                  onClick={() => handleCategoryChange(category)}
-                >
-                  {category}
-                </button>
-              ))}
+              {portfolioData.categories.map((category) => {
+                // 관리자에서 설정한 필터 스타일 가져오기
+                const getFilterStyle = (categoryName: string) => {
+                  const savedFilterStyles = localStorage.getItem('filterStyleSettings');
+                  if (savedFilterStyles) {
+                    try {
+                      const filterStyles = JSON.parse(savedFilterStyles);
+                      return filterStyles[categoryName];
+                    } catch (error) {
+                      console.error('필터 스타일 로드 실패:', error);
+                    }
+                  }
+                  
+                  // 기본값 반환 (현재 사이트 색상)
+                  return {
+                    backgroundColor: "#00A3E0",
+                    textColor: "#ffffff",
+                    borderColor: "#00A3E0",
+                    borderWidth: 1,
+                    fontSize: 14,
+                    fontWeight: 600,
+                    borderRadius: 20,
+                    padding: "8px 20px",
+                    hoverBackgroundColor: "#008CC0",
+                    hoverTextColor: "#ffffff"
+                  };
+                };
+                
+                const filterStyle = getFilterStyle(category);
+                
+                return (
+                  <button
+                    key={category}
+                    style={{
+                      backgroundColor: selectedCategory === category ? 'white' : filterStyle.backgroundColor,
+                      color: selectedCategory === category ? filterStyle.borderColor : filterStyle.textColor,
+                      border: `${filterStyle.borderWidth || 1}px solid ${filterStyle.borderColor}`,
+                      borderRadius: `${filterStyle.borderRadius || 20}px`,
+                      padding: filterStyle.padding || '8px 20px',
+                      fontSize: `${filterStyle.fontSize || 14}px`,
+                      fontWeight: filterStyle.fontWeight || 600,
+                      cursor: 'pointer',
+                      transition: 'all 0.3s ease'
+                    }}
+                    onClick={() => handleCategoryChange(category)}
+                  >
+                    {category}
+                  </button>
+                );
+              })}
             </div>
 
             {/* 모바일용 포트폴리오 카드 스와이퍼 */}
@@ -97,31 +129,63 @@ const PortfolioPage = () => {
                       justifyContent: 'space-between'
                     }}>
                       <div>
-                        <h3 style={{
-                          fontSize: '22px',
-                          fontWeight: '700',
-                          color: '#00A3E0',
-                          marginBottom: '-5px',
-                          textAlign: 'center'
-                        }}>
-                          {project.title}
-                        </h3>
-                        <div style={{
-                          fontSize: '16px',
-                          color: '#333',
-                          fontWeight: '500',
-                          lineHeight: '1.5',
-                          textAlign: 'center',
-                          marginBottom: '16px',
-                          minHeight: '50px',
-                          display: 'flex',
-                          flexDirection: 'column',
-                          justifyContent: 'center'
-                        }}>
-                          {project.description.split('\n').map((line, i) => (
-                            <p key={i} style={{ marginBottom: '4px' }}>{line}</p>
-                          ))}
-                        </div>
+                        {(() => {
+                          // 모바일용 프로젝트 스타일 가져오기
+                          const getProjectStyle = (projectId: number) => {
+                            const savedFontStyles = localStorage.getItem('fontStyleSettings');
+                            let fontStyle = null;
+                            
+                            if (savedFontStyles) {
+                              try {
+                                const fontStyles = JSON.parse(savedFontStyles);
+                                fontStyle = fontStyles[projectId];
+                              } catch (error) {
+                                console.error('글씨 스타일 로드 실패:', error);
+                              }
+                            }
+                            
+                            return fontStyle || {
+                              projectTitle: {
+                                mobile: { size: 22, weight: 700, color: "#00A3E0" }
+                              },
+                              projectDescription: {
+                                mobile: { size: 16, weight: 500, color: "#333" }
+                              }
+                            };
+                          };
+                          
+                          const fontStyle = getProjectStyle(project.id);
+                          
+                          return (
+                            <>
+                              <h3 style={{
+                                fontSize: `${fontStyle.projectTitle.mobile.size}px`,
+                                fontWeight: fontStyle.projectTitle.mobile.weight,
+                                color: fontStyle.projectTitle.mobile.color,
+                                marginBottom: '-5px',
+                                textAlign: 'center'
+                              }}>
+                                {project.title}
+                              </h3>
+                              <div style={{
+                                fontSize: `${fontStyle.projectDescription.mobile.size}px`,
+                                color: fontStyle.projectDescription.mobile.color,
+                                fontWeight: fontStyle.projectDescription.mobile.weight,
+                                lineHeight: '1.5',
+                                textAlign: 'center',
+                                marginBottom: '16px',
+                                minHeight: '50px',
+                                display: 'flex',
+                                flexDirection: 'column',
+                                justifyContent: 'center'
+                              }}>
+                                {project.description.split('\n').map((line, i) => (
+                                  <p key={i} style={{ marginBottom: '4px' }}>{line}</p>
+                                ))}
+                              </div>
+                            </>
+                          );
+                        })()}
                       </div>
                       
                       {/* 이미지 영역 */}

@@ -51,11 +51,11 @@ export async function getContactData(): Promise<ContactData> {
     ],
     buttons: [
       {
-        text: "고객사 직원",
+        text: "고객사 문의",
         type: "inquiry"
       },
       {
-        text: "인재 채용", 
+        text: "인재 문의", 
         type: "hiring"
       }
     ],
@@ -86,10 +86,14 @@ export async function getContactData(): Promise<ContactData> {
     fontSize: {
       mainTitle: 30,
       subtitle: 18,
-      sectionTitle: 16,
-      sectionDescription: 14,
-      buttonText: 16,
-      companyInfo: 14
+      sectionTitle: 42,
+      sectionDescription: 15,
+      buttonText: 24,
+      companyInfo: 14,
+      // 데스크탑 전용
+      desktopSectionTitle: 42,
+      desktopSectionDescription: 21,
+      desktopButtonText: 32
     }
   };
 }
@@ -113,6 +117,12 @@ export async function getAboutData(): Promise<AboutData> {
   return {
     mainTitle: "고객 성공 리딩",
     subtitle: "신뢰성 높은 DT 서비스를 제공합니다.",
+    fontSize: {
+      cardTitle: 28,
+      cardDescription: 22,
+      mobileCardTitle: 28,
+      mobileCardDescription: 22
+    },
     tabs: [
       {
         name: "ITO",
@@ -177,18 +187,17 @@ export async function getAboutData(): Promise<AboutData> {
             ]
           },
           {
-            title: "RPA 프로젝트 수행 이력",
+            title: "다양한 RPA 개발 경험",
             description: [
-              "1. 반복 업무 자동화",
-              "2. 업무 효율성 극대화",
-              "3. 에러율 최소화"
+              "금융, 공공, 제조업 등",
+              "다양한 분야 RPA 구축"
             ]
           },
           {
-            title: "RPA 전문 인력 확보",
+            title: "전문 RPA 운영 서비스",
             description: [
-              "자동화 솔루션 구축 및 운영 가능한",
-              "전문 엔지니어 보유"
+              "RPA 운영 및 모니터링",
+              "지속적 최적화 서비스"
             ]
           }
         ]
@@ -235,7 +244,8 @@ export async function getAboutData(): Promise<AboutData> {
             title: "BCP Solutions",
             description: [
               "솔루션과 컨설팅으로 비즈니스 연속성을 보장합니다"
-            ]
+            ],
+            link: "https://www.krbcp.com/"
           }
         ]
       }
@@ -246,7 +256,13 @@ export async function getAboutData(): Promise<AboutData> {
       cardTitle: 16,
       cardDescription: 14,
       tabName: 16
-    }
+    },
+    tabActiveColor: '#00A3E0',
+    tabInactiveColor: '#374151',
+    cardBackgroundColor: '#ffffff',
+    cardTitleColor: '#000000',
+    cardDescriptionColor: '#6B7280',
+    cardHoverEffect: true
   };
 }
 

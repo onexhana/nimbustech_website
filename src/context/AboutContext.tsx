@@ -1,16 +1,27 @@
-import { createContext, useContext, useState, ReactNode } from 'react';
+import { createContext, useContext, useState, type ReactNode } from 'react';
+import { getAboutData } from '../api/contact';
 
 // About 카드 타입 정의
 interface AboutCard {
   title: string;
   description: string[];
   link?: string;
+  fontSize?: {
+    title?: number;
+    description?: number;
+  };
 }
 
 // About 탭 타입 정의
 interface AboutTab {
   name: string;
   cards: AboutCard[];
+  desktop?: {
+    name?: string;
+  };
+  mobile?: {
+    name?: string;
+  };
 }
 
 // About 데이터 타입 정의
@@ -18,6 +29,49 @@ interface AboutData {
   mainTitle: string;
   subtitle: string;
   tabs: AboutTab[];
+  fontSize?: {
+    mainTitle?: number;
+    subtitle?: number;
+    tabName?: number;
+    cardTitle?: number;
+    cardDescription?: number;
+    // 모바일 전용
+    mobileMainTitle?: number;
+    mobileSubtitle?: number;
+    mobileTabName?: number;
+    mobileCardTitle?: number;
+    mobileCardDescription?: number;
+    // 데스크탑 전용
+    desktopTabName?: number;
+    desktopCardTitle?: number;
+    desktopCardDescription?: number;
+  };
+  colors?: {
+    mainTitle?: string;
+    subtitle?: string;
+    cardTitle?: string;
+    cardDescription?: string;
+    // 모바일 전용
+    mobileMainTitle?: string;
+    mobileSubtitle?: string;
+    mobileCardTitle?: string;
+    mobileCardDescription?: string;
+    // 데스크탑 전용
+    desktopCardTitle?: string;
+    desktopCardDescription?: string;
+  };
+  // 탭 색상 설정
+  tabActiveColor?: string;
+  tabInactiveColor?: string;
+  mobileTabActiveColor?: string;
+  mobileTabInactiveColor?: string;
+  desktopTabActiveColor?: string;
+  desktopTabInactiveColor?: string;
+  // 카드 스타일 설정
+  cardBackgroundColor?: string;
+  cardTitleColor?: string;
+  cardDescriptionColor?: string;
+  cardHoverEffect?: boolean;
 }
 
 // Context 타입 정의
@@ -29,12 +83,19 @@ interface AboutContextType {
   updateCard: (tabIndex: number, cardIndex: number, updatedCard: Partial<AboutCard>) => void;
   addCard: (tabIndex: number, card: AboutCard) => void;
   deleteCard: (tabIndex: number, cardIndex: number) => void;
+  refreshData: () => void;
 }
 
 // 기본 데이터
 const defaultAboutData: AboutData = {
   mainTitle: "고객 성공 리딩",
   subtitle: "신뢰성 높은 DT 서비스를 제공합니다.",
+  fontSize: {
+    cardTitle: 28,
+    cardDescription: 22,
+    mobileCardTitle: 28,
+    mobileCardDescription: 22
+  },
   tabs: [
     {
       name: "ITO",
@@ -118,53 +179,46 @@ const defaultAboutData: AboutData = {
       name: "솔루션",
       cards: [
         {
-          title: "FCS 소프트웨어",
+          title: "Extreme Networks",
           description: [
-            "금융권 전문 솔루션",
-            "FCS 시스템 개발 및 운영"
-          ]
+            "네트워크, 보안, AI를 통합해 복잡성을 단순화합니다"
+          ],
+          link: "https://www.extremenetworks.com/kr/solutions"
         },
         {
-          title: "데이터 관리 솔루션",
+          title: "WeDataLab",
           description: [
-            "빅데이터 분석 및",
-            "데이터 웨어하우스 구축"
-          ]
+            "데이터 인텔리전스로 비즈니스 혁신을 실현합니다"
+          ],
+          link: "https://wedatalab.com/solution"
         },
         {
-          title: "보안 솔루션",
+          title: "SUSE",
           description: [
-            "종합 보안 관리 시스템",
-            "정보보호 컨설팅"
-          ]
+            "자동화와 모니터링으로 SAP 인프라를 관리합니다"
+          ],
+          link: "https://www.suse.com/ko-kr/solutions/run-sap-solutions/"
         },
         {
-          title: "모바일 솔루션",
+          title: "SK AX",
           description: [
-            "모바일 앱 개발",
-            "크로스 플랫폼 솔루션"
-          ]
+            "글로벌 톱10 AI 서비스 기업으로 성장합니다"
+          ],
+          link: "https://www.skax.co.kr/"
         },
         {
-          title: "웹 솔루션",
+          title: "T3Q",
           description: [
-            "웹 애플리케이션 개발",
-            "반응형 웹 디자인"
-          ]
+            "인공지능을 엑셀처럼 쉽게 활용할 수 있게 합니다"
+          ],
+          link: "https://t3q.com/t3q-ai/"
         },
         {
-          title: "API 솔루션",
+          title: "BCP Solutions",
           description: [
-            "RESTful API 개발",
-            "마이크로서비스 아키텍처"
-          ]
-        },
-        {
-          title: "통합 솔루션",
-          description: [
-            "시스템 통합 및 연동",
-            "엔터프라이즈 솔루션"
-          ]
+            "솔루션과 컨설팅으로 비즈니스 연속성을 보장합니다"
+          ],
+          link: "https://www.krbcp.com/"
         }
       ]
     }
@@ -181,7 +235,36 @@ export function AboutProvider({ children }: { children: ReactNode }) {
     const savedData = localStorage.getItem('aboutData');
     if (savedData) {
       try {
-        return JSON.parse(savedData);
+        const parsedData = JSON.parse(savedData);
+        // 폰트 크기가 작으면 기본값으로 업데이트
+        if (!parsedData.fontSize || 
+            (parsedData.fontSize.cardTitle && parsedData.fontSize.cardTitle < 28) ||
+            (parsedData.fontSize.cardDescription && parsedData.fontSize.cardDescription < 22)) {
+          const updatedData = {
+            ...parsedData,
+            fontSize: {
+              cardTitle: 28,
+              cardDescription: 22,
+              mobileCardTitle: 28,
+              mobileCardDescription: 22,
+              ...parsedData.fontSize
+            }
+          };
+          localStorage.setItem('aboutData', JSON.stringify(updatedData));
+          return updatedData;
+        }
+        
+        // BCP Solutions 링크가 누락된 경우 업데이트
+        const solutionTab = parsedData.tabs?.find(tab => tab.name === '솔루션');
+        if (solutionTab) {
+          const bcpCard = solutionTab.cards?.find(card => card.title === 'BCP Solutions');
+          if (bcpCard && !bcpCard.link) {
+            bcpCard.link = 'https://www.krbcp.com/';
+            localStorage.setItem('aboutData', JSON.stringify(parsedData));
+            return parsedData;
+          }
+        }
+        return parsedData;
       } catch (error) {
         console.error('저장된 About 데이터를 불러오는데 실패했습니다:', error);
         return defaultAboutData;
@@ -189,8 +272,60 @@ export function AboutProvider({ children }: { children: ReactNode }) {
     }
     return defaultAboutData;
   });
+  const [isLoading, setIsLoading] = useState(false);
 
-  // 데이터 업데이트 및 localStorage 저장
+  // 데이터 로드 함수 (새로고침용)
+  const loadData = async () => {
+    try {
+      const data = await getAboutData();
+      
+      // 서버에서 가져온 데이터의 폰트 크기가 작으면 강제로 업데이트
+      if (!data.fontSize || 
+          (data.fontSize.cardTitle && data.fontSize.cardTitle < 28) ||
+          (data.fontSize.cardDescription && data.fontSize.cardDescription < 22) ||
+          (data.fontSize.mobileCardTitle && data.fontSize.mobileCardTitle < 28) ||
+          (data.fontSize.mobileCardDescription && data.fontSize.mobileCardDescription < 22)) {
+        console.log('서버에서 가져온 AboutData 폰트 크기가 작아 강제로 업데이트합니다.');
+        const updatedData = {
+          ...data,
+          fontSize: {
+            cardTitle: 28,
+            cardDescription: 22,
+            mobileCardTitle: 28,
+            mobileCardDescription: 22
+          }
+        };
+        setAboutData(updatedData);
+        // localStorage에도 저장
+        localStorage.setItem('aboutData', JSON.stringify(updatedData));
+      } else {
+        // BCP Solutions 링크가 누락된 경우 업데이트
+        const solutionTab = data.tabs?.find(tab => tab.name === '솔루션');
+        if (solutionTab) {
+          const bcpCard = solutionTab.cards?.find(card => card.title === 'BCP Solutions');
+          if (bcpCard && !bcpCard.link) {
+            bcpCard.link = 'https://www.krbcp.com/';
+            localStorage.setItem('aboutData', JSON.stringify(data));
+          }
+        }
+        setAboutData(data);
+      }
+    } catch (error) {
+      console.error('About 데이터 로드 실패:', error);
+      // 실패 시 기본 데이터 사용
+      setAboutData(defaultAboutData);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // 데이터 새로고침 함수
+  const refreshData = () => {
+    setIsLoading(true);
+    loadData();
+  };
+
+  // 데이터 업데이트 (로컬 스토리지에 저장)
   const updateAboutData = (newData: AboutData) => {
     setAboutData(newData);
     localStorage.setItem('aboutData', JSON.stringify(newData));
@@ -256,8 +391,27 @@ export function AboutProvider({ children }: { children: ReactNode }) {
     updateTab,
     updateCard,
     addCard,
-    deleteCard
+    deleteCard,
+    refreshData
   };
+
+  // 로딩 중일 때는 현재 데이터로 렌더링 (동기 로딩이므로 로딩 상태가 거의 없음)
+  if (isLoading) {
+    return (
+      <AboutContext.Provider value={{
+        aboutData: aboutData,
+        updateMainTitle: () => {},
+        updateSubtitle: () => {},
+        updateTab: () => {},
+        updateCard: () => {},
+        addCard: () => {},
+        deleteCard: () => {},
+        refreshData: () => {}
+      }}>
+        {children}
+      </AboutContext.Provider>
+    );
+  }
 
   return (
     <AboutContext.Provider value={value}>

@@ -63,8 +63,8 @@ h1 {
   width: auto;
 }
 
-/* 768px 이상 데스크톱 */
-@media screen and (min-width: 768px) {
+/* 1024px 이상 데스크톱 */
+@media screen and (min-width: 1024px) {
   .desktop-logo {
     display: block;
     height: 18px;
@@ -79,7 +79,7 @@ h1 {
 
 
 /* 헤더 반응형 CSS */
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 1023px) {
   .desktop-menu-nav {
     display: none !important;
   }
@@ -88,7 +88,7 @@ h1 {
   }
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 1024px) {
   .desktop-menu-nav {
     display: flex !important;
   }
@@ -111,5 +111,52 @@ h1 {
 @media (hover: none) {
   .force-hover:hover {
     color: #00A3E0 !important;
+  }
+}
+
+/* 한글 부제목 폰트 두께 */
+.korean-subtitle {
+  font-weight: 703 !important;
+  font-family: 'Pretendard Variable', 'Pretendard', sans-serif !important;
+  font-variation-settings: 'wght' 703 !important;
+}
+
+/* 767px 이하에서 홈버튼 창문 모양으로 조정 */
+@media (max-width: 767px) {
+  .mobile-home-container {
+    margin-left: -20px !important;
+    margin-right: -20px !important;
+    width: calc(100% + 40px) !important;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  
+  .mobile-home-grid {
+    position: relative;
+    border-bottom: 1px solid #e5e7eb !important;
+    width: 100% !important;
+  }
+  
+  /* 가운데 가로선 전체 너비로 */
+  .mobile-home-grid::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background-color: #e5e7eb;
+    z-index: 10;
+  }
+  
+  /* 개별 셀의 모든 경계선 제거 */
+  .mobile-home-grid > div {
+    border-bottom: none !important;
+    border-right: none !important;
+  }
+  
+  /* 세로선 다시 추가 */
+  .mobile-home-grid > div:not(:last-child) {
+    border-right: 1px solid #e5e7eb !important;
   }
 }
