@@ -312,7 +312,8 @@ export default function AboutSection() {
                 <div 
                   className="overflow-hidden"
                   style={{ 
-                    width: 'calc(100vw - 100px)', // 전체 화면 너비에서 좌우 마진 제외 (우측 마진 줄임)
+                    width: window.innerWidth > 1920 ? 'calc(100vw - 20px)' : 'calc(100vw - 100px)', // 1920px 초과에서 좌우 마진 10px씩, 이하에서 50px씩
+                    maxWidth: window.innerWidth > 1920 ? '1600px' : 'none', // 1920px 초과에서 최대 너비 1600px로 더 증가
                     minWidth: 'calc(320px * 3 + 20px * 2)',
                     marginLeft: '0', // 첫 번째 카드를 왼쪽에 고정
                     marginRight: '0' // 중앙 정렬 제거
@@ -328,7 +329,7 @@ export default function AboutSection() {
                   onInit={(swiper: any) => {
                     swiperRef.current = swiper;
                   }}
-                  spaceBetween={20} // 카드 간격을 20px로 설정
+                  spaceBetween={window.innerWidth > 1920 ? Math.max(220, window.innerWidth * 0.01) : Math.max(5, window.innerWidth * 0.002)} // 1920px 초과에서 1% 간격, 이하에서 0.2% 간격
                   slidesPerView={3}
                   slidesPerGroup={1}
                   loop={true}
