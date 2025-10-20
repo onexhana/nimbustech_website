@@ -47,13 +47,17 @@ export default function AboutSection() {
   const [activeTab, setActiveTab] = useState("ITO");
   const [currentSlide, setCurrentSlide] = useState(0); // 슬라이더 현재 위치
   const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 768);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth); // 화면 너비 상태 추가
   
   // Swiper ref for infinite loop (솔루션 섹션용)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const swiperRef = useRef<any>(null);
   
   useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+      setWindowWidth(window.innerWidth); // 화면 너비 상태 업데이트
+    };
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
@@ -312,8 +316,8 @@ export default function AboutSection() {
                 <div 
                   className="overflow-hidden"
                   style={{ 
-                    width: window.innerWidth > 1920 ? 'calc(100vw - 10px)' : 'calc(100vw - 100px)', // 1920px 초과에서 좌우 마진 5px씩, 이하에서 50px씩
-                    maxWidth: window.innerWidth > 1920 ? '1800px' : 'none', // 1920px 초과에서 최대 너비 1800px로 더 증가
+                    width: windowWidth > 1920 ? 'calc(100vw - 10px)' : 'calc(100vw - 100px)', // 1920px 초과에서 좌우 마진 5px씩, 이하에서 50px씩
+                    maxWidth: windowWidth > 1920 ? '1800px' : 'none', // 1920px 초과에서 최대 너비 1800px로 더 증가
                     minWidth: 'calc(320px * 3 + 20px * 2)',
                     marginLeft: '0', // 첫 번째 카드를 왼쪽에 고정
                     marginRight: '0' // 중앙 정렬 제거
@@ -329,7 +333,7 @@ export default function AboutSection() {
                   onInit={(swiper: any) => {
                     swiperRef.current = swiper;
                   }}
-                  spaceBetween={window.innerWidth > 1920 ? Math.max(220, window.innerWidth * 0.01) : Math.max(5, window.innerWidth * 0.002)} // 1920px 초과에서 1% 간격, 이하에서 0.2% 간격
+                  spaceBetween={windowWidth > 1920 ? Math.max(220, windowWidth * 0.01) : Math.max(5, windowWidth * 0.002)} // 1920px 초과에서 1% 간격, 이하에서 0.2% 간격
                   slidesPerView={3}
                   slidesPerGroup={1}
                   loop={true}
