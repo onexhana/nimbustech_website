@@ -413,7 +413,7 @@ export default function AboutSection() {
                       style={{
                         position: 'absolute',
                         top: '-5rem',
-                        right: '6rem',
+                        right: '150px',
                         border: 'none',
                         outline: 'none',
                         width: '40px',
@@ -436,7 +436,7 @@ export default function AboutSection() {
                       style={{
                         position: 'absolute',
                         top: '-5rem',
-                        right: '2rem',
+                        right: '80px',
                         border: 'none',
                         outline: 'none',
                         width: '40px',
