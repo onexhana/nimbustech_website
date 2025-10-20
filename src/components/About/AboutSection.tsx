@@ -340,7 +340,7 @@ export default function AboutSection() {
                   onInit={(swiper: any) => {
                     swiperRef.current = swiper;
                   }}
-                  spaceBetween={Math.max(10, window.innerWidth * 0.01)} // 최소 10px, 1vw에 해당하는 픽셀 값
+                  spaceBetween={Math.max(10, window.innerWidth * 0.020)} // 화면 너비의 1.5% (최소 10px)
                   slidesPerView={3}
                   slidesPerGroup={1}
                   loop={true}
