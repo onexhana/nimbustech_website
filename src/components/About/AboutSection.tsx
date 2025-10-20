@@ -333,7 +333,12 @@ export default function AboutSection() {
                   onInit={(swiper: any) => {
                     swiperRef.current = swiper;
                   }}
-                  spaceBetween={windowWidth > 1920 ? Math.max(220, windowWidth * 0.01) : Math.max(5, windowWidth * 0.002)} // 1920px 초과에서 1% 간격, 이하에서 0.2% 간격
+                  spaceBetween={
+                    windowWidth > 1920 ? Math.max(220, windowWidth * 0.01) : // 1920px 초과: 대형 모니터 설정
+                    windowWidth >= 1360 ? Math.max(15, windowWidth * 0.008) : // 1360px~1920px: 일반 모니터 설정
+                    windowWidth >= 768 ? Math.max(25, windowWidth * 0.02) : // 768px~1360px: 중간 해상도 설정
+                    Math.max(5, windowWidth * 0.002) // 768px 미만: 모바일 설정
+                  }
                   slidesPerView={3}
                   slidesPerGroup={1}
                   loop={true}
@@ -368,7 +373,12 @@ export default function AboutSection() {
                         titleColor={aboutData.colors?.desktopCardTitle || aboutData.colors?.cardTitle || aboutData.cardTitleColor || "#000000"}
                         descriptionColor={aboutData.colors?.desktopCardDescription || aboutData.colors?.cardDescription || aboutData.cardDescriptionColor || "#6B7280"}
                         backgroundColor={aboutData.cardBackgroundColor || "#ffffff"}
-                        width={isMobile ? "380px" : "350px"}
+                        width={
+                          isMobile ? "380px" : // 모바일: 380px
+                          windowWidth >= 1360 ? "350px" : // 1360px 이상: 350px
+                          windowWidth >= 768 ? `${Math.max(280, windowWidth * 0.22)}px` : // 768px~1360px: 화면 너비의 22% (최소 280px)
+                          "350px" // 기본값
+                        }
                         minHeight={isMobile ? "200px" : "180px"}
                         titleFontSize={card.fontSize?.title || aboutData.fontSize?.desktopCardTitle || aboutData.fontSize?.cardTitle}
                         descriptionFontSize={card.fontSize?.description || aboutData.fontSize?.desktopCardDescription || aboutData.fontSize?.cardDescription}
