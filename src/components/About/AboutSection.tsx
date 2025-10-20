@@ -317,15 +317,17 @@ export default function AboutSection() {
                   overflow: 'visible', 
                   display: 'flex', 
                   flex: '1', 
-                  justifyContent: 'center'
+                  justifyContent: 'flex-start'
                 }}
               >
                 <div 
                   className="overflow-hidden"
                   style={{ 
-                    width: 'calc(clamp(200px, 25vw, 500px) * 3 + clamp(40px, 4vw, 80px) * 2)', // 3장 카드 + gap
-                    minWidth: 'calc(clamp(200px, 25vw, 500px) * 3 + clamp(40px, 4vw, 80px) * 2)',
-                    margin: '0 auto' // 중앙 정렬
+                    width: 'calc(100vw - 200px)', // 화면 너비에서 좌우 마진(100px * 2) 제외
+                    maxWidth: 'calc(560px * 3 + 20px * 2)', // 최대 너비 제한
+                    minWidth: 'calc(400px * 3 + 20px * 2)', // 최소 너비 보장
+                    margin: '0',
+                    paddingLeft: '50px' // AboutTab과 같은 시작점
                   }}
                 >
                 <Swiper
@@ -338,11 +340,12 @@ export default function AboutSection() {
                   onInit={(swiper: any) => {
                     swiperRef.current = swiper;
                   }}
-                  spaceBetween={Math.max(40, window.innerWidth * 0.04)} // 최소 40px, 4vw에 해당하는 픽셀 값
+                  spaceBetween={Math.max(10, window.innerWidth * 0.01)} // 최소 10px, 1vw에 해당하는 픽셀 값
                   slidesPerView={3}
                   slidesPerGroup={1}
                   loop={true}
                   loopedSlides={Math.max(3, cards.length)} // 최소 3개 이상의 루프 슬라이드 보장
+                  slidesOffsetBefore={0} // 첫 번째 슬라이드 시작 위치
                   pagination={false}
                   navigation={false}
                   allowTouchMove={true}
@@ -373,8 +376,8 @@ export default function AboutSection() {
                         titleColor={aboutData.colors?.desktopCardTitle || aboutData.colors?.cardTitle || aboutData.cardTitleColor || "#000000"}
                         descriptionColor={aboutData.colors?.desktopCardDescription || aboutData.colors?.cardDescription || aboutData.cardDescriptionColor || "#6B7280"}
                         backgroundColor={aboutData.cardBackgroundColor || "#ffffff"}
-                         width={isMobile ? "380px" : undefined}
-                         minHeight={isMobile ? "200px" : "clamp(120px, 12vw, 240px)"}
+                        width={isMobile ? "380px" : undefined}
+                        minHeight={isMobile ? "200px" : "230px"}
                         titleFontSize={card.fontSize?.title || aboutData.fontSize?.desktopCardTitle || aboutData.fontSize?.cardTitle}
                         descriptionFontSize={card.fontSize?.description || aboutData.fontSize?.desktopCardDescription || aboutData.fontSize?.cardDescription}
                         hoverEffect={aboutData.cardHoverEffect}

@@ -10,15 +10,48 @@ export default function HomeSection() {
 
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768); // 768px 미만을 모바일로 간주
-      setScreenWidth(window.innerWidth);
+      const currentWidth = window.innerWidth;
+      setIsMobile(currentWidth < 768); // 768px 미만을 모바일로 간주
+      setScreenWidth(currentWidth);
+      
+      // 디버깅용 로그 (값이 변경될 때만 출력)
+      const prevWidth = screenWidth;
+      if (Math.abs(currentWidth - prevWidth) > 10) {
+        console.log('HomeSection - 화면 크기 변경:', currentWidth, 'isMobile:', currentWidth < 768);
+      }
     };
 
+    // 초기 로딩 시 즉시 실행
     checkMobile();
-    window.addEventListener('resize', checkMobile);
+    
+    // 리사이즈 이벤트 리스너 추가 (디바운싱 적용)
+    let resizeTimeout: NodeJS.Timeout;
+    const debouncedResize = () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(checkMobile, 150); // 150ms 디바운싱
+    };
+    
+    window.addEventListener('resize', debouncedResize);
+    
+    // 브라우저 확대/축소 감지를 위한 추가 이벤트들
+    window.addEventListener('orientationchange', checkMobile);
+    
+    // 브라우저 확대 비율 변경 감지 (Chrome, Edge 등)
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', debouncedResize);
+    }
+    
+    // 주기적으로 화면 크기 체크 (확대/축소 변경 감지용) - 3초마다 체크
+    const intervalCheck = setInterval(checkMobile, 3000);
 
     return () => {
-      window.removeEventListener('resize', checkMobile);
+      window.removeEventListener('resize', debouncedResize);
+      window.removeEventListener('orientationchange', checkMobile);
+      if (window.visualViewport) {
+        window.visualViewport.removeEventListener('resize', debouncedResize);
+      }
+      clearTimeout(resizeTimeout);
+      clearInterval(intervalCheck);
     };
   }, []);
 
