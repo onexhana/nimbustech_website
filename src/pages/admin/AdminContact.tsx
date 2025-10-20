@@ -1657,7 +1657,7 @@ export default function AdminContact() {
                             color: !isEditing ? '#6b7280' : '#111827'
                           }}
                         >
-                          <option value="inquiry">고객사 직원</option>
+                          <option value="inquiry">고객 문의</option>
                           <option value="hiring">인재 채용</option>
                         </select>
                       </div>

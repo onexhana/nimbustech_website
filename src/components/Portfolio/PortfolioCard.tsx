@@ -1,10 +1,11 @@
 interface PortfolioCardProps {
+  id: number;
   title: string;
   description: string;
   image?: string; // 이미지 URL (선택적)
 }
 
-const PortfolioCard = ({ title, description, image }: PortfolioCardProps) => {
+const PortfolioCard = ({ id, title, description, image }: PortfolioCardProps) => {
   // 설명이 두 줄인 카드들의 간격 조정
   const getMarginBottom = () => {
     // 설명에 줄바꿈(\n)이 있으면 두 줄 설명
@@ -17,55 +18,53 @@ const PortfolioCard = ({ title, description, image }: PortfolioCardProps) => {
   // 모바일과 데스크톱 레이아웃 분리
   const isMobile = window.innerWidth < 768;
 
-  // 포트폴리오 데이터에서 스타일과 이미지 크기 설정 불러오기
-  const portfolioData = (() => {
-    const savedData = localStorage.getItem('portfolioData');
-    if (savedData) {
-      return JSON.parse(savedData);
+  // 관리자 페이지에서 설정한 개별 프로젝트 스타일 불러오기
+  const getProjectStyle = (projectId: number) => {
+    const savedFontStyles = localStorage.getItem('fontStyleSettings');
+    const savedImageSizes = localStorage.getItem('imageSizeSettings');
+    
+    let fontStyle = null;
+    let imageSize = null;
+    
+    if (savedFontStyles) {
+      try {
+        const fontStyles = JSON.parse(savedFontStyles);
+        fontStyle = fontStyles[projectId];
+      } catch (error) {
+        console.error('글씨 스타일 로드 실패:', error);
+      }
     }
+    
+    if (savedImageSizes) {
+      try {
+        const imageSizes = JSON.parse(savedImageSizes);
+        imageSize = imageSizes[projectId];
+      } catch (error) {
+        console.error('이미지 크기 로드 실패:', error);
+      }
+    }
+    
+    // 기본값 반환
     return {
-      fontSize: {
-        title: {
-          web: 28,
-          mobile: 22
+      fontStyle: fontStyle || {
+        projectTitle: {
+          web: { size: 28, weight: 700, color: "#00A3E0" },
+          mobile: { size: 22, weight: 700, color: "#00A3E0" }
         },
-        description: {
-          web: 22,
-          mobile: 16
+        projectDescription: {
+          web: { size: 22, weight: 600, color: "#000000" },
+          mobile: { size: 16, weight: 600, color: "#000000" }
         }
       },
-      fontWeight: {
-        title: {
-          web: 700,
-          mobile: 700
-        },
-        description: {
-          web: 900,
-          mobile: 600
-        }
-      },
-      fontColor: {
-        title: {
-          web: '#00A3E0',
-          mobile: '#00A3E0'
-        },
-        description: {
-          web: '#000000',
-          mobile: '#000000'
-        }
-      },
-      imageSize: {
-        web: {
-          width: 330,
-          height: 250
-        },
-        mobile: {
-          width: 260,
-          height: 150
-        }
+        imageSize: imageSize || {
+        web: { width: 330, height: 250 },
+        mobile: { width: 260, height: 150 }
       }
     };
-  })();
+  };
+
+  // 실제 프로젝트 ID 사용
+  const { fontStyle, imageSize } = getProjectStyle(id);
   
   return (
     <div 
@@ -85,9 +84,9 @@ const PortfolioCard = ({ title, description, image }: PortfolioCardProps) => {
             className="text-center"
             style={{ 
               marginBottom: isMobile ? '0px' : '2px',
-              fontSize: `${isMobile ? (portfolioData.fontSize?.title?.mobile || 22) : (portfolioData.fontSize?.title?.web || 28)}px`,
-              fontWeight: isMobile ? (portfolioData.fontWeight?.title?.mobile || 700) : (portfolioData.fontWeight?.title?.web || 700),
-              color: isMobile ? (portfolioData.fontColor?.title?.mobile || '#00A3E0') : (portfolioData.fontColor?.title?.web || '#00A3E0')
+              fontSize: `${isMobile ? fontStyle.projectTitle.mobile.size : fontStyle.projectTitle.web.size}px`,
+              fontWeight: isMobile ? fontStyle.projectTitle.mobile.weight : fontStyle.projectTitle.web.weight,
+              color: isMobile ? fontStyle.projectTitle.mobile.color : fontStyle.projectTitle.web.color
             }}
           >
             {title}
@@ -97,9 +96,9 @@ const PortfolioCard = ({ title, description, image }: PortfolioCardProps) => {
             style={{ 
               marginTop: isMobile ? '0px' : '2px',
               whiteSpace: 'pre-line',
-              fontSize: `${isMobile ? (portfolioData.fontSize?.description?.mobile || 16) : (portfolioData.fontSize?.description?.web || 22)}px`,
-              fontWeight: isMobile ? (portfolioData.fontWeight?.description?.mobile || 600) : (portfolioData.fontWeight?.description?.web || 900),
-              color: isMobile ? (portfolioData.fontColor?.description?.mobile || '#000000') : (portfolioData.fontColor?.description?.web || '#000000')
+              fontSize: `${isMobile ? fontStyle.projectDescription.mobile.size : fontStyle.projectDescription.web.size}px`,
+              fontWeight: isMobile ? fontStyle.projectDescription.mobile.weight : fontStyle.projectDescription.web.weight,
+              color: isMobile ? fontStyle.projectDescription.mobile.color : fontStyle.projectDescription.web.color
             }}
           >
             {description}
@@ -110,8 +109,8 @@ const PortfolioCard = ({ title, description, image }: PortfolioCardProps) => {
         <div
           className="bg-gray-100 rounded-[16px] overflow-hidden flex items-end justify-center"
           style={{
-            width: isMobile ? `${portfolioData.imageSize?.mobile?.width || 260}px` : `${portfolioData.imageSize?.web?.width || 330}px`,
-            height: isMobile ? `${portfolioData.imageSize?.mobile?.height || 150}px` : `${portfolioData.imageSize?.web?.height || 250}px`,
+            width: isMobile ? `${imageSize.mobile.width}px` : `${imageSize.web.width}px`,
+            height: isMobile ? `${imageSize.mobile.height}px` : `${imageSize.web.height}px`,
             marginTop: isMobile ? '-40px' : '-30px'
           }}
         >

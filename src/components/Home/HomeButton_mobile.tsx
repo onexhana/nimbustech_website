@@ -311,19 +311,19 @@ export default function HomeButtonMobile({ topOffset = '-40vh', marginTopSpacing
       {renderModal()}
       <div className="w-full bg-white border-t border-gray-300" style={{ position: 'relative', top: topOffset, marginTop: marginTopSpacing, marginBottom: marginBottomSpacing }}>
         {/* 모바일용 2x2 그리드 - 동일한 크기로 분할 */}
-        <div style={{ width: '100%', maxWidth: '390px', margin: '0 auto', position: 'relative' }}>
+        <div style={{ width: '100%', maxWidth: '1000px', margin: '0 auto', position: 'relative' }}>
           {/* 내부 세로 구분선 (상단 두 카드 사이) */}
           <div style={{ position: 'absolute', top: 0, left: '50%', bottom: '50%', borderLeft: '1px solid #d1d5db' }} />
           {/* 내부 세로 구분선 (하단 두 카드 사이) */}
           <div style={{ position: 'absolute', top: '50%', left: '50%', bottom: 0, borderLeft: '1px solid #d1d5db' }} />
-          {/* 내부 가로 구분선 (중간) */}
-          <div style={{ position: 'absolute', top: '50%', left: -100, right: -100, borderTop: '1px solid #d1d5db' }} />
+          {/* 내부 가로 구분선 (중간) - 반응형으로 수정 */}
+          <div style={{ position: 'absolute', top: '50%', left: 0, right: 0, borderTop: '1px solid #d1d5db' }} />
           <div style={{ 
             display: 'grid', 
             gridTemplateColumns: '1fr 1fr', 
             gridTemplateRows: '1fr 1fr', 
             width: '100%', 
-            maxWidth: '390px',
+            maxWidth: '1000px',
             height: '100%' 
           }}>
           {homeData.buttonData.map((btn, idx) => {
@@ -347,9 +347,10 @@ export default function HomeButtonMobile({ topOffset = '-40vh', marginTopSpacing
               >
                 <div className="text-center">
                   <h3
-                    className="font-semibold transition-colors group-hover:text-blue-600"
+                    className="transition-colors group-hover:text-blue-600"
                     style={{ 
                       fontSize: `${titleSize}px`, 
+                      fontWeight: 450,
                       marginBottom: '8px',
                       color: isSelected ? hoverColor : "#4a5568"
                     }}
@@ -357,9 +358,10 @@ export default function HomeButtonMobile({ topOffset = '-40vh', marginTopSpacing
                     {renderTextWithBreaks(btn.title)}
                   </h3>
                   <p
-                    className="font-bold transition-colors group-hover:text-blue-600"
+                    className="transition-colors group-hover:text-blue-600"
                     style={{ 
                       fontSize: `${subtitleSize}px`, 
+                      fontWeight: 710,
                       marginBottom: '12px',
                       color: isSelected ? hoverColor : "#000000"
                     }}
@@ -383,11 +385,11 @@ export default function HomeButtonMobile({ topOffset = '-40vh', marginTopSpacing
             );
           })}
           </div>
-          {/* 내부 하단 가로 구분선 */}
-          <div style={{ position: 'absolute', bottom: 0, left: -100, right: -100, borderTop: '1px solid #000000' }} />
+          {/* 내부 하단 가로 구분선 - 반응형으로 수정 */}
+          <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, borderTop: '1px solid #000000' }} />
         </div>
         {/* 모바일용 무한 텍스트 슬라이더 */}
-        <div className="w-full py-12 bg-gray-100" style={{ marginTop: '30px' }}> 
+        <div className="w-full py-12 bg-gray-100" style={{ marginTop: '30px', marginBottom: '120px' }}> 
           <InfiniteTextSlider 
             text={homeData.sliderText || "LEADING CUSTOMER SUCCESS"}
             fontSize={homeData.sliderTextSizes?.mobile || 60}

@@ -2,13 +2,14 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { usePortfolioData } from '../../context/PortfolioContext';
+import FilterStyleEditorComponent from '../../components/admin/FilterStyleEditor';
 
 export default function AdminPortfolio() {
   const { portfolioData, updateProject, addProject, deleteProject, updateCategories } = usePortfolioData();
   const [isEditing, setIsEditing] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("공공");
   const [logoSliderCategory, setLogoSliderCategory] = useState("고객사");
-  const [activeSection, setActiveSection] = useState<"portfolio" | "logoSlider" | "fontStyle" | "imageSize">("portfolio");
+  const [activeSection, setActiveSection] = useState<"portfolio" | "logoSlider" | "fontStyle" | "imageSize" | "filterStyle">("portfolio");
   const [logoSliderSettings, setLogoSliderSettings] = useState({
     web: {
       speed: 50,
@@ -39,6 +40,16 @@ export default function AdminPortfolio() {
       mobile: { width: number; height: number };
     }
   }>({});
+  const [filterStyleSettings, setFilterStyleSettings] = useState<{
+    [categoryName: string]: {
+      backgroundColor: string;
+      textColor: string;
+      borderColor: string;
+      borderWidth: number;
+      fontSize: number;
+      fontWeight: number;
+    }
+  }>({});
   const [showAddForm, setShowAddForm] = useState(false);
   const [newProject, setNewProject] = useState({
     title: "",
@@ -51,6 +62,19 @@ export default function AdminPortfolio() {
   const [showLogoUpload, setShowLogoUpload] = useState<{type: 'customer' | 'partner', index: number} | null>(null);
   const [uploadedLogo, setUploadedLogo] = useState<string | null>(null);
   const [selectedProjectForFontStyle, setSelectedProjectForFontStyle] = useState<number | null>(null);
+  const [selectedCategoryForFilterStyle, setSelectedCategoryForFilterStyle] = useState<string | null>(null);
+  const [tempFilterStyle, setTempFilterStyle] = useState({
+    backgroundColor: "#00A3E0",
+    textColor: "#ffffff",
+    borderColor: "#00A3E0",
+    borderWidth: 1,
+    fontSize: 25,
+    fontWeight: 500,
+    borderRadius: 999, // 둥근 모서리
+    padding: "12px 24px", // 패딩
+    hoverBackgroundColor: "#008CC0", // 호버 시 배경색
+    hoverTextColor: "#ffffff" // 호버 시 글자색
+  });
 
   // 로고 슬라이드 설정 로드
   useEffect(() => {
@@ -84,6 +108,18 @@ export default function AdminPortfolio() {
         setImageSizeSettings(JSON.parse(savedImageSizeSettings));
       } catch (error) {
         console.error('이미지 크기 설정 로드 실패:', error);
+      }
+    }
+  }, []);
+
+  // 필터 스타일 설정 로드
+  useEffect(() => {
+    const savedFilterStyleSettings = localStorage.getItem('filterStyleSettings');
+    if (savedFilterStyleSettings) {
+      try {
+        setFilterStyleSettings(JSON.parse(savedFilterStyleSettings));
+      } catch (error) {
+        console.error('필터 스타일 설정 로드 실패:', error);
       }
     }
   }, []);
@@ -146,6 +182,35 @@ export default function AdminPortfolio() {
     setFontStyleSettings(settings);
     localStorage.setItem('fontStyleSettings', JSON.stringify(settings));
     alert('글씨 스타일 설정이 저장되었습니다!');
+  };
+
+  // 개별 필터 스타일 설정 저장
+  const saveFilterStyleSettings = (categoryName: string, settings: any) => {
+    const newSettings = { ...filterStyleSettings };
+    newSettings[categoryName] = settings;
+    setFilterStyleSettings(newSettings);
+    localStorage.setItem('filterStyleSettings', JSON.stringify(newSettings));
+    alert(`${categoryName} 필터 스타일이 저장되었습니다!`);
+  };
+
+  // 개별 필터 스타일 가져오기
+  const getFilterStyle = (categoryName: string) => {
+    if (!filterStyleSettings[categoryName]) {
+      // 기본값 설정 (현재 사이트 색상 반영)
+      return {
+        backgroundColor: "#00A3E0",
+        textColor: "#ffffff",
+        borderColor: "#00A3E0",
+        borderWidth: 1,
+        fontSize: 25,
+        fontWeight: 500,
+        borderRadius: 999,
+        padding: "12px 24px",
+        hoverBackgroundColor: "#008CC0",
+        hoverTextColor: "#ffffff"
+      };
+    }
+    return filterStyleSettings[categoryName];
   };
 
   // 로고 업로드 핸들러
@@ -540,6 +605,89 @@ export default function AdminPortfolio() {
               )}
             </div>
 
+            {/* 필터 관리 */}
+            <div style={{
+              background: 'rgba(255, 255, 255, 0.8)',
+              backdropFilter: 'blur(10px)',
+              borderRadius: '12px',
+              boxShadow: '0 10px 15px rgba(0, 0, 0, 0.1)',
+              border: '1px solid rgba(255, 255, 255, 0.2)',
+              padding: '1.5rem',
+              marginTop: '1.5rem',
+              transition: 'all 0.3s ease'
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
+                <div style={{
+                  width: '32px',
+                  height: '32px',
+                  background: 'linear-gradient(135deg, #f59e0b, #f97316)',
+                  borderRadius: '8px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}>
+                  <svg width="20" height="20" fill="none" stroke="white" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.207A1 1 0 013 6.5V4z" />
+                  </svg>
+                </div>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#111827', margin: 0 }}>
+                  필터 관리
+                </h3>
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                <button
+                  onClick={() => setActiveSection("filterStyle")}
+                  style={{
+                    padding: '0.75rem 1rem',
+                    fontSize: '0.875rem',
+                    fontWeight: '600',
+                    borderRadius: '8px',
+                    border: 'none',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.5rem',
+                    transition: 'all 0.2s ease',
+                    ...(activeSection === "filterStyle" ? {
+                      background: 'linear-gradient(135deg, #f59e0b, #f97316)',
+                      color: 'white',
+                      boxShadow: '0 4px 12px rgba(245, 158, 11, 0.3)'
+                    } : {
+                      background: 'rgba(255, 255, 255, 0.6)',
+                      color: '#374151',
+                      border: '1px solid rgba(229, 231, 235, 0.5)'
+                    })
+                  }}
+                  onMouseEnter={(e) => {
+                    if (activeSection !== "filterStyle") {
+                      e.currentTarget.style.background = 'rgba(245, 158, 11, 0.1)';
+                      e.currentTarget.style.borderColor = 'rgba(245, 158, 11, 0.3)';
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (activeSection !== "filterStyle") {
+                      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.6)';
+                      e.currentTarget.style.borderColor = 'rgba(229, 231, 235, 0.5)';
+                    }
+                  }}
+                >
+                  <span style={{
+                    fontSize: '0.75rem',
+                    fontWeight: 'bold',
+                    background: activeSection === "filterStyle" ? 'rgba(255, 255, 255, 0.2)' : 'rgba(245, 158, 11, 0.1)',
+                    color: activeSection === "filterStyle" ? 'white' : '#f59e0b',
+                    padding: '0.25rem 0.5rem',
+                    borderRadius: '4px',
+                    minWidth: '20px',
+                    textAlign: 'center'
+                  }}>
+                    🎨
+                  </span>
+                  필터 스타일
+                </button>
+              </div>
+            </div>
+
             {/* 로고 슬라이드 관리 */}
             <div style={{
               background: 'rgba(255, 255, 255, 0.8)',
@@ -660,6 +808,7 @@ export default function AdminPortfolio() {
                     {activeSection === "portfolio" ? `${selectedCategory} 프로젝트 관리` : 
                      activeSection === "fontStyle" ? "글씨 스타일 설정" : 
                      activeSection === "imageSize" ? "이미지 크기 설정" :
+                     activeSection === "filterStyle" ? "필터 스타일 설정" :
                      `${logoSliderCategory} 관리`}
                   </h3>
                 </div>
@@ -1503,6 +1652,89 @@ export default function AdminPortfolio() {
                       >
                         프로젝트 목록으로 돌아가기
                       </button>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* 필터 스타일 설정 콘텐츠 */}
+              {activeSection === "filterStyle" && (
+                <div style={{
+                  background: 'rgba(255, 255, 255, 0.6)',
+                  backdropFilter: 'blur(10px)',
+                  border: '1px solid rgba(229, 231, 235, 0.5)',
+                  borderRadius: '12px',
+                  padding: '1.5rem',
+                  marginBottom: '1rem',
+                  transition: 'all 0.3s ease'
+                }}>
+                  {!selectedCategoryForFilterStyle ? (
+                    // 필터 선택 화면
+                    <div>
+                      <h4 style={{ fontSize: '1rem', fontWeight: 'bold', color: '#111827', marginBottom: '1.5rem' }}>
+                        편집할 필터를 선택하세요
+                      </h4>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                        {portfolioData.categories.map((category) => (
+                          <button
+                            key={category}
+                            onClick={() => setSelectedCategoryForFilterStyle(category)}
+                            style={{
+                              padding: '1rem',
+                              fontSize: '1rem',
+                              fontWeight: '600',
+                              color: '#374151',
+                              backgroundColor: '#f9fafb',
+                              border: '2px solid #e5e7eb',
+                              borderRadius: '8px',
+                              cursor: 'pointer',
+                              transition: 'all 0.2s ease',
+                              textAlign: 'left'
+                            }}
+                            onMouseEnter={(e) => {
+                              e.currentTarget.style.backgroundColor = '#00A3E0';
+                              e.currentTarget.style.color = 'white';
+                              e.currentTarget.style.borderColor = '#00A3E0';
+                            }}
+                            onMouseLeave={(e) => {
+                              e.currentTarget.style.backgroundColor = '#f9fafb';
+                              e.currentTarget.style.color = '#374151';
+                              e.currentTarget.style.borderColor = '#e5e7eb';
+                            }}
+                          >
+                            {category} 필터 편집
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  ) : (
+                    // 선택된 필터 스타일 편집 화면
+                    <div>
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.5rem' }}>
+                        <h4 style={{ fontSize: '1rem', fontWeight: 'bold', color: '#111827' }}>
+                          {selectedCategoryForFilterStyle} 필터 스타일 편집
+                        </h4>
+                        <button
+                          onClick={() => setSelectedCategoryForFilterStyle(null)}
+                          style={{
+                            padding: '0.5rem 1rem',
+                            fontSize: '0.875rem',
+                            fontWeight: '500',
+                            color: '#6b7280',
+                            backgroundColor: '#f3f4f6',
+                            border: '1px solid #d1d5db',
+                            borderRadius: '6px',
+                            cursor: 'pointer'
+                          }}
+                        >
+                          ← 필터 선택으로
+                        </button>
+                      </div>
+                      
+                      <FilterStyleEditorComponent 
+                        selectedCategory={selectedCategoryForFilterStyle}
+                        onSave={saveFilterStyleSettings}
+                      />
                     </div>
                   )}
                 </div>
