@@ -49,9 +49,30 @@ function InfiniteTextSlider({
   const getResponsiveFontSize = (baseSize: number) => {
     // 1920px 기준으로 비례 계산
     const ratio = screenWidth / 1920;
-    const minSize = 0.5; // 최소 50%
     const maxSize = 1.2; // 최대 120%
-    const clampedRatio = Math.max(minSize, Math.min(maxSize, ratio));
+    
+    // 화면 크기별 최소값 설정
+    let minSize;
+    if (screenWidth >= 1920) {
+      minSize = 1.0; // 1920px: 110px
+    } else if (screenWidth >= 1366) {
+      minSize = 100 / baseSize; // 1366px: 100px
+    } else if (screenWidth >= 1024) {
+      minSize = 95 / baseSize; // 1024px: 95px
+    } else if (screenWidth >= 768) {
+      minSize = 90 / baseSize; // 768px: 90px
+    } else {
+      minSize = 80 / baseSize; // 더 작은 화면: 80px
+    }
+    
+    // 1366px 노트북에서 100px가 되도록 조정
+    let adjustedRatio = ratio;
+    if (screenWidth >= 1366 && screenWidth < 1920) {
+      // 1366px에서 100px가 되도록: 100/110 = 0.909
+      adjustedRatio = 0.909;
+    }
+    
+    const clampedRatio = Math.max(minSize, Math.min(maxSize, adjustedRatio));
     
     return Math.round(baseSize * clampedRatio);
   };
@@ -443,7 +464,7 @@ export default function HomeButton() {
         </div>
 
         {/* 무한 텍스트 슬라이더 */}
-        <div className="w-full bg-gray-100" style={{ paddingTop: 'clamp(24px, 4vw, 64px)', paddingBottom: 'clamp(40px, 6vw, 96px)', marginTop: 'clamp(12px, 2.5vw, 24px)' }}>
+        <div className="w-full bg-gray-100" style={{ paddingTop: 'clamp(20px, 28px, 40px)', paddingBottom: 'clamp(20px, 30px, 50px)', marginTop: 'clamp(0px, 2px, 6px)' }}>
           <InfiniteTextSlider
             text={homeData.sliderText || "LEADING CUSTOMER SUCCESS"}
             fontSize={getResponsiveFontSize(homeData.sliderTextSizes?.desktop || 110)}
