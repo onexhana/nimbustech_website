@@ -110,7 +110,7 @@ export default function AboutSection() {
           ? `80px 0 ${activeTab === 'RPA' ? '40px' : '55px'} 0`
           : `clamp(40px, 4.2vw, 80px) clamp(12px, 1.25vw, 24px) ${activeTab === 'RPA' ? 'clamp(20px, 2.1vw, 40px)' : 'clamp(30px, 3.1vw, 60px)'} clamp(12px, 1.25vw, 24px)`,
         backgroundColor: '#F3F6F9',
-        marginTop: 'clamp(60px, 6.25vw, 120px)'
+        marginTop: isMobile ? 'clamp(60px, 6.25vw, 120px)' : 'clamp(5px, 0.5vw, 10px)' // 모바일은 기존 유지, 데스크탑은 최대한 위로 올림
       }}>
       {/* 메인 타이틀 영역 (AboutSection 컴포넌트 내부 상단) */}
       <div className="max-w-[1920px] mx-auto">
