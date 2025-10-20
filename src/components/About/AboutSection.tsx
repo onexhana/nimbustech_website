@@ -296,18 +296,7 @@ export default function AboutSection() {
             {/* ======================================== */}
             {/* 카드 영역 (모든 섹션: Swiper 무한루프) */}
             {/* ======================================== */}
-            <div className="flex items-start" style={{ 
-              position: 'relative', 
-              overflow: 'visible', 
-              display: 'flex', 
-              alignItems: 'flex-start', 
-              gap: '20px', 
-              justifyContent: 'center', 
-              marginLeft: '100px', 
-              marginRight: '100px',
-              transform: window.innerWidth < 1600 ? 'scale(0.85)' : 'scale(1)',
-              transformOrigin: 'center'
-            }}>
+            <div className="flex items-start" style={{ position: 'relative', overflow: 'visible', display: 'flex', alignItems: 'flex-start', gap: '20px', justifyContent: 'flex-start', marginLeft: '50px', marginRight: '2rem' }}>
 
               {/* 모든 섹션: 무한 루프 슬라이더 */}
               <div
@@ -323,11 +312,10 @@ export default function AboutSection() {
                 <div 
                   className="overflow-hidden"
                   style={{ 
-                    width: 'calc(100vw - 200px)', // 화면 너비에서 좌우 마진(100px * 2) 제외
-                    maxWidth: 'calc(560px * 3 + 20px * 2)', // 최대 너비 제한
-                    minWidth: 'calc(400px * 3 + 20px * 2)', // 최소 너비 보장
-                    margin: '0',
-                    paddingLeft: '50px' // AboutTab과 같은 시작점
+                    width: 'calc(100vw - 100px)', // 전체 화면 너비에서 좌우 마진 제외 (우측 마진 줄임)
+                    minWidth: 'calc(320px * 3 + 20px * 2)',
+                    marginLeft: '0', // 첫 번째 카드를 왼쪽에 고정
+                    marginRight: '0' // 중앙 정렬 제거
                   }}
                 >
                 <Swiper
@@ -340,12 +328,11 @@ export default function AboutSection() {
                   onInit={(swiper: any) => {
                     swiperRef.current = swiper;
                   }}
-                  spaceBetween={Math.max(10, window.innerWidth * 0.020)} // 화면 너비의 1.5% (최소 10px)
+                  spaceBetween={20} // 카드 간격을 20px로 설정
                   slidesPerView={3}
                   slidesPerGroup={1}
                   loop={true}
                   loopedSlides={Math.max(3, cards.length)} // 최소 3개 이상의 루프 슬라이드 보장
-                  slidesOffsetBefore={0} // 첫 번째 슬라이드 시작 위치
                   pagination={false}
                   navigation={false}
                   allowTouchMove={true}
@@ -376,8 +363,8 @@ export default function AboutSection() {
                         titleColor={aboutData.colors?.desktopCardTitle || aboutData.colors?.cardTitle || aboutData.cardTitleColor || "#000000"}
                         descriptionColor={aboutData.colors?.desktopCardDescription || aboutData.colors?.cardDescription || aboutData.cardDescriptionColor || "#6B7280"}
                         backgroundColor={aboutData.cardBackgroundColor || "#ffffff"}
-                        width={isMobile ? "380px" : undefined}
-                        minHeight={isMobile ? "200px" : "230px"}
+                        width={isMobile ? "380px" : "350px"}
+                        minHeight={isMobile ? "200px" : "180px"}
                         titleFontSize={card.fontSize?.title || aboutData.fontSize?.desktopCardTitle || aboutData.fontSize?.cardTitle}
                         descriptionFontSize={card.fontSize?.description || aboutData.fontSize?.desktopCardDescription || aboutData.fontSize?.cardDescription}
                         hoverEffect={aboutData.cardHoverEffect}
@@ -422,8 +409,8 @@ export default function AboutSection() {
                       onClick={() => swiperRef.current?.slidePrev()}
                       style={{
                         position: 'absolute',
-                        top: 'clamp(-2.5rem, -2.6vw, -5rem)',
-                        right: 'clamp(3rem, 3.13vw, 6rem)',
+                        top: '-5rem',
+                        right: '150px',
                         border: 'none',
                         outline: 'none',
                         width: 'clamp(20px, 2.08vw, 40px)',
@@ -445,8 +432,8 @@ export default function AboutSection() {
                       onClick={() => swiperRef.current?.slideNext()}
                       style={{
                         position: 'absolute',
-                        top: 'clamp(-2.5rem, -2.6vw, -5rem)',
-                        right: 'clamp(1rem, 1.04vw, 2rem)',
+                        top: '-5rem',
+                        right: '80px',
                         border: 'none',
                         outline: 'none',
                         width: 'clamp(20px, 2.08vw, 40px)',
