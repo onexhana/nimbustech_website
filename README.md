@@ -1,6 +1,6 @@
 # ☁️ Nimbus Tech Official Website
 
-> **Nimbus Tech(님버스테크)**의 공식 기업 홈페이지 프로젝트입니다.
+> **Nimbus Tech(님버스테크)***의 공식 기업 홈페이지 프로젝트입니다.
 > 클라우드 기술을 선도하는 Nimbus Tech의 비전과 서비스를 고객에게 전달하기 위해 구축되었습니다.
 
 <br>
