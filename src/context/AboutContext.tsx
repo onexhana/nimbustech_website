@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, ReactNode, useEffect } from 'react';
+import { createContext, useContext, useState, type ReactNode } from 'react';
 import { getAboutData } from '../api/contact';
 
 // About 카드 타입 정의
@@ -90,6 +90,12 @@ interface AboutContextType {
 const defaultAboutData: AboutData = {
   mainTitle: "고객 성공 리딩",
   subtitle: "신뢰성 높은 DT 서비스를 제공합니다.",
+  fontSize: {
+    cardTitle: 28,
+    cardDescription: 22,
+    mobileCardTitle: 28,
+    mobileCardDescription: 22
+  },
   tabs: [
     {
       name: "ITO",
@@ -211,7 +217,8 @@ const defaultAboutData: AboutData = {
           title: "BCP Solutions",
           description: [
             "솔루션과 컨설팅으로 비즈니스 연속성을 보장합니다"
-          ]
+          ],
+          link: "https://www.krbcp.com/"
         }
       ]
     }
@@ -228,7 +235,36 @@ export function AboutProvider({ children }: { children: ReactNode }) {
     const savedData = localStorage.getItem('aboutData');
     if (savedData) {
       try {
-        return JSON.parse(savedData);
+        const parsedData = JSON.parse(savedData);
+        // 폰트 크기가 작으면 기본값으로 업데이트
+        if (!parsedData.fontSize || 
+            (parsedData.fontSize.cardTitle && parsedData.fontSize.cardTitle < 28) ||
+            (parsedData.fontSize.cardDescription && parsedData.fontSize.cardDescription < 22)) {
+          const updatedData = {
+            ...parsedData,
+            fontSize: {
+              cardTitle: 28,
+              cardDescription: 22,
+              mobileCardTitle: 28,
+              mobileCardDescription: 22,
+              ...parsedData.fontSize
+            }
+          };
+          localStorage.setItem('aboutData', JSON.stringify(updatedData));
+          return updatedData;
+        }
+        
+        // BCP Solutions 링크가 누락된 경우 업데이트
+        const solutionTab = parsedData.tabs?.find(tab => tab.name === '솔루션');
+        if (solutionTab) {
+          const bcpCard = solutionTab.cards?.find(card => card.title === 'BCP Solutions');
+          if (bcpCard && !bcpCard.link) {
+            bcpCard.link = 'https://www.krbcp.com/';
+            localStorage.setItem('aboutData', JSON.stringify(parsedData));
+            return parsedData;
+          }
+        }
+        return parsedData;
       } catch (error) {
         console.error('저장된 About 데이터를 불러오는데 실패했습니다:', error);
         return defaultAboutData;
@@ -242,7 +278,38 @@ export function AboutProvider({ children }: { children: ReactNode }) {
   const loadData = async () => {
     try {
       const data = await getAboutData();
-      setAboutData(data);
+      
+      // 서버에서 가져온 데이터의 폰트 크기가 작으면 강제로 업데이트
+      if (!data.fontSize || 
+          (data.fontSize.cardTitle && data.fontSize.cardTitle < 28) ||
+          (data.fontSize.cardDescription && data.fontSize.cardDescription < 22) ||
+          (data.fontSize.mobileCardTitle && data.fontSize.mobileCardTitle < 28) ||
+          (data.fontSize.mobileCardDescription && data.fontSize.mobileCardDescription < 22)) {
+        console.log('서버에서 가져온 AboutData 폰트 크기가 작아 강제로 업데이트합니다.');
+        const updatedData = {
+          ...data,
+          fontSize: {
+            cardTitle: 28,
+            cardDescription: 22,
+            mobileCardTitle: 28,
+            mobileCardDescription: 22
+          }
+        };
+        setAboutData(updatedData);
+        // localStorage에도 저장
+        localStorage.setItem('aboutData', JSON.stringify(updatedData));
+      } else {
+        // BCP Solutions 링크가 누락된 경우 업데이트
+        const solutionTab = data.tabs?.find(tab => tab.name === '솔루션');
+        if (solutionTab) {
+          const bcpCard = solutionTab.cards?.find(card => card.title === 'BCP Solutions');
+          if (bcpCard && !bcpCard.link) {
+            bcpCard.link = 'https://www.krbcp.com/';
+            localStorage.setItem('aboutData', JSON.stringify(data));
+          }
+        }
+        setAboutData(data);
+      }
     } catch (error) {
       console.error('About 데이터 로드 실패:', error);
       // 실패 시 기본 데이터 사용

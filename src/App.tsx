@@ -12,7 +12,7 @@ function App() {
         <AboutProvider>
           <ContactProvider>
             <BrowserRouter>
-              <div className="min-h-screen font-sans">
+              <div className="min-h-screen font-sans max-w-[1920px] mx-auto">
                 <MainRouter />
               </div>
             </BrowserRouter>

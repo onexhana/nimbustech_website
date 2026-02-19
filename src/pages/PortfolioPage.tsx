@@ -32,7 +32,7 @@ const PortfolioPage = () => {
 
   return (
     <>
-      <section className="pt-[100px] pl-16 pr-12 pb-24 bg-white">
+      <section className="pt-[100px] pl-16 pr-12 pb-24 bg-white max-w-[1920px] mx-auto">
         {/* 모바일과 데스크톱 레이아웃 분기 */}
         {isMobile ? (
           <>

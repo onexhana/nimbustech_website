@@ -51,11 +51,11 @@ export async function getContactData(): Promise<ContactData> {
     ],
     buttons: [
       {
-        text: "고객사 직원",
+        text: "고객 문의",
         type: "inquiry"
       },
       {
-        text: "인재 채용", 
+        text: "인재 문의", 
         type: "hiring"
       }
     ],
@@ -117,6 +117,12 @@ export async function getAboutData(): Promise<AboutData> {
   return {
     mainTitle: "고객 성공 리딩",
     subtitle: "신뢰성 높은 DT 서비스를 제공합니다.",
+    fontSize: {
+      cardTitle: 28,
+      cardDescription: 22,
+      mobileCardTitle: 28,
+      mobileCardDescription: 22
+    },
     tabs: [
       {
         name: "ITO",
@@ -238,7 +244,8 @@ export async function getAboutData(): Promise<AboutData> {
             title: "BCP Solutions",
             description: [
               "솔루션과 컨설팅으로 비즈니스 연속성을 보장합니다"
-            ]
+            ],
+            link: "https://www.krbcp.com/"
           }
         ]
       }

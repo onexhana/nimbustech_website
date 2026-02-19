@@ -6,7 +6,7 @@ export default function Header() {
 
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768); // 768px 미만을 모바일로 간주
+      setIsMobile(window.innerWidth < 1024); // 1024px 미만을 모바일로 간주
     };
 
     checkMobile();
@@ -78,20 +78,26 @@ function HeaderWeb() {
   };
 
   return (
-    <header
-      style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        width: '100%',
-        backgroundColor: '#ffffff',
-        zIndex: 50,
-        paddingBottom: '20px',
-        boxShadow:
-          '0 4px 6px -1px rgba(0, 0, 0, 0.19), 0 2px 4px -2px rgba(0,0,0,0.1)',
-      }}
-    >
-      <div className="max-w-7xl mx-auto px-8 h-16 flex justify-between items-center">
+    <>
+      <header
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '80px',
+          zIndex: 50,
+        }}
+      >
+        <div 
+          className="max-w-[1920px] mx-auto px-8 flex justify-between items-center"
+        style={{
+          backgroundColor: '#ffffff',
+          paddingBottom: '16px',
+          boxShadow:
+            '0 4px 6px -1px rgba(0, 0, 0, 0.19), 0 2px 4px -2px rgba(0,0,0,0.1)',
+        }}
+        >
         {/* 웹 로고 영역 */}
         <a
           href="#home"
@@ -131,7 +137,8 @@ function HeaderWeb() {
             </button>
           ))}
         </nav>
-      </div>
-    </header>
+        </div>
+      </header>
+    </>
   );
 }

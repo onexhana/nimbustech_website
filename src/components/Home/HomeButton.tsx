@@ -35,6 +35,30 @@ function InfiniteTextSlider({
   fontWeight = 300,
   fontWeights = {},
 }: InfiniteTextSliderProps) {
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setScreenWidth(window.innerWidth);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // 화면 크기에 따른 부드러운 폰트 크기 계산 함수
+  const getResponsiveFontSize = (baseSize: number) => {
+    // 1920px 기준으로 비례 계산
+    const ratio = screenWidth / 1920;
+    const minSize = 0.5; // 최소 50%
+    const maxSize = 1.2; // 최대 120%
+    const clampedRatio = Math.max(minSize, Math.min(maxSize, ratio));
+    
+    return Math.round(baseSize * clampedRatio);
+  };
+
+  // 반응형 폰트 크기 계산
+  const responsiveFontSize = getResponsiveFontSize(fontSize);
+
   // 텍스트를 충분히 복사해서 끊김 없는 무한 루프 구현
   const repeatedText = Array(6).fill(text);
 
@@ -72,7 +96,7 @@ function InfiniteTextSlider({
             key={i}
             className="flex-none"
             style={{
-              fontSize: `${fontSize}px`,
+              fontSize: `${responsiveFontSize}px`,
               lineHeight: "1.2",
               color: textColor,
               fontWeight: fontWeight,
@@ -125,7 +149,7 @@ const buttons: ButtonItem[] = [
     title: "Employee Benefits",
     subtitle: "복지 혜택",
     description:
-      "최고의 열정과 패기를 갖춘\n인재들과 함께 일하고 성장하는 기업",
+      "최고의 열정과 패기를 갖춘 인재들과\n함께 일하고 성장하는 기업",
     link: "/#about",
     imagePath: "/popup_image/Employee Benefits.jpg",
     titleFontSize: 30,
@@ -148,15 +172,69 @@ export default function HomeButton() {
   const { homeData } = useHomeData();
   const [selectedIdx, setSelectedIdx] = useState<number | null>(null);
   const [isMobile, setIsMobile] = useState(false);
+  const [isSmallScreen, setIsSmallScreen] = useState(false); // 430px 이하 감지용
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
 
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
+      const currentWidth = window.innerWidth;
+      // 단순하고 예측 가능한 브레이크포인트(768px)로 복귀
+      setIsMobile(currentWidth < 768);
+      // 350px 이하에서만 흰색 배경 사용 (원본 이미지 크기까지는 투명)
+      setIsSmallScreen(currentWidth <= 350);
+      setScreenWidth(currentWidth);
+      
+      // 디버깅용 로그 (값이 변경될 때만 출력)
+      const prevWidth = screenWidth;
+      if (Math.abs(currentWidth - prevWidth) > 10) {
+        console.log('화면 크기 변경:', currentWidth, 'isSmallScreen:', currentWidth <= 350, 'isMobile:', currentWidth < 768);
+      }
     };
+    
+    // 초기 로딩 시 즉시 실행
     checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
+    
+    // 리사이즈 이벤트 리스너 추가 (디바운싱 적용)
+    let resizeTimeout: NodeJS.Timeout;
+    const debouncedResize = () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(checkMobile, 150); // 150ms 디바운싱
+    };
+    
+    window.addEventListener('resize', debouncedResize);
+    
+    // 브라우저 확대/축소 감지를 위한 추가 이벤트들
+    window.addEventListener('orientationchange', checkMobile);
+    
+    // 브라우저 확대 비율 변경 감지 (Chrome, Edge 등)
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', debouncedResize);
+    }
+    
+    // 주기적으로 화면 크기 체크 (확대/축소 변경 감지용) - 3초마다 체크
+    const intervalCheck = setInterval(checkMobile, 3000);
+    
+    return () => {
+      window.removeEventListener('resize', debouncedResize);
+      window.removeEventListener('orientationchange', checkMobile);
+      if (window.visualViewport) {
+        window.visualViewport.removeEventListener('resize', debouncedResize);
+      }
+      clearTimeout(resizeTimeout);
+      clearInterval(intervalCheck);
+    };
   }, []);
+
+  // 화면 크기에 따른 부드러운 폰트 크기 계산 함수 (타이핑 효과와 동일)
+  const getResponsiveFontSize = (baseSize: number) => {
+    // 1920px 기준으로 비례 계산
+    const ratio = screenWidth / 1920;
+    const minSize = 0.5; // 최소 50%
+    const maxSize = 1.2; // 최대 120%
+    const clampedRatio = Math.max(minSize, Math.min(maxSize, ratio));
+    
+    return Math.round(baseSize * clampedRatio);
+  };
 
   // ESC 키 닫기
   useEffect(() => {
@@ -179,6 +257,32 @@ export default function HomeButton() {
 
   const handleCloseModal = () => setSelectedIdx(null);
 
+  const handleButtonClick = (idx: number) => {
+    setSelectedIdx(idx);
+    // 모달이 열릴 때 화면 크기 다시 확인
+    setTimeout(() => {
+      const currentWidth = window.innerWidth;
+      setIsMobile(currentWidth < 768);
+      setIsSmallScreen(currentWidth <= 350);
+      setScreenWidth(currentWidth);
+      console.log('모달 열림 - 화면 크기:', currentWidth, 'isSmallScreen:', currentWidth <= 350);
+    }, 100);
+  };
+
+  // 화면 크기에 따른 부드러운 마진 계산 함수
+  const getResponsiveMarginTop = () => {
+    // 화면 크기에 따라 조정하되, 최소한의 안전한 공간은 보장
+    if (screenWidth >= 1920) {
+      return 40; // 큰 화면: 40px
+    } else if (screenWidth >= 1200) {
+      return 35; // 중간 화면: 35px
+    } else if (screenWidth >= 768) {
+      return 30; // 작은 화면: 30px (최소 안전 공간)
+    } else {
+      return 30; // 모바일: 30px (최소 안전 공간 유지)
+    }
+  };
+
   const renderModal = () => {
     if (selectedIdx === null) return null;
     const selectedButton = homeData.buttonData[selectedIdx];
@@ -195,19 +299,20 @@ export default function HomeButton() {
           alignItems: "center",
           justifyContent: "center",
           zIndex: 999998,
+          padding: isMobile ? (screenWidth < 400 ? "5px" : "10px") : "16px",
         }}
         onClick={() => handleCloseModal()}
       >
         <div
           style={{
             position: "relative",
-            backgroundColor: "white",
-            borderRadius: "8px",
-            boxShadow: "0 10px 25px rgba(0, 0, 0, 0.2)",
-            maxWidth: "1024px",
-            width: "100%",
-            margin: "16px",
-            maxHeight: "575px",
+            backgroundColor: !isSmallScreen ? "transparent" : "white", // 430px 초과에서는 투명 배경
+            borderRadius: !isSmallScreen ? "0px" : "8px", // 430px 초과에서는 둥근 모서리 제거
+            boxShadow: !isSmallScreen ? "none" : "0 10px 25px rgba(0, 0, 0, 0.2)", // 430px 초과에서는 그림자 제거
+            maxWidth: isMobile ? (screenWidth < 400 ? "98vw" : "95vw") : "1024px",
+            width: isMobile ? (screenWidth < 400 ? "98vw" : "95vw") : "100%",
+            margin: isMobile ? (screenWidth < 400 ? "4px" : "8px") : "16px",
+            maxHeight: isMobile ? (screenWidth < 400 ? "95vh" : "90vh") : "575px",
             overflow: "hidden",
           }}
           onClick={(e) => e.stopPropagation()}
@@ -216,20 +321,21 @@ export default function HomeButton() {
             onClick={handleCloseModal}
             style={{
               position: "absolute",
-              top: "16px",
-              right: "16px",
+              top: isMobile ? (screenWidth < 400 ? "6px" : "8px") : "16px",
+              right: isMobile ? (screenWidth < 400 ? "6px" : "8px") : "16px",
               zIndex: 10,
-              backgroundColor: "white",
+              backgroundColor: !isSmallScreen ? "rgba(255, 255, 255, 0.8)" : "white", // 430px 초과에서는 반투명
               borderRadius: "50%",
-              width: "32px",
-              height: "32px",
+              width: isMobile ? (screenWidth < 400 ? "24px" : "28px") : "32px",
+              height: isMobile ? (screenWidth < 400 ? "24px" : "28px") : "32px",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
               border: "none",
               cursor: "pointer",
-              fontSize: "18px",
-              boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+              fontSize: isMobile ? (screenWidth < 400 ? "14px" : "16px") : "18px",
+              boxShadow: !isSmallScreen ? "0 2px 8px rgba(0, 0, 0, 0.3)" : "0 2px 4px rgba(0, 0, 0, 0.1)",
+              backdropFilter: !isSmallScreen ? "blur(4px)" : "none", // 430px 초과에서는 블러 효과
             }}
             aria-label="모달 닫기"
           >
@@ -237,20 +343,32 @@ export default function HomeButton() {
           </button>
           <div style={{ width: "100%" }}>
             <img
-              src={homeData.buttonData[selectedIdx].imagePath}
+              src={isMobile ? 
+                homeData.buttonData[selectedIdx].imagePath.replace('/popup_image/', '/popup_image_mobile/').replace(/\.[^/.]+$/, '_mobile.png') :
+                homeData.buttonData[selectedIdx].imagePath
+              }
               alt={selectedButton.subtitle}
               style={{
                 width: "100%",
                 height: "auto",
-                objectFit: "contain",
-                maxHeight: "85vh",
+                objectFit: "contain", // 모든 경우에 contain 사용하여 이미지가 잘리지 않도록
+                maxHeight: isMobile ? (screenWidth < 400 ? "85vh" : "80vh") : "85vh",
+                display: "block",
               }}
               onError={(e) => {
-                console.error('이미지 로딩 실패:', homeData.buttonData[selectedIdx].imagePath);
+                const imagePath = isMobile ? 
+                  homeData.buttonData[selectedIdx].imagePath.replace('/popup_image/', '/popup_image_mobile/').replace(/\.[^/.]+$/, '_mobile.png') :
+                  homeData.buttonData[selectedIdx].imagePath;
+                console.error('이미지 로딩 실패:', imagePath);
+                console.error('화면 크기:', screenWidth, 'isMobile:', isMobile);
                 e.currentTarget.style.display = 'none';
               }}
               onLoad={() => {
-                console.log('이미지 로딩 성공:', homeData.buttonData[selectedIdx].imagePath);
+                const imagePath = isMobile ? 
+                  homeData.buttonData[selectedIdx].imagePath.replace('/popup_image/', '/popup_image_mobile/').replace(/\.[^/.]+$/, '_mobile.png') :
+                  homeData.buttonData[selectedIdx].imagePath;
+                console.log('이미지 로딩 성공:', imagePath);
+                console.log('화면 크기:', screenWidth, 'isMobile:', isMobile);
               }}
             />
           </div>
@@ -262,43 +380,48 @@ export default function HomeButton() {
   return (
     <>
       {renderModal()}
-      <div className="w-full bg-white" style={{ marginTop: "100px" }}>
-        <div className="grid grid-cols-4 border-t border-gray-200">
+      <div className="w-full bg-white">
+        <div className={`grid grid-cols-4 max-[767px]:grid-cols-2 border-t border-gray-200`}>
           {homeData.buttonData.map((btn, idx) => {
             const isSelected = selectedIdx === idx;
             const hoverColor = homeData.buttonStyles?.hoverColor || "#00A3E0";
-            const titleSize = isMobile 
-              ? homeData.buttonStyles?.titleSizes?.mobile || 20
-              : homeData.buttonStyles?.titleSizes?.desktop || 30;
-            const subtitleSize = isMobile 
-              ? homeData.buttonStyles?.subtitleSizes?.mobile || 28
-              : homeData.buttonStyles?.subtitleSizes?.desktop || 40;
-            const descriptionSize = isMobile 
-              ? homeData.buttonStyles?.descriptionSizes?.mobile || 14
-              : homeData.buttonStyles?.descriptionSizes?.desktop || 20;
+            // 반응형 폰트 크기 적용
+            // 모바일/데스크톱 구분 없이 연속 변화하도록 데스크톱 기준값만 사용
+            const baseTitleSize = homeData.buttonStyles?.titleSizes?.desktop || 20;
+            const baseSubtitleSize = homeData.buttonStyles?.subtitleSizes?.desktop || 40;
+            const baseDescriptionSize = homeData.buttonStyles?.descriptionSizes?.desktop || 20;
+            
+            // 반응형 폰트 크기 계산
+            const titleSize = getResponsiveFontSize(baseTitleSize);
+            const subtitleSize = getResponsiveFontSize(baseSubtitleSize);
+            const descriptionSize = getResponsiveFontSize(baseDescriptionSize);
             
             return (
               <div
                 key={idx}
-                onClick={() => setSelectedIdx(idx)}
-                className={`aspect-square w-full flex flex-col cursor-pointer justify-center p-8 text-center transition-colors border-b border-gray-200 group ${
-                  idx !== homeData.buttonData.length - 1 ? "border-r" : ""
+                onClick={() => handleButtonClick(idx)}
+                className={`${isMobile ? 'aspect-square' : 'aspect-square'} w-full flex flex-col cursor-pointer justify-center p-8 text-center transition-colors border-b border-gray-200 group ${
+                  isMobile 
+                    ? (idx % 2 !== 1 ? "border-r" : "") // 모바일: 홀수 인덱스에만 오른쪽 경계선
+                    : (idx !== homeData.buttonData.length - 1 ? "border-r" : "") // 데스크톱: 마지막이 아닌 경우
                 } ${isSelected ? "bg-gray-100" : "hover:bg-gray-50"}`}
               >
                 <div className="mb-2">
                   <h3
-                    className="font-medium transition-colors group-hover:text-blue-600"
+                    className="transition-colors group-hover:text-blue-600"
                     style={{ 
                       fontSize: `${titleSize}px`,
+                      fontWeight: 450,
                       color: isSelected ? hoverColor : "#000000"
                     }}
                   >
                     {renderTextWithBreaks(btn.title)}
                   </h3>
                   <p
-                    className="font-bold mt-1 transition-colors group-hover:text-blue-600"
+                    className="mt-1 transition-colors group-hover:text-blue-600"
                     style={{ 
                       fontSize: `${subtitleSize}px`,
+                      fontWeight: 710,
                       color: isSelected ? hoverColor : "#000000"
                     }}
                   >
@@ -320,10 +443,10 @@ export default function HomeButton() {
         </div>
 
         {/* 무한 텍스트 슬라이더 */}
-        <div className="w-full py-16 bg-gray-100" style={{ marginTop: "20px" }}>
+        <div className="w-full bg-gray-100" style={{ paddingTop: 'clamp(24px, 4vw, 64px)', paddingBottom: 'clamp(40px, 6vw, 96px)', marginTop: 'clamp(12px, 2.5vw, 24px)' }}>
           <InfiniteTextSlider
             text={homeData.sliderText || "LEADING CUSTOMER SUCCESS"}
-            fontSize={homeData.sliderTextSizes?.desktop || 110}
+            fontSize={getResponsiveFontSize(homeData.sliderTextSizes?.desktop || 110)}
             textColor={homeData.sliderTextColors?.defaultColor || "#c2c2c2"}
             duration={25}
             gap={50}

@@ -56,7 +56,7 @@ const PortfolioCard = ({ id, title, description, image }: PortfolioCardProps) =>
           mobile: { size: 16, weight: 600, color: "#000000" }
         }
       },
-      imageSize: imageSize || {
+        imageSize: imageSize || {
         web: { width: 330, height: 250 },
         mobile: { width: 260, height: 150 }
       }
