@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>Web3Forms 테스트</title>
+</head>
+<body style="font-family: sans-serif; max-width: 400px; margin: 40px auto; padding: 20px;">
+  <h2>Web3Forms 이메일 전송 테스트</h2>
+  <p style="color: #666;">이 폼을 제출하면 Access Key에 등록된 이메일로 전송됩니다.</p>
+  <form id="test-form" style="display: flex; flex-direction: column; gap: 12px;">
+    <input type="text" name="name" placeholder="이름" required style="padding: 10px;">
+    <input type="email" name="email" placeholder="이메일" required style="padding: 10px;">
+    <textarea name="message" placeholder="테스트 메시지" rows="3" required style="padding: 10px;"></textarea>
+    <button type="submit" style="padding: 12px; background: #00A3E0; color: white; border: none; cursor: pointer;">
+      제출 테스트
+    </button>
+  </form>
+  <div id="result" style="margin-top: 20px; padding: 12px; border-radius: 8px;"></div>
+
+  <script>
+    document.getElementById('test-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const form = e.target;
+      const resultDiv = document.getElementById('result');
+      resultDiv.innerHTML = '전송 중...';
+      resultDiv.style.background = '#f0f0f0';
+
+      const formData = new FormData(form);
+      const data = {
+        access_key: '8e31999e-0e7a-46af-84ce-3c3f3a6ccb61',
+        name: formData.get('name'),
+        email: formData.get('email'),
+        message: formData.get('message'),
+      };
+
+      try {
+        const res = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
+        });
+        const json = await res.json();
+        if (json.success) {
+          resultDiv.style.background = '#d4edda';
+          resultDiv.innerHTML = '✅ 전송 성공! 이메일 받은편지함과 스팸함을 확인하세요.';
+        } else {
+          resultDiv.style.background = '#f8d7da';
+          resultDiv.innerHTML = '❌ 실패: ' + (json.message || JSON.stringify(json));
+        }
+      } catch (err) {
+        resultDiv.style.background = '#f8d7da';
+        resultDiv.innerHTML = '❌ 오류: ' + err.message;
+      }
+    });
+  </script>
+</body>
+</html>

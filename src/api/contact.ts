@@ -1,14 +1,34 @@
 import type { InquiryData, HiringData, BrochureDownloadData, ContactData, AboutData } from '../types/contact';
 
+/** 고객 문의 전송 - Web3Forms로 이메일 수신 */
 export async function sendInquiry(data: InquiryData): Promise<void> {
-  const response = await fetch('/api/contact/inquiry', {
+  const accessKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY;
+  if (!accessKey) {
+    throw new Error('이메일 전송 설정이 없습니다. 관리자에게 문의해주세요.');
+  }
+
+  const body = {
+    access_key: accessKey,
+    subject: `[님버스테크] 고객 문의 - ${data.name} (${data.company})`,
+    from_name: '님버스테크 웹사이트',
+    name: data.name,
+    company: data.company,
+    email: data.email,
+    phone: data.phone,
+    message: data.message,
+    agree: data.agree ? '동의' : '미동의',
+  };
+
+  const response = await fetch('https://api.web3forms.com/submit', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(data),
+    body: JSON.stringify(body),
   });
-  if (!response.ok) {
-    const errorText = await response.text();
-    throw new Error(errorText || '문의 전송에 실패했습니다.');
+
+  const result = await response.json();
+  if (!result.success) {
+    const errMsg = result.message || result.body?.message || '문의 전송에 실패했습니다.';
+    throw new Error(errMsg);
   }
 }
 
@@ -24,16 +44,34 @@ export async function sendHiring(data: HiringData): Promise<void> {
   }
 }
 
-/** 회사소개서 다운로드 신청 시 개인정보 제출 (선택적: 백엔드 연동 시 사용) */
+/** 회사소개서 다운로드 신청 시 개인정보 제출 - Web3Forms로 이메일 수신 */
 export async function sendBrochureRequest(data: BrochureDownloadData): Promise<void> {
-  const response = await fetch('/api/contact/brochure', {
+  const accessKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY;
+  if (!accessKey) {
+    throw new Error('이메일 전송 설정이 없습니다. 관리자에게 문의해주세요.');
+  }
+
+  const body = {
+    access_key: accessKey,
+    subject: `[님버스테크] 회사소개서 신청 - ${data.name} (${data.company})`,
+    from_name: '님버스테크 웹사이트',
+    name: data.name,
+    company: data.company,
+    email: data.email,
+    contact: data.contact,
+    inquiry: data.inquiry,
+    agree: data.agree ? '동의' : '미동의',
+  };
+
+  const response = await fetch('https://api.web3forms.com/submit', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(data),
+    body: JSON.stringify(body),
   });
-  if (!response.ok) {
-    const errorText = await response.text();
-    throw new Error(errorText || '제출에 실패했습니다.');
+
+  const result = await response.json();
+  if (!result.success) {
+    throw new Error(result.message || result.body?.message || '제출에 실패했습니다.');
   }
 }
 

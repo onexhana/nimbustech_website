@@ -1,75 +1,157 @@
 // src/components/Contact/InquiryForm.tsx
-import { useEffect } from 'react';
+// Web3Forms 연동 고객 문의 폼
+
+import { useState } from 'react';
+import { sendInquiry } from '../../api/contact';
 
 export default function InquiryForm() {
-  // 웹폼 스크립트 로딩 및 폼 초기화를 위한 useEffect
-  // 마운트 시 SalesMap 웹폼 로더 스크립트를 동적으로 삽입하고, 로드 완료 후 SmFormSettings.loadForm() 호출
-  useEffect(() => {
-    const container = document.getElementById('salesmap-web-form');
-    if (!container) return;
-    const inlineScript = document.createElement('script');
-    inlineScript.text = `!(function (window, document) {
-      var currentScript = document.currentScript;
-      var scriptElement = document.createElement('script');
-      scriptElement.onload = function () {
-        window.SmFormSettings.loadForm();
-      };
-      scriptElement.id = 'loadFormScript';
-      scriptElement.src = 'https://salesmap.kr/web-form-loader-v4.js';
-      currentScript.parentNode.insertBefore(scriptElement, currentScript);
-    })(window, document);`;
-    container.appendChild(inlineScript);
-  }, []);
+  const [formData, setFormData] = useState({
+    name: '',
+    company: '',
+    email: '',
+    phone: '',
+    message: '',
+    agree: false,
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const [submitSuccess, setSubmitSuccess] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSubmitError(null);
+
+    if (!formData.agree) {
+      setSubmitError('개인정보 수집 및 이용에 동의해주세요.');
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email.trim())) {
+      setSubmitError('올바른 이메일 형식을 입력해주세요.');
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
+      await sendInquiry({
+        name: formData.name.trim(),
+        company: formData.company.trim(),
+        email: formData.email.trim(),
+        phone: formData.phone.trim(),
+        message: formData.message.trim(),
+        agree: formData.agree,
+      });
+      setSubmitSuccess(true);
+      setFormData({ name: '', company: '', email: '', phone: '', message: '', agree: false });
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : '전송에 실패했습니다.';
+      setSubmitError(msg + ' (F12 콘솔에서 자세한 오류 확인 가능)');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  if (submitSuccess) {
+    return (
+      <div className="p-8 text-center">
+        <p className="text-lg font-semibold text-[#00A3E0]">문의가 접수되었습니다.</p>
+        <p className="mt-2 text-gray-600">빠른 시일 내에 연락드리겠습니다.</p>
+      </div>
+    );
+  }
 
   return (
-    <>
-      {/* 폼 렌더링을 위한 컨테이너 요소: SalesMap 웹폼이 이 div 내부에 삽입됩니다. */}
-      <div
-        id="salesmap-web-form"
-        data-web-form="https://salesmap.kr/web-form/e2fb0363-5a7d-44db-878a-d24463b86765"
-        style={{ width: '100%', minHeight: '500px', backgroundColor: 'transparent' }}
-      />
-      {/* 웹폼 기본 배경 투명화 및 상단 헤더 수정 스타일 적용 */}
-      <style>{`
-        /* 배경 투명 처리 */
-        #salesmap-web-form,
-        #salesmap-web-form * {
-          background: transparent !important;
-        }
-        /* 웹폼 상단 헤더 숨기기 */
-        #salesmap-web-form > *:first-child {
-          display: none !important;
-        }
-        /* 웹폼 제목 텍스트 변경 - 더 강력한 선택자 */
-        #salesmap-web-form h1,
-        #salesmap-web-form h2,
-        #salesmap-web-form h3,
-        #salesmap-web-form [class*="title"],
-        #salesmap-web-form [class*="Title"],
-        #salesmap-web-form [class*="header"],
-        #salesmap-web-form [class*="Header"] {
-          visibility: hidden !important;
-          position: relative !important;
-          height: auto !important;
-        }
-        #salesmap-web-form h1::before,
-        #salesmap-web-form h2::before,
-        #salesmap-web-form h3::before,
-        #salesmap-web-form [class*="title"]::before,
-        #salesmap-web-form [class*="Title"]::before,
-        #salesmap-web-form [class*="header"]::before,
-        #salesmap-web-form [class*="Header"]::before {
-          content: "고객사 문의" !important;
-          visibility: visible !important;
-          position: absolute !important;
-          left: 0 !important;
-          top: 0 !important;
-          font-size: 24px !important;
-          font-weight: 700 !important;
-          color: #000000 !important;
-          display: block !important;
-        }
-      `}</style>
-    </>
+    <div className="w-full bg-white p-6 rounded-lg">
+      <h2 className="text-2xl font-bold text-black mb-6">고객사 문의</h2>
+      <form onSubmit={handleSubmit} className="space-y-5">
+        <div>
+          <label className="block text-sm font-medium text-gray-900 mb-2">
+            이름 <span className="text-red-500">*</span>
+          </label>
+          <input
+            type="text"
+            value={formData.name}
+            onChange={(e) => setFormData((prev) => ({ ...prev, name: e.target.value }))}
+            placeholder="이름"
+            className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#00A3E0] focus:border-[#00A3E0] outline-none"
+            required
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-900 mb-2">
+            회사 <span className="text-red-500">*</span>
+          </label>
+          <input
+            type="text"
+            value={formData.company}
+            onChange={(e) => setFormData((prev) => ({ ...prev, company: e.target.value }))}
+            placeholder="회사"
+            className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#00A3E0] focus:border-[#00A3E0] outline-none"
+            required
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-900 mb-2">
+            이메일 <span className="text-red-500">*</span>
+          </label>
+          <input
+            type="email"
+            value={formData.email}
+            onChange={(e) => setFormData((prev) => ({ ...prev, email: e.target.value }))}
+            placeholder="이메일"
+            className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#00A3E0] focus:border-[#00A3E0] outline-none"
+            required
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-900 mb-2">
+            연락처 <span className="text-red-500">*</span>
+          </label>
+          <input
+            type="tel"
+            value={formData.phone}
+            onChange={(e) => setFormData((prev) => ({ ...prev, phone: e.target.value }))}
+            placeholder="연락처"
+            className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#00A3E0] focus:border-[#00A3E0] outline-none"
+            required
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-900 mb-2">
+            문의사항 <span className="text-red-500">*</span>
+          </label>
+          <textarea
+            value={formData.message}
+            onChange={(e) => setFormData((prev) => ({ ...prev, message: e.target.value }))}
+            placeholder="문의사항을 적어주세요."
+            rows={5}
+            className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#00A3E0] focus:border-[#00A3E0] outline-none resize-y"
+            required
+          />
+        </div>
+        <div>
+          <label className="flex items-center gap-2 cursor-pointer">
+            <input
+              type="checkbox"
+              checked={formData.agree}
+              onChange={(e) => setFormData((prev) => ({ ...prev, agree: e.target.checked }))}
+              className="w-4 h-4 rounded border-gray-300 text-[#00A3E0] focus:ring-[#00A3E0]"
+            />
+            <span className="text-gray-800">
+              개인정보 수집 및 이용 동의 <span className="text-red-500">*</span>
+            </span>
+          </label>
+        </div>
+        {submitError && <p className="text-sm text-red-600">{submitError}</p>}
+        <button
+          type="submit"
+          disabled={isSubmitting}
+          className="w-full py-4 bg-[#00A3E0] text-white font-bold text-base rounded-md hover:bg-[#008fc4] disabled:opacity-60"
+        >
+          {isSubmitting ? '전송 중...' : '제출하기'}
+        </button>
+      </form>
+    </div>
   );
 }

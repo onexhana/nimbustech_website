@@ -188,7 +188,7 @@ export default function ContactSection() {
               zIndex: 1000
             }} />
             {/* 인라인 폼 렌더링 */}
-            {userType === 'inquiry' && (
+              {userType === 'inquiry' && (
               <div style={isMobile ? {
                 position: 'fixed',
                 zIndex: 1001,
@@ -198,29 +198,27 @@ export default function ContactSection() {
                 width: '80vw',
                 maxWidth: '360px',
                 maxHeight: '90vh',
-                backgroundColor: 'transparent',
+                backgroundColor: 'white',
                 borderRadius: '8px',
                 padding: '20px',
-                overflow: 'hidden'
+                overflow: 'auto',
+                boxShadow: '0 4px 20px rgba(0,0,0,0.15)'
               } : {
                 position: 'fixed',
                 zIndex: 1001,
                 top: '50%',
                 left: '50%',
                 transform: 'translate(-50%, -50%)',
-                width: '480px',
-                height: '680px',
-                overflow: 'hidden'
+                width: '520px',
+                maxHeight: '90vh',
+                backgroundColor: 'white',
+                borderRadius: '8px',
+                overflow: 'auto',
+                boxShadow: '0 4px 20px rgba(0,0,0,0.15)'
               }}>
-                {isMobile ? (
-                  <div style={{ marginTop: '-51px', marginBottom: '-120px' }}>
-                    <InquiryForm />
-                  </div>
-                ) : (
-                  <div style={{ position: 'absolute', top: '-31px', left: 0, width: '100%' }}>
-                    <InquiryForm />
-                  </div>
-                )}
+                <div className="p-4">
+                  <InquiryForm />
+                </div>
               </div>
             )}
             {userType === 'hiring' && (
