@@ -1,4 +1,4 @@
-import type { InquiryData, HiringData, ContactData, AboutData } from '../types/contact';
+import type { InquiryData, HiringData, BrochureRequestData, ContactData, AboutData } from '../types/contact';
 
 export async function sendInquiry(data: InquiryData): Promise<void> {
   const response = await fetch('/api/contact/inquiry', {
@@ -21,6 +21,38 @@ export async function sendHiring(data: HiringData): Promise<void> {
   if (!response.ok) {
     const errorText = await response.text();
     throw new Error(errorText || '채용 문의 전송에 실패했습니다.');
+  }
+}
+
+/** 회사소개서 신청 폼 전송 - Web3Forms로 사이트 운영자 이메일에 전달 */
+export async function sendBrochureRequest(data: BrochureRequestData): Promise<void> {
+  const accessKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY;
+  if (!accessKey) {
+    throw new Error('이메일 전송 설정이 없습니다. 관리자에게 문의해주세요.');
+  }
+
+  const body = {
+    access_key: accessKey,
+    subject: `[님버스테크] 회사소개서 신청 - ${data.name} (${data.company})`,
+    from_name: '님버스테크 웹사이트',
+    name: data.name,
+    email: data.email,
+    phone: data.phone,
+    company: data.company,
+    position: data.position,
+    brochure_type: data.brochureType.join(', '),
+    agree_privacy: data.agreePrivacy ? '동의' : '미동의',
+  };
+
+  const response = await fetch('https://api.web3forms.com/submit', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  });
+
+  const result = await response.json();
+  if (!result.success) {
+    throw new Error(result.message || '전송에 실패했습니다.');
   }
 }
 

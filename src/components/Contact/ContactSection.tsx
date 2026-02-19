@@ -8,11 +8,13 @@
 import { useState, useEffect } from 'react';
 import InquiryForm from './InquiryForm';
 import HiringForm from './HiringForm';
+import BrochureRequestModal from './BrochureRequestModal';
 import { useContactData } from '../../context/ContactContext';
 
 export default function ContactSection() {
   const { contactData, refreshData } = useContactData();
   const [userType, setUserType] = useState<'inquiry' | 'hiring' | null>(null);
+  const [showBrochureModal, setShowBrochureModal] = useState(false);
   const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 768);
   
   useEffect(() => {
@@ -32,6 +34,10 @@ export default function ContactSection() {
   }, [refreshData]);
 
   const handleCompanyDownload = () => {
+    setShowBrochureModal(true);
+  };
+
+  const handleBrochureSuccess = () => {
     window.open('/footer_pdf/님버스테크 회사소개_v3.5_20250923.pdf', '_blank');
   };
 
@@ -155,6 +161,12 @@ export default function ContactSection() {
                 >
                   <span className="relative z-10 text-white" style={{ fontWeight: '700' }}>회사소개서 다운로드</span>
                 </button>
+                {showBrochureModal && (
+                  <BrochureRequestModal
+                    onClose={() => setShowBrochureModal(false)}
+                    onSuccess={handleBrochureSuccess}
+                  />
+                )}
                 <button
                   className="bg-white w-full h-[74px] px-8 flex items-center justify-center relative overflow-hidden border-none text-[#00A3E0] font-black transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
                   style={{ 

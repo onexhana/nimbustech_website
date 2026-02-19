@@ -16,6 +16,16 @@ export interface HiringData {
   agree: boolean;
 }
 
+export interface BrochureRequestData {
+  brochureType: string[];
+  email: string;
+  name: string;
+  phone: string;
+  company: string;
+  position: string;
+  agreePrivacy: boolean;
+}
+
 export interface ContactSection {
   title: string;
   description: string;
