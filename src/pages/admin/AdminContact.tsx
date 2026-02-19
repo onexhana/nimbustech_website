@@ -9,6 +9,7 @@ export default function AdminContact() {
   const [isEditing, setIsEditing] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [activeVersion, setActiveVersion] = useState<'desktop' | 'mobile'>('desktop');
+  const [activeTab, setActiveTab] = useState(0);
 
   useEffect(() => {
     const loadContactData = async () => {

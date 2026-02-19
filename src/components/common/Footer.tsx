@@ -4,7 +4,7 @@ import BrochureDownloadModal from '../Contact/BrochureDownloadModal';
 export default function Footer() {
   const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 768);
   const [showBrochureModal, setShowBrochureModal] = useState(false);
-  
+
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
     window.addEventListener('resize', handleResize);
