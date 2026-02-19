@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
+import BrochureDownloadModal from '../Contact/BrochureDownloadModal';
 
 export default function Footer() {
   const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 768);
+  const [showBrochureModal, setShowBrochureModal] = useState(false);
   
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
@@ -14,9 +16,9 @@ export default function Footer() {
     window.open('/footer_pdf/개인정보 처리방침_v1.0.pdf', '_blank');
   };
 
-  // 회사소개서 버튼
+  // 회사소개서 버튼: 개인정보 입력 팝업 후 다운로드
   const openCompanyIntro = () => {
-    window.open('/footer_pdf/님버스테크 회사소개_v3.5_20250923.pdf', '_blank');
+    setShowBrochureModal(true);
   };
 
   return (
@@ -163,6 +165,11 @@ export default function Footer() {
           </div>
         </div>
       </div>
+      {/* 회사소개서 다운로드 시 개인정보 입력 모달 */}
+      <BrochureDownloadModal
+        isOpen={showBrochureModal}
+        onClose={() => setShowBrochureModal(false)}
+      />
     </footer>
   );
 }

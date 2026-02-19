@@ -16,6 +16,16 @@ export interface HiringData {
   agree: boolean;
 }
 
+/** 회사소개서 다운로드 시 수집하는 개인정보 */
+export interface BrochureDownloadData {
+  name: string;
+  company: string;
+  email: string;
+  contact: string;
+  inquiry: string;
+  agree: boolean;
+}
+
 export interface ContactSection {
   title: string;
   description: string;

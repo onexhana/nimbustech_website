@@ -1,4 +1,4 @@
-import type { InquiryData, HiringData, ContactData, AboutData } from '../types/contact';
+import type { InquiryData, HiringData, BrochureDownloadData, ContactData, AboutData } from '../types/contact';
 
 export async function sendInquiry(data: InquiryData): Promise<void> {
   const response = await fetch('/api/contact/inquiry', {
@@ -21,6 +21,19 @@ export async function sendHiring(data: HiringData): Promise<void> {
   if (!response.ok) {
     const errorText = await response.text();
     throw new Error(errorText || '채용 문의 전송에 실패했습니다.');
+  }
+}
+
+/** 회사소개서 다운로드 신청 시 개인정보 제출 (선택적: 백엔드 연동 시 사용) */
+export async function sendBrochureRequest(data: BrochureDownloadData): Promise<void> {
+  const response = await fetch('/api/contact/brochure', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data),
+  });
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(errorText || '제출에 실패했습니다.');
   }
 }
 

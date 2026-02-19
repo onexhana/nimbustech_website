@@ -8,12 +8,14 @@
 import { useState, useEffect } from 'react';
 import InquiryForm from './InquiryForm';
 import HiringForm from './HiringForm';
+import BrochureDownloadModal from './BrochureDownloadModal';
 import { useContactData } from '../../context/ContactContext';
 
 export default function ContactSection() {
   const { contactData, refreshData } = useContactData();
   const [userType, setUserType] = useState<'inquiry' | 'hiring' | null>(null);
   const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 768);
+  const [showBrochureModal, setShowBrochureModal] = useState(false);
   
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
@@ -32,7 +34,7 @@ export default function ContactSection() {
   }, [refreshData]);
 
   const handleCompanyDownload = () => {
-    window.open('/footer_pdf/님버스테크 회사소개_v3.5_20250923.pdf', '_blank');
+    setShowBrochureModal(true);
   };
 
   const handlePrivacyPolicy = () => {
@@ -258,6 +260,12 @@ export default function ContactSection() {
             )}
           </>
         )}
+
+        {/* 회사소개서 다운로드 시 개인정보 입력 모달 */}
+        <BrochureDownloadModal
+          isOpen={showBrochureModal}
+          onClose={() => setShowBrochureModal(false)}
+        />
 
       </div>
     </div>
