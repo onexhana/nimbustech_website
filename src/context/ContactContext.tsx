@@ -115,7 +115,7 @@ const defaultContactData: ContactData = {
     },
     seoul: {
       title: "[서울사무소]",
-      address: "강남구 선릉로90길 10, B동 407호 (대치동, 샹제리제센터)"
+      address: "서울특별시 금천구 가산디지털1로 205-28, 1107호 (대신 IT 타워)"
     },
     contact: {
       phone: "02-555-0099",
