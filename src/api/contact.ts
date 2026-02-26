@@ -168,12 +168,6 @@ export async function getAboutData(): Promise<AboutData> {
   return {
     mainTitle: "고객 성공 리딩",
     subtitle: "신뢰성 높은 DT 서비스를 제공합니다.",
-    fontSize: {
-      cardTitle: 28,
-      cardDescription: 22,
-      mobileCardTitle: 28,
-      mobileCardDescription: 22
-    },
     tabs: [
       {
         name: "ITO",
@@ -306,7 +300,9 @@ export async function getAboutData(): Promise<AboutData> {
       subtitle: 18,
       cardTitle: 16,
       cardDescription: 14,
-      tabName: 16
+      tabName: 16,
+      mobileCardTitle: 28,
+      mobileCardDescription: 22
     },
     tabActiveColor: '#00A3E0',
     tabInactiveColor: '#374151',
