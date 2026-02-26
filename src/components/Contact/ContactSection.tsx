@@ -210,7 +210,7 @@ export default function ContactSection() {
                 left: '50%',
                 transform: 'translate(-50%, -50%)',
                 width: '480px',
-                height: '700px',
+                height: '680px',
                 overflow: 'hidden'
               }}>
                 {isMobile ? (
