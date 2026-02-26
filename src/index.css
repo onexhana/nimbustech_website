@@ -160,3 +160,17 @@ h1 {
     border-right: 1px solid #e5e7eb !important;
   }
 }
+
+/* 회사소개서 다운로드 모달 placeholder 글꼴/스타일 통일 */
+.brochure-download-modal input,
+.brochure-download-modal textarea {
+  font-family: inherit;
+}
+
+.brochure-download-modal input::placeholder,
+.brochure-download-modal textarea::placeholder {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  font-style: normal;
+}

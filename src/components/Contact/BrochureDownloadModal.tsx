@@ -89,6 +89,7 @@ export default function BrochureDownloadModal({ isOpen, onClose, onSuccess }: Br
         role="dialog"
         aria-modal="true"
         aria-labelledby="brochure-modal-title"
+        className="brochure-download-modal"
         style={{
           position: 'fixed',
           top: '50%',
@@ -101,6 +102,7 @@ export default function BrochureDownloadModal({ isOpen, onClose, onSuccess }: Br
           boxShadow: '0 20px 60px rgba(0,0,0,0.2)',
           zIndex: 2001,
           padding: '32px 28px',
+          fontFamily: "'Pretendard Variable', 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif",
         }}
         onClick={(e) => e.stopPropagation()}
       >
