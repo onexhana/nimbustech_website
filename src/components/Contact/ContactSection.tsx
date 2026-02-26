@@ -6,10 +6,11 @@
 // ========================================
 
 import { useState, useEffect } from 'react';
-import InquiryForm from './InquiryForm';
+import SalesMapForm from './SalesMapForm';
 import HiringForm from './HiringForm';
 import BrochureDownloadModal from './BrochureDownloadModal';
 import { useContactData } from '../../context/ContactContext';
+import { SALESMAP_INQUIRY_FORM_URL } from '../../constants/contact';
 
 export default function ContactSection() {
   const { contactData, refreshData } = useContactData();
@@ -187,8 +188,8 @@ export default function ContactSection() {
               backgroundColor: 'rgba(0, 0, 0, 0.5)',
               zIndex: 1000
             }} />
-            {/* 인라인 폼 렌더링 */}
-              {userType === 'inquiry' && (
+            {/* 인라인 폼 렌더링 (고객 문의 / 인재 문의 동일 모달 스타일) */}
+            {userType === 'inquiry' && (
               <div style={isMobile ? {
                 position: 'fixed',
                 zIndex: 1001,
@@ -198,27 +199,35 @@ export default function ContactSection() {
                 width: '80vw',
                 maxWidth: '360px',
                 maxHeight: '90vh',
-                backgroundColor: 'white',
+                backgroundColor: 'transparent',
                 borderRadius: '8px',
                 padding: '20px',
-                overflow: 'auto',
-                boxShadow: '0 4px 20px rgba(0,0,0,0.15)'
+                overflow: 'hidden'
               } : {
                 position: 'fixed',
                 zIndex: 1001,
                 top: '50%',
                 left: '50%',
                 transform: 'translate(-50%, -50%)',
-                width: '520px',
-                maxHeight: '90vh',
-                backgroundColor: 'white',
-                borderRadius: '8px',
-                overflow: 'auto',
-                boxShadow: '0 4px 20px rgba(0,0,0,0.15)'
+                width: '480px',
+                height: '700px',
+                overflow: 'hidden'
               }}>
-                <div className="p-4">
-                  <InquiryForm />
-                </div>
+                {isMobile ? (
+                  <div style={{ marginTop: '-51px', marginBottom: '-130px' }}>
+                    <SalesMapForm
+                      formUrl={SALESMAP_INQUIRY_FORM_URL}
+                      containerId="salesmap-web-form-inquiry"
+                    />
+                  </div>
+                ) : (
+                  <div style={{ position: 'absolute', top: '-31px', left: 0, width: '100%' }}>
+                    <SalesMapForm
+                      formUrl={SALESMAP_INQUIRY_FORM_URL}
+                      containerId="salesmap-web-form-inquiry"
+                    />
+                  </div>
+                )}
               </div>
             )}
             {userType === 'hiring' && (
